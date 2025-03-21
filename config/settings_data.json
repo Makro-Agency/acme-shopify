@@ -1,1 +1,66 @@
-{"current":{"favicon":"shopify:\/\/shop_images\/Favicon_1.png","social_twitter_link":"https:\/\/twitter.com\/acmesmokedfish?lang=en","social_facebook_link":"https:\/\/www.facebook.com\/acmesmokedfish\/","social_instagram_link":"https:\/\/www.instagram.com\/acmesmokedfish\/?hl=en","social_tiktok_link":"https:\/\/www.tiktok.com\/@acmesmokedfish","show_cart_alert":true,"index_navbar_background":"light","index_navbar_transparency":false,"find_in_store_provider":"where_to_buy","checkout_logo_image":"shopify:\/\/shop_images\/Acmesmokedfish-01-ringlogo-Blue-Rgb-2000px-w-300ppi_1.png","checkout_logo_size":"large","checkout_body_background_color":"#f2f2f2","checkout_sidebar_background_color":"#f2f2f2","checkout_accent_color":"#14315c","checkout_button_color":"#14315c","notification_custom_css":"","sections":{"header":{"type":"header","blocks":{"mega_menu_6MyjHq":{"type":"mega-menu","settings":{"trigger":"Where to Buy","metaobject":["page-one","bagel-deli"]}}},"block_order":["mega_menu_6MyjHq"],"settings":{}},"footer":{"type":"footer","settings":{"footer_menu":"footer","social_menu":"social-menu","footer_utility_menu":"footer-utility"}}},"content_for_index":[],"blocks":{"855628211100114053":{"type":"shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/klaviyo-onsite-embed\/2632fe16-c075-4321-a88b-50b567f42507","disabled":false,"settings":{}},"16015553545834452532":{"type":"shopify:\/\/apps\/bird-pickup-delivery\/blocks\/app-embed\/6e8f5020-fc3a-4acd-a31a-fb627c0270cf","disabled":false,"settings":{}},"6986766168588894248":{"type":"shopify:\/\/apps\/preorder-now-wolf\/blocks\/app-embed\/7ee1d740-e67b-4ea8-b0c9-1f62cb8777ec","disabled":false,"settings":{}},"14060646107696862457":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/judgeme_core\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","disabled":false,"settings":{}},"17428600031447253342":{"type":"shopify:\/\/apps\/attentive\/blocks\/attn-tag\/8df62c72-8fe4-407e-a5b3-72132be30a0d","disabled":false,"settings":{}}}}}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "favicon": "shopify://shop_images/Favicon_1.png",
+    "social_twitter_link": "https://twitter.com/acmesmokedfish?lang=en",
+    "social_facebook_link": "https://www.facebook.com/acmesmokedfish/",
+    "social_instagram_link": "https://www.instagram.com/acmesmokedfish/?hl=en",
+    "social_tiktok_link": "https://www.tiktok.com/@acmesmokedfish",
+    "show_cart_alert": true,
+    "index_navbar_background": "light",
+    "index_navbar_transparency": false,
+    "find_in_store_provider": "where_to_buy",
+    "checkout_logo_image": "shopify://shop_images/Acmesmokedfish-01-ringlogo-Blue-Rgb-2000px-w-300ppi_1.png",
+    "checkout_logo_size": "large",
+    "checkout_body_background_color": "#f2f2f2",
+    "checkout_sidebar_background_color": "#f2f2f2",
+    "checkout_accent_color": "#14315c",
+    "checkout_button_color": "#14315c",
+    "notification_custom_css": "",
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "mega_menu_6MyjHq": {
+            "type": "mega-menu",
+            "settings": {
+              "trigger": "Where to Buy",
+              "metaobject": [
+                "bagel-deli",
+                "retail"
+              ]
+            }
+          }
+        },
+        "block_order": [
+          "mega_menu_6MyjHq"
+        ],
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer_menu": "footer",
+          "social_menu": "social-menu",
+          "footer_utility_menu": "footer-utility"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  }
+}

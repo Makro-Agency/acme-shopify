@@ -1,0 +1,269 @@
+{% liquid 
+	comment 
+		set up classes for transparent header and light vs dark headers
+	endcomment		
+	assign navbar_transparency = false
+	assign navbar_background = 'light'
+	assign is_page = true
+	comment
+		assign hero_image = false
+	endcomment
+	assign light_templates = "index,fish-friday,product,collection,blog,article,search,addresses,account,order,login,register"
+	assign dark_templates = ""
+
+	if light_templates contains template.name 
+		assign is_page = false
+		assign navbar_background = "light"
+	endif
+	if dark_templates contains template.name or dark_templates contains collection.handle
+		assign is_page = false
+		assign navbar_background = "dark"
+	endif
+	if is_page
+		if page.metafields.page.navbar_background != blank 
+			assign navbar_background = page.metafields.page.navbar_background
+		endif
+		if page.metafields.page.navbar_transparency != blank 
+			assign navbar_transparency = page.metafields.page.navbar_transparency
+		endif
+	endif
+	comment
+		The index page and fish friday pages variables are set in theme settings
+		This can also be extended to other unique pages if needed
+	endcomment
+	if template.name == 'index'
+		assign navbar_transparency = settings.index_navbar_transparency
+		assign navbar_background =  settings.index_navbar_background
+	endif
+
+	if collection.handle == 'fish-friday'
+		assign navbar_transparency = settings.fish_friday_navbar_transparency
+		assign navbar_background =  settings.fish_friday_navbar_background
+	endif
+
+	if navbar_transparency == true
+		assign navbar_transparency = 'transparent'
+		else
+			assign navbar_transparency = 'opaque'
+	endif
+	if navbar_background == 'dark'
+		assign navbar_background = 'navbar-dark'
+	endif
+	if navbar_background == 'light'
+		assign navbar_background = 'navbar-light'
+	endif
+	assign mega_menus = section.blocks | where : 'type' , 'mega-menu'
+
+%}
+{% comment %} assign navbar_background = 'navbar-light'
+assign navbar_transparency = false  {% endcomment %}
+
+
+<header class="main-header">
+	<header class="main-header">
+		<nav class="navbar navbar-expand-lg navbar-custom {{ navbar_background }} {{ navbar_transparency }} ">
+			<a href="/" class="navbar-logo" aria-label="Acme Logo - Press to go Home">
+				{% render 'acme-logo' %}
+				{% comment %} {% if navbar_background == 'navbar-dark' %}
+				{% else %}
+					{% render 'acme-logo-blue' %}
+				{% endif %} {% endcomment %}
+			</a>
+			<a href="/cart" id="navCart" class="navCart navbar-toggler d-lg-none" aria-label="Go to Cart page">
+				{% render 'icon-cart-white' %}
+			</a>
+			<button id="navOpen" class="navbar-toggler open" type="button" data-toggle="bs-collapse" data-target="#top-nav" aria-controls="top-nav" aria-expanded="false" aria-label="Open navigation">
+				{% render 'icon-menu-blue' %}
+			</button>
+			<div class="collapse navbar-collapse" id="top-nav">
+				<div class="container navbar-collapse__header d-lg-none">
+					<div class="row d-flex justify-content-between align-items-center mt-3 py-2">
+						<h2 class="menu-header header-1 mb-0">Menu</h2>
+						<button class="menu-back d-flex align-items-center" aria-hidden="true">
+							{% render 'icon-menu-back' %}
+							{% comment %} <p class="mb-0">Back</p> {% endcomment %}
+						</button>
+						<a href="/cart" id="navCart" class="navbar-toggler" aria-label="Go to Cart page">
+							{% render 'icon-cart-white' %}
+						</a>
+						<button id="navClose" class="navbar-toggler" type="button" data-toggle="bs-collapse" data-target="#top-nav" aria-controls="top-nav" aria-expanded="false" aria-label="Close navigation">
+							{% render 'icon-close' %}
+						</button>
+					</div>
+				</div>
+				<div class="navbar-nav level-1 container">
+					<div class="row">
+						{% unless template.name == 'search' %}	
+							<div class="d-lg-none px-0">
+								{% render 'search-bar' %}
+							</div>
+						{% endunless %}
+						<ul class="navbar-nav-ul">
+						{%- for link in linklists.main-menu.links -%}
+							{%  assign mega = false  %}
+							{%  for mega_menu in mega_menus %}
+								{%  if mega_menu.settings.trigger == link.title %}
+									{%  assign mega = mega_menu %}
+								{% endif %}
+							{%  endfor %}
+
+							{% if link.links.size > 0  or mega != blank%}
+								<li class="nav-item dropdown px-0">
+									<a class="nav-link dropdown-toggle header-5" href="#" id="navbarDropdown-{{ link.title }}" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-subnav="{{ link.handle }}">
+										{{ link.title }}
+										{% render 'icon-chevron-blue' %}
+									</a>
+										<ul class="level-2 dropdown-menu offset-lg-1 mt-0">
+											{%  if mega != blank  %}
+												{%  for childLink in mega.settings.metaobject %}
+													<li data-post-type="" data-post-id="" class="link mb-2  product ">
+														<a href="{{childLink.url}}" class="" target="_self" data-type="link" data-depth="2">
+																	<div class="product-image mb-3">
+																		<img src="{{ childLink.image | img_url: '400x' }}" 
+																			alt="{{ childLink.label }}" 
+																			class="mb-1" loading="lazy">
+																	</div>
+															<p class="header-4 text-center d-block w-100">{{ childLink.label }}</p>
+														</a>
+													</li>
+												{% endfor %}
+											{%  endif %}
+											{%  if mega == blank  %}
+												{%- for childLink in link.links -%}
+												{% assign collection_item = false %}
+												{% if childLink.url contains '/collections' %}
+													{% for collection in collections %}
+														{% if childLink.title == collection.title %}
+															{% assign collection_item = collection %}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+												<li data-post-type="" data-post-id="" class="link mb-2 {% if collection_item %} product {% endif %}">
+													<a href="{{childLink.url}}" class="" target="_self" data-type="link" data-depth="2">
+															{% if collection_item  %}
+																<div class="product-image mb-3">
+																	<img src="{{ collection_item.image | img_url: '400x' }}" 
+																		alt="{{ childLink.title }}" 
+																		class="mb-1" loading="lazy">
+																</div>
+															{% endif %}
+														<p class="header-4 {% if is_collection %} text-center {% endif %}  d-block w-100">{{ childLink.title }}</p>
+													</a>
+												</li>
+											{%- endfor -%}
+											<div class="clearfix col-12">
+												{% if link.handle == 'products' %}
+													<a class="btn btn-primary mt-3 mb-4" href="/collections/all">All Products</a>
+												{% endif %}
+											</div>
+										{% endif %}
+										</ul>
+								</li>
+								{% else %}
+									<li data-post-id="" class="depth-0 link">
+										<a href="{{link.url}}" class="header-5" target="_self" data-type="link" data-depth="1">
+											{{ link.title }}
+										</a>
+									</li>
+							{% endif %}
+						{%- endfor -%}
+						</ul>
+					</div> <!-- Row -->
+				</div> <!-- Container -->
+
+				{% comment %} Subnav Items {% endcomment %}
+				{%- for link in linklists.main-menu.links -%}
+					{% if link.links.size > 0 %}
+						<div class="subnav container d-lg-none mt-5 px-4" data-subnav="{{ link.handle }}" aria-hidden="true">
+							<div class="row">
+								<h3 class="subnav__title header-2 col-12 px-3">{{ link.title }}</h3>
+								<ul class="col-12 px-3">
+								{% for childLink in link.links %}
+									<li class="subnav__link">
+										<a href="{{ childLink.url }}" class="header-5">
+											{{ childLink.title }}
+											{% comment %} {% render 'icon-chevron-blue' %} {% endcomment %}
+										</a>
+									</li>
+								{% endfor %}
+								</ul>
+								{% if link.handle == 'products' %}
+									<a class="btn btn-primary ms-3" href="/collections/all">All Products</a>
+								{% endif %}
+							</div>
+						</div>
+					{% endif %}
+				{%- endfor -%}
+			</div><!-- .collapse -->
+			<a class="navbar-brand" href="/" title="<?= bloginfo('name');?>">{{settings.store.name}}</a>
+
+			<div class="navbar-utility d-none d-lg-flex align-items-center">
+				<div class="nav-cart nav-icon d-none d-lg-block">
+					{% render 'btn-cart' %}
+				</div>
+				<div id="nav-search" class="nav-search" tabindex="0" id="btn_search">
+					<a class="nav-icon" href="#" role="button" aria-label="Show Search Bar">{% render 'icon-search' %}</a>
+					{% comment %} 
+					<form role="search" action="/" method="get" class="search-form ng-pristine ng-valid"
+						data-children-count="1"> <span class="icon-search toggler"></span>
+						<input class="form-control" name="s" type="search" placeholder="Search" title="search"
+							aria-label="Search" id="input_search">
+					</form> 
+					{% endcomment %}
+				</div><!-- .nav-search -->
+				<div class="nav-pin nav-icon" tabindex="0">
+					<a href="/pages/where-to-buy" aria-label="Store Finder">
+						{% if template.name == 'product' or template.name == 'collection' %}
+							{% render 'icon-pin-blue' %}
+						{% else %}
+							{% render 'icon-pin-white' %}
+						{% endif %}
+					</a>
+				</div>
+			</div>
+			<!-- end navbar utility -->
+			
+		</nav><!-- .navbar -->
+		{% unless template.name == 'search' %}	
+			<div id="search-desktop">
+				{% render 'search-bar-desktop' %}
+				<div class="search-overlay"></div>
+			</div>
+		{% endunless %}
+		
+	</header><!-- .main-header -->
+
+	<div class="menu-trigger"></div><!-- .menu-trigger -->
+
+
+
+
+	{% schema %}
+	{
+		"name": "Header",
+		"settings": [
+
+			
+		],
+		"blocks": [
+			{
+					"type": "mega-menu",
+					"name": "mega-menu",
+					"settings": [
+							{
+									"type": "text",
+									"id": "trigger",
+									"label": "Enter the menu item label to trigger this dropdown"
+							},
+							{
+								"type": "metaobject_list",
+								"id": "metaobject",
+								"label": "Mega Menu",
+								"metaobject_type": "mega_menu"
+							}							
+					]
+			}
+		],
+		"max_blocks": 6
+	}
+	{% endschema %}

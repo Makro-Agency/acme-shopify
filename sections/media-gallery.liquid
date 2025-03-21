@@ -1,0 +1,169 @@
+{% liquid 
+    assign data = section.settings
+    assign blocks = section.blocks
+    assign gallery_id  = 'gallery-modal-' | append: section.id
+    assign dataType = 'section'
+    if section.settings.meta_object_handle != blank
+        assign handle = section.settings.meta_object_handle
+    endif
+    if product.metafields.accentuate.media_gallery_handle != blank
+        assign handle = product.metafields.accentuate.media_gallery_handle
+    endif
+    if handle
+        assign data = shop.metaobjects.gallery[handle]
+        assign blocks = shop.metaobjects.gallery[handle].items.value
+        assign dataType = 'meta'
+    endif
+
+%}
+{% if blocks %}
+    {% if section.settings.anchor_id != blank %}
+        <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+    {% endif %}
+    <section 
+        class="media-gallery {% if template == 'product' %}gsap-mininav{% endif %}">
+        {% if template == 'product' %}
+            <div id="mini-nav__media" class="mini-nav__anchor"></div>
+        {% endif %}
+        <div class="container">
+            <div class="row">
+                <div class="{% if canonical_url contains '/products/' %}col-lg-11 offset-lg-1 laptop{% endif %}">
+                    <h2 class="media-gallery__title header-1">
+                        {% if data.header != blank %}{{ data.header }}{% elsif section.settings.header != blank %}{{ section.settings.header }}{% else %}Media Gallery{% endif %}
+                    </h2>
+                    <div class="media-wrapper d-flex flex-wrap">
+                        <div class="mosaic col-12">
+                            {% for block in blocks %}
+                                {% liquid
+                                    assign blockData = block 
+                                    if dataType == 'section'
+                                        assign blockData = block.settings
+                                    endif
+                                %}
+                                <div class="mosaic__block">                                    
+                                    <button type="button" 
+                                        class="mosaic__block--button p-0" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#{{gallery_id}}"
+                                        data-index="{{forloop.index | minus:1}}">
+                                        <img class="mosaic__block--image" 
+                                            src="{{ blockData.image | img_url: '700x' }}" {% if blockData.image.alt %} 
+                                            alt="{{ blockData.image.alt }}" {% else %} alt="Acme Smoked Fish" {% endif %} 
+                                            loading="lazy">
+                                    </button>
+                                    {% if block.type == 'video' %}
+                                        {% render 'icon-video' %}
+                                    {% else %}
+                                        {% render 'icon-expand' %}
+                                    {% endif %}
+                                </div>
+                                {% assign x = x | plus:1 %}
+                            {% endfor %}
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!-- Modal -->
+        <div class="modal fade media-gallery-modal" 
+        id="{{gallery_id}}" 
+        tabindex="-1" 
+        aria-labelledby="{{gallery_id}}Label" aria-hidden="true">
+            <button type="button" class="btn-close d-none d-lg-block" data-bs-dismiss="modal" aria-label="Close">
+                {% render 'icon-close-blue' %}
+            </button>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="btn-close d-lg-none" data-bs-dismiss="modal" aria-label="Close">
+                        {% render 'icon-close-blue' %}
+                    </button>
+                    <div class="modal-body">
+                        <div class="swiper swiper-media-gallery">
+                            <div class="swiper-wrapper col-12"> 
+                                {% for block in blocks %}  
+                                    {% liquid 
+                                        assign blockData = block 
+                                        assign blockType = block.type
+                                        if dataType == 'section'
+                                            assign blockData = block.settings
+                                            assign blockType = block.type
+                                        endif
+                                        assign image = blockData.image
+                                        assign video_url = blockData.video_url
+                                        assign video_type = blockData.video_type 
+                                        assign caption = blockData.caption
+
+                                    %}                                  
+                                    <div class="swiper-slide col-md-4">
+                                        {% if block.type == 'image' %}
+                                            <img class="swiper-slide__image" loading="lazy"
+                                            src="{{ blockData.image | img_url: 'master' }}" {% if image.alt %} alt="{{ image.alt }}" {% else %} alt="Acme Smoked Fish" {% endif %}>
+                                        {% endif %}
+                                        {% if blockType == 'video' %}
+                                            {% if video_type == 'video' %}
+                                                <video class="swiper-slide__video" 
+                                                autoplay muted controls src="{{ video_url }}"></video>
+                                            {% elsif video_type == 'iframe' %}
+                                                <iframe src="{{ video_url }}" 
+                                                width="640" 
+                                                height="360" 
+                                                frameborder="0" 
+                                                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                                            {% endif %} 
+                                        {% endif %}
+                                        <div class="d-flex flex-column flex-lg-row justify-content-between">
+                                            {% if blockData.caption %}                                            
+                                                <div class="swiper-slide__caption py-3 px-3 col-lg-7 col-xl-8">{{ caption }}</div>
+                                            {% endif %}
+                                            {% if blockData.link_url %}                                            
+                                                <a href="{{ blockData.link_url }}" 
+                                                    class="swiper-slide__link btn btn-primary mx-2 mx-lg-5 mt-md-3 mb-3">{{ blockData.link_text }}</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div><!-- .swiper -->
+                        <div class="swiper-button swiper-button-prev">{% render 'icon-next-white-filled' %}</div>
+                        <div class="swiper-button swiper-button-next">{% render 'icon-next-white-filled' %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+{% endif %}
+
+{% schema %}
+{
+    "name": "Media Gallery",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "anchor_id",
+            "label": "Anchor Link ID"
+        },
+        {
+            "type": "text",
+            "id": "meta_object_handle",
+            "label": "Media Gallery Handle"
+        },
+        {
+            "type": "text",
+            "id": "header",
+            "label": "Enter Section Header"
+        }
+    ],
+
+    "presets": [
+        {
+            "name": "Media Gallery",
+            "settings" : {}
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,73 @@
+{% if section.settings.anchor_id != blank %}
+      <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="section-hero-about" id="aboutHero">
+   <div class = 'col-8 offset-2 mt-2 mb-5'>
+      <h1 class="header-1 text-white">{{ section.settings.title }} <span class="">{{ section.settings.secondtitle }}</span></h1>
+   </div>
+   <div class="hero-about-gallery-holder">
+      <div class="hero-about-gallery">
+         {% for block in section.blocks %}
+               {% case block.type %}
+                  {% when 'galleryImage' %}
+                  <div class="gallery-image-slide" {{ block.shopify_attributes }}>
+                     {{ block.settings.image | image_url: width: 2048 | image_tag }}
+                  </div>
+               {% endcase %}
+         {% endfor %}
+      </div>
+   </div>
+</section>
+
+{% schema %}
+{
+   "name":"About Hero",
+   "tag":"section",
+   "class":"container-fluid px-0",
+   "settings":[
+      {
+            "type": "text",
+            "id": "anchor_id",
+            "label": "Anchor Link ID"
+      },
+      {
+         "type":"text",
+         "id":"title",
+         "label":"Title"
+      },
+      {
+         "type":"text",
+         "id":"secondtitle",
+         "label":"Second Title"
+      }
+   ],
+   "max_blocks":8,
+   "blocks":[
+      {
+         "name":"Gallery Image",
+         "type":"galleryImage",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"image",
+               "label":"Image"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"About Hero",
+         "settings":{
+            "title": "A Great food is born from a commitment to",
+            "secondtitle": "skill & craft"
+         },
+         "blocks":[
+            {
+               "type":"galleryImage"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}

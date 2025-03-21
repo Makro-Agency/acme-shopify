@@ -1,0 +1,51 @@
+{% liquid
+    assign details_on = product.metafields.accentuate.details_on
+    assign related_on = product.metafields.accentuate.related_on
+    assign recommended_on = product.metafields.accentuate.recommended_on
+    assign faqs_on = product.metafields.accentuate.faqs_on
+%}
+
+<div class="container-fluid d-none d-lg-block">
+    <div class="row">
+        <div id="mini-nav" class="mini-nav d-none d-lg-flex flex-column col-lg-1">
+            <a id="mini-nav--overview" class="mini-nav__link header-6 mb-3" href="#mini-nav__overview">Overview</a>
+            
+            {% if details_on != null %}
+                <a id="mini-nav--details" class="mini-nav__link header-6 mb-3" href="#mini-nav__details">Details</a>
+            {% endif %}
+
+            {% if related_on != null %}
+                <a id="mini-nav--recipes" class="mini-nav__link header-6 mb-3" href="#mini-nav__recipes">Related</a>
+            {% endif %}
+
+            {% if product.metafields.accentuate.media_gallery_handle != blank %}
+                <a id="mini-nav--media" class="mini-nav__link header-6 mb-3" href="#mini-nav__media">Media</a>
+            {% endif %}
+
+            <a id="mini-nav--recommended" class="mini-nav__link header-6 mb-3" href="#mini-nav__recommended">Recommended</a>
+
+            <a id="mini-nav--faqs" class="mini-nav__link header-6 mb-3" href="#mini-nav__faqs">FAQs</a>
+            {% if faqs_on != null %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% schema %}
+    {
+        "name": "Mini Nav",
+        "tag": "section",
+        "class": "section mini-nav-sticky",
+        "settings": [],
+        "templates": [
+            "product"
+          ],        
+        "presets": [
+            {
+                "name": "Mini Nav",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}

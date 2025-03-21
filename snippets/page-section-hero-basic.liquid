@@ -1,0 +1,17 @@
+{% include 'settings-set-data' %}
+
+<section class = 'page-section-hero-basic ' 
+{% if background_image != blank %} style="background-image:url( {{ background_image  }})" {% endif %}	 >
+	<div class = 'container   '>
+			<div class = 'col-sm-7 col-md-5' >
+				{% if label != blank %}
+					<h5 class = ''>{{label}}</h5>
+				{% endif %}
+				{% if header != blank %}
+					<h1 class = ''>{{header}}</h1>
+				{% endif %}
+			</div>
+	</div>
+</section>
+
+{% include 'settings-clear-data' %}

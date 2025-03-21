@@ -1,0 +1,158 @@
+<section class="blog-faqs">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col d-flex flex-column align-items-lg-start offset-lg-1 heading">
+        <h1 class="blog-faqs__header header-1">FAQs</h1>
+        <a id="filter-button" role="button" class="btn btn-primary d-lg-none" data-bs-toggle="modal" data-bs-target="#modal-faq-filter">Filters</a>
+        {% comment %} <p class="body-2 ps-1">Filtering By: <span class="filter-name"></span></p> {% endcomment %}
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid bg-blue">
+    <div class="row">
+      <div class="d-none d-lg-block col-lg-3 offset-lg-1">
+        <h2 class="d-none d-lg-block text-white pt-5 filter-header">Filter FAQs</h2>
+        <ul class="faq-categories-filter">
+          {%- for link in linklists.faq-filter.links -%}
+            {% if link.links.size > 0 %}
+              <li class="has-children header-5 mb-5">
+                <a class="has-children--link" 
+                  data-bs-toggle="collapse" 
+                  data-bs-target="#faq-category-{{forloop.index}}" 
+                  role="button" >
+                  {{ link.title }}
+                  {% comment %} {% render 'icon-next' %} {% endcomment %}
+                </a>
+                {% render 'icon-chevron-white' %}
+                <ul class="level-2 collapse my-3" id="faq-category-{{forloop.index}}">
+                  {%- for childLink in link.links -%}
+                    <li class="list-child mb-3">
+                      <a href="{{childLink.url}}" 
+                        target="_self" 
+                        data-filter="{{childLink.title}}"
+                        class="body-2"
+                        >
+                        {{ childLink.title }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </li>
+              {% else %}
+                <li class="header-5 mb-5">
+                  <a href="{{link.url}}" 
+                    target="_self" 
+                    data-filter="{{link.title}}" 
+                    >
+                    {{ link.title }}
+                  </a>
+                </li>
+            {% endif %}
+          {%- endfor -%}
+        </ul>      
+      </div>
+      <div class="col-lg-8 bg-gray-light faq-container">
+        <div class="accordion accordion-flush" id="faq-accordion">
+          {% for article in blog.articles %}
+            <div class="accordion-item"
+              data-tags = "{{article.tags | join : ','}}">
+              <h2 class="accordion-header" id="heading{{forloop.index}}">
+                <button class="accordion-button collapsed" 
+                  type="button" 
+                  data-bs-toggle="collapse" 
+                  data-bs-target="#collapse{{forloop.index}}"
+                  aria-expanded="false" 
+                  aria-controls="collapse{{forloop.index}}">
+                  <h2 class="accordion-button__header col-9 mb-3">{{ article.title }}</h2>
+                  <div class="icon-holder offset-lg-1">
+                      {% render 'icon-next' %}
+                  </div>
+                  <div class="accordion-tags d-flex flex-wrap">
+                    {% comment %} <p class="text-blue header-5 mb-1 me-2">Associated Categories | {% if article.tags == blank %}None{% endif %}</p> {% endcomment %}
+                    {% for tag in article.tags %} 
+                      <p class="tag header-5 mb-2 me-4 me-lg-3">{{ tag }}</p>
+                    {% endfor %}
+                  </div>
+                </button>
+
+                {% comment %} <button class="accordion-button header-2 py-0 ps-0 mb-4 mb-lg-2" 
+                  type="button" 
+                  data-bs-toggle="collapse" 
+                  data-bs-target="#collapse{{forloop.index}}" 
+                  aria-expanded="true" 
+                  aria-controls="collapse{{forloop.index}}">
+                  {{ article.title }}             
+                  <div class="icon-holder">
+                    {% render 'icon-next' %}
+                  </div>
+                </button> {% endcomment %}
+              </h2>
+              <div id="collapse{{forloop.index}}" 
+                class="accordion-collapse collapse {% if forloop.index == 1%}show{% endif %}" aria-labelledby="heading{{forloop.index}}" data-bs-parent="#faq-accordion">
+                <div class="accordion-body rte">
+                  {{ article.content }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div> <!-- row -->
+  </div> <!-- container -->
+
+
+  <!-- Modal -->
+  <div class="modal modal-xl fade modal-filters" 
+  id="modal-faq-filter" 
+  tabindex="-1" 
+  aria-labelledby="{{ article.id }}Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="btn-close dark" data-bs-dismiss="modal" aria-label="Close">{% render 'icon-close-blue' %}</button>
+      <div class="modal-body">
+        <h3 class="filters-header header-1 mb-4">Filter By</h3>
+        <ul class="faq-categories-filter filter-mobile">
+          {%- for link in linklists.faq-filter.links -%}
+            {% if link.links.size > 0 %}
+              <li class="has-children">
+                <a class="header-5 has-children--link" 
+                  data-bs-toggle="collapse" 
+                  data-bs-target="#modal-faq-filter-{{forloop.index}}" 
+                  role="button" >
+                  {{ link.title }}
+                  {% comment %} <div class="icon-holder">
+                    {% render 'icon-next' %}
+                  </div> {% endcomment %}
+                </a>
+                <ul class="level-2 collapse" id="modal-faq-filter-{{forloop.index}}">
+                  {%- for childLink in link.links -%}
+                    <li class="list-child body-2">
+                      <a href="{{childLink.url}}" 
+                        class=""
+                        target="_self" 
+                        data-filter="{{childLink.title}}" >
+                        {{ childLink.title }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </li>
+              {% else %}
+                <li >
+                  <a href="{{link.url}}" 
+                    class="header-5"
+                    target="_self" 
+                    data-filter="{{link.title}}" >
+                    {{ link.title }}
+                  </a>
+                </li>
+            {% endif %}
+          {%- endfor -%}
+        </div>
+      </div>
+     </div>  
+    </div>
+  </div>
+
+</section>

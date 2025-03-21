@@ -1,0 +1,22 @@
+<section class="search-bar bg-gray-light">
+    <div class="container">
+        <div class="row">
+            <h2 class="header-1 text-blue d-none d-lg-block mb-3">Search</h2>
+            <form role="search col-md-8 offset-md-2" action="/search" method="get" class="sub-nav-search ng-pristine ng-valid">
+                <div class="form-group row d-md-flex">
+                    <div class="px-0 me-md-4 col-md-8 col-lg-9">
+                        <label for="{{ 'general.search.placeholder' | t }}">Products, Recipes, Articles, Etc.</label>
+                        <input type="search" id="SearchInput" class="form-control" name="q"
+                            value="{{ search.terms | escape }}"
+                            placeholder="{{ 'general.search.placeholder' | t }}"
+                            aria-label="{{ 'general.search.placeholder' | t }}" />
+                        {% comment %} <input type="hidden" name="type" value="product,article"/> {% endcomment %}
+                        </div>
+                        <div class="col-md-3 col-lg-2 px-0">
+                        <button type="submit" class="btn btn-primary mt-4">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

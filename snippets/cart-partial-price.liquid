@@ -1,0 +1,68 @@
+{%- assign hasDiscount = false -%}
+{%- if item.original_price != item.final_price -%}
+  {%- assign hasDiscount = true -%}
+{%- endif -%}
+
+{%- assign itemDiscounts = 'template ' | split: ' ' -%}
+{%- if item.line_level_discount_allocations != blank -%}
+  {%- assign itemDiscounts = item.line_level_discount_allocations -%}
+{%- endif -%}
+
+
+
+
+<div data-cart-item-price >
+	<div data-cart-item-price-list >
+	  {%- comment -%}
+		Markup template for discount item
+	  {%- endcomment -%}
+	  <div {% unless hasDiscount %}class="d-none" {% endunless %} 
+		data-cart-item-discounted-price-group >
+		  <span class="d-none">{{ 'products.product.price.regular_price' | t }}</span>
+		  <div data-cart-item-original-price >{{ item.original_price | money }}</div>
+		  <span class="d-none">{{ 'products.product.price.sale_price' | t }}</span>
+		  <div class="order-discount" data-cart-item-final-price>{{ item.final_price | money }}</div>
+	  </div>
+
+	  {%- comment -%}
+		Markup template for regular price item
+	  {%- endcomment -%}
+	  <div {% if hasDiscount %}class="d-none" {% endif %}  data-cart-item-regular-price-group>
+		<span class="d-none">{{ 'products.product.price.regular_price' | t }}</span>
+		<div data-cart-item-regular-price>{{ item.original_price | money }}</div>
+	  </div>
+
+	  {%- comment -%}
+		Markup template for unit price
+	  {%- endcomment -%}
+	  <div {% unless item.unit_price_measurement %}class="d-none" {% endunless %} data-unit-price-group>
+		  <span class="d-none">{{ 'products.product.price.unit_price' | t }}</span>
+		  <div class="price-unit-price">
+			{%- capture unit_price_separator -%}
+			  <span aria-hidden="true">/</span><span class="d-none">&nbsp;</span>
+			{%- endcapture -%}
+			{%- capture unit_price_base_unit -%}
+			  {%- if item.unit_price_measurement.reference_value != 1 -%}
+				{{- item.unit_price_measurement.reference_value -}}
+			  {%- endif -%}
+			  {{ item.unit_price_measurement.reference_unit }}
+			{%- endcapture -%}
+
+			<span data-unit-price>{{ item.unit_price | money }}</span>{{- unit_price_separator -}}<span data-unit-price-base-unit>{{- unit_price_base_unit -}}</span>
+		  </div>
+	  </div>
+	</div>
+  </div>
+
+
+  <ul class="order-discount order-discount--list order-discount--title order-discount--cart{% if item.line_level_discount_allocations == blank %} d-none{% endif %}" aria-label="{{ 'customer.order.discount' | t }}" 
+  data-cart-item-discount-list>
+	{%- for discount_allocation in itemDiscounts -%}
+	  <li class="order-discount__item" data-cart-item-discount>
+		<span data-cart-item-discount-title>
+		  {{- discount_allocation.discount_application.title -}}
+		</span> (-<span data-cart-item-discount-amount>{{ discount_allocation.amount | money }}</span>)
+	  </li>
+	{%- endfor -%}
+  </ul>
+

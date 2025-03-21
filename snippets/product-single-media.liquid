@@ -1,0 +1,55 @@
+{% liquid
+  assign id = media.external_id
+  assign host = media.host
+  assign type = media.media_type
+
+  assign top_quality_source = nil
+  assign top_quality_resolution = 0
+
+  assign src = nil
+  assign src_url = nil
+  assign height = nil
+  assign width = nil
+  assign title = nil
+  assign allow = nil
+
+  if type == 'external_video' and host == 'youtube'
+    assign src = 'https://www.youtube.com/embed/' | append: id
+    assign src_url = src
+    assign height = 315
+    assign width = 560
+    assign title = 'YouTube video player'
+    assign allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+  elsif type == 'external_video' and host == 'vimeo'
+    assign src = 'https://player.vimeo.com/video/' | append: id
+    assign src_url = src
+    assign height = 360
+    assign width = 640
+    assign title = 'Vimeo video player'
+    assign allow = 'autoplay; fullscreen; picture-in-picture'
+  endif
+
+  if type == 'video'
+    for source in media.sources
+      assign resolution = source.height | times: source.width
+      if resolution > top_quality_resolution and source.mime_type != 'application/x-mpegURL'
+        assign top_quality_resolution = resolution
+        assign top_quality_source = source
+        assign src_url = source.url
+      endif
+    endfor
+  endif
+%}
+
+<div
+  class="swiper-slide swiper-slide__video d-flex justify-content-center"
+  data-position="{{ index }}"
+>
+  {% if type == 'external_video' %}
+    <iframe width="{{ width }}" height="{{ height }}" src="{{ src }}" title="{{ title }}" frameborder="0" allow="{{ allow }}" allowfullscreen></iframe>
+  {% elsif type == 'video' %}
+    <video controls>
+      <source src="{{ src_url }}" type="{{ top_quality_source.mime_type }}">
+    </video>
+  {% endif %}
+</div>

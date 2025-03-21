@@ -1,0 +1,11 @@
+<div {% unless item.original_line_price != item.final_line_price %}class="d-none" {% endunless %}data-cart-item-discounted-price-group>
+	<span class="d-none">{{ 'cart.labels.regular_total' | t }}</span>
+	<div data-cart-item-original-price>{{ item.original_line_price | money }}</div>
+	<span class="d-none">{{ 'cart.labels.discounted_total' | t }}</span>
+	<div class="order-discount" data-cart-item-final-price>{{ item.final_line_price | money }}</div>
+</div >
+
+<div {% if item.original_line_price != item.final_line_price %}class="d-none" {% endif %}
+	data-cart-item-regular-price-group>
+	<span data-cart-item-regular-price>{{ item.original_line_price | money }}</span>
+</div>

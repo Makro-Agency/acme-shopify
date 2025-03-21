@@ -1,0 +1,12 @@
+{% unless link_url == blank %}
+	{% unless link_theme == blank %}
+		{% assign btn_class = 'theme-' | append : link_theme %}
+	{% endunless %}
+	<a href="{{link_url}}" class="btn {% if btn_class %}{{btn_class}}{%else%} btn-primary {% endif %} " {% if target %}target="{{target}}"{% endif %}>{{link_text}}</a>			
+{% endunless %}
+
+
+{% assign link_url = false %}
+{% assign link_text = false %}
+{% assign link_theme = false %}
+{% assign btn_class = false %}

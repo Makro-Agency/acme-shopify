@@ -1,0 +1,134 @@
+<!---JSON SCHEMA BreadcrumbList--->
+<script type="application/json">
+    {
+        "@context":"http://schema.org",
+        "@type":"BreadcrumbList",
+        "@id":"{{ shop.url }}",
+        "itemListElement":[
+            {
+                "@type":"ListItem",
+                "position":1,
+                "item":{
+                    "@id":"Home",
+                    "url":"{{ shop.url }}",
+                    "name":"Home"
+                }
+            }
+    
+            {% if template contains 'product' %}
+                {% if collection.handle %}
+                    ,
+                        {
+                            "@type":"ListItem",
+                            "position":2,
+                            "item":{
+                                "@id":"{{ collection.title }}",
+                                "url":"{{ shop.url }}{{ collection.handle }}",
+                                "name":"{{ collection.title }}"
+                            }
+                        }
+                {% endif %}
+    
+            {% elsif template == 'blog' %}
+                ,
+                    {
+                        "@type":"ListItem",
+                        "position":2,
+                        "item":{
+                            "@id":"{{ blog.title }}",
+                            "url":"{{ shop.url }}/{{ blog.url }}",
+                            "name":"{{ blog.title }}"
+                        }
+                    }
+    
+            {% elsif template == 'article' %}
+                ,
+                    {
+                        "@type":"ListItem",
+                        "position":2,
+                        "item":{
+                            "@id":"{{ blog.title }}",
+                            "url":"{{ shop.url }}/{{ blog.url }}",
+                            "name":"{{ blog.title }}"
+                        }
+                    }
+    
+            {% elsif template == 'customers/addresses' or template == 'customers/order' %}
+                ,
+                    {
+                        "@type":"ListItem",
+                        "position":2,
+                        "item":{
+                            "@id":"{{ 'customer.account.title' | t }}",
+                            "url":"{{ shop.url }}/account",
+                            "name":"{{ page.title }}"
+                        }
+                    }
+    
+            {% elsif template == 'customers/account' %}
+                ,
+                    {
+                        "@type":"ListItem",
+                        "position":2,
+                        "item":{
+                            "@id":"{{ 'customer.account.title' | t }}",
+                            "url":"{{ shop.url }}/account",
+                            "name":"{{ page.title }}"
+                        }
+                    }
+            {% elsif template contains 'search' %}
+                ,
+                    {
+                        "@type":"ListItem",
+                        "position":2,
+                        "item":{
+                            "@id":"{{ page.title }}",
+                            "url":"{{ shop.url }}/search",
+                            "name":"{{ page.title }}"
+                        }
+                    }
+    
+            {% else %}
+    
+            {% endif %}
+    
+                    {% if template contains 'product' %}
+                            ,
+                                {
+                                    "@type":"ListItem",
+                                    "position":3,
+                                    "item":{
+                                        "@id":"{{ product.title }}",
+                                            "url":"{{ shop.url }}/{{ product.url }}",
+                                            "name":"{{ product.title }}"
+                                    }
+                                }
+                    {% elsif template == 'blog' %}
+                        ,
+                            {
+                                "@type":"ListItem",
+                                "position":3,
+                                "item":{
+                                    "@id":"{{ blog.title }}",
+                                    "url":"{{ shop.url }}/{{ blog.url }}",
+                                    "name":" {{ article.title }}"
+                                }
+                            }
+    
+                    {% elsif template == 'article' %}
+                        ,
+                            {
+                                "@type":"ListItem",
+                                "position":3,
+                                "item":{
+                                    "@id":"{{ article.title }}",
+                                    "url":"{{ shop.url }}/{{ article.url }}",
+                                    "name":"{{ article.title }}"
+                                }
+                            }
+    
+                    {% endif %}
+    
+            ]
+        }
+    </script>

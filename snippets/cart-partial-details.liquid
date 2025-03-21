@@ -1,0 +1,31 @@
+{%- assign variant_options = 'template ' | split: ' ' -%}
+{%- if item.product.has_only_default_variant != true -%}
+  {%- assign variant_options = item.options_with_values -%}
+{%- endif -%}
+{%- assign property_size = item.properties | size -%}
+
+
+<div class="product-details{% if item.product.has_only_default_variant and property_size == 0 %} d-none {% endif %}" 
+	data-cart-item-details >
+	{%- for option in variant_options -%}
+		<span class="product-details__item product-details__item--variant-option{% if item.product.has_only_default_variant %} d-none{% endif %}" 
+			data-cart-item-option><b>{{ option.name }}</b>: {{ option.value }}</span>{% unless forloop.last %}, {% endunless%}
+	{%- endfor -%}
+
+
+
+	{%- assign properties = 'template ' | split: ' ' -%}
+	{%- if property_size > 0 -%}
+		{%- assign properties = item.properties -%}
+	{%- endif -%}
+
+	{%- for p in properties -%}
+		{%- unless p.last == blank or p.first == '_BirdChimeSlotId'-%}
+			<span class="product-details__item product-details__item--property{%if property_size == 0%} d-none{% endif %}" 
+			data-cart-item-property>
+			<span class="product-details__item-label" 
+				data-cart-item-property-name>{{ p.first }}: </span>
+			</span>
+		{%- endunless -%}
+	{%- endfor -%}
+</div>

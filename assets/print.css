@@ -1,0 +1,5 @@
+@media print {
+    #shopify-section-footer, #preview-bar-iframe, .single-recipe .image-wrap__image, .main-header, .single-recipe__lead, .share-this {
+        display: none !important;
+    }
+ }

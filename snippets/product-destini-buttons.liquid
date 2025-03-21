@@ -1,0 +1,50 @@
+{% if settings.find_in_store_provider == 'destini' %}
+<button 
+    type="button" 
+    class="btn btn-destini btn-primary mb-3" 
+    data-bs-toggle="modal" 
+    data-bs-target="#findAStoreModal"
+    data-destini-apo="{{product.metafields.accentuate.destini_apo}}"
+    data-destini-title="{{product.title}}"
+  >Find A Store</button>
+  <button 
+    type="button" 
+    class="btn btn-destini btn-outline-primary" 
+    data-bs-toggle="modal" 
+    data-bs-target="#findAStoreModal"
+    data-destini-apo="{{product.metafields.accentuate.destini_apo}}" 
+    data-destini-title="{{product.title}}"
+  >Order Online</button>
+{%  endif %}
+{%  if settings.find_in_store_provider == 'where_to_buy' %}
+  {% liquid  
+    assign where_to_buy_code = false  
+    if product.metafields.accentuate.where_to_buy_code != blank 
+      assign where_to_buy_code = product.metafields.accentuate.where_to_buy_code
+    endif
+  %}
+  
+  {%  if template == 'collection' %}
+    <a 
+      class="btn  text-white btn-primary mb-3" 
+      href="{{ product.url }}"
+    >View Product</a>
+    {%  if where_to_buy_code != blank  %}
+      <a 
+        class="btn  btn-outline-primary" 
+        href="/pages/where-to-buy/?wbprod={{ where_to_buy_code }}"
+      >Find A Store</a>
+    {% endif %}
+  {%  endif %}
+  {%  if template == 'product' and where_to_buy_code != blank  %}
+    <h4>Purchase Options</h4>
+    <div class="drb_zwdg" data-embed="acmesmokedfish" 
+      data-product="{{where_to_buy_code}}" 
+      data-baseurl="https://wtb.bio/"></div>
+    <script src="https://wtb.bio/zwdg.js"></script>
+{% endif %}
+
+
+
+{% endif %}
+  

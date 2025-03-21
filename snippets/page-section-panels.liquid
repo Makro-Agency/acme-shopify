@@ -1,0 +1,38 @@
+{%  if section.blocks != blank %}
+	{% assign blocks = section.blocks %}
+	{% for block in blocks %}
+		<section class = 'container my-5 section page-section-panels'>
+			<div class="row">
+				<div class="col">
+					{% assign settings = block.settings%}
+					{% include 'block-panel' %}
+				</div>
+			</div>
+		</section>
+	{% endfor %}
+{% endif %}
+
+
+{% if panels != blank %}
+
+	<section class = 'container section page-section-panels'>
+		<div class="row">
+			{% for panel in  panels.header %}	
+				{% assign index = forloop.index | minus :  1 %}
+				{% assign filter_images = false %}
+				{% assign label = panels.label[index] %}
+				{% assign header = panels.header[index] %}
+				{% assign body = panels.body[index] %}
+				{% assign image = panels.image[index] %}
+				{% assign image_2 = panels.image_2[index] %}
+				{% assign link_url = panels.link_url[index] %}
+				{% assign link_text = panels.link_text[index] %}
+				<div class="col">
+					{% include 'block-panel' %}
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+{% endif %}
+
+{% assign columns = false %}

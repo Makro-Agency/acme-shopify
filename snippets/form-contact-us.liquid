@@ -1,0 +1,58 @@
+<div class="contact-form  container">
+	<div class="row">
+	  <div class="col">
+  
+		{%- assign formId = 'ContactForm' -%}
+		{% form 'contact', id: formId %}
+		  {% include 'form-status', form_id: formId %}
+  
+			  <div class = 'form-group form-group--float'>
+				<input type="text" 
+				  id="{{ formId }}-first_name" 
+				  class="form-control"
+				  placeholder="Name"
+				  name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+				  <label for="{{ formId }}-name">{{ 'contact.form.name' | t }}</label>
+			  </div>
+  
+  
+			  <div class = 'form-group form-group--float'>
+				<input
+				  type="email"
+				  id="{{ formId }}-email"
+				  class="form-control"
+				  name="contact[email]"
+				  autocorrect="off"
+				  autocapitalize="off"
+				  placeholder="Email"
+				  value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+				  aria-required="true"
+				  {%- if form.errors contains 'email' -%}
+					class="input--error"
+					aria-invalid="true"
+					aria-describedby="{{ formId }}-email-error"
+				  {%- endif -%}
+				  >
+				  <label for="{{ formId }}-email">{{ 'contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+  
+				<span id="{{ formId}}-email-error" class="input-error-message">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+			  </div>
+  
+			  <div class = 'form-group form-group--float'>
+				<textarea 
+				  rows="10" id="{{ formId }}-message" 
+				  class = 'form-control'
+				  placeholder="Message"
+				  name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+				  <label for="{{ formId }}-message">{{ 'contact.form.message' | t }}</label>
+				</div>
+				<div class="text-center d-block">
+					<button type="submit" class="btn btn-primary">{{ 'contact.form.submit' | t }}</button>
+				</div>
+  
+		{% endform %}
+	  </div>
+  
+	  </div>  
+  </div>
+  

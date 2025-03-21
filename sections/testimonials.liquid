@@ -1,0 +1,156 @@
+{% liquid
+  assign is_dark = true
+  assign btn_class = 'btn-light'
+
+  if section.settings.color == 'light'
+    assign is_dark = false
+    assign btn_class = 'btn-primary'
+  endif
+
+%}
+
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class='page-section-testimonials theme--{{ section.settings.color }}'>
+	<div class='container testimonials-container gx-0'>
+		<div class="swiper swiper-testimonials-body gsap-el mb-0">
+			<div class="swiper-wrapper">
+				{% for block in section.blocks %}
+					{% case block.type %}
+						{% when 'testimonial' %}
+						<div class="swiper-slide px-3" {{ block.shopify_attributes }}>
+							<p class="testimonial-body body-1 mb-4 pb-2">&#8220;{{ block.settings.body }}&#8221;</p>
+							{%- if block.settings.read_more_url != blank %}
+								<a href="{{ block.settings.read_more_url }}" class="read-more header-5 mb-0">View Press</a>
+							{% endif %}
+						</div>
+					{% endcase %}
+				{% endfor %}
+			</div>
+		</div><!-- .swiper -->
+		<div class="swiper swiper-testimonials-logo mt-4 mt-lg-5 gsap-el">
+			<div class="swiper-wrapper">
+				{% for block in section.blocks %}
+					{% case block.type %}
+						{% when 'testimonial' %}
+						<div class="swiper-slide" {{ block.shopify_attributes }}>
+              {% if block.settings.logo_image %}
+                <div class="logo-holder">
+                  <img src="{{ block.settings.logo_image |img_url: '550x' }}" alt="{{ block.settings.logo_image.alt }}" loading="lazy">
+                </div>
+              {% endif %}
+						</div>
+					{% endcase %}
+				{% endfor %}
+			</div>
+		</div>
+		<div class="button-container pt-lg-4 gsap-el">
+			<div class="button-container__inner d-none d-md-flex">
+
+				<button class="swiper-button swiper-button-prev" aria-label="previous">
+          {% if is_dark %}
+            {% render 'icon-next-white' %}
+          {% else %}
+            {% render 'icon-next' %}
+          {% endif %}
+        </button>
+
+				{% if section.settings.button_url != blank %}
+				<a href="{{ section.settings.button_url }}" class="btn {{ btn_class }} d-none d-md-flex" {% if section.settings.external %}target="_blank"{% endif %}>{{ section.settings.button_text }}</a>
+				{% endif %}
+
+				<button class="swiper-button swiper-button-next" aria-label="next">
+          {% if is_dark %}
+            {% render 'icon-next-white' %}
+          {% else %}
+            {% render 'icon-next' %}
+          {% endif %}
+        </button>
+
+			</div> 
+			{% if section.settings.button_url != blank %}
+        <a href="{{ section.settings.button_url }}" class="btn {{btn_class}} mobile d-md-none mt-3" {% if section.settings.external %}target="_blank"{% endif %}>{{ section.settings.button_text }}</a>
+			{% endif %}
+		</div>
+	</div>
+</section> 
+
+
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor Link ID"
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "Color Scheme",
+      "options": [
+          {
+              "value": "dark",
+              "label": "Dark Background"
+          },
+          {
+              "value": "light",
+              "label": "Light Background"
+          }
+        ],
+        "default": "dark"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL",
+      "info": "Leave blank to not show a button."
+    },
+    {
+      "type": "checkbox",
+      "id": "external",
+      "label": "Open Link in New Window",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Testimonial",
+      "type": "testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body Text"
+        },
+        {
+          "type": "url",
+          "id": "read_more_url",
+          "label": "Read More URL",
+          "info": "Leave blank to hide the Read More link."
+        },
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,119 @@
+
+<section class="section-collection-title header-1">
+    <div class="container">
+        <h1 class="mb-3">
+        {% if collection.handle == "all" %}
+          All Products
+        {% else %}
+          {{ collection.title }}
+        {% endif %}
+        </h1>
+    </div>
+</section>
+<div class = 'd-none'>
+{{ collection.all_products_count }}
+</div>
+{% render "filters" filters: section.settings.filters custom_collection: section.settings.custom_collection -%}
+
+<section class='section-product-grid'>
+    <div class='container'>
+        <div class='row d-flex flex-column align-items-center flex-md-row align-items-md-start justify-content-md-between' id="products-container" mx-filter-results>
+            {% paginate collection.products by 500 %}
+                {% for product in collection.products %}
+                    {% unless product.tags contains 'private' or product.tags contains 'Private' or product.tags contains 'PRIVATE' %}
+                        <div
+                            mx-filter-result
+                            class='{% for tag in product.tags %} {{ tag | handleize }}{% endfor %}'
+                            data-product-id="{{ product.id }}" 
+                            data-title="{{ product.title }}" 
+                            data-date="{{ product.created_at }}" 
+                            data-price="{{ product.price }}"
+                            data-index="{{ forloop.index0 }}"
+                        >
+                            {% render 'product-grid-item' product: product %}
+                        </div>
+                    {% endunless %}
+              {% endfor %}
+              </div>
+            {%- if paginate.pages > 1 -%}
+                <div class="page-pagination">
+                    {% render 'pagination' paginate: paginate %}
+                </div>
+            {%- endif -%}
+        {% endpaginate %}
+        {% if collection.products.size == 0 %}
+
+
+        {% endif %}
+    </div> 
+    {% if collection.products.size == 0 %}
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 offset-lg-3 text-center py-5" >
+            <h2>
+                {% if collection.handle == 'fish-friday' %}
+                  <p>{{ 'sections.collection_template.fish_friday_no_matches_html' | t }}</p>
+                  {% else %}
+                  <p>{{ 'sections.collection_template.general_no_matches_html' | t }}</p>
+                {% endif %}
+            </h2>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+</section> 
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "tag": "section",
+  "class": "section-collection-product-grid",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "custom_collection",
+      "label": "Collection",
+      "info": "Leave blank to display the default collection."
+    },
+    {
+      "type": "header",
+      "content": "Sort Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "sortby_featured",
+      "label": "Sort by: Featured",
+      "default": true,
+      "info": "Sorts according to the order the products are listed in the collection."
+    },
+    {
+      "type": "checkbox",
+      "id": "sortby_title_alphabetically",
+      "label": "Sort by: Title Alphabetically",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sortby_price",
+      "label": "Sort by: Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sortby_date_added",
+      "label": "Sort by: Date Added",
+      "default": true
+    }
+  ],
+  "templates": [
+    "collection"
+  ],
+  "presets": [
+    {
+      "name": "Shop Product Grid",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

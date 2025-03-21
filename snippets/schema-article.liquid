@@ -1,0 +1,92 @@
+
+{%  if blog.title == 'Recipes' %}
+    {%  liquid 
+      assign ingredients = article.metafields.recipes.ingredients | replace : '<li>', '' | replace: "</li>", "|"  | strip_html | replace: '["' , '' | replace: '"]' , '' | remove_last : '|' | replace: '\u0026nbsp;' , '' | split: '|' 
+      assign directions = article.metafields.recipes.directions | replace : '<p>', '' | replace: "</p>", "|"  | replace : "&nbsp;" , "" | strip_html | remove_last : '|' | split: '|'
+    %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Recipe",
+      "name": {{ article.title | json }},
+      "headline": {{ article.title | json }},
+      {% if article.image %}
+        {% assign image_size = article.image.width | append: 'x' %}
+        "image": [
+          {{ article | img_url: image_size | prepend: "https:" | json }}
+        ],
+      {% endif %}
+      "author": {
+        "@type": "Person",
+        "name": {{ article.author | json }}
+      },
+      "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      {% if article.excerpt != blank %}
+        "description": {{ article.excerpt | strip_html | json }},
+      {% endif %}
+      "recipeCuisine": "Seafood",
+      "prepTime": "PT{{article.metafields.recipes.prep_time}}M",
+      "cookTime": "PT{{article.metafields.recipes.cook_time}}M",
+      "totalTime": "PT{{article.metafields.recipes.prep_time | plus : article.metafields.recipes.cook_time}}M",
+      "keywords": "{{article.tags | join: ', '}}",
+      "recipeYield": "{{ article.metafields.recipes.servings }} servings",
+      "recipeCategory": "{{ article.tags | join: ', ' }}",
+      "recipeIngredient": {{ ingredients | json }},
+      "recipeInstructions": [
+        {%  for direction in directions  %}
+        {
+          "@type": "HowToStep",
+          "name": "{{direction | split : ' ' | first }}",
+          "text": "{{  direction }}"
+        }{%  if forloop.last == false  %},{%  endif %}
+        {% endfor %}
+      ]
+    }
+    </script>
+
+{%  endif  %}
+{%  if blog.title != 'Recipes' %}
+<script type="application/json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Article",
+      "articleBody": {{ article.content | strip_html | json }},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": {{ shop.url | append: article.url | json }}
+      },
+      "headline": {{ article.title | json }},
+      {% if article.excerpt != blank %}
+        "description": {{ article.excerpt | strip_html | json }},
+      {% endif %}
+      {% if article.image %}
+        {% assign image_size = article.image.width | append: 'x' %}
+        "image": [
+          {{ article | img_url: image_size | prepend: "https:" | json }}
+        ],
+      {% endif %}
+      "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "author": {
+        "@type": "Person",
+        "name": {{ article.author | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        {% if settings.share_image %}
+          {% assign image_size = settings.share_image.width | append: 'x' %}
+          "logo": {
+            "@type": "ImageObject",
+            "height": {{ settings.share_image.height | json }},
+            "url": {{ settings.share_image | img_url: image_size | prepend: "https:" | json }},
+            "width": {{ settings.share_image.width | json }}
+          },
+        {% endif %}
+        "name": {{ shop.name | json }}
+      }
+    }
+    </script>
+  {%  endif  %}

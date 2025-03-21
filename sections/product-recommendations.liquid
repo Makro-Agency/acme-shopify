@@ -1,0 +1,121 @@
+  {% liquid
+    assign product_recommendations = recommendations.products
+    if recommendations.products_count <= section.settings.min_recommendations
+      assign primary_collection = false
+      for collection in product.collections
+          if collection.metafields.collection.primary_collection == true
+              assign primary_collection = collection
+          endif
+      endfor
+      if primary_collection
+        assign product_recommendations = primary_collection.products
+      else
+        assign product_recommendations = section.settings.custom_collection.products
+      endif
+    endif
+    
+  
+  %} 
+
+  <section class="product-section-recommendations {% if template == 'product' %}gsap-mininav{% endif %}">
+    {% if template == 'product' %}
+        <div id="mini-nav__recommended" class="mini-nav__anchor"></div>
+    {% endif %}
+    <div 
+      class="container product-section-recommendations__inner"
+      data-product-id="{{ product.id }}" 
+      data-limit="{{ section.settings.limit }}" 
+      data-minrecommendations="{{ section.settings.min_recommendations }}">
+      <div class="row mb-4 align-items-end row-laptop">
+        <div class="col-12 col-md-8 offset-lg-1 col-lg-5 header-wrap">
+            <h2 class="related-content__header header-1">{{section.settings.header}}</h2>
+        </div>
+        <div class="mt-3 mb-3 col-lg-6 d-lg-flex px-lg-0 align-items-center justify-content-end">
+            {% if section.settings.link_text != blank and section.settings.link_url != blank  %}
+              <a href="{{ section.settings.link_url}}" class="btn btn-primary me-lg-3 me-xl-0">{{section.settings.link_text}}</a>
+            {% endif %}
+            <div class="button-container d-none d-lg-flex align-items-center justify-content-end col-lg-3 mb-lg-0">
+                <div class="swiper-button-prev dark me-3">
+                    {% render 'icon-next' %}
+                </div> 
+                <div class="swiper-button-next dark">
+                    {% render 'icon-next' %}
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+    {% comment %} This block gets replaced dynamically by product-recommendations.js on load {% endcomment %}
+    <div class="swiper-offset container">
+      <div class="offset-lg-1 swiper-laptop">
+        <div class="swiper">
+          <div class="swiper-wrapper row">
+            {%- for recommended_product in product_recommendations limit: section.settings.limit -%}
+              {% if product.id != recommended_product.id %}
+                <div class="swiper-slide">
+                  {% render 'product-grid-item' product: recommended_product recommended:true %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div><!-- .swiper -->
+  </section>
+
+{% schema %}
+{
+  "name": "Product Recommendations",
+  "tag": "section",
+  "templates": [
+    "product"
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "You May Also Like..."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "Shop All Products"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Button URL",
+      "default" : "/collections/all"
+    },
+    {
+      "type": "collection",
+      "id": "custom_collection",
+      "label": "Fallback Collection",
+      "info": "If the Shopify algorithm returns too few results, it will show products from this collection."
+    },
+    {
+      "type": "number",
+      "id": "limit",
+      "label": "Max Recommendations",
+      "default": 8
+    },
+    {
+      "type": "number",
+      "id": "min_recommendations",
+      "label": "Min Before Fallback",
+      "default": 3,
+      "info": "Point at which the fallback collection is used."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Recommendations",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,62 @@
+<div class="single-recipe__featured-products">
+    {% liquid
+        capture products_array
+            for item in article.metafields.accentuate.related_products
+                echo item
+            endfor
+        endcapture
+
+        assign featured_products = products_array | split: "|"
+    %}
+        {% if featured_products.size > 0 %}
+            <h2 class="header">Featured Products</h2>
+        {% endif %}
+        {% for feature in featured_products %}
+            {% liquid
+            assign featured_product = all_products[feature] 
+
+            assign productFilter = linklists.product-filter.links
+            for productFilterItem in productFilter
+                if productFilterItem.title == 'Product Category'
+                assign first = true
+                capture featured_product_categories
+                    for child_link in productFilterItem.links
+                        if featured_product.tags contains child_link.title
+                            if first == false
+                                echo ", "
+                            else
+                                assign first = false
+                            endif
+                            echo child_link.title
+                        endif
+                    endfor
+                endcapture
+                endif
+            endfor
+
+            assign first_variant = true
+            capture featured_product_variants
+                if featured_product.variants.size > 1
+                    for variant in featured_product.variants
+                        if first_variant == false
+                            echo ", "
+                        else
+                            assign first_variant = false
+                        endif
+                        echo variant.title
+                    endfor
+                endif
+            endcapture
+            %}
+        <a href="{{ featured_product.url }}" class="featured-product">
+            <div class="image-holder">
+                {{ featured_product | image_url: width: 200 | image_tag }}
+            </div>
+            <div class="content-holder">
+                <h3 class="body-1 featured-product-title">{{ featured_product.title }}</h3>
+                <p class="header-5 featured-product-category">{{ featured_product_categories }}</p>
+                <p class="header-5 featured-product-variants">{{ featured_product_variants }}</p>
+            </div>
+        </a>
+    {% endfor %}
+</div>

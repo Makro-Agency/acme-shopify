@@ -1,0 +1,119 @@
+{% liquid
+  assign custom_featured_image = product.metafields.product.custom_featured_image
+  assign has_video = false
+  
+  for media in product.media
+    assign type = media.media_type
+    if type == 'external_video' or type == 'video'
+      assign has_video = true
+      break
+    endif
+  endfor
+%}
+
+<div class="product-single__images pt-lg-2">
+  <div class="swiper-container swiper-product-main">
+    <div class="swiper-wrapper">
+      {% if custom_featured_image %}
+        <div
+          class="swiper-slide d-flex justify-content-center"
+          data-position="0"
+        >
+          <img
+            class="swiper-slide__image"
+            src="{{ custom_featured_image | img_url: '700x' }}"
+            {% if image.alt %}
+              alt="{{ image.alt }}"
+            {% else %}
+              alt="Acme Smoked Fish"
+            {% endif %}
+            loading="lazy"
+          >
+        </div>
+      {% endif %}
+
+      {% for image in product.images %}
+        <div
+          class="swiper-slide d-flex justify-content-center"
+          data-original="{{ image | img_url: '1024' , scale:2 }}"
+          {%- if image.attached_to_variant? == true -%}
+            data-variant-ids="{%- for variant in image.variants -%}{{ variant.id }}{% unless forloop.last %},{% endunless -%}{%- endfor -%}"
+          {%- endif -%}
+          data-position="{%- if custom_featured_image -%}{{ forloop.index0 | plus : 1 }}{% else %}{{ forloop.index0 }}{%- endif -%}"
+        >
+          <img
+            class="swiper-slide__image"
+            src="{{ image | img_url: '700x' }}"
+            {% if image.alt %}
+              alt="{{ image.alt }}"
+            {% else %}
+              alt="Acme Smoked Fish"
+            {% endif %}
+            loading="lazy"
+          >
+        </div>
+      {% endfor %}
+
+      {% for media in product.media %}
+        {% assign type =  media.media_type %}
+        {% if type == 'external_video' or type == 'video' %}
+          {% render 'product-single-media', media: media, index: forloop.index0 %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if product.images.size > 1 %}
+    <div class="thumbs-wrap d-flex justify-content-between align-items-center mt-4 pt-lg-4 col-lg-10 offset-lg-1">
+      <div class="swiper-button-prev">{% render 'icon-next' %}</div>
+      <div class="swiper-container swiper-product-thumbs" data-num-slides="{{ product.images | size }}">
+        <div class="swiper-wrapper">
+          {% if custom_featured_image %}
+            <div class="swiper-slide">
+              <img
+                class="swiper-slide__image custom"
+                src="{{ custom_featured_image | img_url: '150x' }}"
+                {% if image.alt %}
+                  alt="{{ image.alt }}"
+                {% else %}
+                  alt="Acme Smoked Fish"
+                {% endif %}
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+
+          {% for image in product.images %}
+            <div class="swiper-slide">
+              <img
+                class="swiper-slide__image"
+                src="{{ image | img_url: '150x' }}"
+                {% if image.alt %}
+                  alt="{{ image.alt }}"
+                {% else %}
+                  alt="Acme Smoked Fish"
+                {% endif %}
+                loading="lazy"
+              >
+            </div>
+          {% endfor %}
+
+          {% for media in product.media %}
+            {% assign type = media.media_type %}
+
+            {% if type == 'external_video' or type == 'video' %}
+              <div class="swiper-slide">
+                <img
+                  class="swiper-slide__image"
+                  src="{{ media.preview_image | img_url: '150x' }}"
+                  alt="{{ media.preview_image.alt | default: media.title }}"
+                >
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="swiper-button-next">{% render 'icon-next' %}</div>
+    </div>
+  {% endif %}
+</div>

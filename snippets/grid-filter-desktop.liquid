@@ -1,0 +1,44 @@
+{% for link in filterMenu %}
+    {% assign url = link.url | remove_first :'#' %}
+    <div
+      class="btn-group dropdown {{url}}-filter"
+      role="group"
+      mx-filter-group="{{link.title}}"
+      data-group='{{url}}'>
+      <button
+        class="btn btn-filter dropdown-toggle"
+        type="button"
+        id="filterButton-{{url}}"
+        data-bs-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false">
+        {{ link.title }}
+      </button>
+
+      <ul class="dropdown-menu" aria-labelledby="filterButton-{{url}}">
+        {% for child_link in link.links %}
+            {% if all_tags contains child_link.title %}
+                {% liquid
+                    assign child_url = child_link.url | remove_first : '#' 
+                    assign full_url = url | append : '_' | append : child_url 
+                %}
+                <li
+                class="dropdown-item checkbox-row "
+                mx-filter-toggle
+                data-group="{{ url }}"
+                data-filter="{{ child_url }}"
+                data-filter-without-group="{{ child_url }}">
+                    <label for="{{full_url}}-filter-checkbox-desktop">
+                        <input
+                        type="checkbox"
+                        id="{{full_url}}-filter-checkbox-desktop"
+                        name="{{full_url}}"
+                        data-filter="{{full_url}} ">
+                        <span>{{ child_link.title }}</span>
+                    </label>
+                </li>
+            {% endif %}
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endfor -%}

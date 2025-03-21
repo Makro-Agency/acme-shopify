@@ -1,0 +1,85 @@
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="testimonial-image">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 testimonial-image__content-wrap px-0">
+                {% if section.settings.image_full %}
+                    <picture>
+                        <img class="image_full img-fluid" src="{{ section.settings.image_full | img_url: 'master' }}" {% if section.settings.image_full.alt %} alt="{{ section.settings.image_full.alt }}" {% else %} alt="Acme Smoked Fish" {% endif %} loading="lazy">
+                    </picture>
+                {% endif %}
+                <div class="testimonial-block">
+                    <div class="testimonial-block__text-wrap d-lg-flex flex-column align-items-end">
+                        {% if section.settings.body %}
+                            <h2 class="testimonial-block__body body-1">{{ section.settings.body }}</h2>
+                        {% endif  %}
+                        {% if section.settings.author %}
+                            <p class="testimonial-block__author header-5 mb-2">{{ section.settings.author }}</p>
+                        {% endif  %}
+                        {% if section.settings.byline %}
+                            <p class="testimonial-block__byline body-2 mb-0">{{ section.settings.byline }}</p>
+                        {% endif  %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+    {
+        "name": "Testimonial Image Section",
+        "tag": "section",
+        "class": "section",
+        "settings": [
+            {
+                "type": "text",
+                "id": "anchor_id",
+                "label": "Anchor Link ID"
+            },
+            {
+                "type": "richtext",
+                "id": "header",
+                "label": "Header Text"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_full",
+                "label": "Full Bleed Image"
+            },
+            {
+                "type": "richtext",
+                "id": "body",
+                "label": "Body Text"
+            },
+            {
+                "type": "text",
+                "id": "author",
+                "label": "Author"
+            },
+            {
+                "type": "text",
+                "id": "byline",
+                "label": "Byline"
+            },
+            {
+                "type": "text",
+                "id": "cta",
+                "label": "CTA Text"
+            },
+            {
+                "type": "url",
+                "id": "url",
+                "label": "URL Link"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Testimonial Image Section",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}

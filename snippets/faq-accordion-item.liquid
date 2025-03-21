@@ -1,0 +1,22 @@
+<div class="accordion-item" >
+    <header class="accordion-header" 
+        id="faqsAccordionHeading{{ index }}">
+        <button class="accordion-button collapsed" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#faqsAccordionCollapse{{ index }}" 
+            aria-expanded="false" 
+            aria-controls="faqsAccordionCollapse{{ index }}">
+            <h2 class="accordion-button__header col-9">{{ title }}</h2>
+            <div class="icon-holder offset-lg-1">
+                {% render 'icon-next' %}
+            </div>
+        </button>
+    </header>
+    <div id="faqsAccordionCollapse{{ index }}" 
+        class="accordion-collapse collapse" 
+        aria-labelledby="faqsAccordionHeading{{ index }}" 
+        data-bs-parent="#faqsAccordion">
+        <div class="accordion-body rte col-md-11 col-lg-10">{{ content }}</div>
+    </div>
+</div>

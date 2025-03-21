@@ -1,0 +1,125 @@
+{% if section.settings.anchor_id != blank %}
+  <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="product-callout-slider">
+  <div class="swiper swiper-product-callout container">
+    <div class="swiper-wrapper row">
+      {% for block in section.blocks %}
+        {% assign product = block.settings.product %}
+        {% assign hover_image = product.metafields.product.hover_image %}
+        <div class="swiper-slide col-md-4">
+          <div class="card-basic">
+            <a class="" href="{{ product.url }}" aria-label="{{ product.title }}">
+              <div class="image-wrap">
+                <picture>
+                  <source media="(min-width: 992px)" srcset="{{ product.media[0] | img_url: '600x' }}">
+                  <img
+                    class="swiper-slide__image-static"
+                    src="{{ product.media[0] | img_url: '400x' }}"
+                    {% if product.media[0].alt %}
+                      alt="{{ product.media[0].alt }}"
+                    {% else %}
+                      alt="Acme Smoked Fish"
+                    {% endif %}
+                    loading="lazy"
+                  >
+                </picture>
+                {% if hover_image %}
+                  <img
+                    class="image-hover d-none d-lg-block"
+                    src="{{ hover_image | img_url : '700x' }}"
+                    {% if image.alt %}
+                      alt="{{ image.alt }}"
+                    {% else %}
+                      alt="Acme Smoked Fish"
+                    {% endif %}
+                    loading="lazy"
+                  >
+                {% elsif product.media[1] %}
+                  <picture>
+                    <img
+                      class="image-hover d-none d-lg-block"
+                      src="{{ product.media[1] | img_url: '700x' }}"
+                      {% if product.media[1].alt %}
+                        alt="{{ product.media[1].alt }}"
+                      {% else %}
+                        alt="Acme Smoked Fish"
+                      {% endif %}
+                      loading="lazy"
+                    >
+                  </picture>
+                {% endif %}
+              </div>
+              <h2 class="card-basic__header ">{{ product.title }}</h2>
+
+              {%- capture tags_array -%}
+                                {%- for tag in product.tags -%}
+                                    {{ tag }}|
+                                {%- endfor -%}
+                            {%- endcapture -%}
+              {%- assign tags = tags_array | split: '|' | uniq -%}
+
+              {%- for link in linklists['product-filter'].links -%}
+                {% if link.title == 'Product Category' %}
+                  {% for childLink in link.links %}
+                    {% for tag in tags %}
+                      {% if childLink.title == tag %}
+                        <h3 class="card-basic__sub-header">{{ childLink.title }}</h3>
+                      {% endif %}
+                    {% endfor %}
+                  {% endfor %}
+                {% endif %}
+              {%- endfor -%}
+
+              {% if block.settings.variant %}
+                <h3 class="header-4 card-basic__sub-header_2">{{ block.settings.variant }}</h3>
+              {% endif %}
+            </a>
+          </div>
+          {% comment %} <a class="btn btn-primary mt-2" href="{{ product.url }}">{% if block.settings.link_label %}{{ block.settings.link_label }}{% else %}Learn more{% endif %}</a> {% endcomment %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- .swiper -->
+</section>
+
+{% schema %}
+{
+  "name": "Product Callout Slider",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor Link ID"
+    }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Choose a Product"
+        },
+        {
+          "type": "text",
+          "id": "variant",
+          "label": "Add Subheader Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Callout Slider",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

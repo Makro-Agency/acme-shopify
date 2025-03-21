@@ -1,0 +1,16 @@
+{% assign product_item = product %}
+{% assign on_sale = false %}
+{% assign sold_out = false %}
+
+{% if product.compare_at_price > product.price  or product.compare_at_price_max > 0 %} {% assign on_sale = true  %}{% endif %}
+{% if product.available == false   %}{% assign sold_out = true  %}{% endif %}
+
+{% capture product_flags %}{% if on_sale %} flag-on-sale {% endif %} {% if sold_out %} flag-out-of-stock {% endif %}{% endcapture %}
+
+{% assign product_price = product.price %}
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign product_display_title = product.title %}
+{% if product.metafields.display.title != blank %}
+	{% assign product_display_title = product.metafields.display.title %}
+{% endif %}

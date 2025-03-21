@@ -1,0 +1,27 @@
+{% layout none %}
+{% liquid
+    assign get_count = false
+    if canonical_url contains "handle="
+      assign parts = canonical_url | split : 'handle='
+      assign handle = parts[1] | replace : '%2f' : '/'
+    endif
+    if canonical_url contains "get-count"
+      assign get_count = true
+    endif
+%}
+
+{% if get_count %}
+  {{ blog.articles.size }} Recipe{% if blog.articles.size > 1 %}s{% endif %}
+{% endif %}
+
+{% unless get_count %}
+  {% paginate blog.articles by 8 %}
+    {% for article in blog.articles %}
+      {% unless article.handle == handle %}
+        <div class="swiper-slide">
+          {% render 'article-grid-item' article:article %}
+        </div>
+      {% endunless %}
+    {% endfor %}
+  {% endpaginate %}  
+{% endunless %}

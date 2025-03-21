@@ -1,0 +1,74 @@
+<section class="page-content" id="{{section.settings.section_id | default : section.id }}">
+
+<div class="container page-section-page-title basic-page rte">
+    <div class="row">
+        <div class="content {{section.settings.section_width}} {{section.settings.section_offset}}">
+            {{ page.content }}
+        </div>
+    </div>
+</div>
+      
+</section>
+
+{% schema %}
+    {
+        "name": "Page Content",
+        "settings": [
+            {
+                "type": "text",
+                "id": "section_id",
+                "label": "Section ID",
+                "info" : "Enter a url friendly id to link directly to this section."
+            },
+            {
+                "type": "select",
+                "id": "section_width",
+                "label": "Section Width",
+                "default": "col-lg-10",
+                "info" : "Choose the width for the section",
+                "options": [
+                    {
+                        "value": "col-lg-8",
+                        "label": "Narrow"
+                    },
+                    {
+                        "value": "col-lg-10",
+                        "label": "Normal"
+                    },
+                    {
+                        "value": "col-12",
+                        "label": "Full Width"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "section_offset",
+                "label": "Section Offset",
+                "default": "none",
+                "info" : "Choose the offset for the section",
+                "options": [
+                    {
+                        "value": "none",
+                        "label": "None"
+                    },
+                    {
+                        "value": "offset-lg-1",
+                        "label": "8%"
+                    },
+                    {
+                        "value": "offset-lg-2",
+                        "label": "16%"
+                    }
+                ]
+            }
+
+        ],
+        "presets": [
+            {
+                "name": "Page Content",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}

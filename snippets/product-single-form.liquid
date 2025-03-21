@@ -1,0 +1,123 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% capture "form_classes" -%}
+product-add-form product-form product-form-{{ product.id }}
+{%- unless true %} product-form--hide-variant-labels {% endunless %}
+{%- if false and product.has_only_default_variant %} product-form--payment-button-no-variants {%- endif -%}
+{%- if current_variant.available == false %} product-form--variant-sold-out {%- endif -%}
+{%- endcapture %}
+{% if available_online != true %}
+	{% assign available_online = false %}
+{% endif %}
+
+	<div class = 'product-form {{available_online}}' sh-product-form data-product-id="{{product.id}}">
+		{% form 'product', product, class:form_classes, novalidate: 'novalidate', data-product-form: '' %}
+		
+		<!-- Single Variant -->
+		{% if product.has_only_default_variant %}
+		<input name='id' value="{{current_variant.id}}" type='hidden' />
+		{% endif %}
+		<!-- // Single Variant -->
+
+		
+		{% if product.has_only_default_variant or product.variants.size == 1 %}
+			<div class="product-single__single-variant">
+				{% unless current_variant.title == "Default Title" %}
+					{% comment %} <h4 class="card-basic__sub-header_2">{{ current_variant.title }}</h4> {% endcomment %}
+					<div class="swatch swatch-element-container mb-3">
+							<div class="btn-swatch swatch-element mb-2 {% if current_variant.available %}available{% else %}soldout{% endif %}">
+							<input id="swatch-{{current_variant.id}}" type="radio" checked  {% unless current_variant.available %}disabled{% endunless %} />
+							<label for="swatch-{{current_variant.id}}"> {{ current_variant.title }} </label>
+							</div>
+					</div>
+				{% endunless %}
+				{% render 'product-price', variant: current_variant, show_vendor: false  available_online:available_online %}
+				<input type = 'hidden' name="id" value="{{current_variant.id}}" />
+			</div>
+		{% endif %}
+		{% if current_variant.sku != blank  %}
+			<h2 class="header-5 pt-2">SKU : {{current_variant.sku}}</h2>
+		{% endif %}
+		{% if product.variants.size > 1  %}
+			<div class="product-single__multiple-variants">
+				{% render 'product-price', variant: current_variant, show_vendor: false available_online:available_online  %}
+				<!-- Multiple Variants or options -->
+					<div class="form-group">
+						<select name="id"
+							data-productid="{{product.id}}"
+							sh-option-select
+							id="product-select-{{ product.id }}" class=" form-control product-form__variants no-js ">
+							{% for variant in product.variants %}
+							<option value="{{ variant.id }}"
+								{%- if variant == current_variant %} selected="selected" {%- endif -%} >
+								{{ variant.title }}  {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+							</option>
+							{% endfor %}
+						</select>
+					</div>
+				<!-- // multiple variants  -->
+				<!-- swatch Options -->
+				{% for option in product.options %}
+					<div class="row product-form-row">
+						<div class="col">
+						<span class = 'swatch-container-label'>Select a {{option}}</span>
+						{% render 'swatch' with option as swatch %}
+						</div>
+					</div>
+				{% endfor %}
+				<!-- // swatch Options -->
+
+			</div>
+
+		{% endif %}
+
+		<div class="product-form__footer mt-1 mt-xl-4 pt-xl-2 d-xl-flex align-items-center">
+			<div sh-quantity-component data-min-value="1" class="{% if available_online == false %} d-none {% endif %}">
+				<div class="product-qty-title visually-hidden"><span class="option-title header-5 text-blue">Quantity</span></div>
+				<div class="product-qty mb-4 mt-4 mb-xl-0 mt-xl-0">
+					<a class="qty-dec clickable" 
+						data-quantity-dec 
+						aria-label="Decrease Quantity"
+						href="#"
+					><span class="icon-minus">-</span></a>
+					<input class="qty-input"type="text" id="Quantity-{{ product.id }}"
+						name="quantity" value="1" min="1" pattern="[0-9]*"
+						title="Qty" min="0" data-quantity-input 
+						{% if available_online == false  %} aria-disabled="true"{% endif %}>
+					
+					<a class="qty-inc clickable" 
+						data-quantity-inc
+						aria-label="Increase Quantity"
+						href="#"  
+					><span class="icon-plus">+</span></a>
+				</div><!-- .product-qty -->
+			</div>
+			<div class="product-form__item product-form__item--submit pt-2 pt-xl-0 ms-xl-4
+				{% if available_online == false %} d-none {% endif %}
+				{%- if product.has_only_default_variant %} product-form__item--no-variants {%- endif -%}" >
+				<button type="submit" name="add" class="btn btn-primary me-1"
+				{% unless current_variant.available %} aria-disabled="true"{% endunless %}
+				{% if available_online == false  %} aria-disabled="true"{% endif %}
+				aria-label="{% unless current_variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
+				sh-add-to-cart data-product-id="{{product.id}}">
+				<span class = 'fa fa-spin fa-refresh d-none'></span>
+				<span sh-add-to-cart-text>
+					{% unless current_variant.available %}
+					{{ 'products.product.sold_out' | t }}
+					{% else %}
+					{{ 'products.product.buy_now' | t }}
+					{% endunless %}
+				</span>
+				<span class="d-none" data-loader></span>
+				</button>
+				<a role="button" class="btn-fish-calc btn btn-secondary d-xl-none" data-bs-toggle="modal" data-bs-target="#fishCalculatorModal">How Much to Buy?</a>
+			</div>
+		</div>
+
+
+	{% render 'product-json' product:product %}
+	
+	{% endform %}            
+</div>
+
+
+

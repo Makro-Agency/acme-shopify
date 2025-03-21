@@ -1,0 +1,23 @@
+
+<div class="nav-cart {{ classes}} {% if cart.item_count == 0 %} empty{% endif %}" 		
+		sh-nav-cart 
+		href="/cart/"  
+		 >
+		{% if template.name == 'product' or template.name == 'collection' %}
+			{% render 'icon-cart-blue' %}
+		{% else %}
+			{% render 'icon-cart-white' %}
+		{% endif %}
+	<a class ='clickable' 
+		tabindex="0"
+		href="/cart/" 
+		{% comment %} sh-cart-drawer-trigger {% endcomment %}
+		aria-label="My Cart Button">
+		<span class="icon-cart fa fa-shopping-cart d-none"></span>
+		<span class="fa fa-spin fa-refresh d-none" data-loading></span>
+		<span 
+			class = 'cart-count count' 
+			sh-cart-count > {%- if cart.item_count > 0  -%}{{cart.item_count}}{%- endif -%}</span>
+	</a>
+</div><!-- .nav-cart -->
+

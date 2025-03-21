@@ -1,0 +1,440 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "blank": {
+      "type": "blank",
+      "settings": {}
+    },
+    "b679157f-00bd-44e2-8dfa-7289b5c77ddb": {
+      "type": "media-hero",
+      "settings": {
+        "anchor_id": "overview",
+        "color": "light",
+        "alignment": "left",
+        "header": "Giving Back",
+        "sub_header": "<p>Together, we’re stepping up to become a part of the solution. Join us in supporting climate-conscious solutions, industry innovation, and education through the Acme Smoked Fish Foundation. </p>",
+        "link_label": "Donate",
+        "link_url": "https://acmesmokedfish.co/3Nv8ZrK",
+        "external": true,
+        "image": "shopify://shop_images/AllCaslows_0274.png",
+        "background_video_url": ""
+      }
+    },
+    "287062f4-86fd-4d86-a850-e506d76f1a14": {
+      "type": "basic-card-swiper",
+      "blocks": {
+        "6bc6b070-4a19-4722-ba8e-4003dc084eb2": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/2_-_ALFA1.png",
+            "header": "U.S.",
+            "sub_header": "",
+            "sub_header_2": "",
+            "body": "In North America, innovative thinkers can make waves on both coasts and beyond. With SICA, we’re here to support them.",
+            "url": "https://acmesmokedfish.myshopify.com/pages/seafood-and-climate-initiatives"
+          }
+        },
+        "5adcd861-89e0-4158-b992-37e99b56ec9a": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/20191216_132036408_iOS2.png",
+            "header": "Chile",
+            "sub_header": "",
+            "sub_header_2": "",
+            "body": "With SICA Chile, we’re funding the global charge for a sustainable future and innovative fish farming practices.",
+            "url": "https://premioacme.cl/"
+          }
+        },
+        "52aa65b7-607a-4717-997d-b00fc0c0be86": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/smoked-salmon-for-the-planet.png",
+            "header": "1% for the Planet",
+            "sub_header": "",
+            "sub_header_2": "",
+            "body": "By donating 1% of our proceeds to climate initiatives, we’re putting our money where our mouth is.",
+            "url": "shopify://pages/1-for-the-planet"
+          }
+        }
+      },
+      "block_order": [
+        "6bc6b070-4a19-4722-ba8e-4003dc084eb2",
+        "5adcd861-89e0-4158-b992-37e99b56ec9a",
+        "52aa65b7-607a-4717-997d-b00fc0c0be86"
+      ],
+      "settings": {
+        "anchor_id": "climate",
+        "color": "light",
+        "layout": "swiper",
+        "column_width": "col-lg-4",
+        "header": "Climate Initiatives in Action",
+        "body": "By funding innovation through the Seafood Industry Climate Awards and donating 1% of our proceeds to climate initiatives, we’re investing in the longevity of our industry and our planet.",
+        "link_label": "Learn More",
+        "link_url": "shopify://pages/seafood-and-climate-initiatives",
+        "external": false
+      }
+    },
+    "e4a37df4-e43f-4915-bc62-fae2fdf91ed6": {
+      "type": "header-content",
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "",
+        "header": "Seafood Industry Climate Award",
+        "subheader": "<p>The Seafood Industry Climate Award is the Foundation’s signature program with a singular purpose: to identify the most promising solutions that will lower the carbon footprint of the seafood industry and increase the leadership role of women and minority communities. Awards are made in North America and Chile.</p><p>The second annual North America Award application is now open and looking for three entries eligible for individual $70,000 grants. Click here for details and application. </p>",
+        "cta": "Learn More",
+        "url": "https://acmesmokedfish.myshopify.com/pages/seafood-and-climate-initiatives",
+        "external": false
+      }
+    },
+    "e5b4c524-cb7e-41c4-b72b-231aa272dee1": {
+      "type": "basic-card-swiper",
+      "blocks": {
+        "dd1b963e-d202-4608-9992-12008e9b78eb": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/Capture.png",
+            "header": "Denmark",
+            "sub_header": "Ukraine",
+            "sub_header_2": "",
+            "body": "To show up for our friends in Ukraine, we’re donating funds to help resettle displaced families.",
+            "url": ""
+          }
+        },
+        "533a16e9-4873-4e1d-b0b4-deeeab1b3ec8": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/Acme_2022_Sustainability_Report_-_Photos_-_20230202_Brooklyn_761.png",
+            "header": "U.S",
+            "sub_header": "",
+            "sub_header_2": "",
+            "body": "With scholarships for employee dependents and industry grants, we’re fulfilling dreams throughout the States.",
+            "url": ""
+          }
+        },
+        "8e5326ce-7e2a-4967-a827-31c2103853fe": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/AcmeChileFacilityFoto_5_caf15cf1-b5ad-43da-8005-96fa240977c3.jpg",
+            "header": "Chile",
+            "sub_header": "",
+            "sub_header_2": "",
+            "body": "From neighborhood schools to innovative local startups, we’re proud to support our Chilean community.",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "dd1b963e-d202-4608-9992-12008e9b78eb",
+        "533a16e9-4873-4e1d-b0b4-deeeab1b3ec8",
+        "8e5326ce-7e2a-4967-a827-31c2103853fe"
+      ],
+      "settings": {
+        "anchor_id": "education-fund",
+        "color": "light",
+        "layout": "swiper",
+        "column_width": "col-lg-3",
+        "header": "Investing in Education",
+        "body": "Through signature grants and scholarship programs, we celebrate innovators, ignite new passions, and empower individuals to craft a more promising future.",
+        "link_label": "Learn More",
+        "link_url": "shopify://pages/scholarships",
+        "external": false
+      }
+    },
+    "094a91b0-55e4-4ac2-a470-9ce833b3d508": {
+      "type": "header-content",
+      "settings": {
+        "anchor_id": "origin",
+        "color": "light",
+        "lead": "Honoring Eric Caslow",
+        "header": "History of Acme Smoked Fish Foundation",
+        "subheader": "<p>The Eric Caslow Innovation Fund honors Eric Caslow’s unyielding dedication to the seafood industry. Remembered for his tireless commitment to the Acme community, Eric is dearly missed by colleagues, friends, and family. But as with every bold idea and innovator, his inspiring spirit continues to make waves.</p>",
+        "cta": "Donate",
+        "url": "",
+        "external": false
+      }
+    },
+    "0820e8d8-2d91-4773-85d3-f4d2d449ac27": {
+      "type": "two-column-swiper",
+      "blocks": {
+        "a487667e-28bb-4478-bfb8-9c44d0ae5d3c": {
+          "type": "Slide",
+          "settings": {
+            "anchor_id": "",
+            "label": "",
+            "header": "",
+            "title": "",
+            "sub_title": "",
+            "image": "shopify://shop_images/Portraits-2011-Eric_Caslow-Small.jpg",
+            "image_size": "cover",
+            "body": "",
+            "link_url": "https://acmesmokedfish.co/3Nv8ZrK",
+            "external": true,
+            "link_label": "Donate"
+          }
+        }
+      },
+      "block_order": [
+        "a487667e-28bb-4478-bfb8-9c44d0ae5d3c"
+      ],
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "layout": "swiper",
+        "image_position": "left"
+      }
+    },
+    "a26e3143-3ec5-43e6-aa61-b0bc4dba1701": {
+      "type": "header-content",
+      "settings": {
+        "anchor_id": "partners",
+        "color": "light",
+        "lead": "",
+        "header": "Our Partners",
+        "subheader": "<p>Taking care of our oceans, our people, and our planet is a group effort—made possible through the generosity of pioneering philanthropists and corporate partners.</p><ul><li>Acme Smoked Fish Foundation</li><li>Buckhead Capital Corp.</li><li>Builder's Initiative</li><li>Cole Scholtz P.C.</li><li>Eastern Quality Foods</li><li>Feature Foods International, Inc.</li><li>Mark Brownstein</li><li>Northside Packaging</li><li>Rampart Insurance Services</li><li>TD Bank</li></ul>",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "7d80c079-c061-4d6a-b8de-8bebe68177f3": {
+      "type": "image-text-panels",
+      "blocks": {
+        "e6265615-5de0-43d3-bc02-224bda514c1b": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "ACME SMOKED FISH FOUNDATION",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "9a262ebc-63f5-4d62-b97c-23da378c4b5e": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "BUCKHEAD CAPITAL CORP.",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "9bb6e225-3dca-446e-9c39-67df9dd48254": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "COLE SCHOLTZ P.C.",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "6da2a079-2488-4458-b846-37f7d4a6bdfd": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "EASTERN QUALITY FOODS",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "e63d14db-9b76-40f8-bbd9-d63fe970f4ff": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "FEATURE FOODS INTERNATIONAL, INC.",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "081b2612-ad4b-4e0a-9ebd-6ab5f3f6f1c8": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "MARK BROWNSTEIN",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "86858315-a2f1-4d25-85f2-8857675af45e": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "NORTHSIDE PACKAGING",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "c114bf70-0d41-48fb-9f6b-215ce6dd9af4": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "RAMPART INSURANCE SERVICES",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "3df571dc-9735-4589-b1a4-7d3a694fe5ca": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "header": "TD BANK",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        }
+      },
+      "block_order": [
+        "e6265615-5de0-43d3-bc02-224bda514c1b",
+        "9a262ebc-63f5-4d62-b97c-23da378c4b5e",
+        "9bb6e225-3dca-446e-9c39-67df9dd48254",
+        "6da2a079-2488-4458-b846-37f7d4a6bdfd",
+        "e63d14db-9b76-40f8-bbd9-d63fe970f4ff",
+        "081b2612-ad4b-4e0a-9ebd-6ab5f3f6f1c8",
+        "86858315-a2f1-4d25-85f2-8857675af45e",
+        "c114bf70-0d41-48fb-9f6b-215ce6dd9af4",
+        "3df571dc-9735-4589-b1a4-7d3a694fe5ca"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "partners",
+        "header": "",
+        "color": "light",
+        "header_alignment": "left",
+        "col_alignment": "left",
+        "columns": "3_col"
+      }
+    },
+    "dc1438e8-9476-4bd9-aaf3-d6e0f5347224": {
+      "type": "two-column-swiper",
+      "blocks": {
+        "cde86a4f-fad9-4d6b-9cfa-5065c2d1e411": {
+          "type": "Slide",
+          "settings": {
+            "anchor_id": "",
+            "label": "Sustainability at Acme",
+            "header": "Toward a Sustainable Tomorrow",
+            "title": "",
+            "sub_title": "",
+            "image": "shopify://shop_images/sustainability.jpg",
+            "image_size": "cover",
+            "body": "<p>Through responsible sourcing, reduced waste, and operations that respect people <em>and</em> the planet, we’re leading the seafood industry to a greener future. </p>",
+            "link_url": "shopify://pages/sustainability",
+            "external": false,
+            "link_label": "Explore Sustainability at Acme"
+          }
+        }
+      },
+      "block_order": [
+        "cde86a4f-fad9-4d6b-9cfa-5065c2d1e411"
+      ],
+      "settings": {
+        "anchor_id": "sustainability",
+        "color": "light",
+        "layout": "swiper",
+        "image_position": "left"
+      }
+    },
+    "e4ff547b-2c34-4e06-8b26-044486bea196": {
+      "type": "sticky-nav",
+      "blocks": {
+        "1971f191-e9cd-4fd0-a7ee-eacace117a1f": {
+          "type": "link_block",
+          "settings": {
+            "link_label": "Overview",
+            "link_url": "#overview"
+          }
+        },
+        "5e309856-44e7-4952-886b-d09d6361367a": {
+          "type": "link_block",
+          "settings": {
+            "link_label": "Climate Initiatives",
+            "link_url": "#climate"
+          }
+        },
+        "71dd09c5-75b5-441a-b8b3-aa8c486c6687": {
+          "type": "link_block",
+          "settings": {
+            "link_label": "Education Fund",
+            "link_url": "#education-fund"
+          }
+        },
+        "a4e3bbc4-d2ac-4d70-b0b2-2ec4d2592ec2": {
+          "type": "link_block",
+          "settings": {
+            "link_label": "Origin of Foundation",
+            "link_url": "#origin"
+          }
+        },
+        "1258ed62-755f-4962-90a1-4ff316b2df0b": {
+          "type": "link_block",
+          "settings": {
+            "link_label": "Partners",
+            "link_url": "#partners"
+          }
+        },
+        "c2e89ac9-9850-49f0-9bda-d8a95e9474d2": {
+          "type": "link_block",
+          "settings": {
+            "link_label": "Sustainability",
+            "link_url": "#sustainability"
+          }
+        },
+        "d38b4258-61fb-4b66-bd6c-045d4c03393b": {
+          "type": "link_block",
+          "settings": {
+            "link_label": "Donate",
+            "link_url": "https://acmesmokedfish.networkforgood.com/projects/201409-annual-fund"
+          }
+        }
+      },
+      "block_order": [
+        "1971f191-e9cd-4fd0-a7ee-eacace117a1f",
+        "5e309856-44e7-4952-886b-d09d6361367a",
+        "71dd09c5-75b5-441a-b8b3-aa8c486c6687",
+        "a4e3bbc4-d2ac-4d70-b0b2-2ec4d2592ec2",
+        "1258ed62-755f-4962-90a1-4ff316b2df0b",
+        "c2e89ac9-9850-49f0-9bda-d8a95e9474d2",
+        "d38b4258-61fb-4b66-bd6c-045d4c03393b"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "blank",
+    "b679157f-00bd-44e2-8dfa-7289b5c77ddb",
+    "287062f4-86fd-4d86-a850-e506d76f1a14",
+    "e4a37df4-e43f-4915-bc62-fae2fdf91ed6",
+    "e5b4c524-cb7e-41c4-b72b-231aa272dee1",
+    "094a91b0-55e4-4ac2-a470-9ce833b3d508",
+    "0820e8d8-2d91-4773-85d3-f4d2d449ac27",
+    "a26e3143-3ec5-43e6-aa61-b0bc4dba1701",
+    "7d80c079-c061-4d6a-b8de-8bebe68177f3",
+    "dc1438e8-9476-4bd9-aaf3-d6e0f5347224",
+    "e4ff547b-2c34-4e06-8b26-044486bea196"
+  ]
+}

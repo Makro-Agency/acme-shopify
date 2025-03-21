@@ -1,0 +1,176 @@
+{% liquid 
+    assign reasons = section.settings.reasons 
+    assign reasons = reasons | newline_to_br | split: '<br />'
+    assign leads = section.settings.leads 
+    assign leads = leads | newline_to_br | split: '<br />'
+%}
+<section class="contact-container">
+    <div class = "container pb-5">
+      <div class = 'row'>
+        <div class = 'col col-md-8 offset-md-2 d-md-flex flex-column align-items-center justify-content-center'>
+          <h2 class="header-3 text-md-center">{{ section.settings.header }}</h2>
+          <div class="body-1 mt-3 mb-md-4 text-md-center">{{ section.settings.subheader }}</div>
+          <div class="contact-form">
+              {%- assign formId = 'ContactForm' -%}
+              {% form 'contact', id: formId %}
+                <div class="mt-4 body-2">
+                  {% include 'form-status', form_id: formId %}
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class = 'form-group'>
+                      <label for="{{ formId }}-fname">{{ 'contact.form.fname' | t }}</label>
+                      <input type="text"
+                        id="{{ formId }}-fname"
+                        class="form-control"
+                        name="contact[fname]" placeholder="First Name" value="{% if form[fname] %}{{ form[fname] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class = 'form-group'>
+                      <label for="{{ formId }}-fname">{{ 'contact.form.lname' | t }}</label>
+                      <input type="text"
+                        id="{{ formId }}-lname"
+                        class="form-control"
+                        name="contact[lname]" placeholder="Last Name" value="{% if form[lname] %}{{ form[lname] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                    </div>
+                  </div>
+                  <div class="col-12"> 
+                    <div class = 'form-group'>
+                      <label for="{{ formId }}-email">{{ 'contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+                      <input
+                        type="email"
+                        id="{{ formId }}-email"
+                        class="form-control"
+                        name="contact[email]"
+                        placeholder="Email"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                        required
+                        aria-required="true"
+                        {%- if form.errors contains 'email' -%}
+                          class="input--error"
+                          aria-invalid="true"
+                          aria-describedby="{{ formId }}-email-error"
+                        {%- endif -%}
+                        >
+                      {% comment %} <span id="{{ formId}}-email-error" class="input-error-message">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span> {% endcomment %}
+                    </div>
+                  </div>
+                </div>
+                <div class = 'row'>
+                  <div class = 'col-12'>
+                    <div class = 'form-group reason'>
+                      <label for="{{ formId }}-reason">{{ 'contact.form.reason' | t }}</label>
+                      <select 
+                        id="{{ formId }}-reason" 
+                        class="form-control"
+                        name="contact[reason]"
+                        value=""
+                        >
+                        <option disabled selected>Select a topic</option>
+                        {% for reason in reasons %}
+                          <option>{{ reason }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class = 'row'>
+                  <div class = 'col-12'>
+                    <div class = 'form-group reason'>
+                      <label for="{{ formId }}-lead">{{ 'contact.form.lead' | t }}</label>
+                      <select 
+                        id="{{ formId }}-lead"
+                        class="form-control"
+                        name="contact[lead]"
+                        value=""
+                        >
+                        <option disabled selected>{{ 'contact.form.lead' | t }}</option>
+                        {% for lead in leads %}
+                          <option>{{ lead }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class = 'row'>
+                  <div class = 'col'>
+                    <div class = 'form-group'>
+                      <label for="{{ formId }}-message">{{ 'contact.form.message' | t }}</label>
+                      <textarea
+                        rows="5" id="{{ formId }}-message"
+                        class = 'form-control'
+                        placeholder="Write Message"
+                        name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                    </div>
+                  </div>
+                </div>
+
+                {% comment %} <div class = 'row'>
+                  <div class = 'col-12'>
+                    <div class = 'form-group'>
+                      <label for="{{ formId }}-phone">{{ 'contact.form.phone' | t }}</label>
+                      <input type="tel"
+                        id="{{ formId }}-phone"
+                        class="form-control"
+                        name="contact[phone]"
+                        pattern="[0-9\-]*"
+                        value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                    </div>
+                  </div>
+                </div> {% endcomment %}
+                <div class = 'row'>
+                  <div class = 'col'>
+                    <input type="submit" class="btn btn-primary mt-4" value="{{ 'contact.form.submit' | t }}">
+                  </div>
+                </div>
+              {% endform %}
+            </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+
+{% schema %}
+    {
+        "name": "Contact Form Section",
+        "tag": "section",
+        "class": "section",
+        "settings": [
+          { 
+              "type": "text",
+              "id": "header",
+              "label": "Header"
+          },
+          { 
+              "type": "richtext",
+              "id": "subheader",
+              "label": "Subheader Copy"
+          },
+          {
+            "type" : "textarea",
+            "id" : "reasons",
+            "label" : "Reasons",
+            "info" : "Enter a list of reasons for contacting us. Each reason should be on a new line."
+          },
+          {
+            "type" : "textarea",
+            "id" : "leads",
+            "label" : "Leads",
+            "info" : "Enter a list of leads \"How did you hear about us\". Each lead should be on a new line.",
+            "default" : "Google\nSocial Media\nOther"
+          }
+        ],
+        "presets": [
+            {
+                "name": "Contact Form Section",
+                "settings" : {}
+            }
+        ]
+    }
+    {% endschema %}

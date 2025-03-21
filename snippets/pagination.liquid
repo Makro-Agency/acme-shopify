@@ -1,0 +1,21 @@
+{% if paginate.pages > 1 %}
+<div class="container  ">
+  <div class="row">
+    <div class="col">
+      <ul class="pagination mt-5 header-5">
+      {% if paginate.previous %}
+        <li><a href="{{ paginate.previous.url }}" class="prev me-2 text-blue-secondary">Previous</a></li>
+      {% else %}
+        <li><span>{{ back_word }}</span></li>
+      {% endif %}
+        <li>Page {{ paginate.current_page }} of {{ paginate.pages }}</li>
+      {% if paginate.next %}
+        <li><a href="{{ paginate.next.url }}" class="next ms-2 text-blue-secondary">Next</a></li>
+      {% else %}
+        <li><span>{{ next_word }}</span></li>
+      {% endif %}
+      </ul>
+    </div>
+  </div> 
+</div>
+{% endif %}

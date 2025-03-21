@@ -1,0 +1,19 @@
+<div class="modal modal-destini fade modal-destini-order-online" 
+    id="orderOnlineModal-{{product.id}}" 
+    tabindex="-1" 
+    aria-label="Order Online" 
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <button type="button" class="btn-close dark" data-bs-dismiss="modal" aria-label="Close">{% render 'icon-close' %}</button>
+            <div class="modal-body">
+            <div id="destini-order-online-modal"></div>
+                <script>
+                $(document).ready(function() {
+                    destini.init("destini-order-online-modal");
+                    destini.loadWidget("home_delivery_widget&APO={{ upc | strip }}");
+                    });
+                </script> 
+        </div>
+    </div>
+  </div>

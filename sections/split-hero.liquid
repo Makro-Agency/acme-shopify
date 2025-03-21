@@ -1,0 +1,172 @@
+{% liquid
+    assign image_pos = section.settings.image_position
+    assign section_height = section.settings.height
+    assign content_width = section.settings.width
+%}
+
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="split-hero theme--{{ section.settings.color }} image-position--{{ image_pos }} section-height--{{ section_height }}">
+    <div class="container container-main">
+        <div class="row row-main">
+            <div class="order-2 {% if image_pos == 'right' %} order-md-1 {% endif %} col-12 col-md-6 {% if content_width == 'narrow' %} col-lg-4 {% endif %} split-hero__col-content">
+                {% if section.settings.label != blank %}
+                    <p class="split-hero__label header-5">{{ section.settings.label }}</p>
+                {% endif %}
+                <h1 class="split-hero__header header-1">{{ section.settings.header }}</h1>
+                {% if section.settings.body != blank %}
+                    <div class="split-hero__body body-1 my-0 "><div class="pe-5">{{ section.settings.body }}</div></div>
+                {% endif %}
+                {% if section.settings.url != blank and section.settings.cta != blank %}
+                    <a href="{{ section.settings.url }}" 
+                        class="mb-2 btn btn-{% if section.settings.color == 'light' %}primary{% else %}light{% endif %} mt-4" {% if section.settings.external %}target="_blank"{% endif %}>{{ section.settings.cta }}</a>
+                {% endif %}
+            </div>
+
+            <div class="order-1 {% if image_pos == 'right' %} order-md-2 {% endif %} col-12 col-md-6 {% if content_width == 'narrow' %} col-lg-8 {% endif %} split-hero__col-image">
+                {% if section.settings.image %}    
+                    {% if section.settings.url != blank  %}
+                        <a href="{{ section.settings.url }}" >
+                    {% endif %}
+                    <picture class="split-hero__image img-fluid"> 
+                        <img src="{{ section.settings.image | img_url: '1200x' }}" {% if section.settings.image.alt %} alt="{{ section.settings.image.alt }}" {% else %} alt="Acme Smoked Fish" {% endif %}>
+                    </picture>
+                    {% if section.settings.url != blank  %}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+    {
+        "name": "Split Hero",
+        "tag": "section",
+        "class": "hero",
+        "settings": [
+            {
+                "type": "text",
+                "id": "anchor_id",
+                "label": "Anchor Link ID"
+            },
+            {
+                "type": "select",
+                "id": "height",
+                "label": "Section Height",
+                "options": [
+                    {
+                        "value": "small",
+                        "label": "Small"
+                    },
+                    {
+                        "value": "medium",
+                        "label": "Medium"
+                    },
+                    {
+                        "value": "large",
+                        "label": "Large"
+                    }
+                ],
+                "default": "medium"
+            },
+            {
+                "type": "select",
+                "id": "color",
+                "label": "Color Scheme",
+                "options": [
+                    {
+                        "value": "dark",
+                        "label": "Dark Background"
+                    },
+                    {
+                        "value": "light",
+                        "label": "Light Background"
+                    }
+                ],
+                "default": "dark"
+            },
+            {
+                "type": "select",
+                "id": "image_position",
+                "label": "Image Position",
+                "options": [
+                    {
+                        "value": "left",
+                        "label": "Left"
+                    },
+                    {
+                        "value": "right",
+                        "label": "Right"
+                    }
+                ],
+                "default": "right"
+            },
+            {
+                "type": "header",
+                "content": "Text Content"
+            },
+            {
+                "type": "select",
+                "id": "width",
+                "label": "Content Width",
+                "options": [
+                    {
+                        "value": "narrow",
+                        "label": "Narrow"
+                    },
+                    {
+                        "value": "wide",
+                        "label": "Wide"
+                    }
+                ],
+                "default": "narrow"
+            },
+            {
+                "type": "text",
+                "id": "label",
+                "label": "Label"
+            },
+            {
+                "type": "text",
+                "id": "header",
+                "label": "Header Text"
+            },
+            {
+                "type": "richtext",
+                "id": "body",
+                "label": "Body Text"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Choose Background Image"
+            },
+            {
+                "type": "text",
+                "id": "cta",
+                "label": "CTA Text"
+            },
+            {
+                "type": "url",
+                "id": "url",
+                "label": "URL Link"
+            },
+            {
+                "type": "checkbox",
+                "id": "external",
+                "label": "Open Link in New Window",
+                "default": false
+            }
+
+        ],
+        "presets": [
+            {
+                "name": "Split Hero",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}

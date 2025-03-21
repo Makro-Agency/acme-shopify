@@ -1,0 +1,20 @@
+<section class="store-locator">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="store-locator__header header-1 mb-4 pb-2 mb-lg-5">Where to Buy</h1>
+        <!-- Event snippet for Page view conversion page -->
+        <script>
+          gtag('event', 'conversion', {'send_to': 'AW-16624547403/jda_CO_4t70ZEMvsmfc9'});
+        </script>        
+        {%  if settings.find_in_store_provider == 'destini' %}
+        <div id="destini-locator" class="destini-locator-class" locator-id="4244" alpha-code="1094" locator-name="Acme Smoked Fish OCL" client-id="acmesmokedfish"></div><script src="https://lets.shop/productFirstSnippet.js?id=destini-locator" charset="utf-8"></script>
+        {% endif %}
+        {%  if settings.find_in_store_provider == 'where_to_buy' %}
+          <div class="drb_embed" data-embed="map/acmesmokedfish" data-min-height="625" data-baseurl="https://wtb.bio"></div>
+          <script src="https://wtb.bio/embed.min.js"></script>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

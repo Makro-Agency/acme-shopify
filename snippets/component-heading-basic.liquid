@@ -1,0 +1,14 @@
+<header class="heading-basic">
+    <h2 class="header-1">{{ heading }}</h2>
+
+    {% if show_swiper_buttons == true %}
+    <div class="button-container d-none d-sm-flex">
+        <div class="swiper-button-prev dark">
+            {% render 'icon-next-blue' %}
+        </div> 
+        <div class="swiper-button-next dark">
+            {% render 'icon-next-blue' %}
+        </div>
+    </div>
+    {% endif %}
+</header><!-- heading-basic -->

@@ -1,0 +1,50 @@
+<div class="register-account">
+  <div class="container customer-wrapper">
+    <div class="sixteen columns">
+      <div class="section clearfix">
+        <h1 class="mb-4">{{ 'customer.register.title' | t }}</h1>
+      </div>
+    </div>
+
+    <div class="section clearfix">
+      <div class="eight columns offset-by-four">
+
+        <div id="customer">
+          <!-- Create Customer -->
+          <div id="create-customer">
+
+            {% form 'create_customer' %}
+              {{ form.errors | default_errors }}
+
+              <div id="first_name" class="clearfix large_form mb-4">
+                <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label>
+                <input type="text" value="" name="customer[first_name]" id="first_name" class="form-control large" size="30" />
+              </div>
+
+              <div id="last_name" class="clearfix large_form mb-4">
+                <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+                <input type="text" value="" name="customer[last_name]" id="last_name" class="form-control large" size="30" />
+              </div>
+
+              <div id="email" class="clearfix large_form mb-4">
+                <label for="email" class="login">{{ 'customer.register.email' | t }}</label>
+                <input type="email" value="" name="customer[email]" id="email" class="form-control large" size="30" />
+              </div>
+
+              <div id="password" class="clearfix large_form mb-4">
+                <label for="password" class="login">{{ 'customer.register.password' | t }}</label>
+                <input type="password" value="" name="customer[password]" id="password" class="form-control large password" size="30" required aria-required="true"/>
+              </div>
+
+              <p class="action_bottom mt-5 mb-4">
+                <input class="btn action_button btn-primary" type="submit" value="{{ 'customer.register.sign_up' | t }}" />
+                <span class="note font-saa ms-2"><a class="text-blue" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
+              </p>
+
+            {% endform %}
+          </div><!-- /#create-customer -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

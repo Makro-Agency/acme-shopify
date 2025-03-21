@@ -1,0 +1,49 @@
+{% liquid
+  assign image = block.settings.image
+  assign header = block.settings.header
+  assign subheader = block.settings.sub_header
+  assign url = block.settings.url
+  assign cta = block.settings.cta
+  assign color = block.settings.color
+  assign external = block.settings.external
+%}
+
+{% capture filtered_image %}
+  <div class="filter"></div>
+  <div class="filter desktop d-none d-md-block"></div>
+  <picture class="hero-section__image img-fluid mt-3">
+    <img src="{{ image | img_url: '1600x' }}" alt="{{ image.alt | default: 'Acme Smoked Fish' }}">
+  </picture>
+{% endcapture %}
+
+<div class="hero-carousel__slide--content container {% if single %} slide-content--single {% endif %}">
+  <div class="slide-content">
+    <h1 class="hero-section__header header-1 px-0 mb-0 col-lg-9 col-xl-7 col-xxl-7">
+      {{ header }}
+    </h1>
+    
+    {% if subheader != blank %}
+      <h2 class="hero-section__subheader body-1 px-0 mt-4 pt-2 pb-3 mb-0 col-md-9 col-lg-7 col-xxl-7">
+        {{ subheader }}
+      </h2>
+    {% endif %}
+    
+    {% if url %}
+      <a
+        class="btn {% if color == 'dark' %} btn-primary {% else %} btn-light {% endif %} hero-section__btn mt-4"
+        href="{{ url }}"
+        {% if external %}
+          target="_blank"
+        {% endif %}
+      >
+        {{- cta -}}
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+{% if image %}
+  <div class="hero-carousel__slide--background">
+    {{ filtered_image }}
+  </div>
+{% endif %}

@@ -1,0 +1,107 @@
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="recipe-categories related-content">
+    <div class="container">
+        <div class="row mb-4 align-items-end">
+            <div class="col-12 col-md-8 col-lg-6">
+                <h2 class="related-content__header header-1">Recipe Categories</h2>
+            </div>
+            <div class="mt-3 mb-3 col-lg-6 d-lg-flex px-lg-0 align-items-center justify-content-end">
+                <a href="/blogs/recipes" class="btn btn-primary me-lg-3 me-xl-0">View All Recipes</a>
+                <div class="button-container d-none d-lg-flex align-items-center justify-content-end col-lg-3 mb-lg-0">
+                    <div class="swiper-button-prev dark me-3">
+                        {% render 'icon-next' %}
+                    </div> 
+                    <div class="swiper-button-next dark">
+                        {% render 'icon-next' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="swiper recipe-categories__swiper container">
+        <div class="swiper-wrapper row related-content__swiper-wrapper">
+            {% for block in section.blocks %}
+                <div class="swiper-slide related-content__swiper-slide">
+                    <div class="card-basic">
+                        <a class=""
+                            href="{{block.settings.url}}"
+                            aria-label="{{ block.settings.title }}">
+                            <div class="image-wrap">
+                                <div class="filter"></div>
+                                <picture>
+                                    <source media="(min-width: 992px)" srcset="{{ block.settings.image | img_url : '700x' }}">
+                                    <img 
+                                        src="{{ block.settings.image | img_url : '500x' }}" 
+                                        alt="{{ block.settings.image.alt }}" 
+                                        loading="lazy" 
+                                        width="370"
+                                        height="370"
+                                    />
+                                </picture>
+                            </div>
+                            <h2 class="card-basic__header">{{ block.settings.header }}</h2>
+                            <h3
+                                class="card-basic__sub-header" 
+                                data-tag-count
+                                data-tags="{{ block.settings.tag | handleize }}" 
+                                data-url = "/blogs/recipes/tagged/tags/?view=recipes-tag-search&handle=get-count"
+                            >
+                            No Recipes</h3>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div><!-- .swiper -->
+</section>
+
+
+{% schema %}
+    {
+        "name": "Recipe Categories",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "text",
+                "id": "anchor_id",
+                "label": "Anchor Link ID"
+            }
+        ],
+        "blocks": [
+        {
+            "type": "block",
+            "name": "Block",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Choose an Image"
+                },
+                {
+                    "type": "text",
+                    "id": "header",
+                    "label": "Header"
+                },
+                {
+                    "type": "text",
+                    "id": "tag",
+                    "label": "Tag"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Add Link URL"
+                }
+            ]
+        }
+    ],
+        "presets": [
+            {
+                "name": "Recipe Categories",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}

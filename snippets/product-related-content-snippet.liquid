@@ -1,0 +1,137 @@
+{% liquid
+  assign related_articles_string = product.metafields.accentuate.curated_articles
+  assign related_articles = product.metafields.accentuate.curated_articles | split: '|'
+  assign remaining_slots = section.settings.limit | minus: related_articles.size
+  
+  if remaining_slots > 0 
+    comment
+      Must use linklist since  for blog in blogs  doesn't work
+      Pulls related articles from all blogs
+    endcomment
+    for link in linklists.blogs.links
+      assign blog = link.object
+      for article in blog.articles
+        if article.metafields.accentuate.related_products contains product.handle
+          if related_articles_string != blank
+            assign related_articles_string = related_articles_string | append: '|'
+          endif
+          assign related_articles_string = related_articles_string | append: article.handle
+          assign related_articles = related_articles_string | split: '|'
+          if related_articles.size >= section.settings.limit 
+            break
+          endif
+        endif
+      endfor
+      if related_articles.size >= section.settings.limit 
+        break
+      endif
+    endfor
+  endif
+%}
+
+<section 
+  class="product-section-related-content {% if template == 'product' %}gsap-mininav{% endif %}">
+  {% if template == 'product' %}
+    <div id="mini-nav__recipes" class="mini-nav__anchor"></div>
+  {% endif %}
+
+  <div class="container">
+    <div class="row mb-4 align-items-start row-laptop">
+      <div class="col-12 col-lg-8 offset-lg-1 offset-laptop">
+        <h2 class="header-1">Our Recipes</h2>
+      </div>
+      <div class="d-md-flex flex-column col-lg-3 align-items-start align-items-lg-end px-lg-0 laptop">
+        <div class="button-container d-none d-md-flex align-items-center justify-content-end col-lg-3 mt-md-3 mb-md-0 me-md-2">
+          <div class="swiper-button-prev me-3">
+            {% render 'icon-next' %}                      
+          </div> 
+          <div class="swiper-button-next">
+            {% render 'icon-next' %}  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="swiper container">
+    <div class="offset-lg-1 offset-laptop">
+      <div class="related-content-swiper">
+        <div class="swiper-wrapper row">
+          {% if related_articles.size >= section.settings.min_articles %}
+            {% comment %} <div class="d-flex"> {% endcomment %}
+              {% for article_handle in related_articles limit: section.settings.limit %}
+      
+                {% liquid
+                  assign article = articles[article_handle]
+                  assign category = article_handle | split: '/'
+                  assign category = category[0] 
+                  if category == 'recipes'
+                    assign category = 'Recipe'
+                  else
+                    assign category = 'Article'
+                  endif
+                %}
+      
+                <div class="swiper-slide card-basic" {{ block.shopify_attributes }}>
+                  <a href="{{ article.url }}" class="related-content-item">
+                    <div class="image-wrap">
+                      <picture>
+                        <img src="{{ article.image | img_url: '400x' }}" alt="{{ article.image.alt }}" loading="lazy">
+                        <source media="(min-width: 992px)" srcset="{{ article.image | img_url: '600x' }}">
+                      </picture>
+                    </div>
+                    <div class="content">
+                      <h2 class="card-basic__header">{{ article.title }}</h2>
+                      <h3 class="card-basic__sub-header">{{ category }}</h3>
+                      <p class="card-basic__body">{{ article.content | strip_html | truncate: 140 }}</p>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+            {% comment %} </div> {% endcomment %}
+          {% else %}
+    
+            {%- assign tags = product.tags -%}
+            {%- capture tags_array -%}
+              {%- for tag in tags -%}
+                {%- if tag contains "Category_Specialty Smoked Fish" or tag contains "Category_Other Specialties" -%}
+                  {%- assign this_tag = "fish" -%}
+                {%- elsif tag contains "Category_" -%}
+                  {%- assign this_tag = tag | remove: "Category_" | handleize -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endcapture -%}
+    
+            {%- for link in linklists.blogs.links -%}
+              {%- assign blog = link.object -%}
+              {%- if blog.handle == 'recipes' -%}  
+                {%- for article in blog.articles -%}
+                  {%- assign match = article.title | handleize -%}
+                  {%- if match contains this_tag -%}  
+                    <div class="swiper-slide">
+                      <a href="{{ article.url }}" class="related-content-item">
+                        <div class="image-container">
+                          <picture>
+                            <img src="{{ article.image | img_url: '400x' }}" alt="{{ article.image.alt }}" loading="lazy">
+                            <source media="(min-width: 992px)" srcset="{{ article.image | img_url: '600x' }}">
+                          </picture>
+                        </div>
+                        <div class="related-content-item__content">
+                          {% comment %} <h3>{{ match }}</h3>
+                          <h2>Tag = {{ this_tag }}</h2> {% endcomment %}
+                          <p class="related-content-item__category header-6">{{ category }}</p>
+                          <h3 class="related-content-item__title header-4">{{ article.title }}</h3>
+                          <p class="related-content-item__description body-1">{{ article.content | strip_html | truncate: 140 }}</p>
+                        </div>
+                      </a>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div><!-- .swiper -->
+    </div>
+  </div>
+</section>

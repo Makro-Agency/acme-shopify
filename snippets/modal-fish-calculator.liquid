@@ -1,0 +1,113 @@
+{% liquid 
+    assign range_label = "People"
+    if product.metafields.product.fish_calculator_options
+        assign calculator = product.metafields.product.fish_calculator_options.value
+        if calculator.range_label != blank
+            assign range_label = calculator.range_label
+        endif
+    endif
+%}
+
+{% if calculator != blank %}
+<!-- Button -->
+<button class="btn btn-primary btn-fish-calculator d-none d-xl-flex" data-bs-toggle="modal" data-bs-target="#fishCalculatorModal">
+    <div class="icon-holder ms-3">
+        {% render 'icon-calculator' %}
+    </div>
+    <span class="header-6">How much fish should I buy?</span>
+</button>
+<!-- Modal -->
+<div class="modal fade fish-calculator-modal" id="fishCalculatorModal" tabindex="-1" aria-labelledby="fishCalculatorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">{% render 'icon-close-blue' %}</button>
+        <div class="modal-body">
+            <div class="panel-1 show">
+            
+                <header class="header">
+                    <h1 class="modal-title header-1" id="fishCalculatorModalLabel">{{ calculator.header }}</h1>
+                </header>
+                <div class="range-select-container">
+                
+                    <form action="">
+                        {% if calculator.range_1 %}
+                        <div class="button-wrapper">
+                            <input class="radio-input" type="radio" name="range" id="range-1" />
+                            <label class="range-button" for="range-1">
+                                <div class="text-container">
+                                    <span class="range-text">{{ calculator.range_1 }}</span>
+                                    <span class="range-label-text header-5 d-none d-md-block">{{ range_label }}</span>
+                                </div>
+                                <span class="range-label-text header-5 d-md-none">{{ range_label }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+                        {% if calculator.range_2 %}
+                        <div class="button-wrapper">
+                            <input class="radio-input" type="radio" name="range" id="range-2" checked />
+                            <label class="range-button" for="range-2">
+                                <div class="text-container">
+                                    <span class="range-text">{{ calculator.range_2 }}</span>
+                                    <span class="range-label-text header-5 d-none d-md-block">{{ range_label }}</span>
+                                </div>
+                                <span class="range-label-text header-5 d-md-none">{{ range_label }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+                        {% if calculator.range_3 %}
+                        <div class="button-wrapper">
+                            <input class="radio-input" type="radio" name="range" id="range-3" />
+                            <label class="range-button" for="range-3">
+                                <div class="text-container">
+                                    <span class="range-text">{{ calculator.range_3 }}</span>
+                                    <span class="range-label-text header-5 d-none d-md-block">{{ range_label }}</span>
+                                </div>
+                                <span class="range-label-text header-5 d-md-none">{{ range_label }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+                        {% if calculator.range_4 %}
+                        <div class="button-wrapper">
+                            <input class="radio-input" type="radio" name="range" id="range-4" />
+                            <label class="range-button" for="range-4">
+                                <div class="text-container">
+                                    <span class="range-text">{{ calculator.range_4 }}</span>
+                                    <span class="range-label-text header-5 d-none d-md-block">{{ range_label }}</span>
+                                </div>
+                                <span class="range-label-text header-5 d-md-none">{{ range_label }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+                    </form>
+    
+                </div>
+                <div class="action-button-container">
+                    <button class="btn btn-light btn-toggle-panels">Continue</button>
+                </div>
+            </div>
+            <div class="panel-2">
+                <header class="header">
+                    {% if calculator.range_1 %}
+                        <h1 class="modal-title header-1 answer show" id="fishCalculatorModalLabelRange1" data-rangeid="range-1">{{ calculator.answer_1 }}</h1>
+                    {% endif %}
+                    {% if calculator.range_2 %}
+                        <h1 class="modal-title header-1 answer" id="fishCalculatorModalLabelRange2" data-rangeid="range-2">{{ calculator.answer_2 }}</h1>
+                    {% endif %}
+                    {% if calculator.range_3 %}
+                        <h1 class="modal-title header-1 answer" id="fishCalculatorModalLabelRange3" data-rangeid="range-3">{{ calculator.answer_3 }}</h1>
+                    {% endif %}
+                    {% if calculator.range_4 %}
+                        <h1 class="modal-title header-1 answer" id="fishCalculatorModalLabelRange4" data-rangeid="range-4">{{ calculator.answer_4 }}</h1>
+                    {% endif %}
+                </header>
+                <p class="footer body-1">{{ calculator.footer }}</p>
+                <div class="action-button-container">
+                    <button class="btn btn-light btn-toggle-panels">Back</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endif %}

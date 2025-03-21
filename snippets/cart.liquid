@@ -1,0 +1,45 @@
+
+<div class="container  cart-template pb-5 {% if cart.item_count == 0 %} empty {% endif %}" data-section-id="{{ section.id }}" sh-cart-wrapper >
+    <div class = 'cart'  >     
+      <div class="cart-partial-form-ajax-container" >
+        <div class="cart-partial-form row pt-4 pt-lg-5">
+          <div class="col-12 col-lg-11 offset-lg-1">
+            <h2 class="header-1 mt-1 mb-4 mb-lg-5">{{ 'cart.headers.title' | t }}</h2>
+            <h3 class="header-3">Order Summary</h3>
+            <h4 class="header-5 mb-lg-4" data-cart-count >{{cart.item_count}} Item{% unless cart.item_count == 1 %}s{% endunless %}</h4>
+          </div>
+          {% comment %} <div class="col-5 col-md-6 text-right">
+          </div> {% endcomment %}
+          {% comment %} <div class="row flex-row-center">
+          </div> {% endcomment %}
+          <!-- .row -->          
+          {% comment %} <div class="row  ">
+              <div class="col-sm-12 text-center">
+              </div><!-- // col-sm-6' -->
+          </div><!-- // row -->  {% endcomment %}
+          <form action="{{ routes.cart_url }}" method="post" novalidate class="cart cart-form col-lg-11 offset-lg-1">
+            <div class = 'cart__table'>
+              <div class="row cart__row cart__row--heading">
+                <div class='col-5 col-md-3 col-lg-2 text-center' ><h4></h4></div>
+                <div class="col-7 col-md-5 col-lg-7 text-right" ><h4></h4></div>
+                <div class="col-md-4 col-lg-3 text-right " ><h4></h4></div>
+                <div class="col-sm-3 text-right  d-none" ><h4>{{ 'cart.labels.total' | t }}</h4></div>
+              </div>
+              <div data-cart-line-items-ajax-container >
+                {% render 'cart-partial-line-items' %}
+              </div>
+            </div>
+      
+            {% render 'cart-partial-footer' %}
+          </form>
+        </div>
+      </div> 
+    </div>
+    <div class="empty-page-content text-center mt-5 py-5 " data-empty-page-content>
+      <h1>{{ 'cart.headers.title' | t }}</h1>
+      <p class="cart--empty-message header-5 my-5">{{ 'cart.messages.empty' | t }}</p>
+      <a href="/collections/fish-friday" class="btn  btn-primary cart__continue-btn">{{ 'general.buttons.continue_shopping' | t }}</a>
+    </div>
+  </div>
+  
+  

@@ -48,7 +48,7 @@
       "footer": {
         "type": "footer",
         "settings": {
-          "footer_menu": "footer",
+          "footer_menu": "footer-menu-new",
           "social_menu": "social-menu",
           "footer_utility_menu": "footer-utility"
         }

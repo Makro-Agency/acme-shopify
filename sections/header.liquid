@@ -99,7 +99,7 @@ assign navbar_transparency = false  {% endcomment %}
 							</div>
 						{% endunless %}
 						<ul class="navbar-nav-ul">
-						{%- for link in linklists.main-menu.links -%}
+						{%- for link in linklists.main-menu-new.links -%}
 							{%  assign mega = false  %}
 							{%  for mega_menu in mega_menus %}
 								{%  if mega_menu.settings.trigger == link.title %}
@@ -172,7 +172,7 @@ assign navbar_transparency = false  {% endcomment %}
 				</div> <!-- Container -->
 
 				{% comment %} Subnav Items {% endcomment %}
-				{%- for link in linklists.main-menu.links -%}
+				{%- for link in linklists.main-menu-new.links -%}
 					{% if link.links.size > 0 %}
 						<div class="subnav container d-lg-none mt-5 px-4" data-subnav="{{ link.handle }}" aria-hidden="true">
 							<div class="row">

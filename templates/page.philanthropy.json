@@ -101,18 +101,18 @@
         "dd1b963e-d202-4608-9992-12008e9b78eb": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/Capture.png",
-            "header": "Denmark",
-            "sub_header": "Ukraine",
+            "image": "shopify://shop_images/smoked-salmon-for-the-planet_003c608b-e334-4902-90a1-11559c3c2923.png",
+            "header": "1% for the Planet",
+            "sub_header": "",
             "sub_header_2": "",
-            "body": "To show up for our friends in Ukraine, we’re donating funds to help resettle displaced families.",
+            "body": "By donating 1% of our proceeds to climate initiatives, we’re putting our money where our mouth is.",
             "url": ""
           }
         },
         "533a16e9-4873-4e1d-b0b4-deeeab1b3ec8": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/Acme_2022_Sustainability_Report_-_Photos_-_20230202_Brooklyn_761.png",
+            "image": "shopify://shop_images/2_-_ALFA1_bf6d9d55-a762-4ecf-a5a6-f5cf242bec31.png",
             "header": "U.S",
             "sub_header": "",
             "sub_header_2": "",
@@ -123,7 +123,7 @@
         "8e5326ce-7e2a-4967-a827-31c2103853fe": {
           "type": "block",
           "settings": {
-            "image": "shopify://shop_images/AcmeChileFacilityFoto_5_caf15cf1-b5ad-43da-8005-96fa240977c3.jpg",
+            "image": "shopify://shop_images/20191216_132036408_iOS2_d48a28e1-98ed-49fb-8fcf-d8dcf88d8ac0.png",
             "header": "Chile",
             "sub_header": "",
             "sub_header_2": "",

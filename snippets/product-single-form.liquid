@@ -30,7 +30,7 @@ product-add-form product-form product-form-{{ product.id }}
 							</div>
 					</div>
 				{% endunless %}
-				{% render 'product-price', variant: current_variant, show_vendor: false  available_online:available_online %}
+				{% render 'product-price', variant: current_variant, show_vendor: false,  available_online:available_online %}
 				<input type = 'hidden' name="id" value="{{current_variant.id}}" />
 			</div>
 		{% endif %}

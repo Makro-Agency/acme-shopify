@@ -1,0 +1,24 @@
+/* new changes product page */
+.price__b2b-label {
+  font-size: 12px;
+  line-height: 100%;
+  text-transform: uppercase;
+  font-family: SaaSeriesED W05 Regular;
+  margin-bottom: 10px;
+  font-weight: 500
+}
+
+.product-grid-item .price.price--has_b2b-true {
+  margin-block: 1.5rem 0.5rem;
+}
+.product-grid-item .price.price--has_b2b-true .price__pricing-group {
+  margin-top: 0;
+}
+
+.product-single__details .price.price--has_b2b-true {
+  margin-block: 2rem;
+}
+.product-description p:last-child {
+  margin-bottom: 0;
+}
+/* new changes product page */

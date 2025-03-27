@@ -21,9 +21,27 @@
   endif
 
   assign money_price = price | money
+
+  assign available_online = available_online
+  
+  assign has_b2b = false
+  if available_online == true
+    if customer and customer.b2b?
+      if customer.company_available_locations_count > 0      
+        assign available_online = true
+        assign has_b2b = true
+      else
+        assign available_online = false
+      endif
+    endif
+  endif
+
+  assign available_online = true
+  assign has_b2b = true
 -%}
 
-<div class="price 
+{% if available_online %}    
+<div class="price price--has_b2b-{{ has_b2b }}
   {% if available == false %} price--sold-out {% endif %}
   {% if compare_at_price > price %} price--on-sale {% endif %}
   {% if variant.unit_price_measurement %} price--unit-available {% endif %}
@@ -51,6 +69,7 @@
       - div.price__unit: Displayed when the first variant has a unit price
       - div.price__availability: Displayed when the product is sold out
   {%- endcomment -%}
+   {% if has_b2b %}<div class="price__b2b-label">B2b Price: </div>{% endif %}
   <div class="price__pricing-group ">
     <div class="price__regular">
         <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
@@ -98,3 +117,4 @@
     </span>
   </div>
 </div>
+{% endif %}

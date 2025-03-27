@@ -9,7 +9,15 @@
   endif
   assign current_variant = product.selected_or_first_available_variant
 
-
+  assign available_online = product.metafields.accentuate.available_online    
+  if available_online == true
+    if customer and customer.b2b?
+      if customer.company_available_locations_count > 0      
+      else
+        assign available_online = false
+      endif
+    endif
+  endif
 -%}
 
 {% comment %} get the primary collection {% endcomment %}
@@ -47,7 +55,7 @@
 <!-- End of Judge.me code -->
           
           <div class="product-description body-2 mb-2">{{ product.description }}</div>
-            {% render 'product-single-form' product:product  available_online:product.metafields.accentuate.available_online %}
+            {% render 'product-single-form' product:product  available_online: available_online %}
 
           {% if product.metafields.accentuate.where_to_buy_code != blank and product.metafields.accentuate.available_online != true %}
             <div class="destini-buttons d-flex flex-column">

@@ -4,11 +4,9 @@
   assign has_b2b = false
   if customer and customer.b2b?
     if customer.company_available_locations_count > 0            
-      assign has_b2b = true    
+      assign has_b2b = true
     endif
   endif
-
-  assign has_b2b = true
 %}
 {% paginate search.results by 12 %}
 <section class="search-results">

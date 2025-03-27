@@ -1,0 +1,129 @@
+{{ 'order-bulk.css' | asset_url | stylesheet_tag }}
+
+<div class="page-header">
+    <h2 class="title">Wholesale Order Form</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco </p>
+</div>
+
+<div class="container-fluid">
+    <div class="search-bar">
+        <div class="custom-select">
+            <select>
+                <option>Sort by</option>
+                <option>A to Z</option>
+                <option>Capitalize</option>
+                <option>Uppercase</option>
+            </select>
+        </div>
+        <div class="searchbar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" fill="none">
+                <path d="M14.9289 5.90351C14.8578 5.48246 14.7867 4.99123 14.6446 4.57018C14.4313 3.9386 14.0758 3.37719 13.7204 2.81579C13.1517 1.90351 12.2275 1.20175 11.1611 0.921053C10.0948 0.640351 9.02844 0.5 7.96209 0.5C7.60664 0.5 7.32227 0.5 7.03791 0.5C6.04265 0.5 5.11848 0.850877 4.40758 1.48246C3.62559 2.11404 2.91469 2.88596 2.48815 3.72807C1.99052 4.57018 1.70616 5.55263 1.49289 6.53509C1.4218 6.95614 1.35071 7.37719 1.35071 7.79825C1.35071 8.71053 1.70616 9.62281 2.20379 10.3947C2.77251 11.1667 3.41232 11.9386 4.12322 12.5702C4.2654 12.6404 4.2654 12.7807 4.19431 12.8509C4.05213 13.1316 3.83886 13.4825 3.69668 13.7632C2.91469 15.0263 2.06161 16.2895 1.13744 17.5526C0.7109 18.1842 0.35545 18.8158 0 19.5175C0.0710901 19.7281 0 19.8684 0 20.0088C0 20.1491 0 20.3596 0.21327 20.4298C0.42654 20.5 0.63981 20.5702 0.781991 20.3596C0.995261 20.1491 1.20853 19.8684 1.35071 19.6579C1.63507 19.0965 1.91943 18.6053 2.27488 18.0439C3.05687 16.9912 3.69668 15.8684 4.33649 14.7456C4.54976 14.3947 4.69194 14.0439 4.90521 13.693C4.9763 13.5526 5.18957 13.4123 5.33175 13.4825C5.33175 13.4825 5.33175 13.4825 5.40284 13.4825C5.90047 13.693 6.3981 13.8333 6.89573 13.8333C7.32227 13.9035 7.74882 13.9737 8.10427 14.0439C8.24645 14.0439 8.38863 14.0439 8.53081 14.0439C8.67299 14.0439 8.88626 13.9737 9.02844 13.9737C10.237 13.9035 11.3744 13.5526 12.3697 12.9211C12.8673 12.5702 13.2938 12.1491 13.5782 11.6579C13.8626 11.3772 14.0758 11.0263 14.2891 10.6053C14.7156 9.55263 14.9289 8.5 15 7.37719C15 6.95614 15 6.39474 14.9289 5.90351ZM8.38863 12.4298C5.47393 12.4298 3.19905 10.114 3.19905 7.30702C3.19905 4.5 5.54502 2.18421 8.38863 2.18421C11.2322 2.18421 13.5782 4.5 13.5782 7.30702C13.5782 10.114 11.3033 12.4298 8.38863 12.4298Z" fill="#14315C"/>
+            </svg>
+            <input type="text" placeholder="Search by title and SKU">
+        </div>
+    </div>
+    <div class="product-list">
+        <div class="product-header">
+            <span>PRODUCT</span>
+            <span>SKU</span>
+            <span>PRICE</span>
+        </div>
+        <div class="product-item-wrapper">
+            <div class="product-item">
+                <div class="product-wrapper">
+                    <div class="product-wrap">
+                        <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-tuna-front-mockup_e3afe81e-a4fe-4412-8016-bd88c0b30a55.png?v=1742437993" alt="Salmon" height="auto" width="auto">
+                        <span class="title">3 oz. Nova Smoked Salmon</span>
+                    </div>
+                    <span class="sku">F03013</span>
+                    <span class="price">$15.99</span>
+                    <div class="quantity-btn-wrap">
+                        <div class="quantity-selector">
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg></button>
+                            <span>1</span>
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg></button>
+                        </div>
+                        <button class="select-btn">SELECT</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item">
+                <div class="product-wrapper">
+                    <div class="product-wrap">
+                        <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-tuna-front-mockup_e3afe81e-a4fe-4412-8016-bd88c0b30a55.png?v=1742437993" alt="Salmon" height="auto" width="auto">
+                        <span class="title">3 oz. Nova Smoked Salmon</span>
+                    </div>
+                    <span class="sku">F03013</span>
+                    <span class="price">$15.99</span>
+                    <div class="quantity-btn-wrap">
+                        <div class="quantity-selector">
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg></button>
+                            <span>1</span>
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg></button>
+                        </div>
+                        <button class="select-btn">SELECT</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item">
+                <div class="product-wrapper">
+                    <div class="product-wrap">
+                        <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-tuna-front-mockup_e3afe81e-a4fe-4412-8016-bd88c0b30a55.png?v=1742437993" alt="Salmon" height="auto" width="auto">
+                        <span class="title">3 oz. Nova Smoked Salmon</span>
+                    </div>
+                    <span class="sku">-</span>
+                    <span class="price">-</span>
+                    <div class="quantity-btn-wrap">
+                        <button class="variant-select-btn">select a variant</button>
+                    </div>
+                </div>
+                <div class="varient-select-item">
+                    <div class="product-wrapper">
+                        <div class="product-wrap">
+                            <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-salmon-society-shirt-back-gray_ef8d3dd6-20f6-4bd1-b619-911facf4d2dc.png?v=1738801418" alt="Salmon" height="auto" width="auto">
+                            <span class="title">3 oz. Nova Smoked Salmon</span>
+                        </div>
+                        <span class="sku">F03013</span>
+                        <span class="price">$15.99</span>
+                        <div class="quantity-btn-wrap">
+                            <div class="quantity-selector">
+                                <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg></button>
+                                <span>1</span>
+                                <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg></button>
+                            </div>
+                            <button class="select-btn">SELECT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Order Bulk",
+        "class": "order-bulk",
+        "settings": [],      
+        "presets": [
+            {
+                "name": "Order Bulk"
+            }
+        ]
+    }
+{% endschema %}

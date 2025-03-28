@@ -366,4 +366,8 @@ span.title {
     .add-product-btn {
         width: 100%;
     }
+    .varient-select-item .product-wrap {
+        padding-left: 0;
+    }
+    .varient-select-item::after { display: none; }
 }

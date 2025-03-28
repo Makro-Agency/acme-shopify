@@ -49,9 +49,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  {% render 'mobile-tablet-check' %} 
 	
 	{% comment %} {% render "cart-drawer" %} {% endcomment %}
-	{% section 'header' %}
+	{% comment %} {% section 'header' %} {% endcomment %}
+	{% sections 'header-group' %}
 	{{ content_for_layout }}
-	{% section 'footer' %}
+	{% comment %} {% section 'footer' %} {% endcomment %}
+	{% sections 'footer-group' %}
  {%  comment %}
 	<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=RCw3QX"></script>
 {%  endcomment %}

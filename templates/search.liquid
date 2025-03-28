@@ -1,5 +1,12 @@
 {% liquid 
   assign default_search_result_image = settings.default_search_result_image 
+
+  assign has_b2b = false
+  if customer and customer.b2b?
+    if customer.company_available_locations_count > 0            
+      assign has_b2b = true
+    endif
+  endif
 %}
 {% paginate search.results by 12 %}
 <section class="search-results">
@@ -43,8 +50,24 @@
 
     <div class="row search-results__grid col-10 offset-1 d-md-flex justify-content-md-between col-lg-12 offset-lg-0">
       {% for result in search.results %}
-        <div class="search-results__block px-0">
-          <div class="card-basic">
+        {% liquid  
+          assign category = ''
+          if result.url contains "/news/"
+            assign category = "Article"
+          elsif result.url contains "/recipes/"
+            assign category = "Recipe"
+          elsif result.url contains "/faq/"
+            assign category = "FAQ"
+          elsif result.url contains "/products/"
+            assign category = "Product"
+          elsif result.url contains "/glossary/"
+            assign category = "Glossary"
+          elsif result.url contains "/blogs/"
+            assign category = "Post"
+          endif
+        %}
+        <div class="search-results__block px-0{% if category == "Product" %} product-grid-item{% endif %}">
+          <div class="card-basic{% if category == "Product" %} product-form{% endif %}">
             <a class="text-blue"
                 href="{{ result.url }}"
                 aria-label="Link to {{ result.title }}">
@@ -69,24 +92,14 @@
                   </picture>
                 </div>
                 <h2 class="card-basic__header">{{ result.title | truncate: 50 | downcase }}</h2>
-                {% liquid  
-                  assign category = ''
-                  if result.url contains "/news/"
-                    assign category = "Article"
-                  elsif result.url contains "/recipes/"
-                    assign category = "Recipe"
-                  elsif result.url contains "/faq/"
-                    assign category = "FAQ"
-                  elsif result.url contains "/products/"
-                    assign category = "Product"
-                  elsif result.url contains "/glossary/"
-                    assign category = "Glossary"
-                  elsif result.url contains "/blogs/"
-                    assign category = "Post"
-                  endif
-                %}
-                {% if category != blank %}                
+                
+                {% if category != blank %}
                   <h3 class="card-basic__sub-header">{{ category }}</h3>
+                {% endif %}
+                {% if category == "Product" and has_b2b %}                  
+                  {% assign available_online = result.metafields.accentuate.available_online | default: false %}
+                  {% assign current_variant = result.selected_or_first_available_variant %}                  
+                  {% render 'product-price', variant: current_variant, show_vendor: false, available_online: available_online  %}
                 {% endif %}
             </a>
           </div>
@@ -101,3 +114,27 @@
 </section><!-- .search-results -->
 
 {% endpaginate %}
+
+{% style %}
+.search-results__grid .card-basic__header {
+  margin-top: 10px;
+  line-height: 1.2;
+  margin-bottom: 0.375rem;
+}
+.search-results__block {
+  margin-inline: 0.3rem;
+  margin-bottom: 0;
+}
+.search-results__block .card-basic {
+  margin-right: 0;
+}
+.product-grid-item .price.price--has_b2b-true {
+  margin-block: 1.25rem 0;
+}
+@media (min-width: 1400px) {
+  .template-search .container {
+    max-width: calc(1320px + 7.5rem);
+    padding-inline: 3.75rem;
+  }
+}
+{% endstyle %}

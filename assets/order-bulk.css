@@ -174,7 +174,12 @@ button.select-btn {
 }
 button.select-btn.disabled {
     background: #C9CBCE;
-    pointer-events: none;
+    /* pointer-events: none; */
+}
+button.select-btn.disabled:hover {
+    background: #c9cbce;
+    border-color: #c9cbce;
+    color: #FFF;
 }
 button.select-btn:hover {
     background: transparent;
@@ -255,10 +260,13 @@ span.title {
     left: 0;
     right: 0;
     margin: 0 auto;
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: center;
     color: #fff;
+}
+.mini-cart-sticky.active {
+    display: flex;
 }
 .total-added-product {
     color: #FFF;
@@ -291,7 +299,7 @@ span.title {
 .error-massage {
     border-radius: 4px;
     background: rgba(235, 28, 31, 0.05);
-    display: flex;
+    display: none;
     padding: 8px 16px;
     align-items: center;
     gap: 10px;
@@ -303,6 +311,9 @@ span.title {
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
+}
+.error-massage.active {
+    display: flex;
 }
 @media (max-width: 640px) {
     .container-fluid {

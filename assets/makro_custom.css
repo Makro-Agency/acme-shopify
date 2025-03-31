@@ -21,4 +21,37 @@
 .product-description p:last-child {
   margin-bottom: 0;
 }
+
+/* Product template in-out stock */
+  .product-stock {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 100%;
+    text-transform: uppercase;
+    padding-left: 16px;
+    position: relative;
+    margin-block: 0.25rem 1.25rem;
+    color: #B88B1F;
+    font-family: SaaSeriesED W05 Regular;
+  }
+  .product-stock:before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 3px);
+    background: currentColor;
+    border-radius: 50%;
+  }
+  .product-stock.stock-out {
+    color: #EB1C1F;
+  }
+  @media screen and (min-width: 750px ) {
+    .product-stock {
+      margin-block: 0.5rem 1.5rem;
+    }
+  }
+/* Product template in-out stock */
 /* new changes product page */

@@ -195,7 +195,7 @@
           {% endif %}
           {% assign count = 0 %}
           {%- capture _prevItem -%}
-          <li onclick="paginateItemPrev(event)" class="page-item prev-item disabled"><a href="#">{% render 'icon-chevron-blue' %}</a></li>
+          <li onclick="paginateItemPrev(event)" class="page-item prev-item disabled"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
           {%- endcapture -%}{% assign _prevItem = _prevItem | strip | strip_newlines %}
           {{ _prevItem }}
           {% for i in (1..length_count) %}
@@ -213,7 +213,7 @@
             {% endunless %}
           {% endfor %}
           {%- capture _nextItem -%}
-          <li onclick="paginateItemNext(event)" class="page-item next-item{% if length_count == 1 %} disabled{% endif %}"><a href="#">{% render 'icon-chevron-blue' %}</a></li>
+          <li onclick="paginateItemNext(event)" class="page-item next-item{% if length_count == 1 %} disabled{% endif %}"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
           {%- endcapture -%}{% assign _nextItem = _nextItem | strip | strip_newlines %}
           {{ _nextItem }}          
         </ul>

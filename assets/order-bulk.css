@@ -57,11 +57,35 @@
 .search-bar select {
     padding-right: 29px;
 }
+li.page-item.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+.select select {
+    display: none;
+}
+.select-styled {
+    height: 55px;
+    padding: 0 20px;
+    border: 1px solid #14315C;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: none;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    font-size: 16px;
+    position: relative;
+    font-family: ITCClearfaceRegular;
+    padding-right: 29px;
+}
 .custom-select {
     position: relative;
     display: inline-block;
 }
-.custom-select::after {
+.custom-select .select-styled::after {
     content: "";
     position: absolute;
     right: 20px;
@@ -138,6 +162,9 @@
     display: flex;
     gap: 20px;
     justify-content: flex-end;
+}
+.quantity-selector.disabled {
+    opacity: 0.4;
 }
 .quantity-selector button {
     border: none;
@@ -382,3 +409,30 @@ span.title {
     }
     .varient-select-item::after { display: none; }
 }
+
+
+/* pagination css */
+ul.pagination-lists {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+}
+
+ul.pagination-lists li.page-item {
+    padding: 10px;
+}
+
+ul.pagination-lists li.page-item.prev-item svg {
+    transform: rotate(90deg);
+}
+
+ul.pagination-lists li.page-item.next-item svg {
+    transform: rotate(-90deg);
+}
+ul.pagination-lists li.page-item a {
+    pointer-events: none;
+    text-decoration: none;
+    color: #14315c;
+}
+/* pagination css end */

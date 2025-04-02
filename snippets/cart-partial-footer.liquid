@@ -11,12 +11,17 @@
 	</div>
 	<div class="row mb-2">
 		<div class="col">
-            <div class="cart-note mb-2">              				
-              <div  class="mt-2  ">
-                <textarea  name="note" class="form-control" id="order_note" maxlength="350" placeholder="Enter a note for your order here">{{cart.note}}</textarea>
-            	<p><small>We do our best to honor all notes, but we do not guarantee that all requests will be accommodated.</small></p>
-              </div>
-            </div>
+			<div class="cart-note mb-2">              				
+				<div  class="mt-2  ">
+					<textarea  name="note" class="form-control" id="order_note" maxlength="350" placeholder="Enter a note for your order here">{{cart.note}}</textarea>
+					<p><small>We do our best to honor all notes, but we do not guarantee that all requests will be accommodated.</small></p>
+				</div>
+			</div>
+		</div>
+		<div class="cart-checkout-error col-error">
+			<div class="wrapper font-itc">
+				{% render 'icon-warning' %} Sorry, we can't complete your checkout at this time. Please <a href="#">contact</a> our team for more information
+			</div>
 		</div>
 	</div>
 	<div class="row">

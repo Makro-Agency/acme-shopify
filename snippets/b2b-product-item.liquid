@@ -32,11 +32,11 @@
           <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}</span>
           <div class="quantity-btn-wrap">
               <div class="quantity-selector {% unless variant.available %}disabled{% endunless %}" data-item="{{ variant.id }}">
-                  <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <button class="qtyminus" style="opacity: 0.5; cursor: not-allowed;" onclick="clickAttrMinus(this);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg></button>
                   <span>0</span>
-                  <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg></button>

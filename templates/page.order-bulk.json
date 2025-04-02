@@ -1,7 +1,12 @@
 {
     "sections": {
         "order-bulk": {
-            "type": "order-bulk"
+            "type": "order-bulk",
+            "settings": {
+                "title": "Wholesale Order Form",
+                "des": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco",
+                "coll": "all"
+            }
         }
     },
     "order": [

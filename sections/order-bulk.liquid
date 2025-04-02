@@ -5,21 +5,24 @@
     <p>{{ section.settings.des }}</p>
 </div>
 
+{% capture bundle-list %}
 <div class="container-fluid">
-    <div class="search-bar">
+    <div class="search-bar bundle-search-bar">
         <div class="custom-select">
             <select>
-                <option>Sort by</option>
-                <option>A to Z</option>
-                <option>Capitalize</option>
-                <option>Uppercase</option>
+                <option>Alphabetically: A-Z</option>
+                <option>Alphabetically: Z-A</option>
+                <option>Date: old to new</option>
+                <option>Date: new to old</option>
+                <option>Price: low to high</option>
+                <option>Price: high to low</option>
             </select>
         </div>
         <div class="searchbar">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" fill="none">
                 <path d="M14.9289 5.90351C14.8578 5.48246 14.7867 4.99123 14.6446 4.57018C14.4313 3.9386 14.0758 3.37719 13.7204 2.81579C13.1517 1.90351 12.2275 1.20175 11.1611 0.921053C10.0948 0.640351 9.02844 0.5 7.96209 0.5C7.60664 0.5 7.32227 0.5 7.03791 0.5C6.04265 0.5 5.11848 0.850877 4.40758 1.48246C3.62559 2.11404 2.91469 2.88596 2.48815 3.72807C1.99052 4.57018 1.70616 5.55263 1.49289 6.53509C1.4218 6.95614 1.35071 7.37719 1.35071 7.79825C1.35071 8.71053 1.70616 9.62281 2.20379 10.3947C2.77251 11.1667 3.41232 11.9386 4.12322 12.5702C4.2654 12.6404 4.2654 12.7807 4.19431 12.8509C4.05213 13.1316 3.83886 13.4825 3.69668 13.7632C2.91469 15.0263 2.06161 16.2895 1.13744 17.5526C0.7109 18.1842 0.35545 18.8158 0 19.5175C0.0710901 19.7281 0 19.8684 0 20.0088C0 20.1491 0 20.3596 0.21327 20.4298C0.42654 20.5 0.63981 20.5702 0.781991 20.3596C0.995261 20.1491 1.20853 19.8684 1.35071 19.6579C1.63507 19.0965 1.91943 18.6053 2.27488 18.0439C3.05687 16.9912 3.69668 15.8684 4.33649 14.7456C4.54976 14.3947 4.69194 14.0439 4.90521 13.693C4.9763 13.5526 5.18957 13.4123 5.33175 13.4825C5.33175 13.4825 5.33175 13.4825 5.40284 13.4825C5.90047 13.693 6.3981 13.8333 6.89573 13.8333C7.32227 13.9035 7.74882 13.9737 8.10427 14.0439C8.24645 14.0439 8.38863 14.0439 8.53081 14.0439C8.67299 14.0439 8.88626 13.9737 9.02844 13.9737C10.237 13.9035 11.3744 13.5526 12.3697 12.9211C12.8673 12.5702 13.2938 12.1491 13.5782 11.6579C13.8626 11.3772 14.0758 11.0263 14.2891 10.6053C14.7156 9.55263 14.9289 8.5 15 7.37719C15 6.95614 15 6.39474 14.9289 5.90351ZM8.38863 12.4298C5.47393 12.4298 3.19905 10.114 3.19905 7.30702C3.19905 4.5 5.54502 2.18421 8.38863 2.18421C11.2322 2.18421 13.5782 4.5 13.5782 7.30702C13.5782 10.114 11.3033 12.4298 8.38863 12.4298Z" fill="#14315C"/>
             </svg>
-            <input type="text" placeholder="Search by title and SKU">
+            <input type="text" placeholder="Search by title and SKU" onkeyup="filter_bar()">
         </div>
     </div>
     <div class="product-list">
@@ -29,32 +32,40 @@
             <span>PRICE</span>
         </div>
         <div class="product-item-wrapper">
-            {% for prod in section.settings.coll.products %}
-                <div class="product-item">
-                    <div class="product-wrapper">
-                        <div class="product-wrap">
-                            <img src="{{ prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
-                            <span class="title">{{ prod.title }}</span>
-                        </div>
-                        <span class="sku"><span class="mobile-header">Sku</span>{{ prod.selected_or_first_available_variant.sku }}</span>
-                        <span class="price"><span class="mobile-header">Sku</span>{{ prod.price | money }}</span>
-                        <div class="quantity-btn-wrap">
-                            <div class="quantity-selector">
-                                <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg></button>
-                                <span>1</span>
-                                <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg></button>
-                            </div>
-                            <button class="select-btn">SELECT</button>
-                        </div>
-                    </div>
-                </div>
+            {% assign coll = section.settings.coll %}
+            {% assign product_json = '' %}
+            {% assign prod_counter = 0 %}
+
+            {% for coll_prod in coll.products %}
+                {% assign prod_counter = prod_counter | plus:1 %}
             {% endfor %}
-            <div class="product-item">
+    
+            {% assign _temp_count = 0 %}
+            {% for coll_prod in coll.products %}
+                {% assign _temp_count = _temp_count | plus:1 %}
+                {% capture product_json %}
+                    {{ product_json }}
+                    {{ coll_prod | json }}{% unless prod_counter == _temp_count %},{% endunless %}
+                {% endcapture %}
+            {% endfor %}
+
+            {% for coll_prod in coll.products limit:10 %}
+                {% if coll_prod.variants.size > 1 %}
+                    {%- render 'b2b-product-item', coll_prod:coll_prod -%}
+                {% else %}
+                    {% if coll_prod.variants.size > 1 %}
+                        {%- for variant in coll_prod.variants -%}
+                            {%- render 'b2b-product-item', coll_prod:variant, collProd: coll_prod -%}
+                        {% endfor %}
+                    {% else %}
+                        {%- render 'b2b-product-item', coll_prod:coll_prod -%}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <script type="application/json" class="json-div">
+                [{{ product_json | strip }}]
+            </script>
+            {% comment %} <div class="product-item">
                 <div class="product-wrapper">
                     <div class="product-wrap">
                         <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-tuna-front-mockup_e3afe81e-a4fe-4412-8016-bd88c0b30a55.png?v=1742437993" alt="Salmon" height="auto" width="auto">
@@ -173,14 +184,626 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
     </div>
+    <div class="pagination-wrapper ">
+        <ul class="pagination-lists">
+          {% assign length_count = prod_counter | divided_by: 10.0 | ceil %}          
+          {% if length_count == 1 %}
+            {% capture _style %}style="pointer-events: none;"{% endcapture %}
+          {% endif %}
+          {% assign count = 0 %}
+          {%- capture _prevItem -%}
+          <li onclick="paginateItemPrev(event)" class="page-item prev-item disabled"><a href="#">{% render 'icon-chevron-blue' %}</a></li>
+          {%- endcapture -%}{% assign _prevItem = _prevItem | strip | strip_newlines %}
+          {{ _prevItem }}
+          {% for i in (1..length_count) %}
+            {% assign num = count | plus:1 %}
+            {% assign count = count | plus:10 %}
+            {% unless forloop.first %}
+              {% if forloop.last %}
+                <li onclick="paginateItem(event)" class="page-item" data-index="{{ forloop.index }}" end data-val="{{ num | minus:1 }}-{{ prod_counter | minus:1 }}" {{ _style }}>
+                <a href="#">{{ i }}</a></li>
+              {% else %}
+                <li onclick="paginateItem(event)" class="page-item" data-index="{{ forloop.index }}" data-val="{{ num | minus:1 }}-{{ count | minus:1 }}" {{ _style }}><a href="#">{{ i }}</a></li>
+              {% endif %}
+            {% else %}
+              <li onclick="paginateItem(event)" class="page-item active" data-index="{{ forloop.index }}" data-val="0-{{ count | minus:1 }}" {{ _style }}><a href="#">{{ i }}</a></li>
+            {% endunless %}
+          {% endfor %}
+          {%- capture _nextItem -%}
+          <li onclick="paginateItemNext(event)" class="page-item next-item{% if length_count == 1 %} disabled{% endif %}"><a href="#">{% render 'icon-chevron-blue' %}</a></li>
+          {%- endcapture -%}{% assign _nextItem = _nextItem | strip | strip_newlines %}
+          {{ _nextItem }}          
+        </ul>
+    </div>
     <div class="mini-cart-sticky">
-        <div class="total-added-product">2 products selected</div>
-        <div class="add-product-btn"><a href="#">add selected product</a></div>
+        <div class="total-added-product" data-prod-count="0">2 products selected</div>
+        <div class="add-product-btn" data-vid=""><a href="javascript:void(0);" onclick="addtocart(this)">add selected product</a></div>
     </div>
 </div>
+{% endcapture %}
+
+{{ bundle-list }}
+
+<script>
+
+    const _prevItem = `{{ _prevItem }}`;
+    const _nextItem = `{{ _nextItem }}`;
+
+    /* money function */
+    var Shopify = Shopify || {};
+    // ---------------------------------------------------------------------------
+    // Money format handler
+    // ---------------------------------------------------------------------------
+    Shopify.money_format = "${{amount}}";
+    Shopify.formatMoney = function(cents, format) {
+      if (typeof cents == 'string') { cents = cents.replace('.',''); }
+      var value = '';
+      var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+      var formatString = (format || this.money_format);
+    
+      function defaultOption(opt, def) {
+         return (typeof opt == 'undefined' ? def : opt);
+      }
+    
+      function formatWithDelimiters(number, precision, thousands, decimal) {
+        precision = defaultOption(precision, 2);
+        thousands = defaultOption(thousands, ',');
+        decimal   = defaultOption(decimal, '.');
+    
+        if (isNaN(number) || number == null) { return 0; }
+    
+        number = (number/100.0).toFixed(precision);
+    
+        var parts   = number.split('.'),
+            dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+            cents   = parts[1] ? (decimal + parts[1]) : '';
+    
+        return dollars + cents;
+      }
+    
+      switch(formatString.match(placeholderRegex)[1]) {
+        case 'amount':
+          value = formatWithDelimiters(cents, 2);
+          break;
+        case 'amount_no_decimals':
+          value = formatWithDelimiters(cents, 0);
+          break;
+        case 'amount_with_comma_separator':
+          value = formatWithDelimiters(cents, 2, '.', ',');
+          break;
+        case 'amount_no_decimals_with_comma_separator':
+          value = formatWithDelimiters(cents, 0, '.', ',');
+          break;
+      }
+    
+      return formatString.replace(placeholderRegex, value);
+    };
+
+    var amount_text = '{{shop.money_format}}'
+
+    function toggleVariant(ele){
+        if(ele.textContent == 'select a variant'){
+            ele.closest('.product-item').classList.add('active');
+            ele.textContent = 'Hide variants';
+        }else{
+            ele.closest('.product-item').classList.remove('active');
+            ele.textContent = 'select a variant';
+        }
+        
+    }
+
+    function addProduct(ele){
+        {% comment %} document.querySelector('.mini-cart-sticky .add-product-btn').setAttribute('data-vid',getVariants); {% endcomment %}
+        if(ele.closest('.product-item').classList.contains('varient-select')){
+            ele.closest('.product-wrapper').classList.add('selected');
+            ele.closest('.product-item').classList.add('selected');
+            ele.textContent = 'select more';
+        }else{
+            ele.closest('.product-item').classList.add('selected');
+            ele.textContent = 'select more';
+        }
+        var getCount = document.querySelectorAll('.quantity-selector.active').length;
+        document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
+        document.querySelector('.mini-cart-sticky').classList.add('active');
+    }
+
+    function addtocart(ele){
+        const items = [],items_object = {};
+        document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
+            var productData = { 
+                id: selected_items.getAttribute('data-item'),
+                quantity: parseInt(selected_items.querySelector('span').textContent)
+            };
+            items.push(productData);
+        
+            if(index == (document.querySelectorAll('.quantity-selector.active').length - 1)){
+                items_object['items'] = items;
+                console.log(items_object,'items_object')
+                const o = items_object;
+        
+                fetch(`{{ routes.cart_add_url }}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: `application/json`,
+                    },
+                    body: JSON.stringify(o)
+                }).then(response => {
+                    if (!response.ok) {
+                       throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                 }).then(result => {
+                    console.log('Added',result);
+                    window.location.href = '/cart';
+                 }).catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);;
+                }).finally(() => {
+                   console.log('finally');
+                });
+            }
+        })
+    }
+
+    var json_val = JSON.parse("["+document.querySelector('.json-div').innerText.trim()+"]")[0];
+    var _json_val = [];      
+    
+    json_val.forEach(function(iteam){
+        var _i = iteam;
+        if( _i.variants.length > 1 ){
+            var _tempArray = [];    
+            var _tempVars = _i.variants;    
+            _tempVars.forEach(function(variant, index){
+                var _temp = [];
+                _temp.push(_i);
+                _temp.variants = [];  
+                _temp.variants.push(variant);
+                _temp.custom = true;        
+                _json_val.push(_temp);
+            });
+        }else{
+            _json_val.push(_i);
+        }
+    });
+
+    var json_searched = [];
+
+    var select_eles = document.querySelectorAll('.bundle-search-bar .custom-select select');
+    select_eles.forEach(select_ele => {
+        select_ele.addEventListener('change', function(){
+            var sortType = this.value;
+            if( sortType == '' ) return;
+            console.log('sortType',sortType);
+            var sortJson = json_searched.length > 0 ? json_searched : json_val;
+            if(sortType === "Alphabetically: A-Z") {
+            sortJson.sort((a, b) => (a.title < b.title) ? -1 : 1);
+            } else if(sortType === "Alphabetically: Z-A") {
+            sortJson.sort((a, b) => (a.title > b.title) ? -1 : 1);
+            } else if(sortType === "Date: old to new") {
+            sortJson.sort((a, b) => {
+                var aVal = new Date(a.created_at).getTime();
+                var bVal = new Date(b.created_at).getTime();
+                return (aVal - bVal);
+            });
+            } else if(sortType === "Date: new to old") {
+            sortJson.sort((a, b) => {
+                var aVal = new Date(a.created_at).getTime();
+                var bVal = new Date(b.created_at).getTime();
+                return (bVal - aVal);
+            })
+            } else if(sortType === "Price: low to high") {
+            sortJson.sort((a, b) => a.price - b.price);
+            } else if(sortType === "Price: high to low") {
+            sortJson.sort((a, b) => b.price - a.price);
+            }
+
+            appendItems(sortJson);
+        });
+    });
+
+    var clickAttrPlus = function (plusSelector){
+
+        if(document.querySelector('.error-massage.active')){
+            document.querySelector('.error-massage.active').classList.remove('active')
+        }
+
+
+        if(plusSelector.closest('.quantity-selector').classList.contains('disabled')){
+            plusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            return;
+        }
+
+        var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('span').textContent);     
+        if (!isNaN(currentVal)) {
+            if (currentVal < 99999){
+                plusSelector.closest('.quantity-selector').classList.add('active');
+                plusSelector.closest('.quantity-selector').querySelector('span').textContent = currentVal + 1;
+                plusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
+            }else{
+                plusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.opacity = 1;
+                plusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
+            }
+        }else{
+            plusSelector.closest('.quantity-selector').querySelector('span').textContent = 0;
+        }
+
+        var getCount = document.querySelectorAll('.quantity-selector.active').length;
+        if(getCount > 0){
+            document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
+            document.querySelector('.mini-cart-sticky').classList.add('active');
+        }
+    };
+
+    var clickAttrMinus = function (minusSelector){
+
+        if(document.querySelector('.error-massage.active')){
+            document.querySelector('.error-massage.active').classList.remove('active')
+        }
+
+        if(minusSelector.closest('.quantity-selector').classList.contains('disabled')){
+            minusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            return;
+        }
+
+        var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('span').textContent) - 1;
+        if (!isNaN(currentVal) && currentVal > 0) {
+            minusSelector.closest('.quantity-selector').querySelector('span').textContent = currentVal;
+            minusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
+        }else{
+            minusSelector.closest('.quantity-selector').querySelector('span').textContent = 0;
+            minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.opacity = 0.5;
+            minusSelector.closest('.quantity-selector').classList.remove('active');
+            minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
+        }
+
+        var getCount = document.querySelectorAll('.quantity-selector.active').length;
+        if(getCount <= 0){
+            document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
+            document.querySelector('.mini-cart-sticky').classList.remove('active');
+        }
+    };
+    
+    const filter_bar = () => {
+        const searchbox = document.querySelector('.searchbar input').value.toUpperCase();
+        const store_products = document.querySelectorAll('.product-item-wrapper .product-item');
+        const store_products_names = document.querySelectorAll('.product-item-wrapper .title');
+
+        {% comment %} document.querySelector('.mini-cart-sticky').classList.remove('active'); {% endcomment %}
+        
+        json_searched = _json_val.filter((item) => {
+            if( searchbox.length == 0 ) return false;
+            var _found = true;
+            
+            {% comment %} var currentVarint = item.variants.filter((variant) => {     
+                if( variant.available && !_found ){
+                    _found = true
+                    return variant;
+                }
+            }); {% endcomment %}
+            {% comment %} currentVarint = !_found ? item.variants[0] : currentVarint[0];           {% endcomment %}
+            currentVarint = item.variants[0];          
+            if( (currentVarint.sku).toUpperCase().indexOf(searchbox) > -1 ){
+                return item;
+            }else{
+                var title = typeof item.custom != 'undefined' ? item[0].title : item.title;
+                if( (title).toUpperCase().indexOf(searchbox) > -1 ){
+                    return item;
+                }else{
+                    return false;
+                }
+            }
+        });
+
+        //console.log('json_searched',json_searched.length);
+        if( json_searched.length == 0 && searchbox.length > 0 ){
+            document.querySelector('.serach_result').classList.remove('hidden');
+            document.querySelector('.serach_result strong').innerHTML = `"${  document.querySelector('.search-bar').value }"`;
+        }else{
+            if( document.querySelector('.serach_result:not(.hidden)') ){
+            document.querySelector('.serach_result').classList.add('hidden');
+            }
+            appendItems(json_searched.length > 0 ? json_searched : _json_val);            
+        }
+    }
+
+    function appendItems(searchedJSON){
+        var finl_html = '';
+        var _pageLimit = searchedJSON.length > 10 ? 9 : (searchedJSON.length - 1);
+        for(var i=0;i<=_pageLimit;i++){
+        {% comment %} for(var i=0;i<=searchedJSON.length;i++){ {% endcomment %}
+            finl_html += appendHTML(searchedJSON[i]);
+        }
+        if(finl_html != ''){
+            document.querySelector('.product-item-wrapper').innerHTML = finl_html;
+            document.querySelector('.pagination-wrapper .page-item.active').classList.remove('active');
+            document.querySelector('.pagination-wrapper .page-item[data-index="1"]').classList.add('active');
+        }
+        genratePagination(searchedJSON);
+    }
+
+    function genratePagination(searchedJSON){
+        const numberPerPage = 10;
+        const numberOfPages = Math.ceil(searchedJSON.length / numberPerPage);
+        let _li = _prevItem;
+        let _count = 0;
+        for (let j = 1; j <= numberOfPages; j++) {
+            let perPageLimit = (j*numberPerPage) - 1;          
+            perPageLimit = perPageLimit > searchedJSON.length ? ( searchedJSON.length - 1 ) : perPageLimit;
+            if( j > 1 ){
+            _count = ((j-1) * numberPerPage);
+            }else{
+            _count = j - 1;
+            }
+            _li += `<li onclick="paginateItem(event)" class="page-item ${ j == 1 ? 'active':'' }" data-index="${ j }" ${ numberOfPages == j ? 'end':'' } data-val="${ _count }-${ perPageLimit }"
+            ${ numberOfPages == 1 ? 'style="pointer-events: none;"':'' }><a href="#">${ j }</a></li>`;
+        }
+        _li = _li+ _nextItem;
+        
+        document.querySelectorAll('.pagination-lists .page-item').forEach((ele) => ele.remove());
+        document.querySelector('.pagination-lists').innerHTML = _li;
+        if( numberOfPages == 1 ){
+            document.querySelector('.pagination-lists .next-item').classList.add('disabled');
+        }
+    }
+
+    function appendHTML(item){   
+        if( typeof item == "undefined" ) return '';
+
+        //console.log(typeof item.custom, 'asd');
+
+        var varCus = item.variants;
+        var _item = typeof item.custom != 'undefined' ? item[0]:item;
+        var currentVAraints = varCus.filter((variant) => { return variant; });        
+        var _returnHTML = '';
+        
+        {% comment %} console.log(item,'items'); {% endcomment %}
+        if(currentVAraints.length > 1){
+            var split_v = (_item.title).split(' - Sauvez')[0]
+            _returnHTML = 
+                `<div class="product-item varient-select">
+
+                    <div class="product-wrapper">
+                        <div class="product-wrap">
+                            <img src="${ _item.featured_image}" alt="Salmon" height="auto" width="auto">
+                            <span class="title">${_item.title}</span>
+                        </div>
+                        <span class="sku">-</span>
+                        <span class="price">-</span>
+                        <div class="quantity-btn-wrap">
+                        <button class="variant-select-btn" onclick="toggleVariant(this)">select a variant</button>
+                        </div>
+                    </div>
+                    <div class="varient-select-item">`
+                        currentVAraints.forEach(function(currentVAraint){
+                            var { min, max, increment } = currentVAraint.quantity_rule;        
+                            var _maxAttr = max != null ? `data-max="${ max }" max="${ max }"`: '';
+                            var _vtitle = currentVAraint.title == 'Default Title' ? '' : currentVAraint.title;
+                            var split_title = _vtitle.split(' - Sauvez')[0];
+                            var disable_class = '';
+                            console.log(currentVAraint,'currentVAraint.available')
+                            if(currentVAraint.available == false){
+                                var disable_class = 'disabled';
+                            }
+
+                            _returnHTML += `
+                            <div class="product-wrapper">
+                                <div class="product-wrap">
+                                    <img src="//makro-staging-rc-creations-1954.myshopify.com/cdn/shop/files/MAshirtfront_4b7c46fe-9cfd-497b-bec7-3abc6ca71b68.png?v=1742437687" alt="Salmon" height="auto" width="auto">
+                                    <span class="title">${_item.title} / ${currentVAraint.title}</span>
+                                </div>
+                                <span class="sku"><span class="mobile-header">Sku</span>${ currentVAraint.sku }</span>
+                                <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
+                                <div class="quantity-btn-wrap">
+                                    <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
+                                        <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </button>
+                                        <span>0</span>
+                                        <button onclick="clickAttrPlus(this);" class="qtyplus">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>`
+                        });
+
+            _returnHTML += `</div></div>`;
+
+            
+        }else{
+            currentVAraints.forEach(function(currentVAraint){
+                var disable_class = '';
+                if(currentVAraint.available == false){
+                    var disable_class = 'disabled';
+                }
+
+                _returnHTML += `<div class="product-item ">
+                    <div class="product-wrapper">
+                        <div class="product-wrap">
+                            <img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">
+                            <span class="title">${_item.title }</span>
+                        </div>
+                        <span class="sku"><span class="mobile-header">Sku</span>${currentVAraint.sku}</span>
+                        <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
+                        <div class="quantity-btn-wrap">
+                            <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
+                                <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg></button>
+                                <span>0</span>
+                                <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="error-massage">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                            <g clip-path="url(#clip0_95_2217)">
+                            <path d="M8 14.5C11.3137 14.5 14 11.8137 14 8.5C14 5.18629 11.3137 2.5 8 2.5C4.68629 2.5 2 5.18629 2 8.5C2 11.8137 4.68629 14.5 8 14.5Z" stroke="#EB1C1F" stroke-miterlimit="10"></path>
+                            <path d="M8 9V5.5" stroke="#EB1C1F" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M8 12C8.41421 12 8.75 11.6642 8.75 11.25C8.75 10.8358 8.41421 10.5 8 10.5C7.58579 10.5 7.25 10.8358 7.25 11.25C7.25 11.6642 7.58579 12 8 12Z" fill="#EB1C1F"></path>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_95_2217">
+                                <rect width="16" height="16" fill="white" transform="translate(0 0.5)"></rect>
+                            </clipPath>
+                            </defs>
+                        </svg>
+                        This product is out of stock please select a different one
+                    </div>
+                </div>`;
+            });  
+        }
+        
+
+        return _returnHTML;        
+    }
+
+    let paginateItem = function(e) {
+        e.preventDefault();
+        let paginate_item = e.target.nodeName != 'LI' ? e.target.parentElement : e.target;
+        // console.log(e.target, paginate_item);
+        paginate_item.closest('.pagination-lists').querySelector('.active').classList.remove('active');
+        paginate_item.closest('.pagination-lists').querySelector('.page-item.next-item').classList.remove('disabled');
+        paginate_item.closest('.pagination-lists').querySelector('.page-item.prev-item').classList.remove('disabled');
+        paginate_item.classList.add('active');
+        var length_range = paginate_item.getAttribute('data-val');
+        var split_val = length_range.split('-');
+        var finl_html = '';
+        for(var i=Number(split_val[0]);i<=Number(split_val[1]);i++){
+            finl_html += appendHTML(json_val[i]);
+        }
+        document.querySelector('.product-item-wrapper').innerHTML = finl_html;
+        if(paginate_item.getAttribute('end') != null){
+            paginate_item.closest('.pagination-lists').querySelector('.page-item.next-item').classList.add('disabled');
+        }
+        if(paginate_item.getAttribute('data-index') == '1'){
+            paginate_item.closest('.pagination-lists').querySelector('.page-item.prev-item').classList.add('disabled');
+        }
+        var store_scroll = document.querySelector('.bundle-search-bar').offsetTop - 100;
+        window.scrollTo({top: store_scroll, behavior: 'smooth'});
+        return true;
+    };
+
+    let paginateItemNext = function(e) {
+        e.preventDefault();
+        if(e.target.closest('.pagination-lists').querySelector('.active').getAttribute('end') == null){
+            var get_index = Number(e.target.closest('.pagination-lists').querySelector('.active').getAttribute('data-index')) + 1;
+            e.target.closest('.pagination-lists').querySelector('.page-item[data-index="'+get_index+'"]').click();
+            if(e.target.closest('.pagination-lists').querySelector('.page-item[data-index="'+get_index+'"]').getAttribute('end') != null){
+            e.target.closest('.pagination-lists').querySelector('.page-item.next-item').classList.add('disabled');
+            } 
+        }
+    };
+
+    let paginateItemPrev = function(e) {
+        e.preventDefault();
+        if(Number(e.target.closest('.pagination-lists').querySelector('.active').getAttribute('data-index')) != 1){
+            var get_index = Number(e.target.closest('.pagination-lists').querySelector('.active').getAttribute('data-index')) - 1;
+            e.target.closest('.pagination-lists').querySelector('.page-item[data-index="'+get_index+'"]').click();    
+        }else{
+            e.target.closest('.pagination-lists').querySelector('.page-item.prev-item').classList.add('disabled');
+        }
+    };
+
+    var dropdown_js = function (variant_btn){
+        variant_btn.closest('.order-item').classList.toggle('active');
+        var get_height = variant_btn.closest('.order-item').querySelector('.varient-dropdown .toggle-data .varient-dropdown-toggle').scrollHeight;
+        if(variant_btn.closest('.order-item').classList.contains('active')){
+            variant_btn.closest('.order-item').querySelector('.varient-dropdown .toggle-data').style.maxHeight = `${get_height+70}px`;
+        }else{
+            variant_btn.closest('.order-item').querySelector('.varient-dropdown .toggle-data').style.maxHeight = "0px";
+        }
+    }
+
+    document.querySelectorAll('.bundle-search-bar .custom-select select').forEach(select_box => {
+    
+        var wrapper = document.createElement('div');
+        wrapper.classList.add('select');
+  
+        var wrapper2 = document.createElement('div');
+        wrapper2.classList.add('select-styled');
+        wrapper2.innerHTML = 'Sort by';
+  
+        select_box.parentNode.insertBefore(wrapper, select_box);
+        wrapper.appendChild(select_box);
+        wrapper.appendChild(wrapper2);
+  
+        var wrapperul = document.createElement('ul');
+        wrapperul.classList.add('select-options');
+        for(var i=0;i<select_box.querySelectorAll('option').length;i++){
+            var li = document.createElement('li');
+            li.innerHTML = select_box.querySelectorAll('option')[i].innerHTML;
+            wrapperul.appendChild(li);
+        }
+  
+        wrapper.appendChild(wrapperul);
+        wrapperul.style.display = 'none';
+        select_box.classList.add('select-hidden');
+    });
+
+    document.querySelector('.select-styled').addEventListener('click',function(){
+       if(this.classList.contains('active')){
+        this.classList.remove('active');
+        this.closest('.select').querySelector('ul.select-options').style.display = 'none';
+       }else{
+        this.classList.add('active');
+        this.closest('.select').querySelector('ul.select-options').style.display = 'block';
+       }
+    });
+
+    var li_wrapper = document.querySelectorAll('.bundle-search-bar ul.select-options li');
+      li_wrapper.forEach(li_wrap => {
+         li_wrap.addEventListener('click',function(){
+  
+            if(document.querySelector('.bundle-search-bar ul.select-options li.is-selected') != null){
+                document.querySelector('.bundle-search-bar ul.select-options li.is-selected').classList.remove('is-selected');  
+            }
+            li_wrap.classList.add('is-selected');
+            document.querySelector('.bundle-search-bar .select-styled').classList.remove('active');
+            document.querySelector('.bundle-search-bar .select-styled').closest('.select').querySelector('ul.select-options').style.display = 'none';
+  
+            var sortType = li_wrap.textContent;
+            var sortJson = json_searched.length > 0 ? json_searched : json_val;
+            if(sortType === "Alphabetically: A->Z") {
+              sortJson.sort((a, b) => (a.title < b.title) ? -1 : 1);
+            } else if(sortType === "Alphabetically: Z->A") {
+              sortJson.sort((a, b) => (a.title > b.title) ? -1 : 1);
+            } else if(sortType === "Date: old to new") {
+              sortJson.sort((a, b) => {
+                var aVal = new Date(a.created_at).getTime();
+                var bVal = new Date(b.created_at).getTime();
+                return (aVal - bVal);
+              });
+            } else if(sortType === "Date: new to old") {
+              sortJson.sort((a, b) => {
+                var aVal = new Date(a.created_at).getTime();
+                var bVal = new Date(b.created_at).getTime();
+                return (bVal - aVal);
+              })
+            } else if(sortType === "Price: low to high") {
+              sortJson.sort((a, b) => a.price - b.price);
+            } else if(sortType === "Price: high to low") {
+              sortJson.sort((a, b) => b.price - a.price);
+            }
+
+            document.querySelector('.mini-cart-sticky').classList.remove('active');
+
+            appendItems(sortJson);
+         }) 
+      });
+
+</script>
 
 {% schema %}
     {

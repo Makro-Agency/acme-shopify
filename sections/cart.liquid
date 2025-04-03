@@ -1,0 +1,14 @@
+{% render 'cart', section:section %}
+
+{% schema %}
+  {
+    "name": "cart",
+    "settings": [
+        {
+          "type":"richtext",
+          "id":"prevent_msg",
+          "label":"Prevent Checkout Message"
+        }
+    ]
+  }
+{% endschema %}

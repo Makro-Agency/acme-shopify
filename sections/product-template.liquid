@@ -18,7 +18,29 @@
       endif
     endif
   endif
+
+  assign b2b_tag = false
+  for tag in product.tags
+    echo tag
+    if tag == 'B2B'
+      assign b2b_tag = true
+      break
+    endif
+  endfor
+
+  
 -%}
+
+{% comment %} <script>
+  {% if b2b_tag == true %}
+    {% unless customer %}
+      window.location.href = '/';
+    {% elsif customer.b2b? == false %}
+      window.location.href = '/';
+    {% endunless %}
+  {% endif %}
+</script> {% endcomment %}
+
 
 {% comment %} get the primary collection {% endcomment %}
 {% liquid

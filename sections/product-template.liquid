@@ -28,6 +28,11 @@
     endif
   endfor
 
+  assign customer_b2B = false
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign customer_b2B = true
+  endif
+
   
 -%}
 
@@ -87,20 +92,26 @@
           {% else %}
           <span class="product-stock stock-out">Out of Stock</span>
           {% endif %}
+          
+          {% unless customer_b2B %}
           <!-- Start of Judge.me code --> 
             <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}'> 
               {{ product.metafields.judgeme.badge }} 
             </div> 
           <!-- End of Judge.me code -->
+          {% endunless %}
           
           <div class="product-description body-2 mb-2">{{ product.description }}</div>
             {% render 'product-single-form' product:product  available_online: available_online %}
 
-          {% if product.metafields.accentuate.where_to_buy_code != blank and product.metafields.accentuate.available_online != true %}
-            <div class="destini-buttons d-flex flex-column">
-              {% render 'product-destini-buttons' product:product %}
-            </div>
-          {% endif %}
+
+          {% unless customer_b2B %}
+            {% if product.metafields.accentuate.where_to_buy_code != blank and product.metafields.accentuate.available_online != true %}
+              <div class="destini-buttons d-flex flex-column">
+                {% render 'product-destini-buttons' product:product %}
+              </div>
+            {% endif %}
+          {% endunless %}
         </div>
       </div><!-- // product-single__details -->
     </div><!-- row -->

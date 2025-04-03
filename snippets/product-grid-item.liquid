@@ -122,11 +122,13 @@ product-add-form product-form product-form-{{ product.id }}
 										</div>
 								</div>
 							{% endunless %}
-                            <!-- Start of Judge.me code -->
-      <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
-        {{ product.metafields.judgeme.badge }}
-      </div>
-      <!-- End of Judge.me code -->
+								{% unless customer_b2B %}
+								<!-- Start of Judge.me code -->
+								<div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
+									{{ product.metafields.judgeme.badge }}
+								</div>
+								<!-- End of Judge.me code -->
+								{% endunless %}
 							{% render 'product-price', variant: current_variant, show_vendor: false, available_online: available_online %}
 							<input type = 'hidden' name="id" value="{{current_variant.id}}" />
 						</div>
@@ -222,11 +224,12 @@ product-add-form product-form product-form-{{ product.id }}
 		
 
 
-		{% if product.metafields.accentuate.where_to_buy_code != blank and recommended != true and available_online != true or has_b2b == true %}
-			<div class="product-grid-item__button-container mt-3 d-flex flex-column">
-				{% render 'product-destini-buttons' product:product%}
-			  </div> 
-		{% endif %}
+
+			{% if product.metafields.accentuate.where_to_buy_code != blank and recommended != true and available_online != true or has_b2b == true %}
+				<div class="product-grid-item__button-container mt-3 d-flex flex-column">
+					{% render 'product-destini-buttons' product:product, customer_b2B:customer_b2B %}
+					</div> 
+			{% endif %}
 	</div>
 	
 	<!-- // Item Content  -->

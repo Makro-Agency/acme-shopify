@@ -52,6 +52,12 @@
           "social_menu": "social-menu",
           "footer_utility_menu": "footer-utility"
         }
+      },
+      "cart": {
+        "type": "cart",
+        "settings": {
+          "prevent_msg": "<p>Sorry, we can't complete your checkout at this time. Please <a href=\"/pages/contact\" title=\"Contact\">contact</a> our team for more information</p>"
+        }
       }
     },
     "content_for_index": [],

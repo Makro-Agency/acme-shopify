@@ -8,19 +8,16 @@
  * ------------------------------------------------------------
  */
  {
-  "name": "Footer",
-  "type": "footer",
-  "sections": {
-    "footer": {
-      "type": "footer",
-      "settings": {
-        "footer_menu": "footer-menu-new",
-        "social_menu": "social-menu",
-        "footer_utility_menu": "footer-utility"
-      }
-    }
+  "parent": "header-group.json",
+  "context": {
+    "b2b": true
   },
-  "order": [
-    "footer"
-  ]
+  "sections": {
+    "header": {
+      "settings": {
+        "menu": "b2b-menu"
+      },
+      "blocks": {}
+    }
+  }
 }

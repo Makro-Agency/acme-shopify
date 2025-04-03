@@ -54,6 +54,11 @@
 	endif
 	assign mega_menus = section.blocks | where : 'type' , 'mega-menu'
 
+	assign customer_b2B = false
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign customer_b2B = true
+  endif
+
 %}
 {% comment %} assign navbar_background = 'navbar-light'
 assign navbar_transparency = false  {% endcomment %}
@@ -99,7 +104,7 @@ assign navbar_transparency = false  {% endcomment %}
 							</div>
 						{% endunless %}
 						<ul class="navbar-nav-ul">
-						{%- for link in linklists.main-menu.links -%}
+						{%- for link in section.settings.menu.links -%}
 							{%  assign mega = false  %}
 							{%  for mega_menu in mega_menus %}
 								{%  if mega_menu.settings.trigger == link.title %}
@@ -172,7 +177,7 @@ assign navbar_transparency = false  {% endcomment %}
 				</div> <!-- Container -->
 
 				{% comment %} Subnav Items {% endcomment %}
-				{%- for link in linklists.main-menu.links -%}
+				{%- for link in section.settings.menu.links -%}
 					{% if link.links.size > 0 %}
 						<div class="subnav container d-lg-none mt-5 px-4" data-subnav="{{ link.handle }}" aria-hidden="true">
 							<div class="row">
@@ -211,6 +216,8 @@ assign navbar_transparency = false  {% endcomment %}
 					</form> 
 					{% endcomment %}
 				</div><!-- .nav-search -->
+
+				{% unless customer_b2B %}
 				<div class="nav-pin nav-icon" tabindex="0">
 					<a href="/pages/where-to-buy" aria-label="Store Finder">
 						{% if template.name == 'product' or template.name == 'collection' %}
@@ -220,6 +227,14 @@ assign navbar_transparency = false  {% endcomment %}
 						{% endif %}
 					</a>
 				</div>
+				{% else %}
+					<div class="nav-pin nav-icon">
+						<a href="/account">
+							{% render 'icon-account' %}
+						</a>
+					</div>
+				{% endunless %}
+
 			</div>
 			<!-- end navbar utility -->
 			
@@ -242,8 +257,11 @@ assign navbar_transparency = false  {% endcomment %}
 	{
 		"name": "Header",
 		"settings": [
-
-			
+			{
+				"type":"link_list",
+				"id":"menu",
+				"label":"Menu"
+			}
 		],
 		"blocks": [
 			{

@@ -2,6 +2,11 @@
 	if product.metafields.product.hover_image != blank
 		assign hover_image = product.metafields.product.hover_image
 	endif
+
+	assign customer_b2B = false
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign customer_b2B = true
+  endif
 %}
 
 {%- capture tags_array -%}
@@ -79,11 +84,14 @@ product-add-form product-form product-form-{{ product.id }}
 							endunless
 						%}
 					</h3>
-                  <!-- Start of Judge.me code -->
-      <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
-        {{ product.metafields.judgeme.badge }}
-      </div>
-      <!-- End of Judge.me code -->
+
+					{% unless customer_b2B %}
+					<!-- Start of Judge.me code -->
+					<div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
+						{{ product.metafields.judgeme.badge }}
+					</div>
+					<!-- End of Judge.me code -->
+					{% endunless %}
 				{% endif %}
 			</a>
 		</div>

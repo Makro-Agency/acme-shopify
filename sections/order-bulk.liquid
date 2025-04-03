@@ -1,5 +1,14 @@
 {{ 'order-bulk.css' | asset_url | stylesheet_tag }}
 
+<script>
+    {% unless request.design_mode %}
+        {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+        {% else %}  
+            window.location.href = '/'
+        {% endif %}
+    {% endunless %}
+</script>
+
 <div class="page-header">
     <h2 class="title">{{ section.settings.title }}</h2>
     <p>{{ section.settings.des }}</p>
@@ -12,8 +21,8 @@
             <select>
                 <option>Alphabetically: A-Z</option>
                 <option>Alphabetically: Z-A</option>
-                <option>Date: old to new</option>
-                <option>Date: new to old</option>
+                {% comment %} <option>Date: old to new</option>
+                <option>Date: new to old</option> {% endcomment %}
                 <option>Price: low to high</option>
                 <option>Price: high to low</option>
             </select>
@@ -65,126 +74,6 @@
             <script type="application/json" class="json-div">
                 [{{ product_json | strip }}]
             </script>
-            {% comment %} <div class="product-item">
-                <div class="product-wrapper">
-                    <div class="product-wrap">
-                        <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-tuna-front-mockup_e3afe81e-a4fe-4412-8016-bd88c0b30a55.png?v=1742437993" alt="Salmon" height="auto" width="auto">
-                        <span class="title">3 oz. Nova Smoked Salmon</span>
-                    </div>
-                    <span class="sku"><span class="mobile-header">Sku</span>F03013</span>
-                    <span class="price"><span class="mobile-header">Sku</span>$15.99</span>
-                    <div class="quantity-btn-wrap">
-                        <div class="quantity-selector">
-                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg></button>
-                            <span>1</span>
-                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg></button>
-                        </div>
-                        <button class="select-btn">SELECT</button>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-wrapper">
-                    <div class="product-wrap">
-                        <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-tuna-front-mockup_e3afe81e-a4fe-4412-8016-bd88c0b30a55.png?v=1742437993" alt="Salmon" height="auto" width="auto">
-                        <span class="title">3 oz. Nova Smoked Salmon</span>
-                    </div>
-                    <span class="sku"><span class="mobile-header">Sku</span>F03013</span>
-                    <span class="price"><span class="mobile-header">Sku</span>$15.99</span>
-                    <div class="quantity-btn-wrap">
-                        <div class="quantity-selector">
-                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg></button>
-                            <span>1</span>
-                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg></button>
-                        </div>
-                        <button class="select-btn">SELECT</button>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-wrapper">
-                    <div class="product-wrap">
-                        <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-tuna-front-mockup_e3afe81e-a4fe-4412-8016-bd88c0b30a55.png?v=1742437993" alt="Salmon" height="auto" width="auto">
-                        <span class="title">3 oz. Nova Smoked Salmon</span>
-                    </div>
-                    <span class="sku"><span class="mobile-header">Sku</span>F03013</span>
-                    <span class="price"><span class="mobile-header">Sku</span>$15.99</span>
-                    <div class="quantity-btn-wrap">
-                        <div class="quantity-selector">
-                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg></button>
-                            <span>1</span>
-                            <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg></button>
-                        </div>
-                        <button class="select-btn disabled" onclick="this.closest('.product-item').querySelector('.error-massage').classList.add('active');">SELECT</button>
-                    </div>
-                </div>
-                <div class="error-massage">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                        <g clip-path="url(#clip0_95_2217)">
-                          <path d="M8 14.5C11.3137 14.5 14 11.8137 14 8.5C14 5.18629 11.3137 2.5 8 2.5C4.68629 2.5 2 5.18629 2 8.5C2 11.8137 4.68629 14.5 8 14.5Z" stroke="#EB1C1F" stroke-miterlimit="10"/>
-                          <path d="M8 9V5.5" stroke="#EB1C1F" stroke-linecap="round" stroke-linejoin="round"/>
-                          <path d="M8 12C8.41421 12 8.75 11.6642 8.75 11.25C8.75 10.8358 8.41421 10.5 8 10.5C7.58579 10.5 7.25 10.8358 7.25 11.25C7.25 11.6642 7.58579 12 8 12Z" fill="#EB1C1F"/>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_95_2217">
-                            <rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
-                          </clipPath>
-                        </defs>
-                      </svg>
-                      This product is out of stock please select a different one
-                </div>
-            </div>
-            <div class="product-item varient-select">
-                <div class="product-wrapper">
-                    <div class="product-wrap">
-                        <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-salmon-society-shirt-back-gray_ef8d3dd6-20f6-4bd1-b619-911facf4d2dc.png?v=1738801418" alt="Salmon" height="auto" width="auto">
-                        <span class="title">Salmon Society Shirt</span>
-                    </div>
-                    <span class="sku">-</span>
-                    <span class="price">-</span>
-                    <div class="quantity-btn-wrap">
-                        <button class="variant-select-btn" onclick="this.closest('.product-item').classList.add('active');">select a variant</button>
-                    </div>
-                </div>
-                <div class="varient-select-item">
-                    <div class="product-wrapper">
-                        <div class="product-wrap">
-                            <img src="https://cdn.shopify.com/s/files/1/0929/1631/8496/files/smoked-salmon-society-shirt-back-gray_ef8d3dd6-20f6-4bd1-b619-911facf4d2dc.png?v=1738801418" alt="Salmon" height="auto" width="auto">
-                            <span class="title">Salmon Society Shirt</span>
-                        </div>
-                        <span class="sku"><span class="mobile-header">Sku</span>F03013</span>
-                        <span class="price"><span class="mobile-header">Sku</span>$15.99</span>
-                        <div class="quantity-btn-wrap">
-                            <div class="quantity-selector">
-                                <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg></button>
-                                <span>1</span>
-                                <button><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg></button>
-                            </div>
-                            <button class="select-btn">SELECT</button>
-                        </div>
-                    </div>
-                </div>
-            </div> {% endcomment %}
         </div>
     </div>
     <div class="pagination-wrapper ">
@@ -229,6 +118,7 @@
 
 <script>
 
+    const main_items = [];
     const _prevItem = `{{ _prevItem }}`;
     const _nextItem = `{{ _nextItem }}`;
 
@@ -312,6 +202,13 @@
 
     function addtocart(ele){
         const items = [],items_object = {};
+
+        if(main_items.length > 0){
+            main_items.forEach((item)=>{
+                items.push(item);
+            })
+            
+        }
         document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
             var productData = { 
                 id: selected_items.getAttribute('data-item'),
@@ -412,7 +309,11 @@
 
 
         if(plusSelector.closest('.quantity-selector').classList.contains('disabled')){
-            plusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            if(plusSelector.closest('.variant-inner-item')){
+                plusSelector.closest('.variant-inner-item').querySelector('.error-massage').classList.add('active');    
+            }else{
+                plusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            }
             return;
         }
 
@@ -444,7 +345,11 @@
         }
 
         if(minusSelector.closest('.quantity-selector').classList.contains('disabled')){
-            minusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            if(minusSelector.closest('.variant-inner-item')){
+                minusSelector.closest('.variant-inner-item').querySelector('.error-massage').classList.add('active');    
+            }else{
+                minusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            }
             return;
         }
 
@@ -589,28 +494,45 @@
                             }
 
                             _returnHTML += `
-                            <div class="product-wrapper">
-                                <div class="product-wrap">
-                                    <img src="//makro-staging-rc-creations-1954.myshopify.com/cdn/shop/files/MAshirtfront_4b7c46fe-9cfd-497b-bec7-3abc6ca71b68.png?v=1742437687" alt="Salmon" height="auto" width="auto">
-                                    <span class="title">${_item.title} / ${currentVAraint.title}</span>
-                                </div>
-                                <span class="sku"><span class="mobile-header">Sku</span>${ currentVAraint.sku }</span>
-                                <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
-                                <div class="quantity-btn-wrap">
-                                    <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
-                                        <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                        </button>
-                                        <span>0</span>
-                                        <button onclick="clickAttrPlus(this);" class="qtyplus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                        </button>
+                            <div class="variant-inner-item">
+                                <div class="product-wrapper">
+                                    <div class="product-wrap">
+                                        <img src="//makro-staging-rc-creations-1954.myshopify.com/cdn/shop/files/MAshirtfront_4b7c46fe-9cfd-497b-bec7-3abc6ca71b68.png?v=1742437687" alt="Salmon" height="auto" width="auto">
+                                        <span class="title">${_item.title} / ${currentVAraint.title}</span>
                                     </div>
+                                    <span class="sku"><span class="mobile-header">Sku</span>${ currentVAraint.sku }</span>
+                                    <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
+                                    <div class="quantity-btn-wrap">
+                                        <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
+                                            <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                            </button>
+                                            <span>0</span>
+                                            <button onclick="clickAttrPlus(this);" class="qtyplus">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="error-massage">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                                        <g clip-path="url(#clip0_95_2217)">
+                                        <path d="M8 14.5C11.3137 14.5 14 11.8137 14 8.5C14 5.18629 11.3137 2.5 8 2.5C4.68629 2.5 2 5.18629 2 8.5C2 11.8137 4.68629 14.5 8 14.5Z" stroke="#EB1C1F" stroke-miterlimit="10"/>
+                                        <path d="M8 9V5.5" stroke="#EB1C1F" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8 12C8.41421 12 8.75 11.6642 8.75 11.25C8.75 10.8358 8.41421 10.5 8 10.5C7.58579 10.5 7.25 10.8358 7.25 11.25C7.25 11.6642 7.58579 12 8 12Z" fill="#EB1C1F"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_95_2217">
+                                            <rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
+                                    This product is out of stock please select a different one
                                 </div>
                             </div>`
                         });

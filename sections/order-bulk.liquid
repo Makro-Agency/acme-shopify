@@ -309,7 +309,11 @@
 
 
         if(plusSelector.closest('.quantity-selector').classList.contains('disabled')){
-            plusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            if(plusSelector.closest('.variant-inner-item')){
+                plusSelector.closest('.variant-inner-item').querySelector('.error-massage').classList.add('active');    
+            }else{
+                plusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            }
             return;
         }
 
@@ -341,7 +345,11 @@
         }
 
         if(minusSelector.closest('.quantity-selector').classList.contains('disabled')){
-            minusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            if(minusSelector.closest('.variant-inner-item')){
+                minusSelector.closest('.variant-inner-item').querySelector('.error-massage').classList.add('active');    
+            }else{
+                minusSelector.closest('.product-item').querySelector('.error-massage').classList.add('active');
+            }
             return;
         }
 
@@ -486,28 +494,45 @@
                             }
 
                             _returnHTML += `
-                            <div class="product-wrapper">
-                                <div class="product-wrap">
-                                    <img src="//makro-staging-rc-creations-1954.myshopify.com/cdn/shop/files/MAshirtfront_4b7c46fe-9cfd-497b-bec7-3abc6ca71b68.png?v=1742437687" alt="Salmon" height="auto" width="auto">
-                                    <span class="title">${_item.title} / ${currentVAraint.title}</span>
-                                </div>
-                                <span class="sku"><span class="mobile-header">Sku</span>${ currentVAraint.sku }</span>
-                                <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
-                                <div class="quantity-btn-wrap">
-                                    <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
-                                        <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                        </button>
-                                        <span>0</span>
-                                        <button onclick="clickAttrPlus(this);" class="qtyplus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                                <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                        </button>
+                            <div class="variant-inner-item">
+                                <div class="product-wrapper">
+                                    <div class="product-wrap">
+                                        <img src="//makro-staging-rc-creations-1954.myshopify.com/cdn/shop/files/MAshirtfront_4b7c46fe-9cfd-497b-bec7-3abc6ca71b68.png?v=1742437687" alt="Salmon" height="auto" width="auto">
+                                        <span class="title">${_item.title} / ${currentVAraint.title}</span>
                                     </div>
+                                    <span class="sku"><span class="mobile-header">Sku</span>${ currentVAraint.sku }</span>
+                                    <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
+                                    <div class="quantity-btn-wrap">
+                                        <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
+                                            <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                            </button>
+                                            <span>0</span>
+                                            <button onclick="clickAttrPlus(this);" class="qtyplus">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="error-massage">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                                        <g clip-path="url(#clip0_95_2217)">
+                                        <path d="M8 14.5C11.3137 14.5 14 11.8137 14 8.5C14 5.18629 11.3137 2.5 8 2.5C4.68629 2.5 2 5.18629 2 8.5C2 11.8137 4.68629 14.5 8 14.5Z" stroke="#EB1C1F" stroke-miterlimit="10"/>
+                                        <path d="M8 9V5.5" stroke="#EB1C1F" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8 12C8.41421 12 8.75 11.6642 8.75 11.25C8.75 10.8358 8.41421 10.5 8 10.5C7.58579 10.5 7.25 10.8358 7.25 11.25C7.25 11.6642 7.58579 12 8 12Z" fill="#EB1C1F"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_95_2217">
+                                            <rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
+                                    This product is out of stock please select a different one
                                 </div>
                             </div>`
                         });

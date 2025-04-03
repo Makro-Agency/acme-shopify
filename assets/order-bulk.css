@@ -382,6 +382,9 @@ span.title {
     font-weight: 400;
     line-height: 150%;
 }
+.varient-select-item .error-massage{
+    margin-left: 80px;
+}
 .error-massage.active {
     display: flex;
 }
@@ -411,6 +414,13 @@ span.title {
         padding: 20px;
         gap: 16px;
     }
+    .error-massage{
+        margin: 20px;
+        align-items: flex-start;
+    }
+    .varient-select-item .error-massage{
+        margin: 20px;
+    }
     .product-wrap { gap: 16px; }
     span.title { font-size: 16px; }
     .product-item .product-wrapper > span {
@@ -427,7 +437,7 @@ span.title {
     }
     .quantity-btn-wrap { gap: 10px; width: 100%; }
     button.select-btn { flex: 1 0 auto; }
-    .quantity-selector { padding: 12px 22px 10px 22px; gap: 18px; }
+    .quantity-selector { padding: 12px 22px 10px 22px; gap: 18px;width: 100%;justify-content: space-between; }
     .page-header {
         padding: 50px 32.5px;
     }

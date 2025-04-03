@@ -19,30 +19,47 @@
   </div>
   <div class="varient-select-item">
     {%- for variant in coll_prod.variants -%}
-      <div class="product-wrapper">
-          <div class="product-wrap">
-              {% if variant.featured_image %}
-                <img src="{{ variant.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
-              {% else %}
-                <img src="{{ coll_prod.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
-              {% endif %}
-              <span class="title">{{ coll_prod.title }} / {{ variant.title }}</span>
-          </div>
-          {% if variant.sku %}<span class="sku"><span class="mobile-header">Sku</span>{{ variant.sku }}</span>{% else %}-{% endif %}
-          <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}</span>
-          <div class="quantity-btn-wrap">
-              <div class="quantity-selector {% unless variant.available %}disabled{% endunless %}" data-item="{{ variant.id }}">
-                  <button class="qtyminus" style="opacity: 0.5; cursor: not-allowed;" onclick="clickAttrMinus(this);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                      <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg></button>
-                  <span>0</span>
-                  <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                      <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg></button>
-              </div>
-              {% comment %} <button class="select-btn" data-item="{{ variant.id }}" onclick="addProduct(this)">SELECT</button> {% endcomment %}
-          </div>
+      <div class="variant-inner-item">
+        <div class="product-wrapper">
+            <div class="product-wrap">
+                {% if variant.featured_image %}
+                  <img src="{{ variant.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
+                {% else %}
+                  <img src="{{ coll_prod.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
+                {% endif %}
+                <span class="title">{{ coll_prod.title }} / {{ variant.title }}</span>
+            </div>
+            {% if variant.sku %}<span class="sku"><span class="mobile-header">Sku</span>{{ variant.sku }}</span>{% else %}-{% endif %}
+            <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}</span>
+            <div class="quantity-btn-wrap">
+                <div class="quantity-selector {% unless variant.available %}disabled{% endunless %}" data-item="{{ variant.id }}">
+                    <button class="qtyminus" style="opacity: 0.5; cursor: not-allowed;" onclick="clickAttrMinus(this);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg></button>
+                    <span>0</span>
+                    <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg></button>
+                </div>
+                {% comment %} <button class="select-btn" data-item="{{ variant.id }}" onclick="addProduct(this)">SELECT</button> {% endcomment %}
+            </div>
+        </div>
+        <div class="error-massage">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+              <g clip-path="url(#clip0_95_2217)">
+                <path d="M8 14.5C11.3137 14.5 14 11.8137 14 8.5C14 5.18629 11.3137 2.5 8 2.5C4.68629 2.5 2 5.18629 2 8.5C2 11.8137 4.68629 14.5 8 14.5Z" stroke="#EB1C1F" stroke-miterlimit="10"/>
+                <path d="M8 9V5.5" stroke="#EB1C1F" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 12C8.41421 12 8.75 11.6642 8.75 11.25C8.75 10.8358 8.41421 10.5 8 10.5C7.58579 10.5 7.25 10.8358 7.25 11.25C7.25 11.6642 7.58579 12 8 12Z" fill="#EB1C1F"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_95_2217">
+                  <rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
+                </clipPath>
+              </defs>
+            </svg>
+            This product is out of stock please select a different one
+        </div>
       </div>
     {%- endfor -%}
   </div>

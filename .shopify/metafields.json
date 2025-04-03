@@ -13,7 +13,18 @@
       }
     }
   ],
-  "company": [],
+  "company": [
+    {
+      "key": "block_checkout",
+      "namespace": "custom",
+      "name": "block_checkout",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
   "company_location": [],
   "location": [],
   "market": [],

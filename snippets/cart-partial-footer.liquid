@@ -18,17 +18,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="cart-checkout-error col-error">
-			<div class="wrapper font-itc">
-				{% render 'icon-warning' %} Sorry, we can't complete your checkout at this time. Please <a href="#">contact</a> our team for more information
-			</div>
-		</div>
 	</div>
 	<div class="row">
 		{% comment %} <div class="col-md-6"> </div> {% endcomment %}
 		<div class="col-md-12  text-right " >
 			<div class="cart__buttons-container text-right">
-				{% render "cart-checkout-buttons" %}
+				{% render "cart-checkout-buttons", section:section %}
 			</div>
 		</div>
 	</div>

@@ -48,7 +48,7 @@
 			}
 		</style>
 
-		<div class="prevent-msg">
+		{% comment %} <div class="prevent-msg">
 			<span class="svg-icon">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
 					<g clip-path="url(#clip0_161_249)">
@@ -64,8 +64,15 @@
 				</svg>
 			</span>
 			<span class="msg-text">
-				Sorry, we can't complete your checkout at this time. Please <a href="/pages/contact">contact</a> our team for more information
+				{{ section.settings.prevent_msg }}*
 			</span>
+		</div> {% endcomment %}
+
+		<div class="cart-checkout-error col-error">
+			<div class="wrapper font-itc">
+				{% render 'icon-warning' %} 
+				<span>{{ section.settings.prevent_msg | replace:'<p>' | replace:'</p>' }}</span>
+			</div>
 		</div>
 		<input type="button" class="btn btn-primary mt-4 mb-0 cart__submit disabled" value="{{ 'cart.buttons.checkout' | t }}">
 	{% else %}

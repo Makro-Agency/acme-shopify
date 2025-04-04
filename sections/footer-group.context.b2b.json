@@ -16,8 +16,8 @@
     "footer": {
       "settings": {
         "footer_menu": "b2b-footer",
-        "footer_utility_menu": "footer-utility",
-        "social_menu": ""
+        "social_menu": "",
+        "footer_utility_menu": "b2b-footer-utility"
       },
       "blocks": {}
     }

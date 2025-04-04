@@ -77,6 +77,15 @@ assign navbar_transparency = false  {% endcomment %}
 			<a href="/cart" id="navCart" class="navCart navbar-toggler d-lg-none" aria-label="Go to Cart page">
 				{% render 'icon-cart-white' %}
 			</a>
+			{% if customer_b2B %}
+				<style>
+					.navbar #navCart{right: 8rem;}
+					#navaccount{box-shadow: none;background: #14315c;position: absolute;right: 4.5rem;}
+				</style>
+			<a href="/account" id="navaccount" class="navCart navbar-toggler d-lg-none">
+				{% render 'icon-account-white' %}
+			</a>
+			{% endif %}
 			<button id="navOpen" class="navbar-toggler open" type="button" data-toggle="bs-collapse" data-target="#top-nav" aria-controls="top-nav" aria-expanded="false" aria-label="Open navigation">
 				{% render 'icon-menu-blue' %}
 			</button>
@@ -91,6 +100,11 @@ assign navbar_transparency = false  {% endcomment %}
 						<a href="/cart" id="navCart" class="navbar-toggler" aria-label="Go to Cart page">
 							{% render 'icon-cart-white' %}
 						</a>
+						{% if customer_b2B %}
+						<a href="/account" id="navaccount" class="navCart navbar-toggler d-lg-none">
+							{% render 'icon-account-white' %}
+						</a>
+						{% endif %}
 						<button id="navClose" class="navbar-toggler" type="button" data-toggle="bs-collapse" data-target="#top-nav" aria-controls="top-nav" aria-expanded="false" aria-label="Close navigation">
 							{% render 'icon-close' %}
 						</button>
@@ -206,6 +220,31 @@ assign navbar_transparency = false  {% endcomment %}
 				<div class="nav-cart nav-icon d-none d-lg-block">
 					{% render 'btn-cart' %}
 				</div>
+				{% if customer_b2B %}
+					<style>
+						.navbar .navbar-utility{
+							gap: 40px;
+						}
+						.navbar .navbar-utility .nav-search{
+							margin:0;padding:0;
+						}
+						@media(max-width:991px){
+							#navaccount svg{width: 16px;height: 18px;}
+						}
+						.navbar .navbar-utility .nav-pin.nav-account svg {
+							width: 1rem;
+						}
+					</style>
+					<div class="nav-pin nav-icon nav-account">
+						<a href="/account">
+							{% if template.name == 'product' or template.name == 'collection' %}
+								{% render 'icon-account-blue' %}
+							{% else %}
+								{% render 'icon-account-white' %}
+							{% endif %}
+						</a>
+					</div>
+				{% endif %}
 				<div id="nav-search" class="nav-search" tabindex="0" id="btn_search">
 					<a class="nav-icon" href="#" role="button" aria-label="Show Search Bar">{% render 'icon-search' %}</a>
 					{% comment %} 
@@ -227,12 +266,21 @@ assign navbar_transparency = false  {% endcomment %}
 						{% endif %}
 					</a>
 				</div>
-				{% else %}
+				{% comment %} {% else %}
 					<div class="nav-pin nav-icon">
-						<a href="/account">
-							{% render 'icon-account' %}
+						<style>
+							.navbar .navbar-utility .nav-pin .nav-account svg {
+								width: 1rem;
+							}
+						</style>
+						<a href="/account" class="nav-account">
+							{% if template.name == 'product' or template.name == 'collection' %}
+								{% render 'icon-account-blue' %}
+							{% else %}
+								{% render 'icon-account-white' %}
+							{% endif %}
 						</a>
-					</div>
+					</div> {% endcomment %}
 				{% endunless %}
 
 			</div>

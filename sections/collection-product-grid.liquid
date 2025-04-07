@@ -1,3 +1,15 @@
+{{ 'ajaxinate.min.js' | asset_url | script_tag }}
+
+<style>
+  .new-btn{
+    max-width: 320px;
+    padding: .6rem 1.2rem .5rem;
+    font-size: .875rem;
+    background:#14315c !important;
+    color: #FFF !important;
+  }
+</style>
+
 
 <section class="section-collection-title header-1">
     <div class="container">
@@ -11,40 +23,41 @@
     </div>
 </section>
 <div class = 'd-none'>
-{{ collection.all_products_count }}
+  {{ collection.all_products_count }}
 </div>
 {% render "filters" filters: section.settings.filters custom_collection: section.settings.custom_collection -%}
 
 <section class='section-product-grid'>
     <div class='container'>
-        <div class='row d-flex flex-column align-items-center flex-md-row align-items-md-start justify-content-md-between' id="products-container" mx-filter-results>
-            {% paginate collection.products by 500 %}
-                {% for product in collection.products %}
-                    {% unless product.tags contains 'private' or product.tags contains 'Private' or product.tags contains 'PRIVATE' %}
-                        <div
-                            mx-filter-result
-                            class='{% for tag in product.tags %} {{ tag | handleize }}{% endfor %}'
-                            data-product-id="{{ product.id }}" 
-                            data-title="{{ product.title }}" 
-                            data-date="{{ product.created_at }}" 
-                            data-price="{{ product.price }}"
-                            data-index="{{ forloop.index0 }}"
-                        >
-                            {% render 'product-grid-item' product: product %}
-                        </div>
-                    {% endunless %}
-              {% endfor %}
-              </div>
-            {%- if paginate.pages > 1 -%}
-                <div class="page-pagination">
-                    {% render 'pagination' paginate: paginate %}
-                </div>
-            {%- endif -%}
-        {% endpaginate %}
-        {% if collection.products.size == 0 %}
-
-
-        {% endif %}
+      {% paginate collection.products by 9 %}
+          <div class='row d-flex flex-column align-items-center flex-md-row align-items-md-start justify-content-md-between' id="products-container" mx-filter-results>
+              
+                  {% for product in collection.products %}
+                      {% unless product.tags contains 'private' or product.tags contains 'Private' or product.tags contains 'PRIVATE' %}
+                          <div
+                              mx-filter-result
+                              class='{% for tag in product.tags %} {{ tag | handleize }}{% endfor %}'
+                              data-product-id="{{ product.id }}" 
+                              data-title="{{ product.title }}" 
+                              data-date="{{ product.created_at }}" 
+                              data-price="{{ product.price }}"
+                              data-index="{{ forloop.index0 }}"
+                          >
+                              {% render 'product-grid-item' product: product %}
+                          </div>
+                      {% endunless %}
+                  {% endfor %}
+                
+                  
+          </div>
+        {%- if paginate.pages > 1 -%}
+          <div id="AjaxinatePagination">
+            <div class="page-pagination">
+                {% render 'pagination' paginate: paginate %}
+            </div>
+          </div>
+      {%- endif -%}
+  {% endpaginate %}
     </div> 
     {% if collection.products.size == 0 %}
       <div class="container">
@@ -53,7 +66,7 @@
             <h2>
                 {% if collection.handle == 'fish-friday' %}
                   <p>{{ 'sections.collection_template.fish_friday_no_matches_html' | t }}</p>
-                  {% else %}
+                {% else %}
                   <p>{{ 'sections.collection_template.general_no_matches_html' | t }}</p>
                 {% endif %}
             </h2>
@@ -62,6 +75,12 @@
       </div>
     {% endif %}
 </section> 
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var endlessScroll = new Ajaxinate();
+  });
+</script>
 
 {% schema %}
 {

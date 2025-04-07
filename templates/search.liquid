@@ -1,3 +1,15 @@
+{{ 'ajaxinate.min.js' | asset_url | script_tag }}
+
+<style>
+  .new-btn{
+    max-width: 320px;
+    padding: .6rem 1.2rem .5rem;
+    font-size: .875rem;
+    background:#14315c !important;
+    color: #FFF !important;
+  }
+</style>
+
 {% liquid 
   assign default_search_result_image = settings.default_search_result_image 
 
@@ -48,7 +60,7 @@
       </p>
     {% endif %}
 
-    <div class="row search-results__grid col-10 offset-1 d-md-flex justify-content-md-between col-lg-12 offset-lg-0">
+    <div class="row search-results__grid col-10 offset-1 d-md-flex justify-content-md-between col-lg-12 offset-lg-0" id="products-container">
       {% for result in search.results %}
         {% liquid  
           assign category = ''
@@ -65,7 +77,24 @@
           elsif result.url contains "/blogs/"
             assign category = "Post"
           endif
+
+          assign displayProduct = true
+          assign checkB2Btag = false
+          for tag in result.tags
+            if tag == 'B2B'
+              assign checkB2Btag = true
+              break;
+            endif
+          endfor
+
+          if checkB2Btag == true
+            unless customer_b2B
+              assign displayProduct = false
+            endunless
+          endif
         %}
+
+        {% if displayProduct == true %}
         <div class="search-results__block px-0{% if category == "Product" %} product-grid-item{% endif %}">
           <div class="card-basic{% if category == "Product" %} product-form{% endif %}">
             <a class="text-blue"
@@ -104,12 +133,15 @@
             </a>
           </div>
         </div>
+        {% endif %}
       {% endfor %}
     </div>
   </div><!-- .container --> 
 
   {% if paginate.pages > 1 %}
+    <div id="AjaxinatePagination">
     {% include 'pagination' %}
+    </div>
   {% endif %}
 </section><!-- .search-results -->
 
@@ -138,3 +170,9 @@
   }
 }
 {% endstyle %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var endlessScroll = new Ajaxinate();
+  });
+</script>

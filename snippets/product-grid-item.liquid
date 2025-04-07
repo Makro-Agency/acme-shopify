@@ -35,9 +35,24 @@ product-add-form product-form product-form-{{ product.id }}
 			assign available_online = false			
 		endif
 	endif
+
+	assign displayProduct = true
+	assign checkB2Btag = false
+	for tag in product.tags
+		if tag == 'B2B'
+			assign checkB2Btag = true
+			break;
+		endif
+	endfor
+
+	if checkB2Btag == true
+		unless customer_b2B
+			assign displayProduct = false
+		endunless
+	endif
 -%}
 
-
+{% if displayProduct == true %}
 <div class="product-grid-item {{ product_flags }} card-basic" >
 	<!-- Image --> 
 	<div class="product-grid-item__inner">
@@ -236,3 +251,4 @@ product-add-form product-form product-form-{{ product.id }}
 	{%- render 'product-json' product: product -%}
 	{%- render 'schema-product' product: product -%}
 </div>
+{% endif %}

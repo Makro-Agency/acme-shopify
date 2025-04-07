@@ -36,15 +36,15 @@
   
 -%}
 
-{% comment %} <script>
+<script>
   {% if b2b_tag == true %}
     {% unless customer %}
       window.location.href = '/';
-    {% elsif customer.b2b? == false %}
+    {% elsif customer_b2B == false %}
       window.location.href = '/';
     {% endunless %}
   {% endif %}
-</script> {% endcomment %}
+</script>
 
 
 {% comment %} get the primary collection {% endcomment %}

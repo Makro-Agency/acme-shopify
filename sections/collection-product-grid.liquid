@@ -80,6 +80,10 @@
   document.addEventListener("DOMContentLoaded", function() {
     var endlessScroll = new Ajaxinate();
   });
+
+  function addcarttrigger(ele){
+    ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
+  }
 </script>
 
 {% schema %}

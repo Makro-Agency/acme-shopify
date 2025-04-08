@@ -88,9 +88,14 @@
             endif
           -%}
           {% if has_in_stock %}
-          <span class="product-stock stock-in">In stock</span>
+          {% comment %} <span class="product-stock stock-in">In stock</span> {% endcomment %}
           {% else %}
-          <span class="product-stock stock-out">Out of Stock</span>
+          <div>
+            <span class="product-stock stock-out">
+              <span>{% render 'icon-warning-dot' %}</span>
+              <span>This product is Out of Stock</span>
+            </span>
+          </div>
           {% endif %}
           
           {% unless customer_b2B %}

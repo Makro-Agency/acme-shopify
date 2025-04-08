@@ -33,6 +33,14 @@
             </svg>
             <input type="text" placeholder="Search by title and SKU" onkeyup="filter_bar()">
         </div>
+        <div class="view-btn">
+            <span class="active" data-type="list" onclick="changeview(this)">{% render 'icon-list' %}</span>
+            <span data-type="grid" onclick="changeview(this)">{% render 'icon-grid' %}</span>
+        </div>
+    </div>
+    <div class="temp-msg">
+        <span class="icon">{% render 'icon-tickmark' %}</span>
+        <span class="temp-text"></span>
     </div>
     <div class="product-list">
         <div class="product-header">
@@ -331,10 +339,25 @@
             plusSelector.closest('.quantity-selector').querySelector('span').textContent = 0;
         }
 
-        var getCount = document.querySelectorAll('.quantity-selector.active').length;
+        {% comment %} var getCount = document.querySelectorAll('.quantity-selector.active').length; {% endcomment %}
+        var getCount = 0;
+        for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
+            getCount += parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('span').innerText);
+        }
         if(getCount > 0){
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.add('active');
+            var title = plusSelector.closest('.product-wrapper').querySelector('.product-wrap .title').innerText;
+            document.querySelector('.temp-msg .temp-text').innerText = title + ' has been added to your cart';
+            document.querySelector('.temp-msg').classList.add('active');
+            var store_scroll = document.querySelector('.bundle-search-bar').offsetTop - 100;
+            setTimeout(function(){ 
+                window.scrollTo({top: store_scroll, behavior: 'smooth'});
+                setTimeout(function(){ 
+                    document.querySelector('.temp-msg').classList.remove('active');
+                    document.querySelector('.temp-msg .temp-text').innerText = '';
+                }, 4000);
+            }, 2000);
         }
     };
 
@@ -685,8 +708,8 @@
     });
 
     var li_wrapper = document.querySelectorAll('.bundle-search-bar ul.select-options li');
-      li_wrapper.forEach(li_wrap => {
-         li_wrap.addEventListener('click',function(){
+    li_wrapper.forEach(li_wrap => {
+        li_wrap.addEventListener('click',function(){
   
             if(document.querySelector('.bundle-search-bar ul.select-options li.is-selected') != null){
                 document.querySelector('.bundle-search-bar ul.select-options li.is-selected').classList.remove('is-selected');  
@@ -722,8 +745,21 @@
             document.querySelector('.mini-cart-sticky').classList.remove('active');
 
             appendItems(sortJson);
-         }) 
-      });
+        }) 
+    });
+
+    function changeview(ele){
+        
+        var gettype = ele.dataset.type;
+        ele.closest('.view-btn').querySelector('span.active').classList.remove('active');
+        ele.classList.add('active');
+        console.log('in',gettype);
+        if(gettype == 'grid'){
+            document.querySelector('.product-list').classList.add('grid');
+        }else{
+            document.querySelector('.product-list').classList.remove('grid')
+        }
+    }
 
 </script>
 

@@ -8,6 +8,60 @@
   font-weight: 500
 }
 
+.sku-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin: 20px 0px 10px;
+}
+
+.sku-content span {
+  color: var(--Blue, #14315C);
+  font-family: SaaSeriesED W05 Regular;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 12px */
+}
+
+span.addbtn {
+  display: flex;
+  width: 45px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  border-radius: 100px;
+  border: 1px solid var(--Blue, #14315C);
+  background: var(--Blue, #14315C);
+  margin-block: 1.5rem .5rem;
+  cursor: pointer;
+}
+
+span.addbtn.no-visible{
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+span.addbtn:hover {
+  background: transparent;
+}
+
+span.addbtn:hover svg path {
+  stroke: #14315c;
+}
+
+span.addbtn svg {
+  pointer-events: none;
+}
+
+.btn-price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .product-grid-item .price.price--has_b2b-true {
   margin-block: 1.5rem 0.5rem;
 }
@@ -28,13 +82,19 @@
     font-weight: 400;
     line-height: 100%;
     text-transform: uppercase;
-    padding-left: 16px;
+    /* padding-left: 16px; */
     position: relative;
     margin-block: 0.25rem 1.25rem;
     color: #B88B1F;
     font-family: SaaSeriesED W05 Regular;
+    padding: 10px 15px;
+    border-radius: 4px;
+    background: rgba(235, 28, 31, 0.08);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
   }
-  .product-stock:before {
+  /* .product-stock:before {
     content: '';
     width: 6px;
     height: 6px;
@@ -44,7 +104,7 @@
     top: calc(50% - 3px);
     background: currentColor;
     border-radius: 50%;
-  }
+  } */
   .product-stock.stock-out {
     color: #EB1C1F;
   }

@@ -7,6 +7,9 @@
       data-cart-item-title="{{ item.title }}" 
       data-cart-item-index="{{ forloop.index }}" 
       data-cart-item-quantity="{{ item.quantity }}">
+
+
+      {% unless customer_b2B %}
       <div class="col-4 col-md-3 pe-0">
         <div class="cart__image-wrapper p-0">
           <img class="cart__image cart-thumbnail img-fluid {% if item.image == null %} d-none{% endif %}" src="{{ item | img_url: 'x190' }}" 
@@ -16,6 +19,7 @@
             data-cart-item-image >
         </div>
       </div>
+      {% endunless %}
 
       <div class="col-8 col-md-4 cart__meta ps-3" 
         data-cart-table-cell>
@@ -28,15 +32,29 @@
             </a></h3>
           </div>
           <div>
+            {% unless customer_b2B %}
             <div class=" cart__price text-left header-5 mb-2">
               {% render 'cart-partial-price' item:item %}
             </div>
+            {% else %}
+              {% if item.sku != blank %}
+              <div class=" cart__sku text-left header-5 mb-2">
+                SKU: {{item.sku}}
+              </div>
+              {% endif %}
+            {% endunless %}
             <div class="header-6">
               {% render 'cart-partial-details'item:item %}
             </div>
           </div>
         </div>
       </div>
+
+      {% if customer_b2B %}
+        <div class="col-8 col-md-4 cart__meta ps-3">
+          {% render 'product-price', product:item, variant: item.product.selected_or_first_available_variant, show_vendor: false, available_online: true %}
+        </div>
+      {% endif %}
 
       <div class="offset-4 offset-md-0 col-md-5 cart__quantity-td text-left header-6">
         {% render 'cart-partial-quantity' item:item %}

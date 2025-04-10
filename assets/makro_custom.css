@@ -123,43 +123,90 @@ span.addbtn svg {
 
 /* cart footer  */
   .cart-checkout-error .wrapper {
-    border-radius: 4px;
+    /* border-radius: 4px;
     background: rgba(235, 28, 31, 0.05);
     padding: 0.5rem 0.75rem;
     color: #EB1C1F;
     position: relative;
     padding-left: 2.25rem;
-    font-size: 0.875rem;
+    font-size: 0.875rem; */
+    display: flex;
+    padding: 15px 20px;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 4px;
+    background: rgba(235, 28, 31, 0.05);
   }
 
   .cart-checkout-error .wrapper svg {
-    vertical-align: middle;
+    /* vertical-align: middle;
     margin-top: -4px;
     font-weight: 400;
     position: absolute;
     top: 0.8rem;
     left: 0.75rem;    
     width: 1rem;
-    height: 1rem;
+    height: 1rem; */
+    height: 20px;
+    width: 20px;
   }
 
-  .cart-checkout-error .wrapper a {
+  .cart-checkout-error .wrapper span {
+    color: #EB1C1F;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  /* .cart-checkout-error .wrapper a {
     color: inherit;
     font-weight: 600;
+  } */
+
+  .cart-checkout-error .wrapper span a {
+    color: #EB1C1F;
+    font-family: "ITC Clearface Std";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: 140%;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
   }
 
   .cart-checkout-error .wrapper a:hover {
     color: #b88b20;
   }
+  
+  .cart-checkout-error.col-error {
+    margin-bottom: 24px;
+  }
 
   @media screen and (min-width: 641px){
-    .cart-checkout-error .wrapper {
+    /* .cart-checkout-error .wrapper {
         padding: 0.5rem 1rem;        
         padding-left: 2.625rem;        
         font-size: 1rem;
     }   
     .cart-checkout-error .wrapper svg {
         left: 1rem; 
+    } */
+  }
+
+  @media screen and (max-width: 641px){
+    .cart-checkout-error .wrapper {
+      padding: 15px;
+      align-items: flex-start;
+      gap: 8px;
+    } 
+    .cart-checkout-error .wrapper svg{
+      flex: 1 0 auto;
     }
   }
 /* cart footer  */

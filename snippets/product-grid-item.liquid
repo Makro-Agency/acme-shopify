@@ -157,7 +157,7 @@ product-add-form product-form product-form-{{ product.id }}
 							<!-- End of Judge.me code -->
 							{% endunless %}
 								
-							{% capture price_html %}{% render 'product-price', variant: current_variant, show_vendor: false, available_online: available_online %}{% endcapture %}
+							{% capture price_html %}{% render 'product-price', product:product, variant: current_variant, show_vendor: false, available_online: available_online %}{% endcapture %}
 							{% if customer_b2B %}
 
 								<div class="btn-price">
@@ -177,7 +177,7 @@ product-add-form product-form product-form-{{ product.id }}
 					{% if product.variants.size > 1  %}
 						<div class="product-single__multiple-variants">
 
-							{% capture price_html %}{% render 'product-price', variant: current_variant, show_vendor: false, available_online: available_online %}{% endcapture %}
+							{% capture price_html %}{% render 'product-price', product:product, variant: current_variant, show_vendor: false, available_online: available_online %}{% endcapture %}
 							{% if customer_b2B %}
 
 								<div class="btn-price">

@@ -1,6 +1,6 @@
 <div class = 'table' data-cart-line-items >
   {%- for item in cart.items -%}
-    <div class="row cart__row flex-row justify-content-start align-items-center mb-5" 
+    <div class="row cart__row flex-row {% unless customer_b2B %}justify-content-start{% endunless %} align-items-center {% unless customer_b2B %}mb-5{% endunless %}" 
       data-cart-item 
       data-cart-item-key="{{ item.key }}" 
       data-cart-item-url="{{ item.url }}" 
@@ -21,7 +21,7 @@
       </div>
       {% endunless %}
 
-      <div class="col-8 col-md-4 cart__meta ps-3" 
+      <div class="col-8 col-md-4 cart__meta {% unless customer_b2B %}ps-3{% endunless %} title-wrap" 
         data-cart-table-cell>
         <div class="cart__product-information pt-0">
           <div class="list-view-item__title">
@@ -32,8 +32,8 @@
             </a></h3>
           </div>
           <div>
-            {% unless customer_b2B %}
-            <div class=" cart__price text-left header-5 mb-2">
+            {% unless customer_b2B %} 
+            <div class=" cart__price text-left header-5">
               {% render 'cart-partial-price' item:item %}
             </div>
             {% else %}
@@ -51,13 +51,13 @@
       </div>
 
       {% if customer_b2B %}
-        <div class="col-8 col-md-4 cart__meta ps-3">
+        <div class="col-8 col-md-4 cart__meta price-wrap">
           {% render 'product-price', product:item, variant: item.product.selected_or_first_available_variant, show_vendor: false, available_online: true %}
         </div>
       {% endif %}
 
-      <div class="offset-4 offset-md-0 col-md-5 cart__quantity-td text-left header-6">
-        {% render 'cart-partial-quantity' item:item %}
+      <div class="offset-4 offset-md-0 col-md-5 cart__quantity-td text-left header-6 qty-wrap">
+        {% render 'cart-partial-quantity' item:item, customer_b2B:customer_b2B %}
       </div>
       <div class="col-sm-3 cart__final-price text-right d-none " data-cart-item-line-price>
         {% render 'cart-partial-price-final' item:item %}

@@ -463,6 +463,23 @@ span.title {
     /* max-width: 330px; */
 }
 
+.product-list.grid .variant-select-btn {
+    display: none;
+}
+
+.product-item.varient-select .quantity-selector,.product-list.grid .product-item.active .varient-select-item {
+    display: none;
+}
+
+.product-item.varient-select .variant-inner-item .quantity-selector{
+    display: flex;
+}
+
+
+.product-list.grid .product-item.varient-select .quantity-selector {
+    display: flex;
+}
+
 
 @media screen and (min-width: 576px){
 

@@ -474,7 +474,7 @@ span.title {
         width: calc(50% - 40px * 1 / 2);
         max-width: 330px;
     }
-}
+} 
 
 @media screen and (min-width: 768px){
     .product-list.grid .product-item-wrapper .product-item{

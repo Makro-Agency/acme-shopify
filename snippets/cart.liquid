@@ -1,10 +1,89 @@
+{%- liquid 
+
+  assign customer_b2B = false
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign customer_b2B = true
+  endif
+  
+-%}
+{% if customer_b2B %}
+<style>
+  .cart__sku {
+    color: var(--Blue, #14315C);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
+  }
+  .row.cart__row {
+    border-bottom: 1px solid var(--Blue, #14315C);
+  }
+</style>
+{% endif %}
+
 
 <div class="container  cart-template pb-5 {% if cart.item_count == 0 %} empty {% endif %}" data-section-id="{{ section.id }}" sh-cart-wrapper >
     <div class = 'cart'  >     
       <div class="cart-partial-form-ajax-container" >
         <div class="cart-partial-form row pt-4 pt-lg-5">
           <div class="col-12 col-lg-11 offset-lg-1">
-            <h2 class="header-1 mt-1 mb-4 mb-lg-5">{{ 'cart.headers.title' | t }}</h2>
+            <h2 class="header-1 mt-1 mb-4 {% unless customer_b2B %}mb-lg-5{% endunless %}">{{ 'cart.headers.title' | t }}</h2>
+            {% if customer.current_company.metafields.custom.block_checkout == true %}
+              <style>
+                .prevent-msg{
+                  display: flex;
+                  padding: 8px 16px;
+                  align-items: center;
+                  gap: 10px;
+                  align-self: stretch;
+                  border-radius: 4px;
+                  background: rgba(235, 28, 31, 0.05);
+                }
+                .prevent-msg .svg-icon{
+                  width: 16px;
+                  height: 16px;
+                  display: flex;
+                }
+                .prevent-msg .msg-text{
+                  color: #EB1C1F;
+                  font-family: ITCClearfaceRegular;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 150%; /* 21px */
+                }
+          
+                .prevent-msg .msg-text a{
+                  color: #EB1C1F;
+                  font-family: ITCClearfaceRegular;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 550;
+                  line-height: 150%;
+                  text-decoration-line: underline;
+                  text-decoration-style: solid;
+                  text-decoration-skip-ink: auto;
+                  text-decoration-thickness: auto;
+                  text-underline-offset: auto;
+                  text-underline-position: from-font;
+                }
+          
+                @media(max-width:575px){
+                  .prevent-msg{
+                    padding: 8px 12px;
+                    align-items: flex-start;
+                    gap: 8px;
+                  }
+                }
+              </style>
+          
+              <div class="cart-checkout-error col-error">
+                <div class="wrapper font-itc">
+                  {% render 'icon-warning' %} 
+                  <span>{{ section.settings.prevent_msg | replace:'<p>' | replace:'</p>' }}</span>
+                </div>
+              </div>
+            {% endif %}
             <h3 class="header-3">Order Summary</h3>
             <h4 class="header-5 mb-lg-4" data-cart-count >{{cart.item_count}} Item{% unless cart.item_count == 1 %}s{% endunless %}</h4>
           </div>
@@ -26,7 +105,7 @@
                 <div class="col-sm-3 text-right  d-none" ><h4>{{ 'cart.labels.total' | t }}</h4></div>
               </div>
               <div data-cart-line-items-ajax-container >
-                {% render 'cart-partial-line-items' %}
+                {% render 'cart-partial-line-items', customer_b2B:customer_b2B %}
               </div>
             </div>
       

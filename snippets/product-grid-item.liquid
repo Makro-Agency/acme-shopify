@@ -35,9 +35,24 @@ product-add-form product-form product-form-{{ product.id }}
 			assign available_online = false			
 		endif
 	endif
+
+	assign displayProduct = true
+	assign checkB2Btag = false
+	for tag in product.tags
+		if tag == 'B2B'
+			assign checkB2Btag = true
+			break;
+		endif
+	endfor
+
+	if checkB2Btag == true
+		unless customer_b2B
+			assign displayProduct = false
+		endunless
+	endif
 -%}
 
-
+{% if displayProduct == true %}
 <div class="product-grid-item {{ product_flags }} card-basic" >
 	<!-- Image --> 
 	<div class="product-grid-item__inner">
@@ -55,6 +70,17 @@ product-add-form product-form product-form-{{ product.id }}
 			</a>
 		<!-- // Image -->
 		<!-- Content -->
+
+		{% if has_b2b %}
+		<div class="sku-content">
+			{% if product.vendor %}
+				<span>{{product.vendor}}</span>{% render 'icon-seprator-line' %}
+				<span>SKU: {{current_variant.sku}}</span>
+			{% else %}
+				<span>SKU: {{current_variant.sku}}</span>
+			{% endif %}
+		</div>
+		{% endif %}
 			<a href="{{ product.url }}" class="product-grid-item__content"> 
 				<h2 class="card-basic__header">{{ product.title }}</h2>
 				{%- for link in linklists.product-filter.links -%}
@@ -122,24 +148,52 @@ product-add-form product-form product-form-{{ product.id }}
 										</div>
 								</div>
 							{% endunless %}
-								{% unless customer_b2B %}
-								<!-- Start of Judge.me code -->
-								<div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
-									{{ product.metafields.judgeme.badge }}
+
+							{% unless customer_b2B %}
+							<!-- Start of Judge.me code -->
+							<div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
+								{{ product.metafields.judgeme.badge }}
+							</div>
+							<!-- End of Judge.me code -->
+							{% endunless %}
+								
+							{% capture price_html %}{% render 'product-price', product:product, variant: current_variant, show_vendor: false, available_online: available_online %}{% endcapture %}
+							{% if customer_b2B %}
+
+								<div class="btn-price">
+									{{ price_html }}
+									<span class="addbtn {% unless current_variant.available %}no-visible{% endunless %}" onclick="addcarttrigger(this)">
+										{% render 'icon-plus-addcart' %}
+									</span>
 								</div>
-								<!-- End of Judge.me code -->
-								{% endunless %}
-							{% render 'product-price', variant: current_variant, show_vendor: false, available_online: available_online %}
+								
+							{% else %}
+								{{ price_html }}
+							{% endif %}
 							<input type = 'hidden' name="id" value="{{current_variant.id}}" />
 						</div>
 					{% endif %}
 			
 					{% if product.variants.size > 1  %}
 						<div class="product-single__multiple-variants">
-							{% render 'product-price', variant: current_variant, show_vendor: false, available_online: available_online %}
-							{% unless has_b2b %}
+
+							{% capture price_html %}{% render 'product-price', product:product, variant: current_variant, show_vendor: false, available_online: available_online %}{% endcapture %}
+							{% if customer_b2B %}
+
+								<div class="btn-price">
+									{{ price_html }}
+									<span class="addbtn {% unless current_variant.available %}no-visible{% endunless %}" onclick="addcarttrigger(this)">
+										{% render 'icon-plus-addcart' %}
+									</span>
+								</div>
+								
+							{% else %}
+								{{ price_html }}
+							{% endif %}
+
+							
 								<!-- Multiple Variants or options -->
-									<div class="form-group">
+									<div class="form-group {% if has_b2b %}hide{% endif %}">
 										<select name="id"
 											class="d-none"
 											data-productid="{{product.id}}"
@@ -156,7 +210,7 @@ product-add-form product-form product-form-{{ product.id }}
 								<!-- // multiple variants  -->
 								<!-- swatch Options -->
 								{% for option in product.options %}
-									<div class="row product-form-row">
+									<div class="row product-form-row {% if has_b2b %}hide{% endif %}">
 										<div class="col">
 										<span class = 'swatch-container-label'>Select a {{option}}</span>
 										{% render 'swatch' swatch:option product:product %}
@@ -164,13 +218,12 @@ product-add-form product-form product-form-{{ product.id }}
 									</div>
 								{% endfor %}
 								<!-- // swatch Options -->
-							{% endunless %}			
 						</div>
 			
 					{% endif %}
 					
-					{% unless has_b2b %}
-						<div class="product-form__footer d-flex" data-cart-item-key >
+					
+						<div class="product-form__footer {% if has_b2b %}hide{% else %}d-flex{% endif %}" data-cart-item-key >
 							<div sh-quantity-component data-min-value="1" class="w-50">
 								<div class="product-qty-title visually-hidden"><span class="option-title header-5 text-blue">Quantity</span></div>
 								<div class="product-qty mb-4">
@@ -209,7 +262,7 @@ product-add-form product-form product-form-{{ product.id }}
 								</button>
 							</div>
 						</div>
-					{% endunless %}
+						
 			
 			
 					{% render 'product-json' product:product %}
@@ -226,9 +279,9 @@ product-add-form product-form product-form-{{ product.id }}
 
 
 			{% if product.metafields.accentuate.where_to_buy_code != blank and recommended != true and available_online != true or has_b2b == true %}
-				<div class="product-grid-item__button-container mt-3 d-flex flex-column">
+				{% comment %} <div class="product-grid-item__button-container mt-3 d-flex flex-column">
 					{% render 'product-destini-buttons' product:product, customer_b2B:customer_b2B %}
-					</div> 
+					</div>  {% endcomment %}
 			{% endif %}
 	</div>
 	
@@ -236,3 +289,4 @@ product-add-form product-form product-form-{{ product.id }}
 	{%- render 'product-json' product: product -%}
 	{%- render 'schema-product' product: product -%}
 </div>
+{% endif %}

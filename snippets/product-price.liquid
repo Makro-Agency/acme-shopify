@@ -71,7 +71,7 @@
     <div class="price__regular">
         <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
         <span class="price-item price-item--regular" data-regular-price>
-          {{ money_price }}
+          {{ money_price }}{% if has_b2b %}{% if product.metafields.accentuate.unit_of_measure != blank %}/{{ product.metafields.accentuate.unit_of_measure }}{% endif %}{% endif %}
         </span>
     </div>
     <div class="price__sale">

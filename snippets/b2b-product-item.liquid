@@ -30,7 +30,7 @@
                 <span class="title">{{ coll_prod.title }} / {{ variant.title }}</span>
             </div>
             {% if variant.sku %}<span class="sku"><span class="mobile-header">Sku</span>{{ variant.sku }}</span>{% else %}-{% endif %}
-            <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}</span>
+            <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
             <div class="quantity-btn-wrap">
                 <div class="quantity-selector {% unless variant.available %}disabled{% endunless %}" data-item="{{ variant.id }}">
                     <button class="qtyminus" style="opacity: 0.5; cursor: not-allowed;" onclick="clickAttrMinus(this);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -70,7 +70,12 @@
         <span class="title">{{ coll_prod.title }}</span>
     </div>
     <span class="sku"><span class="mobile-header">Sku</span>{{ coll_prod.selected_or_first_available_variant.sku }}</span>
-    <span class="price"><span class="mobile-header">Price</span>{{ coll_prod.price | money }}</span>
+    <div class="product-details">
+      <span class="grid-sku"><span>SKU:</span><span>{{ coll_prod.selected_or_first_available_variant.sku }}</span></span>
+      <span class="grid-title">{{ coll_prod.title }}</span>
+    </div>
+    <span class="price"><span class="mobile-header">Price</span>{{ coll_prod.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
+    <span class="grid-price"><span>Your price:</span><span>{{ coll_prod.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span></span>
     <div class="quantity-btn-wrap">
       <div class="quantity-selector {% unless coll_prod.selected_or_first_available_variant.available %}disabled{% endunless %}" data-item="{{ coll_prod.selected_or_first_available_variant.id }}">
         <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">

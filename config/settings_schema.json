@@ -19,6 +19,21 @@
     ]
   },
   {
+    "name": "Out of stock",
+    "settings": [
+      {
+        "type": "text",
+        "id": "out-stock-msg",
+        "label": "Out Of stock message Product page"
+      },
+      {
+        "type": "text",
+        "id": "out-stock-msg-bulk",
+        "label": "Out Of stock message bulk order page"
+      }
+    ]
+  },
+  {
     "name": "Search",
     "settings": [
       {

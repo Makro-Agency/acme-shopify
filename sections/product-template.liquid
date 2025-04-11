@@ -93,7 +93,7 @@
           <div>
             <span class="product-stock stock-out">
               <span>{% render 'icon-warning-dot' %}</span>
-              <span>This product is Out of Stock</span>
+              <span>{{ settings.out-stock-msg }}</span>
             </span>
           </div>
           {% endif %}

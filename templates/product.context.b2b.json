@@ -13,28 +13,28 @@
     "b2b": true
   },
   "sections": {
-    "7023be65-856f-4ba7-b165-62a3a7bd5a04": {
-      "disabled": true,
+    "0208aff1-8dd2-44fa-94c4-2231272d3a57": {
+      "disabled": false,
       "settings": {},
       "blocks": {}
     },
     "9de17df6-fe63-4efb-8b39-4aa5d0c1b20e": {
-      "disabled": true,
+      "disabled": false,
       "settings": {},
       "blocks": {}
     },
     "f74208c3-6009-4669-afc6-5c133bba7394": {
-      "disabled": true,
+      "disabled": false,
+      "settings": {},
+      "blocks": {}
+    },
+    "7023be65-856f-4ba7-b165-62a3a7bd5a04": {
+      "disabled": false,
       "settings": {},
       "blocks": {}
     },
     "1295eba3-6d3d-4d72-85f3-8fc4295b7280": {
-      "disabled": true,
-      "settings": {},
-      "blocks": {}
-    },
-    "0208aff1-8dd2-44fa-94c4-2231272d3a57": {
-      "disabled": true,
+      "disabled": false,
       "settings": {},
       "blocks": {}
     }

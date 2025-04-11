@@ -86,33 +86,36 @@
     </div>
     <div class="pagination-wrapper ">
         <ul class="pagination-lists">
-          {% assign length_count = prod_counter | divided_by: 10.0 | ceil %}          
-          {% if length_count == 1 %}
-            {% capture _style %}style="pointer-events: none;"{% endcapture %}
-          {% endif %}
-          {% assign count = 0 %}
-          {%- capture _prevItem -%}
-          <li onclick="paginateItemPrev(event)" class="page-item prev-item disabled"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
-          {%- endcapture -%}{% assign _prevItem = _prevItem | strip | strip_newlines %}
-          {{ _prevItem }}
-          {% for i in (1..length_count) %}
-            {% assign num = count | plus:1 %}
-            {% assign count = count | plus:10 %}
-            {% unless forloop.first %}
-              {% if forloop.last %}
-                <li onclick="paginateItem(event)" class="page-item" data-index="{{ forloop.index }}" end data-val="{{ num | minus:1 }}-{{ prod_counter | minus:1 }}" {{ _style }}>
-                <a href="#">{{ i }}</a></li>
-              {% else %}
-                <li onclick="paginateItem(event)" class="page-item" data-index="{{ forloop.index }}" data-val="{{ num | minus:1 }}-{{ count | minus:1 }}" {{ _style }}><a href="#">{{ i }}</a></li>
-              {% endif %}
-            {% else %}
-              <li onclick="paginateItem(event)" class="page-item active" data-index="{{ forloop.index }}" data-val="0-{{ count | minus:1 }}" {{ _style }}><a href="#">{{ i }}</a></li>
-            {% endunless %}
-          {% endfor %}
-          {%- capture _nextItem -%}
-          <li onclick="paginateItemNext(event)" class="page-item next-item{% if length_count == 1 %} disabled{% endif %}"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
-          {%- endcapture -%}{% assign _nextItem = _nextItem | strip | strip_newlines %}
-          {{ _nextItem }}          
+            
+            {% assign length_count = prod_counter | divided_by: 10.0 | ceil %}
+            {% if length_count > 1 %}
+                {% if length_count == 1 %}
+                    {% capture _style %}style="pointer-events: none;"{% endcapture %}
+                {% endif %}
+                {% assign count = 0 %}
+                {%- capture _prevItem -%}
+                <li onclick="paginateItemPrev(event)" class="page-item prev-item disabled"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
+                {%- endcapture -%}{% assign _prevItem = _prevItem | strip | strip_newlines %}
+                {{ _prevItem }}
+                {% for i in (1..length_count) %}
+                    {% assign num = count | plus:1 %}
+                    {% assign count = count | plus:10 %}
+                    {% unless forloop.first %}
+                    {% if forloop.last %}
+                        <li onclick="paginateItem(event)" class="page-item" data-index="{{ forloop.index }}" end data-val="{{ num | minus:1 }}-{{ prod_counter | minus:1 }}" {{ _style }}>
+                        <a href="#">{{ i }}</a></li>
+                    {% else %}
+                        <li onclick="paginateItem(event)" class="page-item" data-index="{{ forloop.index }}" data-val="{{ num | minus:1 }}-{{ count | minus:1 }}" {{ _style }}><a href="#">{{ i }}</a></li>
+                    {% endif %}
+                    {% else %}
+                    <li onclick="paginateItem(event)" class="page-item active" data-index="{{ forloop.index }}" data-val="0-{{ count | minus:1 }}" {{ _style }}><a href="#">{{ i }}</a></li>
+                    {% endunless %}
+                {% endfor %}
+                {%- capture _nextItem -%}
+                <li onclick="paginateItemNext(event)" class="page-item next-item{% if length_count == 1 %} disabled{% endif %}"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
+                {%- endcapture -%}{% assign _nextItem = _nextItem | strip | strip_newlines %}
+                {{ _nextItem }}
+            {% endif %}          
         </ul>
     </div>
     <div class="mini-cart-sticky">
@@ -536,7 +539,7 @@
                             </clipPath>
                             </defs>
                         </svg>
-                        This product is out of stock please select a different one
+                        {{ settings.out-stock-msg-bulk }}
                     </div>
                     <div class="varient-select-item">`
                         currentVAraints.forEach(function(currentVAraint){
@@ -589,7 +592,7 @@
                                         </clipPath>
                                         </defs>
                                     </svg>
-                                    This product is out of stock please select a different one
+                                    {{ settings.out-stock-msg-bulk }}
                                 </div>
                             </div>`
                         });
@@ -643,7 +646,7 @@
                             </clipPath>
                             </defs>
                         </svg>
-                        This product is out of stock please select a different one
+                        {{ settings.out-stock-msg-bulk }}
                     </div>
                 </div>`;
             });  

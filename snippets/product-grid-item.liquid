@@ -283,6 +283,14 @@ product-add-form product-form product-form-{{ product.id }}
 					{% render 'product-destini-buttons' product:product, customer_b2B:customer_b2B %}
 					</div>  {% endcomment %}
 			{% endif %}
+
+			{% unless has_b2b %}
+				{% if product.metafields.accentuate.where_to_buy_code != blank and recommended != true and available_online != true %}
+				<div class="product-grid-item__button-container mt-3 d-flex flex-column">
+					{% render 'product-destini-buttons' product:product, customer_b2B:customer_b2B %}
+				</div>
+				{% endif %}
+			{% endunless %}
 	</div>
 	
 	<!-- // Item Content  -->

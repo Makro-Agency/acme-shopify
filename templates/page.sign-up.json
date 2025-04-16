@@ -12,9 +12,15 @@
     "blank": {
       "type": "blank",
       "settings": {}
+    },
+    "custom_application_Dgp8Jn": {
+      "type": "custom-application",
+      "name": "Custom Application",
+      "settings": {}
     }
   },
   "order": [
-    "blank"
+    "blank",
+    "custom_application_Dgp8Jn"
   ]
 }

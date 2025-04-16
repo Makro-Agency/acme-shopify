@@ -1,0 +1,304 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.custom-wholesale-application {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #F2F2F2;
+  padding-top:60px; 
+  padding-bottom:150px; 
+}
+.custom-wholesale-application .custom-application-form{ max-width:684px; margin:0 auto;  }
+.custom-wholesale-application .section-heading{ max-width:800px; }
+.custom-wholesale-application h1 {
+  font-family: EphemeraEgyptianCondensedMedium; 
+  font-weight: 400;
+  font-size: 80px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color:#14315C; 
+  text-align: center;
+  text-transform: uppercase;
+  
+  text-align: center;
+  margin-bottom: 10px;
+}
+.custom-wholesale-application .custom-application-form{ margin-top:0px; }
+.custom-wholesale-application p {
+  text-align: center;
+  margin-top:16px; 
+  max-width:600px; 
+font-weight: 400;
+font-size: 18px;
+line-height: 150%;
+letter-spacing: 0%;
+text-align: center;
+margin:0 auto; 
+  margin-bottom: 60px;
+}
+
+.custom-wholesale-application .form-fieldset {
+  border: 1px solid #14315C; 
+  border-radius: 4px;
+  padding: 21px 20px 15px 20px; 
+  margin-bottom: 32px;
+  position: relative;
+}
+.custom-wholesale-application .form-fieldset legend {
+  padding: 0 5px;
+  font-size: 14px;
+  color: #14315C; 
+  background-color:#F2F2F2;
+  text-transform: uppercase;
+  margin-top: -28px;
+  height: fit-content;
+  width: fit-content;
+  margin-bottom: 0;
+  font-family: SaaSeriesED W05 Regular; 
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+   letter-spacing: 0;
+
+}
+
+.custom-wholesale-application  .two-column-inner{ width:100%; }
+.form-fieldset.error {
+  border-color: #e74c3c !important;
+}
+.form-fieldset.error legend:after{  color: #e74c3c !important; }
+.form-fieldset.error legend {
+  color: #e74c3c !important;
+}
+.custom-wholesale-application .success-icon{ text-align:center; margin-bottom:40px;  }
+.custom-wholesale-application  h1.success-title{ 
+  font-family: EphemeraEgyptianCondensedMedium;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #14315c;
+  text-transform: uppercase;
+}
+.custom-wholesale-application .required::after {
+  content: " *";
+  color: #14315C; 
+}
+.custom-wholesale-application .form-control {
+  width: 100%;
+  padding: 0;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  line-height:1.6; 
+  font-family:ITCClearfaceRegular; 
+}
+.custom-dropdown {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+.custom-wholesale-application .form-fieldset.dropdown{ padding:0; }
+.custom-dropdown .selected-option {
+  padding: 21px 20px 15px;  
+  font-size: 14px;
+  color: #0a2e5c;    
+  background-color: transparent;
+  border-radius: 4px;
+}
+.custom-wholesale-application .form-fieldset.dropdown legend{
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+
+.custom-dropdown .dropdown-options {
+  position: absolute;
+  top: 101%;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;
+  z-index: 1000;
+}
+.custom-dropdown .dropdown-options .option {
+  padding: 13px 20px;
+  font-family: ITCClearfaceRegular;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+   letter-spacing: 0;
+
+  background-color: #fff;
+}
+.custom-dropdown .selected-option{
+  color:#14315C;
+  font-family: ITCClearfaceRegular;
+font-weight: 400;
+font-size: 16px;
+line-height: 150%;
+letter-spacing: 0;
+
+}
+.custom-dropdown .dropdown-options .option:hover {
+background: rgba(20, 49, 92, 0.05);
+}
+.custom-dropdown.active .dropdown-arrow svg{
+transform:rotate(180deg);
+}
+.custom-dropdown.active .dropdown-options {
+  display: block;
+}
+
+.custom-dropdown .dropdown-arrow {
+  position: absolute;
+  right: 12px;      
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; 
+}
+
+.custom-wholesale-application .two-column.last-fields .form-fieldset.country-code{
+ max-width:180px; 
+}
+.custom-wholesale-application .dropdown select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #f2f2f2; 
+    url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') 
+    no-repeat right 10px center;
+  background-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  padding: 0; 
+  font-size: 14px;
+  border: none;
+  outline: none;
+}
+
+/* TWO-COLUMN LAYOUT FOR CERTAIN FIELDS */
+.custom-wholesale-application .two-column {
+  display: flex;
+  gap: 30px;
+}
+.custom-wholesale-application .form-control::placeholder{
+  opacity:0.4; 
+  color:#14315C; 
+  font-family: ITC Clearface Std;
+font-weight: 400;
+font-size: 16px;
+line-height: 1.6;
+letter-spacing: 0;
+padding-top:1px; 
+}
+.custom-wholesale-application .two-column .form-fieldset {
+  flex: 1;
+  padding:19px 20px 13px; 
+}
+.custom-wholesale-application .form-control:focus{ box-shadow:none; }
+/* SUBMIT BUTTON */
+.custom-wholesale-application .btn-submit {
+  display: inline-block;
+  background-color: #14315C; 
+  color: #fff;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  margin-top: 0px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  font-family: SaaSeriesED W05 Regular; 
+font-weight: 400;
+font-size: 14px;
+line-height: 150%;
+letter-spacing: 0;
+
+}
+.custom-wholesale-application .two-column.last-fields .form-fieldset.country-code{ padding-left:15px; padding-right:15px; }
+.custom-wholesale-application .btn-submit:hover {
+  background-color: #09325c;
+}
+
+/* EXAMPLE ERROR MESSAGE (HIDDEN BY DEFAULT) */
+.custom-wholesale-application .error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* EXAMPLE SUCCESS MESSAGE (HIDDEN BY DEFAULT) */
+.custom-wholesale-application .success-message {
+  margin-top: 0px;
+  color: #14315C; 
+font-family:ITCClearfaceRegular; 
+font-weight: 400;
+font-size: 18px;
+line-height: 150%;
+letter-spacing: 0;
+margin-bottom:32px; 
+text-align: center;
+}
+.custom-wholesale-application a.go-back-button{ margin:0 auto; background: #14315C; text-decoration:none;  width:fit-content; 
+  border-radius: 100px; padding:12px 30px; color:#ffffff;  display:flex; text-align:center; font-family:SaaSeriesED W05 Regular;   }
+.custom-wholesale-application .success-message .error-icon{
+  margin-right:8px; 
+}
+.custom-wholesale-application .error-message{     color:#EB1C1F;
+  font-size: 14px;
+  margin-top: 0px;
+  font-family: SaaSeriesED W05 Regular; 
+font-weight: 400;
+font-size: 14px;
+line-height: 150%;
+letter-spacing: 0;
+margin-bottom: 5px;
+position:relative;
+bottom:25px; 
+}
+.custom-wholesale-application .checkbox-group{ 
+  margin-bottom:24px; 
+}
+.custom-wholesale-application .btn-submit:hover{
+  background-color: #b88b20;
+}
+.custom-wholesale-application a.go-back-button:hover{
+ background-color: #b88b20;
+}
+
+@media (max-width: 767px) {
+  .custom-wholesale-application .two-column {
+    flex-direction: column;
+  }
+}
+.custom-wholesale-application .two-column.last-fields .two-column-inner.country-code{ max-width:180px; }
+@media screen and (max-width:767px){
+  .custom-wholesale-application .success-message{ margin-bottom:36px; }
+   .custom-wholesale-application.success{ padding-left:0; padding-right:0; }
+  .custom-wholesale-application a.go-back-button {font-size:14px; }
+  .custom-wholesale-application h1.success-title{ font-size:42px; }
+  .custom-wholesale-application .two-column.last-fields .form-fieldset.country-code legend{ width:124px; }
+  .custom-wholesale-application .form-fieldset legend{ padding:0 3px; }
+  .custom-wholesale-application .two-column.last-fields .form-fieldset.country-code{ padding-left:10px; padding-right:10px; }
+  .custom-wholesale-application .form-fieldset{ padding: 21px 16px 15px 16px;  }
+  .custom-wholesale-application .two-column.last-fields .two-column-inner.country-code{ max-width:140px; }
+  .custom-wholesale-application .form-fieldset legend{ font-size:14px; }
+  .custom-wholesale-application .two-column.two-column.last-fields{ flex-direction:row; gap:16px;  }
+  .custom-wholesale-application .two-column{ gap:0; }
+  .custom-wholesale-application p{ font-size:16px; }
+.custom-wholesale-application h1{ font-size:42px; } }
+@media screen and (max-width:989px){
+  .custom-wholesale-application{ padding-left:31px; padding-right:31px; }
+}

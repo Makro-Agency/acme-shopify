@@ -251,6 +251,14 @@ letter-spacing: 0;
 margin-bottom:32px; 
 text-align: center;
 }
+.custom-wholesale-application .checkbox-group .checkbox-label { font-family: ITC Clearface Std;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0;
+ 
+   }
+ 
 .custom-wholesale-application a.go-back-button{ margin:0 auto; background: #14315C; text-decoration:none;  width:fit-content; 
   border-radius: 100px; padding:12px 30px; color:#ffffff;  display:flex; text-align:center; font-family:SaaSeriesED W05 Regular;   }
 .custom-wholesale-application .success-message .error-icon{
@@ -270,6 +278,26 @@ bottom:25px;
 }
 .custom-wholesale-application .checkbox-group{ 
   margin-bottom:24px; 
+}
+.custom-wholesale-application span.checkbox-label a{ position:relative; font-family: ITC Clearface Std;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0;
+  color:#14315c; 
+  text-decoration:none; 
+  }
+.custom-wholesale-application span.checkbox-label a:after{
+  content: "";
+  position: absolute;
+  background-color:#14315c;
+  width: 100%;
+  height: 1px;
+  top: unset;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  border: none;
 }
 .custom-wholesale-application .btn-submit:hover{
   background-color: #b88b20;

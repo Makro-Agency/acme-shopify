@@ -241,7 +241,7 @@ padding-top:1px;
     margin-top: 0px;
     transition: background-color 0.3s ease;
     width: 100%;
-    font-family: SaaSeriesED W05 Regular;
+    font-family: SaaSeriesED W05 Regular; 
 font-weight: 400;
 font-size: 14px;
 line-height: 150%;
@@ -273,7 +273,7 @@ margin-bottom:32px;
 text-align: center;
   }
   .custom-wholesale-application button.go-back-button{ margin:0 auto; background: #14315C;
-    border-radius: 100px; padding:12px 30px; color:#ffffff;  display:flex; text-align:center; font-family:SaaSeriesED W05 Regular;  }
+    border-radius: 100px; padding:12px 30px; color:#ffffff;  display:flex; text-align:center; font-family:SaaSeriesED W05 Regular;   }
   .custom-wholesale-application .success-message .error-icon{
     margin-right:8px; 
   }
@@ -292,6 +292,13 @@ bottom:25px;
   .custom-wholesale-application .checkbox-group{ 
     margin-bottom:24px; 
   }
+  .custom-wholesale-application .btn-submit:hover{
+    background-color: #b88b20;
+  }
+  .custom-wholesale-application button.go-back-button:hover{
+   background-color: #b88b20;
+  }
+ 
   /* RESPONSIVE: STACK FIELDS ON SMALLER SCREENS */
   @media (max-width: 767px) {
     .custom-wholesale-application .two-column {

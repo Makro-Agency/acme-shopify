@@ -2,222 +2,158 @@
 {{ 'custom-application.css' | asset_url | stylesheet_tag }}
 
 <div class="custom-wholesale-application">
-<div class="section-heading">
-  <h1>WHOLESALE APPLICATION</h1>
-  <p>Interested in becoming a wholesale customer? Please fill out the application form below and we will get back to you shortly.</p>
-</div>
-<div class="custom-application-form">
-  <form action="#" id="wholesale-form" >
-    <!-- First & Last Name Side-by-Side -->
-    <div class="two-column">
-    <div class="two-column-inner">
-      <fieldset class="form-fieldset">
-        <legend class="required">First Name</legend>
-        <input 
-          type="text" 
-          id="first-name" 
-          name="first_name" 
-          class="form-control" 
-          placeholder="First Name"
-        >
-        
-      </fieldset>
-      <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-      </div>
-       <div class="two-column-inner">
-      <fieldset class="form-fieldset">
-        <legend class="required">Last Name</legend>
-        <input 
-          type="text" 
-          id="last-name" 
-          name="last_name" 
-          class="form-control" 
-          placeholder="Last Name"
-        >
-        
-      </fieldset>
-      <div class="error-message" style="display: none;">  <span class="error-icon"> {% render 'custom-error' %}</span>  THIS FIELD IS REQUIRED</div>
-      </div>
+    <div class="section-heading">
+        <h1>WHOLESALE APPLICATION</h1>
+        <p>Interested in becoming a wholesale customer? Please fill out the application form below and we will get back to you shortly.</p>
     </div>
-    
-    <!-- Email -->
-    <fieldset class="form-fieldset">
-      <legend class="required">Email</legend>
-      <input 
-        type="email" 
-        id="email" 
-        name="email" 
-        class="form-control" 
-        placeholder="Email"
-      >
-      
-    </fieldset>
-     <div class="error-message" style="display: none;">  <span class="error-icon"> {% render 'custom-error' %}</span>  THIS FIELD IS REQUIRED</div>
-    <!-- Name of Business -->
-    <fieldset class="form-fieldset">
-      <legend class="required">Name of Your Business</legend>
-      <input 
-        type="text" 
-        id="business-name" 
-        name="business_name" 
-        class="form-control" 
-        placeholder="Name of your business"
-      >
-      
-    </fieldset>
-    <div class="error-message" style="display: none;">  <span class="error-icon"> {% render 'custom-error' %}</span>  THIS FIELD IS REQUIRED</div>
-    <!-- Tax ID/EIN Number -->
-    <fieldset class="form-fieldset">
-      <legend class="required">Tax ID/EIN Number</legend>
-      <input 
-        type="text" 
-        id="tax-id" 
-        name="tax_id" 
-        class="form-control" 
-        placeholder="Tax ID/EIN Number"
-      >
-      
-    </fieldset>
-     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span>  THIS FIELD IS REQUIRED</div>
-    <!-- Shipping Address -->
-    <fieldset class="form-fieldset">
-      <legend class="required">Your Shipping Address</legend>
-      <input 
-        type="text" 
-        id="address" 
-        name="address" 
-        class="form-control" 
-        placeholder="Your Shipping Address"
-      >
-     
-    </fieldset>
-      <div class="error-message" style="display: none;">  <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-    <!-- ZIP Code -->
-    <fieldset class="form-fieldset">
-      <legend class="required">ZIP Code</legend>
-      <input 
-        type="text" 
-        id="zip-code" 
-        name="zip_code" 
-        class="form-control" 
-        placeholder="ZIP Code"
-      >
-     
-    </fieldset>
-     <div class="error-message" style="display: none;">  <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
- <fieldset class="form-fieldset dropdown">
-  <legend class="required">Country</legend>
-  <div class="custom-dropdown">
-    <div class="selected-option">Please Select</div>
-    <!-- SVG arrow -->
-    <div class="dropdown-arrow">
-   {% render 'custom-dropdown-icon' %}
-    </div>
-    <div class="dropdown-options">
-      <div class="option" data-value="Afghanistan">Afghanistan</div>
-      <div class="option" data-value="Aland Islands">Åland Islands</div>
-      <div class="option" data-value="Albania">Albania</div>
-      <div class="option" data-value="Algeria">Algeria</div>
-      <div class="option" data-value="Andorra">Andorra</div>
-      <!-- Add more options as needed -->
-    </div>
-  </div>
-  
-</fieldset>
-   <div class="error-message" style="display: none;">  <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-   <fieldset class="form-fieldset dropdown">
-  <legend class="required">State</legend>
-  <div class="custom-dropdown" data-input-id="state-value">
-    <div class="selected-option">Please Select</div>
-    <!-- SVG arrow rendered from your snippet -->
-    <div class="dropdown-arrow">
-      {% render 'custom-dropdown-icon' %}
-    </div>
-    <div class="dropdown-options">
-      <div class="option" data-value="California">California</div>
-      <div class="option" data-value="Texas">Texas</div>
-      <div class="option" data-value="New York">New York</div>
-      <div class="option" data-value="Florida">Florida</div>
-      <div class="option" data-value="Other">Other</div>
-      <!-- Add more options as needed -->
-    </div>
-  </div>
-  <!-- Hidden input to store the selected value for form submission -->
-  <input type="hidden" id="state-value" name="state" value="">
-  
-</fieldset>
-    <div class="error-message" style="display: none;">  <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-    <!-- City -->
-    <fieldset class="form-fieldset">
-      <legend class="required">City</legend>
-      <input 
-        type="text" 
-        id="city" 
-        name="city" 
-        class="form-control" 
-        placeholder="City"
-      >
-      
-    </fieldset>
-     <div class="error-message" style="display:none">  <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-    <!-- Country Code & Phone Number Side-by-Side -->
-    <div class="two-column last-fields">
-     <div class="two-column-inner country-code">
-      <fieldset class="form-fieldset country-code">
-        <legend class="required">Country Code</legend>
-        <input 
-          type="text" 
-          id="country-code" 
-          name="country_code" 
-          class="form-control" 
-          placeholder="+"
-        >
-        
-      </fieldset>
+    <div class="custom-application-form">
+        <form action="#" id="wholesale-form">
+            <!-- First & Last Name Side-by-Side -->
+            <div class="two-column">
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend class="required">First Name</legend>
+                        <input type="text" id="first-name" name="first_name" class="form-control" placeholder="First Name">
 
-      <div class="error-message" style="display: none;">  <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-      </div>
-        <div class="two-column-inner">
-      <fieldset class="form-fieldset">
-        <legend class="required">Phone Number</legend>
-        <input 
-          type="text" 
-          id="phone-number" 
-          name="phone_number" 
-          class="form-control" 
-          placeholder="(___) ___-____"
-        >
-      
-      </fieldset>
-        <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-      </div>
-    </div>
-<div class="checkbox-group">
-  <label class="custom-checkbox-container">
-    <input type="checkbox" name="agree_terms" required>
-    <span class="checkmark"></span>
-    <span class="checkbox-label">
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend class="required">Last Name</legend>
+                        <input type="text" id="last-name" name="last_name" class="form-control" placeholder="Last Name">
+
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <fieldset class="form-fieldset">
+                <legend class="required">Email</legend>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            <!-- Name of Business -->
+            <fieldset class="form-fieldset">
+                <legend class="required">Name of Your Business</legend>
+                <input type="text" id="business-name" name="business_name" class="form-control" placeholder="Name of your business">
+
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            <!-- Tax ID/EIN Number -->
+            <fieldset class="form-fieldset">
+                <legend class="required">Tax ID/EIN Number</legend>
+                <input type="text" id="tax-id" name="tax_id" class="form-control" placeholder="Tax ID/EIN Number">
+
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            <!-- Shipping Address -->
+            <fieldset class="form-fieldset">
+                <legend class="required">Your Shipping Address</legend>
+                <input type="text" id="address" name="address" class="form-control" placeholder="Your Shipping Address">
+
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            <!-- ZIP Code -->
+            <fieldset class="form-fieldset">
+                <legend class="required">ZIP Code</legend>
+                <input type="text" id="zip-code" name="zip_code" class="form-control" placeholder="ZIP Code">
+
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            <fieldset class="form-fieldset dropdown">
+                <legend class="required">Country</legend>
+                <div class="custom-dropdown">
+                    <div class="selected-option">Please Select</div>
+                    <div class="dropdown-arrow">
+                        {% render 'custom-dropdown-icon' %}
+                    </div>
+                    <div class="dropdown-options">
+                        <div class="option" data-value="Afghanistan">Afghanistan</div>
+                        <div class="option" data-value="Aland Islands">Åland Islands</div>
+                        <div class="option" data-value="Albania">Albania</div>
+                        <div class="option" data-value="Algeria">Algeria</div>
+                        <div class="option" data-value="Andorra">Andorra</div>
+                    </div>
+                </div>
+
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            <fieldset class="form-fieldset dropdown">
+                <legend class="required">State</legend>
+                <div class="custom-dropdown" data-input-id="state-value">
+                    <div class="selected-option">Please Select</div>
+                    <!-- SVG arrow rendered from your snippet -->
+                    <div class="dropdown-arrow">
+                        {% render 'custom-dropdown-icon' %}
+                    </div>
+                    <div class="dropdown-options">
+                        <div class="option" data-value="California">California</div>
+                        <div class="option" data-value="Texas">Texas</div>
+                        <div class="option" data-value="New York">New York</div>
+                        <div class="option" data-value="Florida">Florida</div>
+                        <div class="option" data-value="Other">Other</div>
+                        <!-- Add more options as needed -->
+                    </div>
+                </div>
+                <input type="hidden" id="state-value" name="state" value="">
+
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            <!-- City -->
+            <fieldset class="form-fieldset">
+                <legend class="required">City</legend>
+                <input type="text" id="city" name="city" class="form-control" placeholder="City">
+
+            </fieldset>
+            <div class="error-message" style="display:none"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            <!-- Country Code & Phone Number Side-by-Side -->
+            <div class="two-column last-fields">
+                <div class="two-column-inner country-code">
+                    <fieldset class="form-fieldset country-code">
+                        <legend class="required">Country Code</legend>
+                        <input type="text" id="country-code" name="country_code" class="form-control" placeholder="+">
+
+                    </fieldset>
+
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend class="required">Phone Number</legend>
+                        <input type="text" id="phone-number" name="phone_number" class="form-control" placeholder="(___) ___-____">
+
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+            </div>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="agree_terms" required>
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">
       I Agree to the Terms and Conditions 
       <span class="required-asterisk">*</span>
-    </span>
-  </label>
-</div>
-    <!-- Submit Button -->
-    <button type="submit" class="btn-submit">SUBMIT</button>
-  
-<div class="custom-wholesale-application success">
+                    </span>
+                </label>
+            </div>
+            <button type="submit" class="btn-submit">SUBMIT</button>
 
-  <div class="success-container" id="success-container" >
-    <div class="success-icon">
-     {% render 'success-message' %}
+            <div class="custom-wholesale-application success">
+
+                <div class="success-container" id="success-container">
+                    <div class="success-icon">
+                        {% render 'success-message' %}
+                    </div>
+                    <h1 class="success-title">THANK YOU!</h1>
+                    <p class="success-message">The form has been successfully submitted</p>
+                    <a href="#" class="go-back-button" onclick="goBack()">GO BACK</a>
+                </div>
+            </div>
+        </form>
     </div>
-    <h1 class="success-title">THANK YOU!</h1>
-    <p class="success-message">The form has been successfully submitted</p>
-    <button type="button" class="go-back-button" onclick="goBack()">GO BACK</button>
-  </div>
-</div>
-  </form>
-  </div>
 </div>
 
 <script>

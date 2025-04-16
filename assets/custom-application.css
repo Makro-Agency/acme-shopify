@@ -251,7 +251,7 @@ letter-spacing: 0;
 margin-bottom:32px; 
 text-align: center;
 }
-.custom-wholesale-application button.go-back-button{ margin:0 auto; background: #14315C;
+.custom-wholesale-application a.go-back-button{ margin:0 auto; background: #14315C; text-decoration:none;  width:fit-content; 
   border-radius: 100px; padding:12px 30px; color:#ffffff;  display:flex; text-align:center; font-family:SaaSeriesED W05 Regular;   }
 .custom-wholesale-application .success-message .error-icon{
   margin-right:8px; 
@@ -274,7 +274,7 @@ bottom:25px;
 .custom-wholesale-application .btn-submit:hover{
   background-color: #b88b20;
 }
-.custom-wholesale-application button.go-back-button:hover{
+.custom-wholesale-application a.go-back-button:hover{
  background-color: #b88b20;
 }
 
@@ -287,7 +287,7 @@ bottom:25px;
 @media screen and (max-width:767px){
   .custom-wholesale-application .success-message{ margin-bottom:36px; }
    .custom-wholesale-application.success{ padding-left:0; padding-right:0; }
-  .custom-wholesale-application button.go-back-button {font-size:14px; }
+  .custom-wholesale-application a.go-back-button {font-size:14px; }
   .custom-wholesale-application h1.success-title{ font-size:42px; }
   .custom-wholesale-application .two-column.last-fields .form-fieldset.country-code legend{ width:124px; }
   .custom-wholesale-application .form-fieldset legend{ padding:0 3px; }

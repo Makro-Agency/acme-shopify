@@ -1,11 +1,10 @@
-/* GLOBAL RESET */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  /* MAIN CONTAINER */
   .custom-wholesale-application {
     max-width: 800px;
     margin: 0 auto;
@@ -15,7 +14,6 @@
   }
   .custom-wholesale-application .custom-application-form{ max-width:684px; margin:0 auto;  }
   .custom-wholesale-application .section-heading{ max-width:800px; }
-  /* FORM TITLE & SUBTITLE */
   .custom-wholesale-application h1 {
     font-family: EphemeraEgyptianCondensedMedium; 
     font-weight: 400;
@@ -43,7 +41,6 @@ margin:0 auto;
     margin-bottom: 60px;
   }
   
-  /* FIELDSET & LEGEND STYLING */
   .custom-wholesale-application .form-fieldset {
     border: 1px solid #14315C; 
     border-radius: 4px;
@@ -87,14 +84,10 @@ margin:0 auto;
     color: #14315c;
     text-transform: uppercase;
   }
-  /* REQUIRED ASTRISKS */
   .custom-wholesale-application .required::after {
     content: " *";
     color: #14315C; 
   }
-  
-  /* INPUT FIELDS */
-  /* Using transparent backgrounds since the border is part of the fieldset */
   .custom-wholesale-application .form-control {
     width: 100%;
     padding: 0;
@@ -105,22 +98,16 @@ margin:0 auto;
     line-height:1.6; 
     font-family:ITCClearfaceRegular; 
   }
-
-
-
-
-  /* Custom Dropdown Container */
 .custom-dropdown {
     position: relative;
     cursor: pointer;
     user-select: none;
   }
   .custom-wholesale-application .form-fieldset.dropdown{ padding:0; }
-  /* Displayed Selected Option */
   .custom-dropdown .selected-option {
     padding: 21px 20px 15px;  
     font-size: 14px;
-    color: #0a2e5c;       /* Text color */
+    color: #0a2e5c;    
     background-color: transparent;
     border-radius: 4px;
   }
@@ -129,7 +116,7 @@ margin:0 auto;
     top: 20px;
     left: 20px;
   }
-  /* Dropdown Options Container */
+
   .custom-dropdown .dropdown-options {
     position: absolute;
     top: 101%;
@@ -145,8 +132,6 @@ margin:0 auto;
     display: none;
     z-index: 1000;
   }
-  
-  /* Individual Option Styling */
   .custom-dropdown .dropdown-options .option {
     padding: 13px 20px;
     font-family: ITCClearfaceRegular;
@@ -155,7 +140,6 @@ margin:0 auto;
     line-height: 150%;
      letter-spacing: 0;
 
-        /* Text color */
     background-color: #fff;
   }
   .custom-dropdown .selected-option{
@@ -167,32 +151,27 @@ line-height: 150%;
 letter-spacing: 0;
 
   }
-  /* Hover State for Options */
   .custom-dropdown .dropdown-options .option:hover {
  background: rgba(20, 49, 92, 0.05);
   }
   .custom-dropdown.active .dropdown-arrow svg{
   transform:rotate(180deg);
   }
-
-  /* Show options when dropdown is active */
   .custom-dropdown.active .dropdown-options {
     display: block;
   }
 
   .custom-dropdown .dropdown-arrow {
     position: absolute;
-    right: 12px;         /* Adjust as needed */
+    right: 12px;      
     top: 50%;
     transform: translateY(-50%);
-    pointer-events: none; /* Ensure clicks pass through to the dropdown */
+    pointer-events: none; 
   }
 
   .custom-wholesale-application .two-column.last-fields .form-fieldset.country-code{
    max-width:180px; 
   }
-
-  /* CUSTOM DROPDOWN (removes default arrow) */
   .custom-wholesale-application .dropdown select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -299,7 +278,6 @@ bottom:25px;
    background-color: #b88b20;
   }
  
-  /* RESPONSIVE: STACK FIELDS ON SMALLER SCREENS */
   @media (max-width: 767px) {
     .custom-wholesale-application .two-column {
       flex-direction: column;

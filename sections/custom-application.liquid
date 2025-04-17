@@ -14,7 +14,6 @@
                     <fieldset class="form-fieldset">
                         <legend class="required">First Name</legend>
                         <input type="text" id="first-name" name="first_name" class="form-control" placeholder="First Name">
-
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
@@ -22,45 +21,38 @@
                     <fieldset class="form-fieldset">
                         <legend class="required">Last Name</legend>
                         <input type="text" id="last-name" name="last_name" class="form-control" placeholder="Last Name">
-
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
             </div>
-
             <!-- Email -->
             <fieldset class="form-fieldset">
                 <legend class="required">Email</legend>
                 <input type="email" id="email" name="email" class="form-control" placeholder="Email">
-
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             <!-- Name of Business -->
             <fieldset class="form-fieldset">
                 <legend class="required">Name of Your Business</legend>
                 <input type="text" id="business-name" name="business_name" class="form-control" placeholder="Name of your business">
-
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             <!-- Tax ID/EIN Number -->
             <fieldset class="form-fieldset">
                 <legend class="required">Tax ID/EIN Number</legend>
                 <input type="text" id="tax-id" name="tax_id" class="form-control" placeholder="Tax ID/EIN Number">
-
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             <!-- Shipping Address -->
             <fieldset class="form-fieldset">
                 <legend class="required">Your Shipping Address</legend>
                 <input type="text" id="address" name="address" class="form-control" placeholder="Your Shipping Address">
-
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             <!-- ZIP Code -->
             <fieldset class="form-fieldset">
                 <legend class="required">ZIP Code</legend>
                 <input type="text" id="zip-code" name="zip_code" class="form-control" placeholder="ZIP Code">
-
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             <fieldset class="form-fieldset dropdown">
@@ -78,7 +70,6 @@
                         <div class="option" data-value="Andorra">Andorra</div>
                     </div>
                 </div>
-
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             <fieldset class="form-fieldset dropdown">
@@ -99,14 +90,12 @@
                     </div>
                 </div>
                 <input type="hidden" id="state-value" name="state" value="">
-
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             <!-- City -->
             <fieldset class="form-fieldset">
                 <legend class="required">City</legend>
                 <input type="text" id="city" name="city" class="form-control" placeholder="City">
-
             </fieldset>
             <div class="error-message" style="display:none"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             <!-- Country Code & Phone Number Side-by-Side -->
@@ -115,16 +104,13 @@
                     <fieldset class="form-fieldset country-code">
                         <legend class="required">Country Code</legend>
                         <input type="text" id="country-code" name="country_code" class="form-control" placeholder="+">
-
                     </fieldset>
-
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
                 <div class="two-column-inner">
                     <fieldset class="form-fieldset">
                         <legend class="required">Phone Number</legend>
                         <input type="text" id="phone-number" name="phone_number" class="form-control" placeholder="(___) ___-____">
-
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
@@ -134,15 +120,13 @@
                     <input type="checkbox" name="agree_terms" required>
                     <span class="checkmark"></span>
                     <span class="checkbox-label">
-      I Agree to the Terms and Conditions 
-      <span class="required-asterisk">*</span>
+                    I Agree to the <a href="#" class="conditions">Terms and Conditions </a>
+                    <span class="required-asterisk">*</span>
                     </span>
                 </label>
             </div>
             <button type="submit" class="btn-submit">SUBMIT</button>
-
             <div class="custom-wholesale-application success">
-
                 <div class="success-container" id="success-container">
                     <div class="success-icon">
                         {% render 'success-message' %}

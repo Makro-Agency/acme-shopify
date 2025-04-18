@@ -157,7 +157,7 @@ background: rgba(20, 49, 92, 0.05);
 .custom-dropdown.active .dropdown-arrow svg{
 transform:rotate(180deg);
 }
-.custom-dropdown.active .dropdown-options {
+[data-form-dropdwon-wrapper].active .custom-dropdown .dropdown-options {
   display: block;
 }
 
@@ -304,6 +304,61 @@ bottom:25px;
 }
 .custom-wholesale-application a.go-back-button:hover{
  background-color: #b88b20;
+}
+
+.custom-wholesale-application .btn-submit.loading {
+  color: transparent;
+  position: relative;
+}
+
+.btn-submit.loading .loading-overlay__spinner {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.loading-overlay__spinner {
+  width: 1.8rem;
+  display: inline-block;
+}
+
+.spinner {
+  animation: rotator 1.4s linear infinite;
+}
+
+.path {
+  stroke-dasharray: 280;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  stroke: #FFF;
+  animation: dash 1.4s ease-in-out infinite;
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 280;
+  }
+  50% {
+    stroke-dashoffset: 75;
+    transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 280;
+    transform: rotate(450deg);
+  }
 }
 
 @media (max-width: 767px) {

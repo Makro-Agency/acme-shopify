@@ -117,7 +117,7 @@ span.addbtn svg {
 /* new changes product page */
 
 /* global css */
-.hide{display: none;}
+.hide{display: none !important;}
 /* global css */
 
 

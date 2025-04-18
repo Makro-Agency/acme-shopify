@@ -23,6 +23,26 @@
         "name": "boolean",
         "category": "TRUE_FALSE"
       }
+    },
+    {
+      "key": "delivery_date",
+      "namespace": "acme",
+      "name": "Delivery date",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "shopify-forms-app-submissions",
+      "namespace": "app--6171699--shopify-forms",
+      "name": "Shopify Forms submissions",
+      "description": "This metafield is used to store the submissions of the Shopify Forms App",
+      "type": {
+        "name": "list.mixed_reference",
+        "category": "REFERENCE"
+      }
     }
   ],
   "company_location": [],
@@ -33,10 +53,20 @@
       "key": "choose_your_delivery_day",
       "namespace": "checkoutblocks",
       "name": "Choose your delivery day",
-      "description": null,
+      "description": "test",
       "type": {
         "name": "date",
         "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "test",
+      "namespace": "checkoutblocks",
+      "name": "PO Number",
+      "description": null,
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     }
   ],
@@ -301,6 +331,16 @@
       "key": "blocks_list_checkout_custom_field",
       "namespace": "checkoutblocks",
       "name": "Checkout Blocks: Blocks List for: checkout_custom_field",
+      "description": null,
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "blocks_list_checkout_static_content",
+      "namespace": "checkoutblocks",
+      "name": "Checkout Blocks: Blocks List for: checkout_static_content",
       "description": null,
       "type": {
         "name": "list.metaobject_reference",

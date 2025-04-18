@@ -3,84 +3,94 @@
 
 <div class="custom-wholesale-application">
     <div class="section-heading">
-        <h1>WHOLESALE APPLICATION</h1>
-        <p>Interested in becoming a wholesale customer? Please fill out the application form below and we will get back to you shortly.</p>
+        {% if section.settings.title != blank %}<h1>{{section.settings.title}}</h1>{% endif %}
+        {% if section.settings.des != blank %}<p>{{section.settings.des}}</p>{% endif %}
     </div>
+    {% if section.settings.formlink != blank %}
     <div class="custom-application-form">
-        <form action="#" id="wholesale-form">
+        <form action="{{section.settings.formlink}}" id="wholesale-form">
             <!-- First & Last Name Side-by-Side -->
             <div class="two-column">
                 <div class="two-column-inner">
                     <fieldset class="form-fieldset">
                         <legend class="required">First Name</legend>
-                        <input type="text" id="first-name" name="first_name" class="form-control" placeholder="First Name">
+                        <input type="text" id="first-name" name="first_name" class="form-control" placeholder="First Name" required>
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
                 <div class="two-column-inner">
                     <fieldset class="form-fieldset">
                         <legend class="required">Last Name</legend>
-                        <input type="text" id="last-name" name="last_name" class="form-control" placeholder="Last Name">
+                        <input type="text" id="last-name" name="last_name" class="form-control" placeholder="Last Name" required>
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
             </div>
+
             <!-- Email -->
             <fieldset class="form-fieldset">
                 <legend class="required">Email</legend>
-                <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
             <!-- Name of Business -->
             <fieldset class="form-fieldset">
                 <legend class="required">Name of Your Business</legend>
-                <input type="text" id="business-name" name="business_name" class="form-control" placeholder="Name of your business">
+                <input type="text" id="business-name" name="business_name" class="form-control" placeholder="Name of your business" required>
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            
             <!-- Tax ID/EIN Number -->
             <fieldset class="form-fieldset">
                 <legend class="required">Tax ID/EIN Number</legend>
-                <input type="text" id="tax-id" name="tax_id" class="form-control" placeholder="Tax ID/EIN Number">
+                <input type="text" id="tax-id" name="tax_id" class="form-control" placeholder="Tax ID/EIN Number" required>
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            
             <!-- Shipping Address -->
             <fieldset class="form-fieldset">
                 <legend class="required">Your Shipping Address</legend>
-                <input type="text" id="address" name="address" class="form-control" placeholder="Your Shipping Address">
+                <input type="text" id="address" name="address" class="form-control" placeholder="Your Shipping Address" required>
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            
             <!-- ZIP Code -->
             <fieldset class="form-fieldset">
                 <legend class="required">ZIP Code</legend>
-                <input type="text" id="zip-code" name="zip_code" class="form-control" placeholder="ZIP Code">
+                <input type="text" id="zip-code" name="zip_code" class="form-control" placeholder="ZIP Code" required>
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-            <fieldset class="form-fieldset dropdown">
+            
+            <fieldset class="form-fieldset dropdown" data-form-dropdwon-wrapper>
                 <legend class="required">Country</legend>
+                
+                {% capture country_data %}
+                  {{ all_country_option_tags }}
+                {% endcapture %}
                 <div class="custom-dropdown">
-                    <div class="selected-option">Please Select</div>
+                    <select class="hide" id="country-drop" required name="country-drop"><option value=""></option>{{ all_country_option_tags }}</select>
+                    <div class="selected-option" data-form-dropdwon-active>Please Select</div>
                     <div class="dropdown-arrow">
                         {% render 'custom-dropdown-icon' %}
                     </div>
-                    <div class="dropdown-options">
-                        <div class="option" data-value="Afghanistan">Afghanistan</div>
-                        <div class="option" data-value="Aland Islands">Åland Islands</div>
-                        <div class="option" data-value="Albania">Albania</div>
-                        <div class="option" data-value="Algeria">Algeria</div>
-                        <div class="option" data-value="Andorra">Andorra</div>
+                    <div class="dropdown-options" data-province-append="#stateProvince-drop" data-tag="#country-drop">
+                      {{ country_data | replace:'<option','<div class="option"' | replace:'</option','</div' | replace:'value=','data-value=' }}
                     </div>
                 </div>
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-            <fieldset class="form-fieldset dropdown">
+
+            <fieldset class="form-fieldset dropdown" data-form-dropdwon-wrapper>
                 <legend class="required">State</legend>
-                <div class="custom-dropdown" data-input-id="state-value">
-                    <div class="selected-option">Please Select</div>
+                <div class="custom-dropdown">
+                    <select class="hide" id="stateProvince-drop" name="stateProvince" required></select>
+                    <div class="selected-option" data-form-dropdwon-active>Please Select</div>
                     <!-- SVG arrow rendered from your snippet -->
                     <div class="dropdown-arrow">
                         {% render 'custom-dropdown-icon' %}
                     </div>
-                    <div class="dropdown-options">
+                    <div class="dropdown-options" data-tag="#stateProvince-drop">
                         <div class="option" data-value="California">California</div>
                         <div class="option" data-value="Texas">Texas</div>
                         <div class="option" data-value="New York">New York</div>
@@ -92,25 +102,27 @@
                 <input type="hidden" id="state-value" name="state" value="">
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            
             <!-- City -->
             <fieldset class="form-fieldset">
                 <legend class="required">City</legend>
-                <input type="text" id="city" name="city" class="form-control" placeholder="City">
+                <input type="text" id="city" name="city" class="form-control" placeholder="City" required>
             </fieldset>
             <div class="error-message" style="display:none"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            
             <!-- Country Code & Phone Number Side-by-Side -->
             <div class="two-column last-fields">
                 <div class="two-column-inner country-code">
                     <fieldset class="form-fieldset country-code">
                         <legend class="required">Country Code</legend>
-                        <input type="text" id="country-code" name="country_code" class="form-control" placeholder="+">
+                        <input type="text" id="country-code" name="country_code" class="form-control" placeholder="+" required oninput="limitToTwoDigits(this)">
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
                 <div class="two-column-inner">
                     <fieldset class="form-fieldset">
                         <legend class="required">Phone Number</legend>
-                        <input type="text" id="phone-number" name="phone_number" class="form-control" placeholder="(___) ___-____">
+                        <input type="text" id="phone-number" name="phone_number" class="form-control" placeholder="(___) ___-____" required oninput="formatPhoneNumber(this)" maxlength="14">
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
@@ -125,26 +137,141 @@
                     </span>
                 </label>
             </div>
-            <button type="submit" class="btn-submit">SUBMIT</button>
-            <div class="custom-wholesale-application success">
-                <div class="success-container" id="success-container">
-                    <div class="success-icon">
-                        {% render 'success-message' %}
-                    </div>
-                    <h1 class="success-title">THANK YOU!</h1>
-                    <p class="success-message">The form has been successfully submitted</p>
-                    <a href="#" class="go-back-button" onclick="goBack()">GO BACK</a>
-                </div>
-            </div>
+            <button type="submit" class="btn-submit">SUBMIT
+              <div class="loading-overlay__spinner hide">
+                {% render 'icon-spinner' %}
+              </div>
+            </button>
+            
         </form>
+        <div class="custom-wholesale-application success hide">
+          <div class="success-container" id="success-container">
+              <div class="success-icon">
+                  {% render 'success-message' %}
+              </div>
+              <h1 class="success-title">THANK YOU!</h1>
+              <p class="success-message">The form has been successfully submitted</p>
+              <a href="#" class="go-back-button" onclick="goBack()">GO BACK</a>
+          </div>
+      </div>
     </div>
+    {% endif %}
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+
+    document.addEventListener("click",function(e){
+      console.log('_hearAboutActive');
+      var _hearAboutActive = e.target.hasAttribute('data-form-dropdwon-active');
+      if( e.target.closest('[data-tag]') != null && e.target.hasAttribute('data-value') ){
+        
+        let value = e.target.getAttribute("data-value");
+        var _hearAboutSelect = document.querySelector(e.target.closest('[data-tag]').getAttribute('data-tag'));
+        var _appednActiveText = e.target.closest('[data-form-dropdwon-wrapper]').querySelector('[data-form-dropdwon-active]');      
+        if(_hearAboutSelect){
+          _hearAboutSelect.value = value;
+          _hearAboutSelect.closest('.form-fieldset').nextElementSibling.style.display = 'none';
+        } 
+        if(_appednActiveText) _appednActiveText.innerText = e.target.innerText;
+        
+        let provines = e.target.getAttribute("data-provinces") || null;
+        var appendEle = e.target.closest('[data-province-append]') != null ? document.querySelector(e.target.closest('[data-province-append]').getAttribute('data-province-append')) : null;
+        if( provines != null && provines.length > 2 ){
+          console.log( JSON.parse(provines),'provines', provines.length );
+          var provinesJSON = JSON.parse(provines);
+          var _option = '', _li = '', _ul = document.createElement("ul"), _div = document.createElement("div");
+          for(var i = 0; i < provinesJSON.length; i++){          
+            _option = _option + `<option value="${provinesJSON[i][0]}">${provinesJSON[i][0]}</option>`;
+            _li = _li + `<div class="option" data-value="${provinesJSON[i][0]}">${provinesJSON[i][0]}</div>`;
+          }        
+          appendEle.innerHTML = _option;
+          appendEle.value = '';
+          appendEle.closest('[data-form-dropdwon-wrapper]').querySelector('[data-form-dropdwon-active]').innerText = 'Please Select';
+          appendEle.closest('[data-form-dropdwon-wrapper]').querySelector('.dropdown-options').innerHTML = _li;
+          appendEle.closest('[data-form-dropdwon-wrapper]').classList.remove('hide');
+        }else{
+          if( appendEle ){
+            console.log('appendEle',appendEle);
+            appendEle.closest('[data-form-dropdwon-wrapper]').classList.add('hide');
+            appendEle.closest('[data-form-dropdwon-wrapper]').nextElementSibling.style.display = 'none';
+            appendEle.value = '';
+          }
+        }
+      }
+      if(_hearAboutActive){
+        var _hearAboutWrap = e.target.closest('[data-form-dropdwon-wrapper]');
+        if(_hearAboutWrap.classList.contains("active")){
+          _hearAboutWrap.classList.remove("active");
+        }else{        
+          document.querySelectorAll('[data-form-dropdwon-wrapper].active').forEach(function(ele, eleIndex, eleArray){
+            ele.classList.remove('active');
+          });
+          _hearAboutWrap.classList.add("active");
+        }
+      }
+      if( !_hearAboutActive && document.querySelector('[data-form-dropdwon-wrapper].active') != null ){
+        document.querySelectorAll('[data-form-dropdwon-wrapper].active').forEach(function(ele, eleIndex, eleArray){
+          ele.classList.remove('active');
+        });
+      }
+    });
+
+    document.querySelector('.custom-wholesale-application .custom-application-form form .btn-submit').addEventListener("click",function(e){
+      var _fieldEmpty = false;
+      
+      var _passwrodMatch = false;
+      if( this.closest('form').querySelectorAll('input[type="password"]').length == 0 ){
+        _passwrodMatch = true;
+      }
+  
+      this.closest('form').querySelector('input[type="email"]').closest('.form-fieldset').nextElementSibling.style.display = 'none';
+      if( this.closest('form').querySelector('input[type="email"]') && !validateEmail(this.closest('form').querySelector('input[type="email"]').value) ){
+        this.closest('form').querySelector('input[type="email"]').closest('.form-fieldset').nextElementSibling.style.display = 'block';
+        _passwrodMatch = false;
+      }
+  
+      var _requiredFiledCount = this.closest('form').querySelectorAll('*[required]').length, _FiledFilledCount = 0;
+      this.closest('form').querySelectorAll('*[required]').forEach(function(ele, eleIndex, eleArray){
+        /*if( ele.tagName == "SELECT" ){console.log(ele.tagName, ele.value, ele);}*/
+        
+        if(ele.closest('[data-form-dropdwon-wrapper]') && ele.closest('[data-form-dropdwon-wrapper]').classList.contains('hide')){
+          _FiledFilledCount += 1;
+          ele.closest('[data-form-dropdwon-wrapper]').remove();
+        }else{
+          if( ele.value == '' ){
+            ele.closest('.form-fieldset').nextElementSibling.style.display = 'block';
+          }else{
+            if( ele.closest('.form-fieldset') && ele.closest('.form-fieldset').nextElementSibling.style.display == 'block'){
+              ele.closest('.form-fieldset').nextElementSibling.style.display == 'none';
+            }
+            _FiledFilledCount += 1;
+          }
+        }
+        
+  
+        if( ele.type == "checkbox" && ele.name == "agree_terms" && ele.checked == false ){        
+          _FiledFilledCount -= 1;
+        }
+
+        
+      });
+      console.log(_requiredFiledCount, _FiledFilledCount);
+      if( _requiredFiledCount != _FiledFilledCount ){
+        _passwrodMatch = false;
+      }
+      
+      console.log('_passwrodMatch',_passwrodMatch, _fieldEmpty);
+      if(!_passwrodMatch){
+        e.preventDefault();
+      }else{
+        formSubmit(e);
+      }
+    });
+
     // Since you might have multiple custom dropdowns on the page (Country, State, etc.),
     // it’s best to query all of them:
-    var dropdowns = document.querySelectorAll('.custom-dropdown');
+    {% comment %} var dropdowns = document.querySelectorAll('.custom-dropdown');
 
     dropdowns.forEach(function(dropdown) {
       var selectedOption = dropdown.querySelector('.selected-option');
@@ -170,55 +297,120 @@
           dropdown.classList.remove('active');
         });
       });
-    });
+    }); {% endcomment %}
 
     // Close any open dropdown if a click occurs outside
-    document.addEventListener('click', function(e) {
+    {% comment %} document.addEventListener('click', function(e) {
       dropdowns.forEach(function(dropdown) {
         if (!dropdown.contains(e.target)) {
           dropdown.classList.remove('active');
         }
       });
+    }); {% endcomment %}
+
+    document.querySelectorAll('.custom-application-form form *[required]').forEach(function(ele, eleIndex, eleArray){
+      ele.addEventListener("focus", inputFunction);
+      ele.addEventListener("blur", inputFunction);    
     });
+    
   });
 
-</script>
+  function formSubmit(e) {
+    //clearErrors();
+    e.preventDefault();
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var form = document.getElementById('wholesale-form');
+    document.querySelector('.custom-application-form .btn-submit').classList.add('loading');
+    document.querySelector('.custom-application-form .btn-submit .loading-overlay__spinner').classList.remove('hide');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    e.target.closest('form').classList.add('hide');
+    e.target.closest(".custom-application-form").querySelector(".custom-wholesale-application.success").classList.remove('hide');
 
-  form.addEventListener('submit', function(e) {
-    clearErrors();
-    let isValid = true;
-    
-    // Validate text and email inputs
-    var inputs = form.querySelectorAll('input[type="text"], input[type="email"]');
-    inputs.forEach(function(input) {
-      if (!input.value.trim()) {
-        isValid = false;
-        // Find the closest fieldset that contains the input
-        var fieldset = input.closest('.form-fieldset');
+    {% comment %} var url = form.getAttribute('action');    
+    var config = fetchConfig('javascript');
+    delete config.headers['Content-Type'];
+    config.headers['Accept'] = '/';
+    var formData = new FormData(form);
+    config.body = formData;
+    fetch(`${url}`, config)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status) {
+          window.scrollTo({top: 0, behavior: 'smooth'});
+          form.classList.add('hide');
+          form.closest(".custom-application-form").querySelector(".custom-wholesale-application.success").classList.remove('hide');
+        }
+      })
+      .catch(e => {
+        console.error(e);
+      }); {% endcomment %}
+  };
+
+  function goBack(){
+    location.reload();
+  }
+
+  function limitToTwoDigits(input) {
+      
+    input.value = input.value.replace(/\D/g, '');
+
+    if (input.value.length > 2) {
+      input.value = input.value.slice(0, 2);
+    }
+  }
+
+  function formatPhoneNumber(input) {
+    // Remove all non-digit characters
+    let numbers = input.value.replace(/\D/g, '').slice(0, 10);
+
+    let formatted = '';
+
+    if (numbers.length > 0) {
+      formatted = '(' + numbers.slice(0, 3);
+    }
+    if (numbers.length >= 4) {
+      formatted += ') ' + numbers.slice(3, 6);
+    }
+    if (numbers.length >= 7) {
+      formatted += '-' + numbers.slice(6, 10);
+    }
+
+    input.value = formatted;
+  }
+
+  function inputFunction(event){
+    if( event.target.value == '' ){
+      var fieldset = event.target.closest('.form-fieldset');
+      if (fieldset) {
+        var errorDiv = fieldset.nextElementSibling;
+        if (errorDiv && errorDiv.classList.contains('error-message')) {
+          errorDiv.style.display = 'block';
+        }
+      }
+    }else{
+      if( event.target.type == "email" && !validateEmail(event.target.value) ){
+        
+        var fieldset = event.target.closest('.form-fieldset');
         if (fieldset) {
-          // Add error styling to the fieldset
-          fieldset.classList.add('error');
-          // Find the error message container right after this fieldset
           var errorDiv = fieldset.nextElementSibling;
           if (errorDiv && errorDiv.classList.contains('error-message')) {
             errorDiv.style.display = 'block';
           }
         }
+      }else {
+        if( event.target.closest('.form-fieldset') && event.target.closest('.form-fieldset').nextElementSibling.classList.contains('error-message') ){
+          event.target.closest('.form-fieldset').nextElementSibling.style.display = 'none';
+        }
       }
-    });
-    
-    // (Additional validation for custom dropdowns or checkboxes would go here)
-    
-    // Prevent form submission if any field is invalid
-    if (!isValid) {
-      e.preventDefault();
     }
-  });
-  
+  }
+
+  function validateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)){
+      return (true);
+    }    
+    return (false);
+  }
+
   // Utility function to clear error styling/message for all fields
   function clearErrors() {
     var errorFieldsets = form.querySelectorAll('.form-fieldset.error');
@@ -230,13 +422,28 @@ document.addEventListener('DOMContentLoaded', function() {
       msg.style.display = 'none';
     });
   }
-});
 </script>
 
 {% schema %}
 {
   "name": "Custom Application",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id":"formlink",
+      "label": "Add form link"
+    }
+  ],
   "presets": [
     {
       "name": "Custom Application"

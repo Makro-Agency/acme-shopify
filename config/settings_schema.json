@@ -24,12 +24,14 @@
       {
         "type": "text",
         "id": "out-stock-msg",
-        "label": "Out Of stock message Product page"
+        "label": "Out Of stock message Product page",
+        "default": "This product is Out of Stock"
       },
       {
         "type": "text",
         "id": "out-stock-msg-bulk",
-        "label": "Out Of stock message bulk order page"
+        "label": "Out Of stock message bulk order page",
+        "default": "This product is out of stock please select a different one"
       }
     ]
   },

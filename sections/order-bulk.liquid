@@ -231,26 +231,41 @@
                 items_object['items'] = items;
                 console.log(items_object,'items_object')
                 const o = items_object;
-        
-                fetch(`{{ routes.cart_add_url }}`, {
+
+                fetch('/cart/clear.js', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        Accept: `application/json`,
-                    },
-                    body: JSON.stringify(o)
-                }).then(response => {
-                    if (!response.ok) {
-                       throw new Error('Network response was not ok');
+                        'Content-Type': 'application/json'
                     }
-                    return response.json();
-                 }).then(result => {
-                    console.log('Added',result);
-                    window.location.href = '/cart';
-                 }).catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);;
-                }).finally(() => {
-                   console.log('finally');
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Cart clear failed');
+                        return res.json();
+                    })
+                .then(data => {
+                    fetch(`{{ routes.cart_add_url }}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: `application/json`,
+                        },
+                        body: JSON.stringify(o)
+                    }).then(response => {
+                        if (!response.ok) {
+                           throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                     }).then(result => {
+                        console.log('Added',result);
+                        window.location.href = '/cart';
+                     }).catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);;
+                    }).finally(() => {
+                       console.log('finally');
+                    });
+                })
+                .catch(err => {
+                    console.error('Error clearing cart:', err);
                 });
             }
         })

@@ -6,47 +6,56 @@
     if section.settings.header_alignment == "center"
         assign header_center = true
     endif
+
+    assign customer_b2B = false
+    if customer and customer.b2b? and customer.company_available_locations_count > 0
+        assign customer_b2B = true
+    endif
 %}
 
-{% if section.settings.anchor_id != blank %}
-    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
-{% endif %}
-<section class="image-text-panels theme--{{ section.settings.color }}">
-    <div class="container">
-        <div class="row">
-            {% if section.settings.header != blank %}
-                <h2 class="image-text-panels__header header-1 col-12 mb-5 {% if header_center %}text-center{% endif %}">{{ section.settings.header }}</h2>
-            {% endif %}
-            <div class="col-12 d-flex flex-column flex-md-row justify-content-center flex-wrap">
-                {% for block in section.blocks %}
-                    <div class="image-text-panels__block col-md-4 {% if section.settings.columns == '4_col' %}col-xl-3{% endif %} px-md-3 px-lg-0 {% if section.settings.col_alignment == "left" %}align-items-start{% else %}align-items-center{% endif %}" block.shopify_attributes>
-                        {% if block.settings.image %}    
-                            <div class="image-wrapper mb-3 align-{{ section.settings.col_alignment }}">
-                                {% if block.settings.url != blank %}
-                                    <a href="{{block.settings.url}}" {% if block.settings.external %}target="_blank"{% endif %}{% if block.settings.external %}target="_blank"{% endif %}>
-                                {% endif %}
-                                    <picture>
-                                        <source media="(min-width: 992px)" srcset="{{ block.settings.image | img_url: '650x' }}">
-                                        <img class="img-fluid" src="{{ block.settings.image | img_url: '450x' }}" {% if block.settings.image.alt %} alt="{{ block.settings.image.alt }}" {% else %} alt="Acme Smoked Fish" {% endif %}>
-                                    </picture>
-                                {% if block.settings.url  != blank%}
-                                   </a>
-                                {% endif  %}
+
+
+{% unless customer_b2B and section.settings.hide-for-b2b %}
+    {% if section.settings.anchor_id != blank %}
+        <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+    {% endif %}
+    <section class="image-text-panels theme--{{ section.settings.color }}">
+        <div class="container">
+            <div class="row">
+                {% if section.settings.header != blank %}
+                    <h2 class="image-text-panels__header header-1 col-12 mb-5 {% if header_center %}text-center{% endif %}">{{ section.settings.header }}</h2>
+                {% endif %}
+                <div class="col-12 d-flex flex-column flex-md-row justify-content-center flex-wrap">
+                    {% for block in section.blocks %}
+                        <div class="image-text-panels__block col-md-4 {% if section.settings.columns == '4_col' %}col-xl-3{% endif %} px-md-3 px-lg-0 {% if section.settings.col_alignment == "left" %}align-items-start{% else %}align-items-center{% endif %}" block.shopify_attributes>
+                            {% if block.settings.image %}    
+                                <div class="image-wrapper mb-3 align-{{ section.settings.col_alignment }}">
+                                    {% if block.settings.url != blank %}
+                                        <a href="{{block.settings.url}}" {% if block.settings.external %}target="_blank"{% endif %}{% if block.settings.external %}target="_blank"{% endif %}>
+                                    {% endif %}
+                                        <picture>
+                                            <source media="(min-width: 992px)" srcset="{{ block.settings.image | img_url: '650x' }}">
+                                            <img class="img-fluid" src="{{ block.settings.image | img_url: '450x' }}" {% if block.settings.image.alt %} alt="{{ block.settings.image.alt }}" {% else %} alt="Acme Smoked Fish" {% endif %}>
+                                        </picture>
+                                    {% if block.settings.url  != blank%}
+                                    </a>
+                                    {% endif  %}
+                                </div>
+                            {% endif %}
+                            <div class="text-wrapper mt-3 {% if col_center %}text-center px-lg-4{% else %}pe-lg-5{% endif %}">
+                                <h3 class="text-wrapper--title header-4 mb-3 {% if col_center %}px-lg-4 px-xxl-5{% else %}pe-lg-5{% endif %}">{{ block.settings.header }}</h3>
+                                <div class="text-wrapper--description body-2 mb-3 {% if col_center %}text-center px-lg-4{% else %}pe-lg-5{% endif %}">{{ block.settings.description }}</div>
                             </div>
-                        {% endif %}
-                        <div class="text-wrapper mt-3 {% if col_center %}text-center px-lg-4{% else %}pe-lg-5{% endif %}">
-                            <h3 class="text-wrapper--title header-4 mb-3 {% if col_center %}px-lg-4 px-xxl-5{% else %}pe-lg-5{% endif %}">{{ block.settings.header }}</h3>
-                            <div class="text-wrapper--description body-2 mb-3 {% if col_center %}text-center px-lg-4{% else %}pe-lg-5{% endif %}">{{ block.settings.description }}</div>
+                            {% if block.settings.url != blank and block.settings.cta != blank  %}
+                                <a href="{{ block.settings.url }}" class="btn btn-{% if section.settings.color == 'light' %}primary{% else %}light{% endif %} mt-4" {% if block.settings.external %}target="_blank"{% endif %}>{{ block.settings.cta }}</a>
+                            {% endif %}
                         </div>
-                        {% if block.settings.url != blank and block.settings.cta != blank  %}
-                            <a href="{{ block.settings.url }}" class="btn btn-{% if section.settings.color == 'light' %}primary{% else %}light{% endif %} mt-4" {% if block.settings.external %}target="_blank"{% endif %}>{{ block.settings.cta }}</a>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+{% endunless %}
 
 
 {% schema %}
@@ -55,6 +64,11 @@
         "tag": "section",
         "class": "section",
         "settings": [
+            {
+                "type": "checkbox",
+                "id": "hide-for-b2b",
+                "label": "Hide Section for B2B"
+            },
             {
                 "type": "text",
                 "id": "anchor_id",

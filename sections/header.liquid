@@ -183,6 +183,8 @@ assign navbar_transparency = false  {% endcomment %}
 											<div class="clearfix col-12">
 												{% if link.handle == 'products' %}
 													<a class="btn btn-primary mt-3 mb-4" href="/collections/all">All Products</a>
+												{% elsif customer_b2B and link.handle == 'your-products' %}
+													<a class="btn btn-primary mt-3 mb-4" href="/collections/all">All Products</a>
 												{% endif %}
 											</div>
 										{% endif %}

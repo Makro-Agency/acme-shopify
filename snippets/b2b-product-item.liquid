@@ -9,7 +9,9 @@
   <div class="product-wrapper">
       <div class="product-wrap">
           <img src="{{ coll_prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
-          <span class="title">{{ coll_prod.title }}</span>
+          <span class="title">
+            <a href="{{ coll_prod.url }}">{{ coll_prod.title }}</a>
+          </span>
       </div>
       <span class="sku">-</span>
       <span class="price">-</span>
@@ -27,7 +29,9 @@
                 {% else %}
                   <img src="{{ coll_prod.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
                 {% endif %}
-                <span class="title">{{ coll_prod.title }} / {{ variant.title }}</span>
+                <span class="title">
+                  <a href="{{ coll_prod.url }}">{{ coll_prod.title }} / {{ variant.title }}</a>
+                </span>
             </div>
             {% if variant.sku %}<span class="sku"><span class="mobile-header">Sku</span>{{ variant.sku }}</span>{% else %}-{% endif %}
             <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
@@ -67,12 +71,16 @@
   <div class="product-wrapper">
     <div class="product-wrap">
         <img src="{{ coll_prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
-        <span class="title">{{ coll_prod.title }}</span>
+        <span class="title">
+          <a href="{{ coll_prod.url }}">{{ coll_prod.title }}</a>
+        </span>
     </div>
     <span class="sku"><span class="mobile-header">Sku</span>{{ coll_prod.selected_or_first_available_variant.sku }}</span>
     <div class="product-details">
       <span class="grid-sku"><span>SKU:</span><span>{{ coll_prod.selected_or_first_available_variant.sku }}</span></span>
-      <span class="grid-title">{{ coll_prod.title }}</span>
+      <span class="grid-title">
+        <a href="{{ coll_prod.url }}">{{ coll_prod.title }}</a>
+      </span>
     </div>
     <span class="price"><span class="mobile-header">Price</span>{{ coll_prod.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
     <span class="grid-price"><span>Your price:</span><span>{{ coll_prod.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span></span>

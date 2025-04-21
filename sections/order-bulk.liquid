@@ -518,12 +518,16 @@
                     <div class="product-wrapper">
                         <div class="product-wrap">
                             <img src="${ _item.featured_image}" alt="Salmon" height="auto" width="auto">
-                            <span class="title">${_item.title}</span>
+                            <span class="title">
+                                <a href="/products/${_item.handle}">${_item.title}</a>
+                            </span>
                         </div>
                         <span class="sku">-</span>
                         <div class="product-details">
                             <span class="grid-sku"><span>SKU:</span><span>${_item.variants[0].sku}</span></span>
-                            <span class="grid-title">${_item.title }</span>
+                            <span class="grid-title">
+                                <a href="/products/${_item.handle}">${_item.title}</a>
+                            </span>
                         </div>
                         <span class="price">-</span>
                         <span class="grid-price"><span>Your price:</span><span>${Shopify.formatMoney(_item.price, amount_text)}</span></span>
@@ -573,7 +577,9 @@
                                 <div class="product-wrapper">
                                     <div class="product-wrap">
                                         <img src="//makro-staging-rc-creations-1954.myshopify.com/cdn/shop/files/MAshirtfront_4b7c46fe-9cfd-497b-bec7-3abc6ca71b68.png?v=1742437687" alt="Salmon" height="auto" width="auto">
-                                        <span class="title">${_item.title} / ${currentVAraint.title}</span>
+                                        <span class="title">
+                                            <a href="/products/${_item.handle}">${_item.title} / ${currentVAraint.title}</a>
+                                        </span>
                                     </div>
                                     <span class="sku"><span class="mobile-header">Sku</span>${ currentVAraint.sku }</span>
                                     <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
@@ -626,12 +632,16 @@
                     <div class="product-wrapper">
                         <div class="product-wrap">
                             <img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">
-                            <span class="title">${_item.title }</span>
+                            <span class="title">
+                                <a href="/products/${_item.handle}">${_item.title}</a>
+                            </span>
                         </div>
                         <span class="sku"><span class="mobile-header">Sku</span>${currentVAraint.sku}</span>
                         <div class="product-details">
                             <span class="grid-sku"><span>SKU:</span><span>${currentVAraint.sku}</span></span>
-                            <span class="grid-title">${_item.title }</span>
+                            <span class="grid-title">
+                                <a href="/products/${_item.handle}">${_item.title }</a>
+                            </span>
                         </div>
                         <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
                         <span class="grid-price"><span>Your price:</span><span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span></span>

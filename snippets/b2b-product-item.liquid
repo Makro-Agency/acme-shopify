@@ -7,12 +7,12 @@
 <div class="product-item {% if coll_prod.variants.size > 1 %}varient-select{% endif %}">
   {% if coll_prod.variants.size > 1 %}
   <div class="product-wrapper">
-      <div class="product-wrap">
+      <a href="{{ coll_prod.url }}" class="product-wrap">
           <img src="{{ coll_prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
           <span class="title">
-            <a href="{{ coll_prod.url }}">{{ coll_prod.title }}</a>
+            {{ coll_prod.title }}
           </span>
-      </div>
+      </a>
       <span class="sku">-</span>
       <span class="price">-</span>
       <div class="quantity-btn-wrap">
@@ -23,16 +23,16 @@
     {%- for variant in coll_prod.variants -%}
       <div class="variant-inner-item">
         <div class="product-wrapper">
-            <div class="product-wrap">
+            <a href="{{ coll_prod.url }}" class="product-wrap">
                 {% if variant.featured_image %}
                   <img src="{{ variant.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
                 {% else %}
                   <img src="{{ coll_prod.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
                 {% endif %}
                 <span class="title">
-                  <a href="{{ coll_prod.url }}">{{ coll_prod.title }} / {{ variant.title }}</a>
+                  {{ coll_prod.title }} / {{ variant.title }}
                 </span>
-            </div>
+            </a>
             {% if variant.sku %}<span class="sku"><span class="mobile-header">Sku</span>{{ variant.sku }}</span>{% else %}-{% endif %}
             <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
             <div class="quantity-btn-wrap">
@@ -69,12 +69,12 @@
   </div>
   {% else %}
   <div class="product-wrapper">
-    <div class="product-wrap">
-        <img src="{{ coll_prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
-        <span class="title">
-          <a href="{{ coll_prod.url }}">{{ coll_prod.title }}</a>
-        </span>
-    </div>
+    <a href="{{ coll_prod.url }}" class="product-wrap">
+      <img src="{{ coll_prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
+      <span class="title">
+        {{ coll_prod.title }}
+      </span>
+    </a>
     <span class="sku"><span class="mobile-header">Sku</span>{{ coll_prod.selected_or_first_available_variant.sku }}</span>
     <div class="product-details">
       <span class="grid-sku"><span>SKU:</span><span>{{ coll_prod.selected_or_first_available_variant.sku }}</span></span>

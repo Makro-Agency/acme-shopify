@@ -220,6 +220,7 @@ li.page-item.disabled {
     align-items: center;
     justify-content: flex-start;
     gap: 20px;
+    text-decoration: none;
 }
 .product-wrap img {
     max-width: 100%;

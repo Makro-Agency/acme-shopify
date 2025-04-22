@@ -516,12 +516,12 @@
                 `<div class="product-item varient-select">
 
                     <div class="product-wrapper">
-                        <div class="product-wrap">
+                        <a href="/products/${_item.handle}" class="product-wrap">
                             <img src="${ _item.featured_image}" alt="Salmon" height="auto" width="auto">
                             <span class="title">
-                                <a href="/products/${_item.handle}">${_item.title}</a>
+                                ${_item.title}
                             </span>
-                        </div>
+                        </a>
                         <span class="sku">-</span>
                         <div class="product-details">
                             <span class="grid-sku"><span>SKU:</span><span>${_item.variants[0].sku}</span></span>
@@ -575,12 +575,12 @@
                             _returnHTML += `
                             <div class="variant-inner-item">
                                 <div class="product-wrapper">
-                                    <div class="product-wrap">
+                                    <a href="/products/${_item.handle}" class="product-wrap">
                                         <img src="//makro-staging-rc-creations-1954.myshopify.com/cdn/shop/files/MAshirtfront_4b7c46fe-9cfd-497b-bec7-3abc6ca71b68.png?v=1742437687" alt="Salmon" height="auto" width="auto">
                                         <span class="title">
-                                            <a href="/products/${_item.handle}">${_item.title} / ${currentVAraint.title}</a>
+                                            ${_item.title} / ${currentVAraint.title}
                                         </span>
-                                    </div>
+                                    </a>
                                     <span class="sku"><span class="mobile-header">Sku</span>${ currentVAraint.sku }</span>
                                     <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
                                     <div class="quantity-btn-wrap">
@@ -630,12 +630,12 @@
 
                 _returnHTML += `<div class="product-item ">
                     <div class="product-wrapper">
-                        <div class="product-wrap">
+                        <a href="/products/${_item.handle}" class="product-wrap">
                             <img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">
                             <span class="title">
-                                <a href="/products/${_item.handle}">${_item.title}</a>
+                                ${_item.title}
                             </span>
-                        </div>
+                        </a>
                         <span class="sku"><span class="mobile-header">Sku</span>${currentVAraint.sku}</span>
                         <div class="product-details">
                             <span class="grid-sku"><span>SKU:</span><span>${currentVAraint.sku}</span></span>

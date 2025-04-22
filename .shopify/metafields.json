@@ -70,7 +70,28 @@
       }
     }
   ],
-  "page": [],
+  "page": [
+    {
+      "key": "navbar_background",
+      "namespace": "page",
+      "name": "Navbar Background",
+      "description": "Choose Light or Dark. ",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "navbar_transparency",
+      "namespace": "page",
+      "name": "Navbar Transparency",
+      "description": "Should the navbar be transparent before scroll",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
   "product": [
     {
       "key": "hidden",

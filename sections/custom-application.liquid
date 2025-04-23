@@ -99,7 +99,6 @@
                         <!-- Add more options as needed -->
                     </div>
                 </div>
-                <input type="hidden" id="state-value" name="state" value="">
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
             
@@ -315,17 +314,23 @@
     
   });
 
+  function fetchConfig(type = 'json') {
+    return {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: `application/${type}` },
+    };
+  }
+
   function formSubmit(e) {
     //clearErrors();
     e.preventDefault();
 
     document.querySelector('.custom-application-form .btn-submit').classList.add('loading');
     document.querySelector('.custom-application-form .btn-submit .loading-overlay__spinner').classList.remove('hide');
-    window.scrollTo({top: 0, behavior: 'smooth'});
-    e.target.closest('form').classList.add('hide');
-    e.target.closest(".custom-application-form").querySelector(".custom-wholesale-application.success").classList.remove('hide');
+    
+    const form = e.target.closest('form');
 
-    {% comment %} var url = form.getAttribute('action');    
+    var url = form.getAttribute('action');    
     var config = fetchConfig('javascript');
     delete config.headers['Content-Type'];
     config.headers['Accept'] = '/';
@@ -336,13 +341,13 @@
       .then((response) => {
         if (response.status) {
           window.scrollTo({top: 0, behavior: 'smooth'});
-          form.classList.add('hide');
-          form.closest(".custom-application-form").querySelector(".custom-wholesale-application.success").classList.remove('hide');
+          e.target.closest('form').classList.add('hide');
+          e.target.closest(".custom-application-form").querySelector(".custom-wholesale-application.success").classList.remove('hide');
         }
       })
       .catch(e => {
         console.error(e);
-      }); {% endcomment %}
+      });
   };
 
   function goBack(){

@@ -38,10 +38,10 @@
             <span data-type="grid" onclick="changeview(this)">{% render 'icon-grid' %}</span>
         </div>
     </div>
-    <div class="temp-msg">
+    {% comment %} <div class="temp-msg">
         <span class="icon">{% render 'icon-tickmark' %}</span>
         <span class="temp-text"></span>
-    </div>
+    </div> {% endcomment %}
     <div class="product-list">
         <div class="product-header">
             <span>PRODUCT</span>
@@ -366,14 +366,14 @@
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.add('active');
             var title = plusSelector.closest('.product-wrapper').querySelector('.product-wrap .title').innerText;
-            document.querySelector('.temp-msg .temp-text').innerText = title + ' has been added to your cart';
-            document.querySelector('.temp-msg').classList.add('active');
+            //document.querySelector('.temp-msg .temp-text').innerText = title + ' has been added to your cart';
+            //document.querySelector('.temp-msg').classList.add('active');
             var store_scroll = document.querySelector('.bundle-search-bar').offsetTop - 100;
             setTimeout(function(){ 
                 window.scrollTo({top: store_scroll, behavior: 'smooth'});
                 setTimeout(function(){ 
-                    document.querySelector('.temp-msg').classList.remove('active');
-                    document.querySelector('.temp-msg .temp-text').innerText = '';
+                    //document.querySelector('.temp-msg').classList.remove('active');
+                    //document.querySelector('.temp-msg .temp-text').innerText = '';
                 }, 4000);
             }, 2000);
         }

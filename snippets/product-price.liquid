@@ -23,6 +23,10 @@
   assign money_price = price | money
 
   assign available_online = available_online
+
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign available_online = true
+  endif
   
   assign has_b2b = false
   if available_online == true
@@ -35,6 +39,8 @@
       endif
     endif
   endif
+
+  
 -%}
 
 {% if available_online %}    

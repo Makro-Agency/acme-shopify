@@ -76,6 +76,11 @@ span.addbtn svg {
   margin-bottom: 0;
 }
 
+/* Product page soldout button*/
+[sh-add-to-cart][aria-disabled=true][type="submit"] {
+  opacity: 0.5;
+}
+
 /* Product template in-out stock */
   .product-stock {
     font-size: 0.75rem;

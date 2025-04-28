@@ -26,6 +26,10 @@ product-add-form product-form product-form-{{ product.id }}
 
 {%- liquid
 	assign available_online = product.metafields.accentuate.available_online | default: false
+
+	if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign available_online = true
+  endif
 	
 	assign has_b2b = false
 	if customer and customer.b2b?		

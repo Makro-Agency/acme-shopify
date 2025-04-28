@@ -10,6 +10,9 @@
   assign current_variant = product.selected_or_first_available_variant
 
   assign available_online = product.metafields.accentuate.available_online    
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign available_online = true
+  endif
   if available_online == true
     if customer and customer.b2b?
       if customer.company_available_locations_count > 0      

@@ -223,7 +223,10 @@
         document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
             var productData = { 
                 id: selected_items.getAttribute('data-item'),
-                quantity: parseInt(selected_items.querySelector('span').textContent)
+                quantity: parseInt(selected_items.querySelector('span').textContent),
+                properties: {
+                    "_delivery_date":"{{ customer.current_company.metafields.acme.delivery_date }}"
+                }
             };
             items.push(productData);
         

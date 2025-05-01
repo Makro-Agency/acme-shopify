@@ -245,8 +245,10 @@
                         Availdays.push(DateFormat);
                         checkCount++;
                     }
-                    
                 }else{
+                    if(checkCount == 0){
+                        checkCount++;
+                    }
                     count++;
                 }
                 Tomorrow.setDate(Tomorrow.getDate() + 1)
@@ -275,7 +277,7 @@
             var nextMondays = '';
         {% endif %}
 
-        console.log('nextMondays',nextMondays);
+        console.log('nextMondays*',nextMondays);
 
         /*document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
             var productData = { 

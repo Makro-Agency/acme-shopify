@@ -277,7 +277,7 @@
             var nextMondays = '';
         {% endif %}
 
-        console.log('nextMondays*',nextMondays);
+        {% comment %} console.log('nextMondays*',nextMondays); {% endcomment %}
 
         document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
             var productData = { 

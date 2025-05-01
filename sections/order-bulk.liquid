@@ -279,7 +279,7 @@
 
         console.log('nextMondays*',nextMondays);
 
-        /*document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
+        document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
             var productData = { 
                 id: selected_items.getAttribute('data-item'),
                 quantity: parseInt(selected_items.querySelector('span').textContent),
@@ -330,7 +330,7 @@
                     console.error('Error clearing cart:', err);
                 });
             }
-        })*/
+        })
     }
 
     var json_val = JSON.parse("["+document.querySelector('.json-div').innerText.trim()+"]")[0];

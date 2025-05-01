@@ -220,12 +220,45 @@
             })
             
         }
+
+        function getNextMondays(count = 7) {
+            var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
+            Tomorrow.setDate(Today.getDate() + 1);
+            var count = 7;
+        
+            var tempBitValue = '1001101';
+            var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
+            BitValue.split('');
+        
+            // Collect next `count` Mondays
+            for (let i = 0; i < count; i++) {
+                const dayOfWeek = Tomorrow.getDay();
+                if(BitValue[(dayOfWeek)] == '1'){
+                    var DateFormat = `${Tomorrow.getFullYear()}-${Tomorrow.getMonth() < 10 ? ('0'+Tomorrow.getMonth()) : Tomorrow.getMonth()}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                    Availdays.push(DateFormat);
+                }else{
+                    count++;
+                }
+                Tomorrow.setDate(Tomorrow.getDate() + 1)
+            }
+        
+            return Availdays;
+        }
+
+        // Example usage:
+
+        {% if customer.current_company.metafields.acme.delivery_date != blank %}
+            var nextMondays = getNextMondays();
+        {% else %}
+            var nextMondays = '';
+        {% endif %}
+
         document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
             var productData = { 
                 id: selected_items.getAttribute('data-item'),
                 quantity: parseInt(selected_items.querySelector('span').textContent),
                 properties: {
-                    "_delivery_date":"{{ customer.current_company.metafields.acme.delivery_date }}"
+                    "_delivery_date":nextMondays
                 }
             };
             items.push(productData);

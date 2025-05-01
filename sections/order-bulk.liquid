@@ -222,6 +222,9 @@
         }
 
         function getNextMondays(count = 7) {
+
+            const inputTime = "{{settings.cut-time}}:00";
+
             var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
             Tomorrow.setDate(Today.getDate() + 1);
             var count = 7;
@@ -230,13 +233,22 @@
             var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
             BitValue.split('');
         
-            // Collect next `count` Mondays
+            var checkCount = 0;
             for (let i = 0; i < count; i++) {
                 const dayOfWeek = Tomorrow.getDay();
                 if(BitValue[(dayOfWeek)] == '1'){
-                    var DateFormat = `${Tomorrow.getFullYear()}-${Tomorrow.getMonth() < 10 ? ('0'+Tomorrow.getMonth()) : Tomorrow.getMonth()}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
-                    Availdays.push(DateFormat);
+                    if(checkCount==0 && hasEstTimePassedToday(inputTime)){
+                        count++;
+                        checkCount++;
+                    }else{
+                        var DateFormat = `${Tomorrow.getFullYear()}-${Tomorrow.getMonth() < 10 ? ('0'+Tomorrow.getMonth()) : Tomorrow.getMonth()}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                        Availdays.push(DateFormat);
+                        checkCount++;
+                    }
                 }else{
+                    if(checkCount == 0){
+                        checkCount++;
+                    }
                     count++;
                 }
                 Tomorrow.setDate(Tomorrow.getDate() + 1)
@@ -245,6 +257,18 @@
             return Availdays;
         }
 
+        function hasEstTimePassedToday(inputTime) {
+            const estNow = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+            const nowEstDate = new Date(estNow);
+          
+            const [inputHour, inputMinute] = inputTime.split(':').map(Number);
+          
+            const targetEstTime = new Date(nowEstDate);
+            targetEstTime.setHours(inputHour, inputMinute, 0, 0);
+          
+            return nowEstDate >= targetEstTime;
+          }
+
         // Example usage:
 
         {% if customer.current_company.metafields.acme.delivery_date != blank %}
@@ -252,6 +276,8 @@
         {% else %}
             var nextMondays = '';
         {% endif %}
+
+        {% comment %} console.log('nextMondays*',nextMondays); {% endcomment %}
 
         document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
             var productData = { 

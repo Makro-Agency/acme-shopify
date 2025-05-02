@@ -241,7 +241,8 @@
                         count++;
                         checkCount++;
                     }else{
-                        var DateFormat = `${Tomorrow.getFullYear()}-${Tomorrow.getMonth() < 10 ? ('0'+Tomorrow.getMonth()) : Tomorrow.getMonth()}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                        var store_month = (Tomorrow.getMonth() + 1);
+                        var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
                         Availdays.push(DateFormat);
                         checkCount++;
                     }
@@ -277,7 +278,7 @@
             var nextMondays = '';
         {% endif %}
 
-        {% comment %} console.log('nextMondays*',nextMondays); {% endcomment %}
+        console.log('nextMondays*',nextMondays);
 
         document.querySelectorAll('.quantity-selector.active').forEach((selected_items,index) => {
             var productData = { 

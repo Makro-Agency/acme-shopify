@@ -35,7 +35,7 @@ product-add-form product-form product-form-{{ product.id }}
 			</div>
 		{% endif %}
 		{% if current_variant.sku != blank  %}
-			<h2 class="header-5 pt-2">SKU : {{current_variant.sku}} {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}/ UPC : {{current_variant.barcode}}{% endif %}</h2>
+			<h2 class="header-5 pt-2">SKU : {{current_variant.sku}} {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}{% if current_variant.barcode != blank%} / UPC : {{current_variant.barcode}}{% endif %}{% endif %}</h2>
 		{% endif %}
 		{% if product.variants.size > 1  %}
 			<div class="product-single__multiple-variants">
@@ -74,20 +74,20 @@ product-add-form product-form product-form-{{ product.id }}
 			<div sh-quantity-component data-min-value="1" class="{% if available_online == false %} d-none {% endif %}">
 				<div class="product-qty-title visually-hidden"><span class="option-title header-5 text-blue">Quantity</span></div>
 				<div class="product-qty mb-4 mt-4 mb-xl-0 mt-xl-0">
-					<a class="qty-dec clickable" 
+					<a class="qty-dec clickable qty-btn disabled" 
 						data-quantity-dec 
 						aria-label="Decrease Quantity"
-						href="#"
+						href="#" data-val="{{ current_variant.quantity | default: 1 }}"
 					><span class="icon-minus">-</span></a>
 					<input class="qty-input"type="text" id="Quantity-{{ product.id }}"
 						name="quantity" value="1" min="1" pattern="[0-9]*"
 						title="Qty" min="0" data-quantity-input 
 						{% if available_online == false  %} aria-disabled="true"{% endif %}>
 					
-					<a class="qty-inc clickable" 
+					<a class="qty-inc clickable qty-btn" 
 						data-quantity-inc
 						aria-label="Increase Quantity"
-						href="#"  
+						href="#" data-val="{{ current_variant.quantity | default: 1 }}"
 					><span class="icon-plus">+</span></a>
 				</div><!-- .product-qty -->
 			</div>

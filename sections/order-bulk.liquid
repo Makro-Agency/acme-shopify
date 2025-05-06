@@ -229,7 +229,7 @@
             Tomorrow.setDate(Today.getDate() + 1);
             var count = 7;
         
-            var tempBitValue = '1001101';
+            var tempBitValue = '{{customer.current_company.metafields.acme.delivery_date}}';
             var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
             BitValue.split('');
         

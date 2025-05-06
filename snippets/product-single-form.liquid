@@ -35,7 +35,7 @@ product-add-form product-form product-form-{{ product.id }}
 			</div>
 		{% endif %}
 		{% if current_variant.sku != blank  %}
-			<h2 class="header-5 pt-2">SKU : {{current_variant.sku}}</h2>
+			<h2 class="header-5 pt-2">SKU : {{current_variant.sku}} {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}/ UPC : {{current_variant.barcode}}{% endif %}</h2>
 		{% endif %}
 		{% if product.variants.size > 1  %}
 			<div class="product-single__multiple-variants">

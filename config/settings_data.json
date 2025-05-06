@@ -20,6 +20,7 @@
     "index_navbar_transparency": false,
     "find_in_store_provider": "where_to_buy",
     "cut-time": "17",
+    "b2b_text_no_product": "No products.",
     "checkout_logo_image": "shopify://shop_images/Acmesmokedfish-01-ringlogo-Blue-Rgb-2000px-w-300ppi_1.png",
     "checkout_logo_size": "large",
     "checkout_body_background_color": "#f2f2f2",

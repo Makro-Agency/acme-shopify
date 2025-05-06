@@ -278,5 +278,15 @@
         ]
       }
     ]
+  },
+  {
+    "name" : "No product settings B2B",
+    "settings" : [
+      {
+        "id" : "b2b_text_no_product",
+        "type" : "text",
+        "label": "Add Text For B2B users"
+      }      
+    ]
   }
 ]

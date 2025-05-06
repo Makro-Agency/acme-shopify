@@ -81,6 +81,11 @@ span.addbtn svg {
   opacity: 0.5;
 }
 
+.disabled{
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 /* Product template in-out stock */
   .product-stock {
     font-size: 0.75rem;

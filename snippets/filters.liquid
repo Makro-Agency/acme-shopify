@@ -252,10 +252,14 @@ endif
   <div class="noFish container">
     <div class="row">
       <div class="col-12 d-flex flex-column align-items-center">
+        {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+          <h2 class="tagline header-3 mt-3">{{settings.b2b_text_no_product}}</h2>
+        {% else %}
         <picture>
           <img src="https://cdn.shopify.com/s/files/1/0688/3596/7262/files/noFish.png?v=1675810930" alt="'No Fish For You' Illustration">
         </picture>
         <h2 class="tagline header-3 mt-3">No Fish For You.</h2>
+        {% endif %}
       </div>
     </div>
   </div>

@@ -69,6 +69,16 @@
   </div>
   {% else %}
   <div class="product-wrapper">
+    {% assign qty = 0 %}
+    {% if cart_items_array != blank %}
+      {% for chk_qty in cart_items_array %}
+        {% assign temp_chk_qty = chk_qty | strip | times:1 %}
+        {% if coll_prod.selected_or_first_available_variant.id == temp_chk_qty %}
+          {% assign qty = cart_items_array_qty[forloop.index0] %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
     <a href="{{ coll_prod.url }}" class="product-wrap">
       <img src="{{ coll_prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
       <span class="title">
@@ -89,7 +99,8 @@
         <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg></button>
-        <span>0</span>
+        
+        <span>{{qty}}</span>
         <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>

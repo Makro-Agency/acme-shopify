@@ -4,10 +4,45 @@
   if customer and customer.b2b? and customer.company_available_locations_count > 0
     assign customer_b2B = true
   endif
+
+  assign changed_day = false
+  for item in cart.items
+    if item.properties['_addtocart_date']
+      echo '<script>var order_date="' | append:item.properties['_addtocart_date'] | append:'";</script>'
+      assign changed_day = true
+      break
+    endif
+  endfor
   
 -%}
 {% if customer_b2B %}
 <style>
+  body.loading-screen {
+    position: relative;
+    overflow: hidden;
+  }
+
+  body.loading-screen:before {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #FFF;
+    z-index: 999;
+    opacity: 0.5;
+  }
+
+  body.loading-screen:after {
+    content: 'Loading...';
+    position: fixed;
+    top: 50%;
+    z-index: 9999;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+  }
   .cart__sku {
     color: var(--Blue, #14315C);
     font-size: 14px;
@@ -159,6 +194,143 @@
     }
   }
 </style>
+{% endif %}
+
+{% if changed_day %}
+  <script>
+
+
+    function getNextMondays(count = 7) {
+
+      const inputTime = "{{settings.cut-time}}:00";
+
+      var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
+      Tomorrow.setDate(Today.getDate() + 1);
+      var count = 7;
+  
+      var tempBitValue = '{{customer.current_company.metafields.acme.delivery_date}}';
+      var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
+      BitValue.split('');
+  
+      var checkCount = 0;
+      for (let i = 0; i < count; i++) {
+          const dayOfWeek = Tomorrow.getDay();
+          if(BitValue[(dayOfWeek)] == '1'){
+              if(checkCount==0 && hasEstTimePassedToday(inputTime)){
+                  count++;
+                  checkCount++;
+              }else{
+                  var store_month = (Tomorrow.getMonth() + 1);
+                  var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                  Availdays.push(DateFormat);
+                  checkCount++;
+              }
+          }else{
+              if(checkCount == 0){
+                  checkCount++;
+              }
+              count++;
+          }
+          Tomorrow.setDate(Tomorrow.getDate() + 1)
+      }
+
+      var currentstore_month = (Today.getMonth() + 1);
+      var currentDateFormat = `${Today.getFullYear()}-${currentstore_month < 10 ? ('0'+currentstore_month) : currentstore_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`
+      Availdays.push(currentDateFormat)
+  
+      return Availdays;
+    }
+
+    const updateProp = async(up_obj,resp = null) => {
+      if(!up_obj.length){
+        document.body.classList.remove('loading-screen');
+        return;
+      }
+      
+      const response = await fetch(`/cart/change`, up_obj[0]);
+      if (!response.ok) {
+        console.log('%cHTTP error! status:','color: red; font-size: 15px; font-weight: 700', response.status);
+        console.log('%cSomething went wrong, please refresh the page and try again..!!','color: red; font-size: 15px; font-weight: 700');
+        document.body.classList.remove('loading-screen');
+        return;
+      }
+      const data = await response.json();
+      up_obj.shift();
+      {% comment %} console.log(`%cItem properties update success on pickup select >>`,'color: green; font-size: 15px; font-weight: 700', data); {% endcomment %}
+      updateProp(up_obj,JSON.stringify(data));
+    }
+    
+    function hasEstTimePassedToday(inputTime) {
+      const estNow = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+      const nowEstDate = new Date(estNow);
+      
+      const [inputHour, inputMinute] = inputTime.split(':').map(Number);
+      
+      const targetEstTime = new Date(nowEstDate);
+      targetEstTime.setHours(inputHour, inputMinute, 0, 0);
+      
+      return nowEstDate >= targetEstTime;
+    }
+
+    var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    const inputTime = "{{settings.cut-time}}:00";
+    var store_month = (Today.getMonth() + 1);
+    var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
+    var check_change_line = false;
+    
+    if(DateFormat != order_date){
+      check_change_line = true;
+    }else{
+      if(hasEstTimePassedToday(inputTime)){
+        check_change_line = true;
+      }
+    }
+
+    var update_main_arry = [];
+    if(check_change_line){
+      document.body.classList.add('loading-screen');
+
+      var get_new_date = getNextMondays();
+      var tempcurrentDay = get_new_date.pop();
+
+      {% for item in cart.items %}
+        {% if item.properties['_addtocart_date'] %}
+          var date_array = [];
+          var prop = {}
+
+          {% for item_prop in item.properties %}
+            {% assign val = item_prop.last | split:',' %}
+            {% if val.size > 1 %}
+              prop['{{ item_prop.first }}']=get_new_date;
+            {% elsif item_prop.first == '_addtocart_date' %}
+              prop['{{ item_prop.first }}']=tempcurrentDay
+            {% else %}
+              prop['{{ item_prop.first }}']={{ item_prop.last }}
+            {% endif %}
+          {% endfor %}
+
+          var cart_item_data = {
+            id: '{{item.key}}',
+            quantity: {{item.quantity}},
+            properties: prop
+          };
+          var UPDATE_OBJ = {
+            method: 'POST',
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify(cart_item_data)
+          };
+          update_main_arry.push(UPDATE_OBJ);
+          {% if forloop.last %}
+            updateProp(update_main_arry)
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    }
+    
+    
+    
+    
+  </script>
 {% endif %}
 
 

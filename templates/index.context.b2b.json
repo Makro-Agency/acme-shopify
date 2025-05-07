@@ -13,16 +13,26 @@
     "b2b": true
   },
   "sections": {
+    "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3": {
+      "settings": {
+        "body": "<p>20 grams protein per serving. Ready to eat, right out of the pack. Wild caught and sustainably sourced. What else could you need?!</p>"
+      },
+      "blocks": {}
+    },
     "058aa77c-6cc0-4133-8ad8-c28c9947fba5": {
       "disabled": true,
       "settings": {},
       "blocks": {}
     },
-    "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3": {
-      "settings": {
-        "body": ""
-      },
-      "blocks": {}
+    "two_column_swiper_aeNLTF": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {
+        "slide_LWxLMT": {
+          "disabled": true,
+          "settings": {}
+        }
+      }
     }
   }
 }

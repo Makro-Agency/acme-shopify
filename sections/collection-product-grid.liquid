@@ -81,21 +81,99 @@
     var endlessScroll = new Ajaxinate();
   });
 
+  function getNextMondays(count = 7) {
+
+    const inputTime = "{{settings.cut-time}}:00";
+    var tempBitValue = '{{customer.current_company.metafields.acme.delivery_date}}';
+    if(tempBitValue.split("").length == 7){
+        var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
+        Tomorrow.setDate(Today.getDate() + 1);
+        var count = 7;
+    
+        var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
+        
+    
+        var checkCount = 0;
+        for (let i = 0; i < count; i++) {
+            const dayOfWeek = Tomorrow.getDay();
+            if(BitValue[(dayOfWeek)] == '1'){
+                if(checkCount==0 && hasEstTimePassedToday(inputTime)){
+                    count++;
+                    checkCount++;
+                }else{
+                    var store_month = (Tomorrow.getMonth() + 1);
+                    var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                    Availdays.push(DateFormat);
+                    checkCount++;
+                }
+            }else{
+                if(checkCount == 0){
+                    checkCount++;
+                }
+                count++;
+            }
+            Tomorrow.setDate(Tomorrow.getDate() + 1)
+        }
+
+        var currentstore_month = (Today.getMonth() + 1);
+        var currentDateFormat = `${Today.getFullYear()}-${currentstore_month < 10 ? ('0'+currentstore_month) : currentstore_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`
+        Availdays.push(currentDateFormat)
+    
+        return Availdays;
+    }else{
+        var Availdays = '';
+        return Availdays;
+    }
+
+    
+  }
+
+  function hasEstTimePassedToday(inputTime) {
+    const estNow = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    const nowEstDate = new Date(estNow);
+    
+    const [inputHour, inputMinute] = inputTime.split(':').map(Number);
+    
+    const targetEstTime = new Date(nowEstDate);
+    targetEstTime.setHours(inputHour, inputMinute, 0, 0);
+    
+    return nowEstDate >= targetEstTime;
+  }
+
+  {% if customer.current_company.metafields.acme.delivery_date != blank %}
+    var nextMondays = getNextMondays();
+    if(nextMondays != ''){
+        var tempcurrentDay = nextMondays.pop();
+    }
+  {% else %}
+    var nextMondays = '';
+  {% endif %}
+
   function addcarttrigger(ele){
     ele.closest('div').classList.add('active');
     var v_id = parseInt(ele.closest('div').querySelector('.product-qty').dataset.id);
+    if(nextMondays == ''){
+      var productData = { 
+          id: v_id,
+          quantity: 1
+      };
+    }else{
+      var productData = { 
+          id: v_id,
+          quantity: 1,
+          properties: {
+              "_delivery_date":nextMondays,
+              "_addtocart_date":tempcurrentDay
+          }
+      };
+    }
     fetch("/cart/add.js", {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
       },
       body: JSON.stringify({
-          items: [
-              {
-                  quantity: 1,
-                  id: v_id,
-              },
-          ],
+          items: [productData],
       }),
     }).then(response => {
       if (!response.ok) {
@@ -116,15 +194,27 @@
     var currentVal = parseInt(plusSelector.dataset.val);
     plusSelector.closest('.product-qty').querySelector('input').value = currentVal + 1;
     
-    var v_id = parseInt(plusSelector.closest('.product-qty').dataset.id);
+    var v_id = plusSelector.closest('.product-qty').dataset.id;
     var updates = {};
-    updates[v_id] = parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
-    fetch("/cart/update.js", {
+    if(nextMondays == ''){
+      var productData = { 
+          id: v_id,
+          quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
+      };
+    }else{
+      var productData = { 
+          id: v_id,
+          quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value),
+          properties: {
+              "_delivery_date":nextMondays,
+              "_addtocart_date":tempcurrentDay
+          }
+      };
+    }
+    fetch("/cart/change.js", {
       method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ updates })
+      headers: { "Accept": "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify(productData)
     }).then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -144,15 +234,29 @@
       var currentVal = parseInt(minusSelector.dataset.val);
       if(currentVal > 0){
         minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
-        var v_id = parseInt(minusSelector.closest('.product-qty').dataset.id);
+        var v_id = minusSelector.closest('.product-qty').dataset.id;
         var updates = {};
-        updates[v_id] = parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
-        fetch("/cart/update.js", {
+        nextMondays = '';
+        if(nextMondays == ''){
+          var productData = { 
+              id: v_id,
+              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
+            }
+          };
+        }else{
+          var productData = { 
+              id: v_id,
+              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value),
+              properties: {
+                  "_delivery_date":nextMondays,
+                  "_addtocart_date":tempcurrentDay
+              }
+          };
+        }
+        fetch("/cart/change.js", {
           method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ updates })
+          headers: { "Accept": "application/json", "Content-Type": "application/json" },
+          body: JSON.stringify(productData)
         }).then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -167,6 +271,8 @@
         });
       }
   };
+
+  
 </script>
 
 {% schema %}

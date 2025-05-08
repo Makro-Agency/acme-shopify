@@ -164,9 +164,19 @@ product-add-form product-form product-form-{{ product.id }}
 							{% capture price_html %}{% render 'product-price', product:product, variant: current_variant, show_vendor: false, available_online: available_online %}{% endcapture %}
 							{% if customer_b2B %}
 
+								{%- liquid
+									assign qty_cart = 0
+									for item in cart.items
+										if item.product.handle == product.handle
+											assign qty_cart = item.quantity
+											break;
+										endif
+									endfor
+
+								-%}
 								<div class="btn-price">
 									{{ price_html }}
-									<div class="coll-cart-btn">
+									<div class="coll-cart-btn {{ qty_cart }} {% if qty_cart > 0 %}active{% else %}{% assign qty_cart = 1 %}{% endif %}">
 										<span class="addbtn {% unless current_variant.available %}no-visible{% endunless %}" onclick="addcarttrigger(this)">
 											{% render 'icon-plus-addcart' %}
 										</span>
@@ -174,16 +184,16 @@ product-add-form product-form product-form-{{ product.id }}
 											<a class="qty-dec clickable qty-btn disabled" 
 												data-quantity-dec 
 												aria-label="Decrease Quantity"
-												href="#" data-val="{{ current_variant.quantity | default: 1 }}" onclick="clickAttrMinus(this)"
+												href="#" data-val="{{ qty_cart | default: 1 }}" onclick="clickAttrMinus(this)"
 											><span class="icon-minus">-</span></a>
 											<input class="qty-input"type="text" id="Quantity-{{ product.id }}"
-												name="quantity" value="1" min="1" pattern="[0-9]*"
+												name="quantity" value="{{qty_cart}}" min="1" pattern="[0-9]*"
 												title="Qty" min="0" data-quantity-input>
 											
 											<a class="qty-inc clickable qty-btn" 
 												data-quantity-inc
 												aria-label="Increase Quantity"
-												href="#" data-val="{{ current_variant.quantity | default: 1 }}" onclick="clickAttrPlus(this)"
+												href="#" data-val="{{ qty_cart | default: 1 }}" onclick="clickAttrPlus(this)"
 											><span class="icon-plus">+</span></a>
 										</div>
 									</div>

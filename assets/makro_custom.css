@@ -25,6 +25,16 @@
   line-height: 100%; /* 12px */
 }
 
+
+.product-qty.b2b-grid,.coll-cart-btn.active span.addbtn{
+  display: none;
+}
+
+.coll-cart-btn.active .product-qty.b2b-grid{
+  display: flex;
+}
+
+
 span.addbtn {
   display: flex;
   width: 45px;

@@ -82,8 +82,91 @@
   });
 
   function addcarttrigger(ele){
-    ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
+    ele.closest('div').classList.add('active');
+    var v_id = parseInt(ele.closest('div').querySelector('.product-qty').dataset.id);
+    fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          items: [
+              {
+                  quantity: 1,
+                  id: v_id,
+              },
+          ],
+      }),
+    }).then(response => {
+      if (!response.ok) {
+      throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then(result => {
+        console.log('Added',result);
+    }).catch(error => {
+        console.error('There was a problem with the fetch operation:', error);;
+    }).finally(() => {
+      console.log('finally');
+    });
+    //ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
   }
+
+  var clickAttrPlus = function (plusSelector){
+    var currentVal = parseInt(plusSelector.dataset.val);
+    plusSelector.closest('.product-qty').querySelector('input').value = currentVal + 1;
+    
+    var v_id = parseInt(plusSelector.closest('.product-qty').dataset.id);
+    var updates = {};
+    updates[v_id] = parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
+    fetch("/cart/update.js", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ updates })
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then(result => {
+        console.log('updated',result);
+    }).catch(error => {
+        console.error('There was a problem with the fetch operation:', error);;
+    }).finally(() => {
+      console.log('finally');
+    });
+  };
+
+  var clickAttrMinus = function (minusSelector){
+
+      var currentVal = parseInt(minusSelector.dataset.val);
+      if(currentVal > 0){
+        minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
+        var v_id = parseInt(minusSelector.closest('.product-qty').dataset.id);
+        var updates = {};
+        updates[v_id] = parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
+        fetch("/cart/update.js", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ updates })
+        }).then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        }).then(result => {
+            console.log('updated',result);
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);;
+        }).finally(() => {
+          console.log('finally');
+        });
+      }
+  };
 </script>
 
 {% schema %}

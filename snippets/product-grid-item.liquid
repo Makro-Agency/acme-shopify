@@ -166,9 +166,27 @@ product-add-form product-form product-form-{{ product.id }}
 
 								<div class="btn-price">
 									{{ price_html }}
-									<span class="addbtn {% unless current_variant.available %}no-visible{% endunless %}" onclick="addcarttrigger(this)">
-										{% render 'icon-plus-addcart' %}
-									</span>
+									<div class="coll-cart-btn">
+										<span class="addbtn {% unless current_variant.available %}no-visible{% endunless %}" onclick="addcarttrigger(this)">
+											{% render 'icon-plus-addcart' %}
+										</span>
+										<div class="product-qty b2b-grid mb-4 mt-4 mb-xl-0 mt-xl-0" data-id="{{current_variant.id}}">
+											<a class="qty-dec clickable qty-btn disabled" 
+												data-quantity-dec 
+												aria-label="Decrease Quantity"
+												href="#" data-val="{{ current_variant.quantity | default: 1 }}" onclick="clickAttrMinus(this)"
+											><span class="icon-minus">-</span></a>
+											<input class="qty-input"type="text" id="Quantity-{{ product.id }}"
+												name="quantity" value="1" min="1" pattern="[0-9]*"
+												title="Qty" min="0" data-quantity-input>
+											
+											<a class="qty-inc clickable qty-btn" 
+												data-quantity-inc
+												aria-label="Increase Quantity"
+												href="#" data-val="{{ current_variant.quantity | default: 1 }}" onclick="clickAttrPlus(this)"
+											><span class="icon-plus">+</span></a>
+										</div>
+									</div>
 								</div>
 								
 							{% else %}
@@ -186,9 +204,27 @@ product-add-form product-form product-form-{{ product.id }}
 
 								<div class="btn-price">
 									{{ price_html }}
-									<span class="addbtn {% unless current_variant.available %}no-visible{% endunless %}" onclick="addcarttrigger(this)">
-										{% render 'icon-plus-addcart' %}
-									</span>
+									<div class="coll-cart-btn">
+										<span class="addbtn {% unless current_variant.available %}no-visible{% endunless %}" onclick="addcarttrigger(this)">
+											{% render 'icon-plus-addcart' %}
+										</span>
+										<div class="product-qty b2b-grid mb-4 mt-4 mb-xl-0 mt-xl-0">
+											<a class="qty-dec clickable qty-btn disabled" 
+												data-quantity-dec 
+												aria-label="Decrease Quantity"
+												href="#" data-val="{{ current_variant.quantity | default: 1 }}"
+											><span class="icon-minus">-</span></a>
+											<input class="qty-input"type="text" id="Quantity-{{ product.id }}"
+												name="quantity" value="1" min="1" pattern="[0-9]*"
+												title="Qty" min="0" data-quantity-input>
+											
+											<a class="qty-inc clickable qty-btn" 
+												data-quantity-inc
+												aria-label="Increase Quantity"
+												href="#" data-val="{{ current_variant.quantity | default: 1 }}"
+											><span class="icon-plus">+</span></a>
+										</div>
+									</div>
 								</div>
 								
 							{% else %}

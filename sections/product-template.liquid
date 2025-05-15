@@ -62,14 +62,14 @@
 
 {% comment %} B2B in stock status {% endcomment %}
 {% liquid    
-  assign b2b_product_in_stock = 'no'
+  assign availability = 'no'
   if customer_b2B == true
-    assign b2b_product_in_stock = product.metafields.acme.b2b_product_in_stock | default: false    
+    assign availability = product.metafields.custom.availability | default: false    
   elsif b2b_tag == true
-    assign b2b_product_in_stock = product.metafields.acme.b2b_product_in_stock | default: false
+    assign availability = product.metafields.custom.availability | default: false
   endif
-  if b2b_product_in_stock == 'true'
-    assign b2b_product_in_stock = true
+  if availability == 'true'
+    assign availability = true
   endif
 %}
 {%- capture product_flags -%}{%- if on_sale -%} flag-on-sale {%- endif -%} {%- if sold_out -%} flag-out-of-stock {%- endif -%}{%- endcapture -%}

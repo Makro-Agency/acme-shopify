@@ -23,10 +23,32 @@
       }
     }
   ],
-  "company": [],
-  "company_location": [],
-  "location": [],
-  "market": [
+  "company_location": [
+    {
+      "key": "test_name",
+      "namespace": "custom",
+      "name": "Test Name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "location": [
+    {
+      "key": "email",
+      "namespace": "custom",
+      "name": "email",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "market": [],
+  "order": [
     {
       "key": "carousel_slider",
       "namespace": "custom",
@@ -189,6 +211,46 @@
       "type": {
         "name": "list.metaobject_reference",
         "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "availability",
+      "namespace": "custom",
+      "name": "Availability",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "weight",
+      "namespace": "custom",
+      "name": "Weight",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "unit_of_measure",
+      "namespace": "custom",
+      "name": "Unit of measure",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "catch_weight",
+      "namespace": "custom",
+      "name": "catch_weight",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
     }
   ],

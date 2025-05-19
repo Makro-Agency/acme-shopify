@@ -1,0 +1,161 @@
+<div class="page-header">
+    <h2 class="title">{{ section.settings.title }}</h2>
+    {{ customer.first_name }}<br>
+    {% assign all_products_id = '' %}
+    {% assign all_products_qty = '' %}
+    {% assign all_products_obj = '' %}
+    {% for order in customer.orders %}
+      {% assign prod_data = order.line_items | sort: "quantity" | reverse %}
+      {% for item in prod_data %}
+        {% if all_products_obj == '' %}
+          {% assign all_products_obj = item.product.id %}
+          {% assign all_products_qty = item.quantity %}
+        {% else %}
+          {% assign all_products_obj = all_products_obj | append:',' | append:item.product.id %}
+          {% assign all_products_qty = all_products_qty | append:',' | append:item.quantity %}
+        {% endif %}
+        {% comment %}  {{ item.product.title }} — Quantity: {{ item.quantity }} — Price: {{ item.product.price | money }}{% unless forloop.last %}<br>{% endunless %}
+        {% assign product_curr_data = '{"id":' | append: item.product.id | append: ', "title":"' | append: item.product.title | append: '", "quantity":"' | append: item.quantity | append: '}' %}
+        {% assign all_products_json = all_products_json | append: ',' | append: product_curr_data %} {% endcomment %}
+      {% endfor %}
+      <br><br>
+
+      {% if forloop.last %}
+        {% comment %} {% assign all_products_json = all_products_json | remove_first:',' | split:',' %}
+
+        {% assign merged = '' %}
+        {% assign id_tracker = '' %}
+
+        {% for items_data in all_products_json %}
+
+          {% for item in items_data %}
+            ==>{{ item }}
+            {% assign search_id = item.id | append: ',' %}
+
+            {% unless id_tracker contains search_id %}
+              {% assign id_tracker = id_tracker | append: search_id %}
+
+              {% assign total_quantity = 0 %}
+
+              {% for subitem_data in all_products_json %}
+                {% for subitem in subitem_data %}
+                  {% comment %} ==>{{ subitem.id }}--{{ item.id }} {% endcomment %}
+                  {% if subitem.id == item.id %}
+                    {% assign total_quantity = total_quantity | plus: subitem.quantity %}
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+
+              {% assign json_item = '{"id":' | append: item.id | append: ', "title":"' | append: item.title | append: '", "quantity":' | append: total_quantity | append: '}' %}
+
+              {% if merged == '' %}
+                {% assign merged = json_item %}
+              {% else %}
+                {% assign merged = merged | append: ',' | append: json_item %}
+              {% endif %}
+
+            {% endunless %}
+          {% endfor %}
+        {% endfor %}
+
+        {% assign merged_array = merged | split:',' %}
+
+        <!-- Display result -->
+        <ul>
+          {% for p in merged_array %}
+            <li>{{ p.title }} — Quantity: {{ p.quantity }}</li>
+          {% endfor %}
+        </ul> {% endcomment %}
+      {% endif %}
+    {% endfor %}
+    {% assign uniq_array = all_products_obj | split:',' | uniq %}
+    {% assign uniq_qty = blank %}
+
+    {% assign prod_ids = all_products_obj | split:',' %}
+    {% assign prod_qty = all_products_qty | split:',' %}
+
+    
+    
+    {% for item_id in uniq_array %}
+      {% assign quantity_obj = 0 %}
+      {% assign set_item_id = item_id %}
+      {% for item_id_inner in prod_ids %}
+        {% if item_id_inner == set_item_id %}
+          {% assign get_qty = prod_qty[forloop.index0] | times:1 %}
+          {% assign quantity_obj = quantity_obj | plus:get_qty %}
+        {% endif %}
+      {% endfor %}
+      {% if uniq_qty == blank %}
+        {% assign uniq_qty = quantity_obj %}
+      {% else %}
+        {% assign uniq_qty = uniq_qty | append:',' | append:quantity_obj %}
+      {% endif %}
+    {% endfor %}
+
+    {% assign split_qty = uniq_qty | split:',' %}
+    {% assign uniq_array2 = blank %}
+    {% assign ignoreindex = blank %}
+
+    {% for hq in split_qty %}
+      {% assign temp_index = forloop.index0 %}
+      {% for inner_hq in split_qty %}
+        {% if ignoreindex contains forloop.index0 %}
+          {% continue %}
+        {% endif %}
+        {% assign inner_hq_t = inner_hq | times:1 %}
+        {% assign hq_t = hq | times:1 %}
+        {% if hq_t > inner_hq_t %}
+          {% assign temp_index = forloop.index0 %}
+        {% elsif inner_hq_t > hq_t %}
+          {% assign temp_index = forloop.index0 %}
+        {% endif %}
+      {% endfor %}
+      {% if uniq_array2 != blank %}
+        {% assign uniq_array2 = uniq_array[temp_index] %}
+        {% assign ignoreindex = temp_index %}
+      {% else %}
+        {% assign uniq_array2 = uniq_array2 | append:',' | append:uniq_array[temp_index] %}
+        {% assign ignoreindex = ignoreindex | append:',' | append:temp_index %}
+      {% endif %}
+    {% endfor %}
+    
+    
+    {% comment %} {% for item_id in uniq_array %}
+      {% assign has_break = false %}
+      {% for order in customer.orders %}
+        {% assign prod_data = order.line_items | sort: "quantity" | reverse %}
+        {% for item in prod_data %}
+          {% assign temp_data = item_id | times:1 %}
+          {% if temp_data == item.product.id %}
+            {{ item.product.title }}:{{ item.product.first_available_variant.inventory_quantity }}<br>
+            {% assign has_break = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% if has_break == true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %} {% endcomment %}
+
+
+</div>
+
+{% schema %}
+{
+  "name": "Frequnt Buy",
+  "class": "frequnt-buy",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],      
+  "presets": [
+    {
+      "name": "Frequnt Buy"
+    }
+  ]
+}
+{% endschema %}

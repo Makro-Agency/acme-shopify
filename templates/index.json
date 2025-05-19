@@ -508,6 +508,13 @@
         "button_url": "https://acmesmokedfish.myshopify.com/blogs/news/tagged/about_press",
         "external": false
       }
+    },
+    "most_purchased_items_EXm48A": {
+      "type": "most-purchased-items",
+      "name": "Most Purchased Items",
+      "settings": {
+        "title": "Your Most Purchased Items"
+      }
     }
   },
   "order": [
@@ -526,6 +533,7 @@
     "e7f2050a-a86e-416c-906c-534b5fcad997",
     "34117dc8-47aa-407e-bb53-9d0f57413667",
     "a83b49b0-6557-4c8a-8b02-291e25990080",
-    "a90a4a52-3044-4b1e-b689-d72e5f0ef59c"
+    "a90a4a52-3044-4b1e-b689-d72e5f0ef59c",
+    "most_purchased_items_EXm48A"
   ]
 }

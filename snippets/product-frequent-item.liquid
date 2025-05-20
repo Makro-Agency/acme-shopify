@@ -1,9 +1,11 @@
 {% assign entry_parts = prod_obj | split: ':::' %}
+{% assign p_id = entry_parts[0] %}
 {% assign title = entry_parts[1] %}
 {% assign img = entry_parts[2] %}
 {% assign qty = entry_parts[3] %}
 {% assign sku = entry_parts[4] %}
 {% assign vendor = entry_parts[5] %}
+{% assign v_id = entry_parts[6] %}
 
 
 <div class="swiper-slide collection-product-card">
@@ -31,11 +33,11 @@
 				</a>
 			</div>
 
-			<div class="product-form" sh-product-form="" sh-cart-aware-product-form="" data-product-id="9819411415328">
-				<form method="post" action="/cart/add" id="product_form_9819411415328" accept-charset="UTF-8" class="product-add-form product-form product-form-9819411415328" enctype="multipart/form-data" novalidate="novalidate" data-product-form="">
+			<div class="product-form" sh-product-form="" sh-cart-aware-product-form="" data-product-id="{{p_id}}">
+				<form method="post" action="/cart/add" id="product_form_{{p_id}}" accept-charset="UTF-8" class="product-add-form product-form product-form-{{p_id}}" enctype="multipart/form-data" novalidate="novalidate" data-product-form="">
 					<input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
 					<!-- Single Variant -->
-					<input name="id" value="49866713596192" type="hidden">
+					<input name="id" value="{{v_id}}" type="hidden">
 					<!-- // Single Variant -->
 						
 					<div class="product-single__single-variant">
@@ -75,7 +77,6 @@
 								</svg>
 							</span>
 						</div>
-						<input type="hidden" name="id" value="49866713596192">
 					</div>
 					
 					<div class="product-form__footer hide" data-cart-item-key="">
@@ -83,12 +84,12 @@
 							<div class="product-qty-title visually-hidden"><span class="option-title header-5 text-blue">Quantity</span></div>
 							<div class="product-qty mb-4">
 								<a class="qty-dec clickable" data-quantity-dec="" title="Decrease quantity" aria-label="Decrement Quantity" href="#"><span class="icon-minus">-</span></a>
-								<input class="qty-input" type="text" id="Quantity-9819411415328" name="quantity" value="1" min="1" pattern="[0-9]*" title="Qty" data-quantity-input="">
+								<input class="qty-input" type="text" id="Quantity-{{p_id}}" name="quantity" value="1" min="1" pattern="[0-9]*" title="Qty" data-quantity-input="">
 								<a class="qty-inc clickable" data-quantity-inc="" title="Increase Quantity" aria-label="Increase Quantity" href="#"><span class="icon-plus">+</span></a>
 							</div><!-- .product-qty -->
 						</div>
 						<div class="product-form__item product-form__item--submit mt-3 w-50 product-form__item--no-variants">
-							<button type="submit" name="add" class="btn btn-primary btn-test btn-block" aria-label="Add to cart" sh-add-to-cart="" data-product-id="9819411415328">
+							<button type="submit" name="add" class="btn btn-primary btn-test btn-block" aria-label="Add to cart" sh-add-to-cart="" data-product-id="{{p_id}}">
 								<span class="fa fa-spin fa-refresh d-none"></span>
 								<span sh-add-to-cart-text="">Add to cart</span>
 								<span class="d-none" data-loader=""></span>
@@ -96,7 +97,7 @@
 						</div>
 					</div>
 		
-					<input type="hidden" name="product-id" value="9819411415328"><input type="hidden" name="section-id" value="template--24534381887776__most_purchased_items_zxA43R">
+					<input type="hidden" name="product-id" value="{{p_id}}"><input type="hidden" name="section-id" value="template--24534381887776__most_purchased_items_zxA43R">
 				</form>            
 					
 			</div>

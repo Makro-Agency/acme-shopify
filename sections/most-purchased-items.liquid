@@ -22,7 +22,8 @@
             {% assign image_link = item.image | image_url:width:400 %}
             {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
             {% assign item_vendor = item.product.vendor %}
-            {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor  %}
+            {% assign item_v_id = item.variant_id %}
+            {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id  %}
             {% if product_data == '' %}
               {% assign product_data = entry %}
             {% else %}
@@ -40,6 +41,7 @@
         {% assign img = entry_parts[2] %}
         {% assign sku = entry_parts[4] %}
         {% assign vendor = entry_parts[5] %}
+        {% assign v_id = entry_parts[6] %}
         {% assign total_qty = 0 %}
         {% for order in latest_orders %}
           {% for item in order.line_items %}
@@ -49,7 +51,7 @@
             {% endif %}
           {% endfor %}
         {% endfor %}
-        {% assign new_entry = prod_id | append: ':::' | append: title | append: ':::' | append: img | append: ':::' | append: total_qty | append: ':::' | append: sku | append: ':::' | append: vendor %}
+        {% assign new_entry = prod_id | append: ':::' | append: title | append: ':::' | append: img | append: ':::' | append: total_qty | append: ':::' | append: sku | append: ':::' | append: vendor | append: ':::' | append: v_id %}
         {% if updated_product_data == '' %}
           {% assign updated_product_data = new_entry %}
         {% else %}
@@ -179,9 +181,195 @@
       });
     });
 
-    function addcarttrigger(ele){
-      ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
+    function getNextMondays(count = 7) {
+
+      const inputTime = "{{settings.cut-time}}:00";
+      var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
+      if(tempBitValue.split("").length == 7){
+          var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
+          Tomorrow.setDate(Today.getDate() + 1);
+          var count = 7;
+      
+          var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
+          
+      
+          var checkCount = 0;
+          for (let i = 0; i < count; i++) {
+              const dayOfWeek = Tomorrow.getDay();
+              if(BitValue[(dayOfWeek)] == '1'){
+                  if(checkCount==0 && hasEstTimePassedToday(inputTime)){
+                      count++;
+                      checkCount++;
+                  }else{
+                      var store_month = (Tomorrow.getMonth() + 1);
+                      var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                      Availdays.push(DateFormat);
+                      checkCount++;
+                  }
+              }else{
+                  if(checkCount == 0){
+                      checkCount++;
+                  }
+                  count++;
+              }
+              Tomorrow.setDate(Tomorrow.getDate() + 1)
+          }
+  
+          var currentstore_month = (Today.getMonth() + 1);
+          var currentDateFormat = `${Today.getFullYear()}-${currentstore_month < 10 ? ('0'+currentstore_month) : currentstore_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`
+          Availdays.push(currentDateFormat)
+      
+          return Availdays;
+      }else{
+          var Availdays = '';
+          return Availdays;
+      }
+  
+      
     }
+  
+    function hasEstTimePassedToday(inputTime) {
+      const estNow = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+      const nowEstDate = new Date(estNow);
+      
+      const [inputHour, inputMinute] = inputTime.split(':').map(Number);
+      
+      const targetEstTime = new Date(nowEstDate);
+      targetEstTime.setHours(inputHour, inputMinute, 0, 0);
+      
+      return nowEstDate >= targetEstTime;
+    }
+  
+    {% if customer.current_location.metafields.acme.delivery_date != blank %}
+      var nextMondays = getNextMondays();
+      if(nextMondays != ''){
+          var tempcurrentDay = nextMondays.pop();
+      }
+    {% else %}
+      var nextMondays = '';
+    {% endif %}
+  
+  function addcarttrigger(ele){
+    ele.closest('div').classList.add('active');
+    var v_id = parseInt(ele.closest('form').querySelector('[name="id"]').value);
+    if(nextMondays == ''){
+      var productData = { 
+          id: v_id,
+          quantity: 1
+      };
+    }else{
+      var productData = { 
+          id: v_id,
+          quantity: 1,
+          properties: {
+              "_delivery_date":nextMondays,
+              "_addtocart_date":tempcurrentDay
+          }
+      };
+    }
+    fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          items: [productData],
+      })
+    }).then(response => {
+      if (!response.ok) {
+      throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then(result => {
+        console.log('Added',result);
+    }).catch(error => {
+        console.error('There was a problem with the fetch operation:', error);;
+    }).finally(() => {
+      console.log('finally');
+    });
+    //ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
+  }
+  
+  var clickAttrPlus = function (plusSelector){
+    var currentVal = parseInt(plusSelector.dataset.val);
+    plusSelector.closest('.product-qty').querySelector('input').value = currentVal + 1;
+    
+    var v_id = plusSelector.closest('.product-qty').dataset.id;
+    var updates = {};
+    if(nextMondays == ''){
+      var productData = { 
+          id: v_id,
+          quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
+      };
+    }else{
+      var productData = { 
+          id: v_id,
+          quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value),
+          properties: {
+              "_delivery_date":nextMondays,
+              "_addtocart_date":tempcurrentDay
+          }
+      };
+    }
+    fetch("/cart/change.js", {
+      method: "POST",
+      headers: { "Accept": "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify(productData)
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then(result => {
+        console.log('updated',result);
+    }).catch(error => {
+        console.error('There was a problem with the fetch operation:', error);;
+    }).finally(() => {
+      console.log('finally');
+    });
+  };
+
+  var clickAttrMinus = function (minusSelector){
+
+      var currentVal = parseInt(minusSelector.dataset.val);
+      if(currentVal > 0){
+        minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
+        var v_id = minusSelector.closest('.product-qty').dataset.id;
+        var updates = {};
+        nextMondays = '';
+        if(nextMondays == ''){
+          var productData = { 
+            id: v_id,
+            quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
+          };
+        }else{
+          var productData = { 
+              id: v_id,
+              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value),
+              properties: {
+                  "_delivery_date":nextMondays,
+                  "_addtocart_date":tempcurrentDay
+              }
+          };
+        }
+        fetch("/cart/change.js", {
+          method: "POST",
+          headers: { "Accept": "application/json", "Content-Type": "application/json" },
+          body: JSON.stringify(productData)
+        }).then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        }).then(result => {
+            console.log('updated',result);
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);;
+        }).finally(() => {
+          console.log('finally');
+        });
+      }
+  };
   </script>
   
   {% schema %}

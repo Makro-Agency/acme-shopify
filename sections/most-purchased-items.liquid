@@ -1,8 +1,11 @@
 {{ 'most-purchased-items-section.css' | asset_url | stylesheet_tag }}
 
-<div class="most-purchased-items-section container">
+<div class="most-purchased-items-section container hide">
     <h2 class="heading">{{ section.settings.title }}</h2>
     {% if customer and customer.orders.size > 0 %}
+      <script>
+        document.querySelector('.most-purchased-items-section').classList.remove('hide');
+      </script>
       {% assign latest_orders = customer.orders | sort: 'created_at' | reverse | slice: 0, 20 %}
       {% assign product_data = '' %}
       {% for order in latest_orders %}
@@ -103,51 +106,37 @@
           {% endfor %}
         </div>
       </div>
-    {% elsif customer %}
-      <p>You have not placed any orders yet.</p>
-    {% else %}
-      <p>Please log in to see your most purchased items.</p>
     {% endif %}
-
-    {% comment %} <div id="product-grid" class="most-purchased-product-list swiper">
-      <div class="swiper-wrapper">
-        {%- for product in collections['all'].products -%}
-            <div class="swiper-slide collection-product-card">
-              {% render 'product-grid-item' product: product %}
-            </div>
-        {%- endfor -%}
-      </div>
-      
-    </div> {% endcomment %}
+    
     <!-- Navigation buttons -->
-        <div class="swiper-button-next swiper-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
-            <g clip-path="url(#clip0_616_3315)">
-              <path d="M25.0002 49.1069C38.3142 49.1069 49.1074 38.3137 49.1074 24.9997C49.1074 11.6857 38.3142 0.892578 25.0002 0.892578C11.6862 0.892578 0.893066 11.6857 0.893066 24.9997C0.893066 38.3137 11.6862 49.1069 25.0002 49.1069Z" stroke="#14315C" stroke-width="2"/>
-              <path d="M27.6134 24.9949C27.4633 24.8906 27.3188 24.7785 27.1803 24.6592C24.944 22.4259 22.7092 20.1914 20.4759 17.9556C19.7616 17.2414 19.7786 16.7503 20.4545 16.0137C21.3821 15.0021 21.9402 15.1048 22.833 16.0137C25.4732 18.7003 28.1518 21.3494 30.8152 24.0137C31.5295 24.728 31.5357 25.2414 30.825 25.953L22.5964 34.1914C21.9 34.8878 21.4018 34.8646 20.683 34.2083C19.6893 33.3003 19.7303 32.7333 20.683 31.7976C22.8741 29.6628 25.017 27.4789 27.1821 25.3181C27.3192 25.2018 27.4632 25.0938 27.6134 24.9949Z" fill="#14315C"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_616_3315">
-                <rect width="50" height="50" rx="25" fill="white"/>
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
-        <div class="swiper-button-prev swiper-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
-            <g opacity="0.4">
-              <g clip-path="url(#clip0_617_3616)">
-                <path d="M24.9998 49.1069C11.6858 49.1069 0.892651 38.3137 0.892651 24.9997C0.892651 11.6857 11.6858 0.892578 24.9998 0.892578C38.3138 0.892578 49.1069 11.6857 49.1069 24.9997C49.1069 38.3137 38.3138 49.1069 24.9998 49.1069Z" stroke="#14315C" stroke-width="2"/>
-                <path d="M22.3866 24.9949C22.5367 24.8906 22.6812 24.7785 22.8197 24.6592C25.056 22.4259 27.2908 20.1914 29.5241 17.9556C30.2384 17.2414 30.2214 16.7503 29.5455 16.0137C28.6179 15.0021 28.0598 15.1048 27.167 16.0137C24.5268 18.7003 21.8482 21.3494 19.1848 24.0137C18.4705 24.728 18.4643 25.2414 19.175 25.953L27.4036 34.1914C28.1 34.8878 28.5982 34.8646 29.317 34.2083C30.3107 33.3003 30.2697 32.7333 29.317 31.7976C27.1259 29.6628 24.983 27.4789 22.8179 25.3181C22.6808 25.2018 22.5368 25.0938 22.3866 24.9949Z" fill="#14315C"/>
-              </g>
-            </g>
-            <defs>
-              <clipPath id="clip0_617_3616">
-                <rect width="50" height="50" rx="25" fill="white"/>
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
+    <div class="swiper-button-next swiper-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+        <g clip-path="url(#clip0_616_3315)">
+          <path d="M25.0002 49.1069C38.3142 49.1069 49.1074 38.3137 49.1074 24.9997C49.1074 11.6857 38.3142 0.892578 25.0002 0.892578C11.6862 0.892578 0.893066 11.6857 0.893066 24.9997C0.893066 38.3137 11.6862 49.1069 25.0002 49.1069Z" stroke="#14315C" stroke-width="2"/>
+          <path d="M27.6134 24.9949C27.4633 24.8906 27.3188 24.7785 27.1803 24.6592C24.944 22.4259 22.7092 20.1914 20.4759 17.9556C19.7616 17.2414 19.7786 16.7503 20.4545 16.0137C21.3821 15.0021 21.9402 15.1048 22.833 16.0137C25.4732 18.7003 28.1518 21.3494 30.8152 24.0137C31.5295 24.728 31.5357 25.2414 30.825 25.953L22.5964 34.1914C21.9 34.8878 21.4018 34.8646 20.683 34.2083C19.6893 33.3003 19.7303 32.7333 20.683 31.7976C22.8741 29.6628 25.017 27.4789 27.1821 25.3181C27.3192 25.2018 27.4632 25.0938 27.6134 24.9949Z" fill="#14315C"/>
+        </g>
+        <defs>
+          <clipPath id="clip0_616_3315">
+            <rect width="50" height="50" rx="25" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+    <div class="swiper-button-prev swiper-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+        <g opacity="0.4">
+          <g clip-path="url(#clip0_617_3616)">
+            <path d="M24.9998 49.1069C11.6858 49.1069 0.892651 38.3137 0.892651 24.9997C0.892651 11.6857 11.6858 0.892578 24.9998 0.892578C38.3138 0.892578 49.1069 11.6857 49.1069 24.9997C49.1069 38.3137 38.3138 49.1069 24.9998 49.1069Z" stroke="#14315C" stroke-width="2"/>
+            <path d="M22.3866 24.9949C22.5367 24.8906 22.6812 24.7785 22.8197 24.6592C25.056 22.4259 27.2908 20.1914 29.5241 17.9556C30.2384 17.2414 30.2214 16.7503 29.5455 16.0137C28.6179 15.0021 28.0598 15.1048 27.167 16.0137C24.5268 18.7003 21.8482 21.3494 19.1848 24.0137C18.4705 24.728 18.4643 25.2414 19.175 25.953L27.4036 34.1914C28.1 34.8878 28.5982 34.8646 29.317 34.2083C30.3107 33.3003 30.2697 32.7333 29.317 31.7976C27.1259 29.6628 24.983 27.4789 22.8179 25.3181C22.6808 25.2018 22.5368 25.0938 22.3866 24.9949Z" fill="#14315C"/>
+          </g>
+        </g>
+        <defs>
+          <clipPath id="clip0_617_3616">
+            <rect width="50" height="50" rx="25" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
@@ -249,127 +238,131 @@
       var nextMondays = '';
     {% endif %}
   
-  function addcarttrigger(ele){
-    ele.closest('div').classList.add('active');
-    var v_id = parseInt(ele.closest('form').querySelector('[name="id"]').value);
-    if(nextMondays == ''){
-      var productData = { 
-          id: v_id,
-          quantity: 1
-      };
-    }else{
-      var productData = { 
-          id: v_id,
-          quantity: 1,
-          properties: {
-              "_delivery_date":nextMondays,
-              "_addtocart_date":tempcurrentDay
-          }
-      };
-    }
-    fetch("/cart/add.js", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-          items: [productData],
-      })
-    }).then(response => {
-      if (!response.ok) {
-      throw new Error('Network response was not ok');
-      }
-      return response.json();
-    }).then(result => {
-        console.log('Added',result);
-    }).catch(error => {
-        console.error('There was a problem with the fetch operation:', error);;
-    }).finally(() => {
-      console.log('finally');
-    });
-    //ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
-  }
   
-  var clickAttrPlus = function (plusSelector){
-    var currentVal = parseInt(plusSelector.dataset.val);
-    plusSelector.closest('.product-qty').querySelector('input').value = currentVal + 1;
-    
-    var v_id = plusSelector.closest('.product-qty').dataset.id;
-    var updates = {};
-    if(nextMondays == ''){
-      var productData = { 
-          id: v_id,
-          quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
-      };
-    }else{
-      var productData = { 
-          id: v_id,
-          quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value),
-          properties: {
-              "_delivery_date":nextMondays,
-              "_addtocart_date":tempcurrentDay
-          }
-      };
-    }
-    fetch("/cart/change.js", {
-      method: "POST",
-      headers: { "Accept": "application/json", "Content-Type": "application/json" },
-      body: JSON.stringify(productData)
-    }).then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    }).then(result => {
-        console.log('updated',result);
-    }).catch(error => {
-        console.error('There was a problem with the fetch operation:', error);;
-    }).finally(() => {
-      console.log('finally');
-    });
-  };
-
-  var clickAttrMinus = function (minusSelector){
-
-      var currentVal = parseInt(minusSelector.dataset.val);
-      if(currentVal > 0){
-        minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
-        var v_id = minusSelector.closest('.product-qty').dataset.id;
-        var updates = {};
-        nextMondays = '';
-        if(nextMondays == ''){
-          var productData = { 
+    function addcarttrigger(ele){
+      ele.closest('div').classList.add('active');
+      var v_id = parseInt(ele.closest('form').querySelector('[name="id"]').value);
+      if(nextMondays == ''){
+        var productData = { 
             id: v_id,
-            quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
-          };
-        }else{
-          var productData = { 
-              id: v_id,
-              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value),
-              properties: {
-                  "_delivery_date":nextMondays,
-                  "_addtocart_date":tempcurrentDay
-              }
-          };
-        }
-        fetch("/cart/change.js", {
-          method: "POST",
-          headers: { "Accept": "application/json", "Content-Type": "application/json" },
-          body: JSON.stringify(productData)
-        }).then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        }).then(result => {
-            console.log('updated',result);
-        }).catch(error => {
-            console.error('There was a problem with the fetch operation:', error);;
-        }).finally(() => {
-          console.log('finally');
-        });
+            quantity: 1
+        };
+      }else{
+        var productData = { 
+            id: v_id,
+            quantity: 1,
+            properties: {
+                "_delivery_date":nextMondays,
+                "_addtocart_date":tempcurrentDay
+            }
+        };
       }
-  };
+      fetch("/cart/add.js", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            items: [productData],
+        })
+      }).then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }).then(result => {
+          console.log('Added',result);
+          document.querySelector('[sh-cart-count]').textContent = parseInt(document.querySelector('[sh-cart-count]').textContent) + 1;
+      }).catch(error => {
+          console.error('There was a problem with the fetch operation:', error);;
+      }).finally(() => {
+        console.log('finally');
+      });
+    //ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
+    }
+  
+    var clickAttrPlus = function (plusSelector){
+      var currentVal = parseInt(plusSelector.dataset.val);
+      plusSelector.closest('.product-qty').querySelector('input').value = currentVal + 1;
+      
+      var v_id = plusSelector.closest('.product-qty').dataset.id;
+      var updates = {};
+      if(nextMondays == ''){
+        var productData = { 
+            id: v_id,
+            quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
+        };
+      }else{
+        var productData = { 
+            id: v_id,
+            quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value),
+            properties: {
+                "_delivery_date":nextMondays,
+                "_addtocart_date":tempcurrentDay
+            }
+        };
+      }
+      fetch("/cart/change.js", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(productData)
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }).then(result => {
+          console.log('updated',result);
+          document.querySelector('[sh-cart-count]').textContent = result.item_count;
+      }).catch(error => {
+          console.error('There was a problem with the fetch operation:', error);;
+      }).finally(() => {
+        console.log('finally');
+      });
+    };
+
+    var clickAttrMinus = function (minusSelector){
+
+        var currentVal = parseInt(minusSelector.dataset.val);
+        if(currentVal > 0){
+          minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
+          var v_id = minusSelector.closest('.product-qty').dataset.id;
+          var updates = {};
+          nextMondays = '';
+          if(nextMondays == ''){
+            var productData = { 
+              id: v_id,
+              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
+            };
+          }else{
+            var productData = { 
+                id: v_id,
+                quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value),
+                properties: {
+                    "_delivery_date":nextMondays,
+                    "_addtocart_date":tempcurrentDay
+                }
+            };
+          }
+          fetch("/cart/change.js", {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify(productData)
+          }).then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          }).then(result => {
+              console.log('updated',result);
+              document.querySelector('[sh-cart-count]').textContent = result.item_count;
+          }).catch(error => {
+              console.error('There was a problem with the fetch operation:', error);;
+          }).finally(() => {
+            console.log('finally');
+          });
+        }
+    };
   </script>
   
   {% schema %}

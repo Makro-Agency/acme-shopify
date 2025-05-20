@@ -45,6 +45,15 @@
     right: -15px;
     left: auto;
 }
+
+.most-purchased-items-list .product-qty,.most-purchased-items-list .coll-cart-btn.active span.addbtn {
+    display: none;
+}
+
+.most-purchased-items-list .coll-cart-btn.active .product-qty {
+    display: flex;
+}
+
 @media screen and (max-width: 989px) {
     .most-purchased-items-section h2.heading {
         font-size: 42px;

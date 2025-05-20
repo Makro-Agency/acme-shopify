@@ -511,6 +511,7 @@
     },
     "most_purchased_items_zxA43R": {
       "type": "most-purchased-items",
+      "disabled": true,
       "name": "Most Purchased Items",
       "settings": {
         "title": "Your Most Purchased Items"

@@ -28,6 +28,7 @@
     },
     "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3": {
       "type": "split-hero",
+      "disabled": true,
       "settings": {
         "anchor_id": "",
         "height": "large",
@@ -182,6 +183,7 @@
         "slide_dMcfeP",
         "slide_EweX9P"
       ],
+      "disabled": true,
       "settings": {
         "anchor_id": "",
         "color": "light",
@@ -230,6 +232,7 @@
     },
     "b2049783-56d5-4f1f-9033-f993b51af154": {
       "type": "header-content",
+      "disabled": true,
       "settings": {
         "anchor_id": "",
         "color": "light",
@@ -271,12 +274,14 @@
         "a413a993-f4eb-4fc5-b7f8-c2760b912579",
         "f6c117c3-c035-4cf6-ab61-e42213fdd637"
       ],
+      "disabled": true,
       "settings": {
         "anchor_id": ""
       }
     },
     "e42e5ee8-81f2-4dca-9b66-d5d3d57d7993": {
       "type": "header-content",
+      "disabled": true,
       "settings": {
         "anchor_id": "",
         "color": "light",
@@ -333,6 +338,7 @@
         "3ccc0984-c37a-49b5-80c1-48372484b58b",
         "6f78499c-ff20-4b89-90b5-45bf7f93d801"
       ],
+      "disabled": true,
       "settings": {
         "anchor_id": "",
         "color": "light",
@@ -434,6 +440,7 @@
     },
     "a90a4a52-3044-4b1e-b689-d72e5f0ef59c": {
       "type": "testimonials",
+      "disabled": true,
       "blocks": {
         "80c963c6-ecc9-49bd-840d-a30fd884aa68": {
           "type": "testimonial",
@@ -511,7 +518,6 @@
     },
     "most_purchased_items_zxA43R": {
       "type": "most-purchased-items",
-      "disabled": true,
       "name": "Most Purchased Items",
       "settings": {
         "title": "Your Most Purchased Items"

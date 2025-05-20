@@ -2,7 +2,7 @@
 
 <div class="most-purchased-items-section container">
     <h2 class="heading">{{ section.settings.title }}</h2>
-    {% comment %} {% if customer and customer.orders.size > 0 %}
+    {% if customer and customer.orders.size > 0 %}
       {% assign latest_orders = customer.orders | sort: 'created_at' | reverse | slice: 0, 20 %}
       {% assign product_data = '' %}
       {% for order in latest_orders %}
@@ -19,8 +19,10 @@
             {% endfor %}
           {% endif %}
           {% if found == false %}
-            {% assign image_link = item.image | image_url:width:100 %}
-            {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' %}
+            {% assign image_link = item.image | image_url:width:400 %}
+            {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
+            {% assign item_vendor = item.product.vendor %}
+            {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor  %}
             {% if product_data == '' %}
               {% assign product_data = entry %}
             {% else %}
@@ -36,6 +38,8 @@
         {% assign prod_id = entry_parts[0] %}
         {% assign title = entry_parts[1] %}
         {% assign img = entry_parts[2] %}
+        {% assign sku = entry_parts[4] %}
+        {% assign vendor = entry_parts[5] %}
         {% assign total_qty = 0 %}
         {% for order in latest_orders %}
           {% for item in order.line_items %}
@@ -45,7 +49,7 @@
             {% endif %}
           {% endfor %}
         {% endfor %}
-        {% assign new_entry = prod_id | append: ':::' | append: title | append: ':::' | append: img | append: ':::' | append: total_qty %}
+        {% assign new_entry = prod_id | append: ':::' | append: title | append: ':::' | append: img | append: ':::' | append: total_qty | append: ':::' | append: sku | append: ':::' | append: vendor %}
         {% if updated_product_data == '' %}
           {% assign updated_product_data = new_entry %}
         {% else %}
@@ -74,29 +78,36 @@
           {% assign used_indexes = used_indexes | append: ',' | append: max_idx %}
         {% endif %}
       {% endfor %}
-      <div class="most-purchased-items-list">
-        {% assign sorted_array = sorted_data | split: '|||' %}
-        {% for entry in sorted_array %}
-          {% assign entry_parts = entry | split: ':::' %}
-          {% assign title = entry_parts[1] %}
-          {% assign img = entry_parts[2] %}
-          {% assign qty = entry_parts[3] %}
-          {% if qty != '0' and title != blank %}
-            <div class="most-purchased-item">
-              {% if img != blank %}<img src="{{ img }}" alt="{{ title }}" width="100" height="100" />{% endif %}
-              <div class="item-title">{{ title }}</div>
-              <div class="item-qty">Purchased: {{ qty }}</div>
-            </div>
-          {% endif %}
-        {% endfor %}
+      <div class="most-purchased-items-list most-purchased-product-list swiper">
+        <div class="swiper-wrapper">
+          {% assign sorted_array = sorted_data | split: '|||' %}
+          {% for entry in sorted_array %}
+            {% assign entry_parts = entry | split: ':::' %}
+            {% assign title = entry_parts[1] %}
+            {% assign img = entry_parts[2] %}
+            {% assign qty = entry_parts[3] %}
+            {% if qty != '0' and title != blank %}
+              {% comment %} <div class="most-purchased-item"> {% endcomment %}
+                
+                <div class="swiper-slide collection-product-card">
+                  {% render 'product-frequent-item', prod_obj:entry %}
+                </div>
+                
+                {% comment %} {% if img != blank %}<img src="{{ img }}" alt="{{ title }}" width="100" height="100" />{% endif %}
+                <div class="item-title">{{ title }}</div>
+                <div class="item-qty">Purchased: {{ qty }}</div> {% endcomment %}
+              {% comment %} </div> {% endcomment %}
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
     {% elsif customer %}
       <p>You have not placed any orders yet.</p>
     {% else %}
       <p>Please log in to see your most purchased items.</p>
-    {% endif %} {% endcomment %}
+    {% endif %}
 
-    <div id="product-grid" class="most-purchased-product-list swiper">
+    {% comment %} <div id="product-grid" class="most-purchased-product-list swiper">
       <div class="swiper-wrapper">
         {%- for product in collections['all'].products -%}
             <div class="swiper-slide collection-product-card">
@@ -105,7 +116,7 @@
         {%- endfor -%}
       </div>
       
-    </div>
+    </div> {% endcomment %}
     <!-- Navigation buttons -->
         <div class="swiper-button-next swiper-button">
           <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
@@ -167,6 +178,10 @@
         }
       });
     });
+
+    function addcarttrigger(ele){
+      ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
+    }
   </script>
   
   {% schema %}

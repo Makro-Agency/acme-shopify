@@ -3,72 +3,146 @@
   "blog": [],
   "collection": [
     {
-      "key": "image_sub_nav",
-      "namespace": "custom",
-      "name": "Image Sub Nav",
-      "description": "Custom image for collection sub navigation",
+      "key": "primary_collection",
+      "namespace": "collection",
+      "name": "Primary Collection",
+      "description": "Check True if this is a primary collection",
       "type": {
-        "name": "file_reference",
-        "category": "REFERENCE"
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
-    },
+    }
+  ],
+  "company": [
     {
-      "key": "collection_filters",
+      "key": "block_checkout",
       "namespace": "custom",
-      "name": "Collection Filters",
+      "name": "block_checkout",
       "description": "",
       "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
-    }
-  ],
-  "company": [],
-  "company_location": [],
-  "location": [],
-  "market": [
+    },
     {
-      "key": "carousel_slider",
-      "namespace": "custom",
-      "name": "Carousel Slider",
-      "description": "Slider",
+      "key": "delivery_date",
+      "namespace": "acme",
+      "name": "Delivery date",
+      "description": "",
       "type": {
-        "name": "list.file_reference",
-        "category": "REFERENCE"
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     }
   ],
-  "order": [],
-  "page": [],
+  "company_location": [
+    {
+      "key": "test_name",
+      "namespace": "custom",
+      "name": "Test Name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "delivery_date",
+      "namespace": "acme",
+      "name": "Delivery date",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "block_checkout",
+      "namespace": "custom",
+      "name": "block_checkout",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
+  "location": [
+    {
+      "key": "email",
+      "namespace": "custom",
+      "name": "email",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "market": [],
+  "order": [
+    {
+      "key": "choose_your_delivery_day",
+      "namespace": "checkoutblocks",
+      "name": "Choose your delivery day",
+      "description": "test",
+      "type": {
+        "name": "date",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "test",
+      "namespace": "checkoutblocks",
+      "name": "PO Number",
+      "description": null,
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "page": [
+    {
+      "key": "navbar_background",
+      "namespace": "page",
+      "name": "Navbar Background",
+      "description": "Choose Light or Dark. ",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "navbar_transparency",
+      "namespace": "page",
+      "name": "Navbar Transparency",
+      "description": "Should the navbar be transparent before scroll",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
   "product": [
     {
-      "key": "category",
-      "namespace": "custom",
-      "name": "Category",
-      "description": "Product Filter - Category",
+      "key": "hidden",
+      "namespace": "seo",
+      "name": "SEO HIdden",
+      "description": "Hide this product from the Sitemap.xml",
       "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
+        "name": "number_integer",
+        "category": "NUMBER"
       }
     },
     {
-      "key": "season",
-      "namespace": "custom",
-      "name": "Season",
-      "description": "Product Filter - Season",
+      "key": "custom_product",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Product",
+      "description": "Use to indicate whether or not the unique product identifiers (UPIs) GTIN, MPN, and brand are available for your product.",
       "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "size",
-      "namespace": "custom",
-      "name": "Size",
-      "description": "Product Filter - Size",
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
     },
     {
@@ -92,63 +166,83 @@
       }
     },
     {
-      "key": "custom_product",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Product",
-      "description": "Use to indicate whether or not the unique product identifiers (UPIs) GTIN, MPN, and brand are available for your product.",
+      "key": "where_to_buy_code",
+      "namespace": "accentuate",
+      "name": "Where To Buy Code",
+      "description": "Enter product code from where to buy ",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_featured_image",
+      "namespace": "product",
+      "name": "Custom Featured Image",
+      "description": "Choose an image to show first in the product carousel",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "hover_image",
+      "namespace": "product",
+      "name": "Hover Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "fish_calculator_options",
+      "namespace": "product",
+      "name": "Fish Calculator",
+      "description": "Choose fish calculator options for this product",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "availability",
+      "namespace": "custom",
+      "name": "Availability",
+      "description": "",
       "type": {
         "name": "boolean",
         "category": "TRUE_FALSE"
       }
     },
     {
-      "key": "short_description",
+      "key": "weight",
       "namespace": "custom",
-      "name": "Short Description",
-      "description": "Product Short Description After Title",
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "cruiser_new_sizing_infos",
-      "namespace": "custom",
-      "name": "Additional Info ",
+      "name": "Weight",
       "description": "",
       "type": {
-        "name": "multi_line_text_field",
+        "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "color-pattern",
-      "namespace": "shopify",
-      "name": "Color",
-      "description": "Defines the primary color or pattern, such as blue or striped",
+      "key": "unit_of_measure",
+      "namespace": "custom",
+      "name": "Unit of measure",
+      "description": "",
       "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
-      "key": "closure-type",
-      "namespace": "shopify",
-      "name": "Closure type",
-      "description": "Defines the method used to fasten or secure a product, such as zipper or buckles",
+      "key": "catch_weight",
+      "namespace": "custom",
+      "name": "catch_weight",
+      "description": "",
       "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "target-gender",
-      "namespace": "shopify",
-      "name": "Target gender",
-      "description": "Identifies the intended gender for a product, such as female, male or unisex",
-      "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
     }
   ],
@@ -157,16 +251,6 @@
       "key": "custom_label_4",
       "namespace": "mm-google-shopping",
       "name": "Google: Custom Label 4",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "custom_label_3",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 3",
       "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
@@ -184,9 +268,9 @@
       }
     },
     {
-      "key": "custom_label_1",
+      "key": "custom_label_3",
       "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 1",
+      "name": "Google: Custom Label 3",
       "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
@@ -204,10 +288,10 @@
       }
     },
     {
-      "key": "size_system",
+      "key": "mpn",
       "namespace": "mm-google-shopping",
-      "name": "Google: Size System",
-      "description": "The country of the size system used by your product.",
+      "name": "Google: MPN",
+      "description": "Your product’s Manufacturer Part Number (MPN).",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -224,10 +308,20 @@
       }
     },
     {
-      "key": "mpn",
+      "key": "custom_label_1",
       "namespace": "mm-google-shopping",
-      "name": "Google: MPN",
-      "description": "Your product’s Manufacturer Part Number (MPN).",
+      "name": "Google: Custom Label 1",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "condition",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Condition",
+      "description": "The condition of your product at time of sale.",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -244,10 +338,10 @@
       }
     },
     {
-      "key": "condition",
+      "key": "size_system",
       "namespace": "mm-google-shopping",
-      "name": "Google: Condition",
-      "description": "The condition of your product at time of sale.",
+      "name": "Google: Size System",
+      "description": "The country of the size system used by your product.",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -266,13 +360,23 @@
   ],
   "shop": [
     {
-      "key": "fastbundleconf",
-      "namespace": "rbrfb",
-      "name": "Fast Bundle Conf",
-      "description": "App's config for the widgets",
+      "key": "blocks_list_checkout_custom_field",
+      "namespace": "checkoutblocks",
+      "name": "Checkout Blocks: Blocks List for: checkout_custom_field",
+      "description": null,
       "type": {
-        "name": "json",
-        "category": "JSON"
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "blocks_list_checkout_static_content",
+      "namespace": "checkoutblocks",
+      "name": "Checkout Blocks: Blocks List for: checkout_static_content",
+      "description": null,
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
       }
     }
   ]

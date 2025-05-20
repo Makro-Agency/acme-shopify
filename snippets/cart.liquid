@@ -208,7 +208,7 @@
       Tomorrow.setDate(Today.getDate() + 1);
       var count = 7;
   
-      var tempBitValue = '{{customer.current_company.metafields.acme.delivery_date}}';
+      var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
       var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
       BitValue.split('');
   
@@ -340,7 +340,7 @@
         <div class="cart-partial-form row pt-4 pt-lg-5">
           <div class="col-12 col-lg-11 offset-lg-1">
             <h2 class="header-1 mt-1 mb-4 {% unless customer_b2B %}mb-lg-5{% endunless %}">{{ 'cart.headers.title' | t }}</h2>
-            {% if customer.current_company.metafields.custom.block_checkout == true %}
+            {% if customer.current_location.metafields.custom.block_checkout == true %}
               <style>
                 .prevent-msg{
                   display: flex;

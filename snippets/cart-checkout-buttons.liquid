@@ -6,7 +6,7 @@
 		{% assign checkout_button_text = 'cart.buttons.checkout' | t %}
 	{% endif %}
 
-	{% if customer and customer.b2b? and customer.company_available_locations_count > 0 and customer.current_company.metafields.custom.block_checkout == true %}
+	{% if customer and customer.b2b? and customer.company_available_locations_count > 0 and customer.current_location.metafields.custom.block_checkout == true %}
 		{% comment %} <style>
 			.prevent-msg{
 				display: flex;

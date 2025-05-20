@@ -55,6 +55,26 @@
         "name": "single_line_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "delivery_date",
+      "namespace": "acme",
+      "name": "Delivery date",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "block_checkout",
+      "namespace": "custom",
+      "name": "block_checkout",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
     }
   ],
   "location": [

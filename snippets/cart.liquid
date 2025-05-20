@@ -338,7 +338,8 @@
     <div class = 'cart'  >     
       <div class="cart-partial-form-ajax-container" >
         <div class="cart-partial-form row pt-4 pt-lg-5">
-          <div class="col-12 col-lg-11 offset-lg-1" data-check="{{ customer.current_location.metafields.custom.block_checkout }}">
+          <div class="col-12 col-lg-11 offset-lg-1">
+            <div class="d-none"></div>
             <h2 class="header-1 mt-1 mb-4 {% unless customer_b2B %}mb-lg-5{% endunless %}">{{ 'cart.headers.title' | t }}</h2>
             {% if customer.current_location.metafields.custom.block_checkout == true %}
               <style>

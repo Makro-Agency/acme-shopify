@@ -320,9 +320,12 @@
             body: JSON.stringify(cart_item_data)
           };
           update_main_arry.push(UPDATE_OBJ);
-          {% if forloop.last %}
-            updateProp(update_main_arry)
-          {% endif %}
+        {% endif %}
+        {% if forloop.last %}
+          updateProp(update_main_arry);
+          if(update_main_arry.length == 0){
+            document.body.classList.remove('loading-screen');
+          }
         {% endif %}
       {% endfor %}
     }

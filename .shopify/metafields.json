@@ -33,16 +33,6 @@
         "name": "single_line_text_field",
         "category": "TEXT"
       }
-    },
-    {
-      "key": "shopify-forms-app-submissions",
-      "namespace": "app--6171699--shopify-forms",
-      "name": "Shopify Forms submissions",
-      "description": "This metafield is used to store the submissions of the Shopify Forms App",
-      "type": {
-        "name": "list.mixed_reference",
-        "category": "REFERENCE"
-      }
     }
   ],
   "company_location": [
@@ -183,46 +173,6 @@
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
-      }
-    },
-    {
-      "key": "related_products_display",
-      "namespace": "shopify--discovery--product_recommendation",
-      "name": "Related products settings",
-      "description": "Determines how related products are displayed along with algorithmic product recommendations",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "queries",
-      "namespace": "shopify--discovery--product_search_boost",
-      "name": "Search product boosts",
-      "description": "List of search queries for which a product gets higher rank in search results",
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "related_products",
-      "namespace": "shopify--discovery--product_recommendation",
-      "name": "Related products",
-      "description": "List of related products",
-      "type": {
-        "name": "list.product_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "complementary_products",
-      "namespace": "shopify--discovery--product_recommendation",
-      "name": "Complementary products",
-      "description": "List of complementary products",
-      "type": {
-        "name": "list.product_reference",
-        "category": "REFERENCE"
       }
     },
     {

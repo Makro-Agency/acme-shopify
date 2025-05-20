@@ -253,7 +253,7 @@
             Tomorrow.setDate(Today.getDate() + 1);
             var count = 7;
         
-            var tempBitValue = '{{customer.current_company.metafields.acme.delivery_date}}';
+            var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
             var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
             BitValue.split('');
         
@@ -300,7 +300,7 @@
 
         // Example usage:
 
-        {% if customer.current_company.metafields.acme.delivery_date != blank %}
+        {% if customer.current_location.metafields.acme.delivery_date != blank %}
             var nextMondays = getNextMondays();
             var tempcurrentDay = nextMondays.pop();
         {% else %}

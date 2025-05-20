@@ -1,0 +1,93 @@
+.swiper:not(.swiper-initialized) .swiper-wrapper {
+    gap: 64px;
+}
+.most-purchased-items-section {
+    padding: 60px 0 100px;
+    position: relative;
+}
+.most-purchased-items-section h2.heading {
+    font-size: 80px;
+    letter-spacing: 0;
+    margin-bottom: 40px;
+    line-height: 100%;
+}
+.most-purchased-product-list {
+    padding: 80px 0 0;
+}
+.most-purchased-product-list .card-basic .image-wrap {
+    height: 308px;
+    width: 282px;
+}
+.most-purchased-product-list .product-grid-item.card-basic {
+    width: 100%;
+}
+
+.most-purchased-items-section .swiper-button {
+    position: absolute;
+    border: 1px solid;
+    border-radius: 100px;
+    border: 1px solid var(--Blue, #14315C);
+    z-index: 99;
+    top: 40%;
+    bottom: auto;
+    margin: auto;
+    height: 32px;
+    width: 32px;
+    min-height: 32px;
+    min-width: 32px;
+}
+.most-purchased-items-section .swiper-button-prev.swiper-button {
+    left: -15px;
+    right: auto;
+    transform: rotate(180deg);
+}
+.most-purchased-items-section .swiper-button-next.swiper-button {
+    right: -15px;
+    left: auto;
+}
+@media screen and (max-width: 989px) {
+    .most-purchased-items-section h2.heading {
+        font-size: 42px;
+    }
+    .most-purchased-items-section {
+        padding: 30px 0 60px;
+    }
+    .most-purchased-items-section .swiper-button-prev.swiper-button { left: 0; }
+    .most-purchased-items-section .swiper-button-next.swiper-button { right: 0; }
+}
+@media screen and (max-width: 767px) {
+    .most-purchased-product-list .card-basic .image-wrap {
+        height: 224px;
+        width: 297px;
+    }
+}
+@media screen and (max-width: 640px) {
+    .most-purchased-product-list .card-basic .image-wrap {
+        height: 360px;
+        width: 330px;
+    }
+    .product-grid-item__content-container {
+        padding: 0 60px;
+    }
+    .product-grid-item__inner > .product-form {
+        padding: 0 60px;
+    }
+    .most-purchased-items-section .swiper-button {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+    .most-purchased-items-section .swiper-button-prev.swiper-button {
+        left: -60px;
+        right: 0;
+    }
+    .most-purchased-items-section .swiper-button-next.swiper-button {
+        right: -60px;
+        left: 0;
+    }
+    .most-purchased-items-section {
+        padding: 30px 0 0px;
+    }
+}

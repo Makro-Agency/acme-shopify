@@ -54,25 +54,26 @@ product-add-form product-form product-form-{{ product.id }}
 			assign displayProduct = false
 		endunless
 	endif
--%}
 
+-%}
 {% if displayProduct == true %}
 <div class="product-grid-item {{ product_flags }} card-basic" >
 	<!-- Image --> 
 	<div class="product-grid-item__inner">
-		<div class="product-grid-item__content-container">
-			<a href="{{ product.url }}">
-				<div class="image-wrap">
-					<img class="product-image img-fluid" src="{{ product.featured_image | image_url: width: 412 }}" width="317" height="317" alt="{{ product.title }} packaging" loading="lazy"/> 
-					{% if hover_image  %}
-						<img class="product-image product-image-hover img-fluid" 
-						src="{{ hover_image | img_url : '500x' }}" width="512" height="512" alt="{{ product.title }}" loading="lazy"/>
-					{% elsif product.media[1] %}
-						<img class="product-image product-image-hover img-fluid" src="{{ product.media[1] | img_url: '500x' }}" alt="{{ product.media[1].alt }}" loading="lazy"/>
-					{% endif %}
-				</div>
-			</a>
+		<a href="{{ product.url }}">
+			<div class="image-wrap">
+				<img class="product-image img-fluid" src="{{ product.featured_image | image_url: width: 412 }}" width="317" height="317" alt="{{ product.title }} packaging" loading="lazy"/> 
+				{% if hover_image  %}
+					<img class="product-image product-image-hover img-fluid" 
+					src="{{ hover_image | img_url : '500x' }}" width="512" height="512" alt="{{ product.title }}" loading="lazy"/>
+				{% elsif product.media[1] %}
+					<img class="product-image product-image-hover img-fluid" src="{{ product.media[1] | img_url: '500x' }}" alt="{{ product.media[1].alt }}" loading="lazy"/>
+				{% endif %}
+			</div>
+		</a>
 		<!-- // Image -->
+		<div class="product-grid-item__content-container">
+			
 		<!-- Content -->
 
 		{% if has_b2b %}

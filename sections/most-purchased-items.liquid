@@ -113,3 +113,192 @@
   ]
 }
 {% endschema %} 
+{{ 'most-purchased-items-section.css' | asset_url | stylesheet_tag }}
+
+<div class="most-purchased-items-section container">
+    <h2 class="heading">{{ section.settings.title }}</h2>
+    {% comment %} {% if customer and customer.orders.size > 0 %}
+      {% assign latest_orders = customer.orders | sort: 'created_at' | reverse | slice: 0, 20 %}
+      {% assign product_data = '' %}
+      {% for order in latest_orders %}
+        {% for item in order.line_items %}
+          {% assign prod_id = item.product.id | append: '' %}
+          {% assign found = false %}
+          {% if product_data != '' %}
+            {% assign product_data_array = product_data | split: '|||' %}
+            {% for entry in product_data_array %}
+              {% assign entry_parts = entry | split: ':::' %}
+              {% if entry_parts[0] == prod_id %}
+                {% assign found = true %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% if found == false %}
+            {% assign image_link = item.image | image_url:width:100 %}
+            {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' %}
+            {% if product_data == '' %}
+              {% assign product_data = entry %}
+            {% else %}
+              {% assign product_data = product_data | append: '|||' | append: entry %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+      {% assign product_data_array = product_data | split: '|||' %}
+      {% assign updated_product_data = '' %}
+      {% for entry in product_data_array %}
+        {% assign entry_parts = entry | split: ':::' %}
+        {% assign prod_id = entry_parts[0] %}
+        {% assign title = entry_parts[1] %}
+        {% assign img = entry_parts[2] %}
+        {% assign total_qty = 0 %}
+        {% for order in latest_orders %}
+          {% for item in order.line_items %}
+              {% assign con_int = prod_id | plus: 0 %}
+            {% if item.product.id == con_int %}
+              {% assign total_qty = total_qty | plus: item.quantity %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        {% assign new_entry = prod_id | append: ':::' | append: title | append: ':::' | append: img | append: ':::' | append: total_qty %}
+        {% if updated_product_data == '' %}
+          {% assign updated_product_data = new_entry %}
+        {% else %}
+          {% assign updated_product_data = updated_product_data | append: '|||' | append: new_entry %}
+        {% endif %}
+      {% endfor %}
+      {% assign sorted_data = '' %}
+      {% assign used_indexes = '' %}
+      {% for i in (0..product_data_array.size) %}
+        {% assign max_qty = -1 %}
+        {% assign max_idx = -1 %}
+        {% assign updated_array = updated_product_data | split: '|||' %}
+        {% for j in (0..updated_array.size) %}
+          {% if used_indexes contains j %}{% continue %}{% endif %}
+          {% assign entry = updated_array[j] %}
+          {% assign entry_parts = entry | split: ':::' %}
+          {% assign qty = entry_parts[3] | plus: 0 %}
+          {% if qty > max_qty %}
+            {% assign max_qty = qty %}
+            {% assign max_idx = j %}
+          {% endif %}
+        {% endfor %}
+        {% if max_idx != -1 %}
+          {% if sorted_data != '' %}{% assign sorted_data = sorted_data | append: '|||' %}{% endif %}
+          {% assign sorted_data = sorted_data | append: updated_array[max_idx] %}
+          {% assign used_indexes = used_indexes | append: ',' | append: max_idx %}
+        {% endif %}
+      {% endfor %}
+      <div class="most-purchased-items-list">
+        {% assign sorted_array = sorted_data | split: '|||' %}
+        {% for entry in sorted_array %}
+          {% assign entry_parts = entry | split: ':::' %}
+          {% assign title = entry_parts[1] %}
+          {% assign img = entry_parts[2] %}
+          {% assign qty = entry_parts[3] %}
+          {% if qty != '0' and title != blank %}
+            <div class="most-purchased-item">
+              {% if img != blank %}<img src="{{ img }}" alt="{{ title }}" width="100" height="100" />{% endif %}
+              <div class="item-title">{{ title }}</div>
+              <div class="item-qty">Purchased: {{ qty }}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% elsif customer %}
+      <p>You have not placed any orders yet.</p>
+    {% else %}
+      <p>Please log in to see your most purchased items.</p>
+    {% endif %} {% endcomment %}
+
+    <div id="product-grid" class="most-purchased-product-list swiper">
+      <div class="swiper-wrapper">
+        {%- for product in collections['all'].products -%}
+            <div class="swiper-slide collection-product-card">
+              {% render 'product-grid-item' product: product %}
+            </div>
+        {%- endfor -%}
+      </div>
+      
+    </div>
+    <!-- Navigation buttons -->
+        <div class="swiper-button-next swiper-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+            <g clip-path="url(#clip0_616_3315)">
+              <path d="M25.0002 49.1069C38.3142 49.1069 49.1074 38.3137 49.1074 24.9997C49.1074 11.6857 38.3142 0.892578 25.0002 0.892578C11.6862 0.892578 0.893066 11.6857 0.893066 24.9997C0.893066 38.3137 11.6862 49.1069 25.0002 49.1069Z" stroke="#14315C" stroke-width="2"/>
+              <path d="M27.6134 24.9949C27.4633 24.8906 27.3188 24.7785 27.1803 24.6592C24.944 22.4259 22.7092 20.1914 20.4759 17.9556C19.7616 17.2414 19.7786 16.7503 20.4545 16.0137C21.3821 15.0021 21.9402 15.1048 22.833 16.0137C25.4732 18.7003 28.1518 21.3494 30.8152 24.0137C31.5295 24.728 31.5357 25.2414 30.825 25.953L22.5964 34.1914C21.9 34.8878 21.4018 34.8646 20.683 34.2083C19.6893 33.3003 19.7303 32.7333 20.683 31.7976C22.8741 29.6628 25.017 27.4789 27.1821 25.3181C27.3192 25.2018 27.4632 25.0938 27.6134 24.9949Z" fill="#14315C"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_616_3315">
+                <rect width="50" height="50" rx="25" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+        <div class="swiper-button-prev swiper-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+            <g opacity="0.4">
+              <g clip-path="url(#clip0_617_3616)">
+                <path d="M24.9998 49.1069C11.6858 49.1069 0.892651 38.3137 0.892651 24.9997C0.892651 11.6857 11.6858 0.892578 24.9998 0.892578C38.3138 0.892578 49.1069 11.6857 49.1069 24.9997C49.1069 38.3137 38.3138 49.1069 24.9998 49.1069Z" stroke="#14315C" stroke-width="2"/>
+                <path d="M22.3866 24.9949C22.5367 24.8906 22.6812 24.7785 22.8197 24.6592C25.056 22.4259 27.2908 20.1914 29.5241 17.9556C30.2384 17.2414 30.2214 16.7503 29.5455 16.0137C28.6179 15.0021 28.0598 15.1048 27.167 16.0137C24.5268 18.7003 21.8482 21.3494 19.1848 24.0137C18.4705 24.728 18.4643 25.2414 19.175 25.953L27.4036 34.1914C28.1 34.8878 28.5982 34.8646 29.317 34.2083C30.3107 33.3003 30.2697 32.7333 29.317 31.7976C27.1259 29.6628 24.983 27.4789 22.8179 25.3181C22.6808 25.2018 22.5368 25.0938 22.3866 24.9949Z" fill="#14315C"/>
+              </g>
+            </g>
+            <defs>
+              <clipPath id="clip0_617_3616">
+                <rect width="50" height="50" rx="25" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+      var swiper = new Swiper(".most-purchased-product-list", {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          390: {
+            slidesPerView: 1,
+            spaceBetween: 30
+          },
+          649: {
+            slidesPerView: 2,
+            spaceBetween: 30
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30
+          },
+          1200: {
+            slidesPerView: 4,
+            spaceBetween: 64
+          }
+        }
+      });
+    });
+  </script>
+  
+  {% schema %}
+  {
+    "name": "Most Purchased Items",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title",
+        "default": "Your Most Purchased Items"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Most Purchased Items"
+      }
+    ]
+  }
+  {% endschema %}

@@ -182,7 +182,7 @@ product-add-form product-form product-form-{{ product.id }}
 											{% render 'icon-plus-addcart' %}
 										</span>
 										<div class="product-qty b2b-grid mb-4 mt-4 mb-xl-0 mt-xl-0" data-id="{{current_variant.id}}">
-											<a class="qty-dec clickable qty-btn disabled" 
+											<a class="qty-dec clickable qty-btn {% if qty_cart <= 1 %}disabled{% endif %}" 
 												data-quantity-dec 
 												aria-label="Decrease Quantity"
 												href="#" data-val="{{ qty_cart | default: 1 }}" onclick="clickAttrMinus(this)"

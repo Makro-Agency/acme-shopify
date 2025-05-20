@@ -174,7 +174,7 @@
       },
       body: JSON.stringify({
           items: [productData],
-      }),
+      })
     }).then(response => {
       if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -239,9 +239,8 @@
         nextMondays = '';
         if(nextMondays == ''){
           var productData = { 
-              id: v_id,
-              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
-            }
+            id: v_id,
+            quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
           };
         }else{
           var productData = { 

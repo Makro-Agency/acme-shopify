@@ -248,28 +248,22 @@
         function getNextMondays(count = 7) {
 
             const inputTime = "{{settings.cut-time}}:00";
+
+            var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
+            Tomorrow.setDate(Today.getDate() + 1);
+            var count = 7;
+        
             var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
-            if(tempBitValue.split("").length == 7){
-                var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
-                Tomorrow.setDate(Today.getDate() + 1);
-                var count = 7;
-            
-                var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
-                
-            
-                var checkCount = 0;
-                for (let i = 0; i < count; i++) {
-                    const dayOfWeek = Tomorrow.getDay();
-                    if(BitValue[(dayOfWeek)] == '1'){
-                        if(checkCount==0 && hasEstTimePassedToday(inputTime)){
-                            count++;
-                            checkCount++;
-                        }else{
-                            var store_month = (Tomorrow.getMonth() + 1);
-                            var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
-                            Availdays.push(DateFormat);
-                            checkCount++;
-                        }
+            var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
+            BitValue.split('');
+        
+            var checkCount = 0;
+            for (let i = 0; i < count; i++) {
+                const dayOfWeek = Tomorrow.getDay();
+                if(BitValue[(dayOfWeek)] == '1'){
+                    if(checkCount==0 && hasEstTimePassedToday(inputTime)){
+                        count++;
+                        checkCount++;
                     }else{
                         if(checkCount == 0){
                             checkCount++;

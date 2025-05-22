@@ -320,9 +320,12 @@
             body: JSON.stringify(cart_item_data)
           };
           update_main_arry.push(UPDATE_OBJ);
-          {% if forloop.last %}
-            updateProp(update_main_arry)
-          {% endif %}
+        {% endif %}
+        {% if forloop.last %}
+          updateProp(update_main_arry);
+          if(update_main_arry.length == 0){
+            document.body.classList.remove('loading-screen');
+          }
         {% endif %}
       {% endfor %}
     }
@@ -339,6 +342,7 @@
       <div class="cart-partial-form-ajax-container" >
         <div class="cart-partial-form row pt-4 pt-lg-5">
           <div class="col-12 col-lg-11 offset-lg-1">
+            <div class="d-none">{{ customer.current_location.name }}</div>
             <h2 class="header-1 mt-1 mb-4 {% unless customer_b2B %}mb-lg-5{% endunless %}">{{ 'cart.headers.title' | t }}</h2>
             {% if customer.current_location.metafields.custom.block_checkout == true %}
               <style>

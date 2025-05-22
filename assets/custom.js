@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   document.querySelectorAll('.qty-btn').forEach((quantityBtn) => {
-    quantityBtn.addEventListener('click',function(){
+    quantityBtn.addEventListener('click',function(e){
+      e.preventDefault();
       var get_val = parseInt(quantityBtn.dataset.val);
       if(quantityBtn.classList.contains('qty-dec')){
         get_val = get_val - 1;

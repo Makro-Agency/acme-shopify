@@ -4,6 +4,63 @@
   {%- assign _currentVaraint = coll_prod.selected_or_first_available_variant -%}
 {%- endif -%}
 
+{%- liquid
+
+
+  
+  assign available_online = coll_prod.metafields.accentuate.available_online    
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+      assign available_online = true
+  endif
+  if available_online == true
+      if customer and customer.b2b?
+        if customer.company_available_locations_count > 0      
+        else
+            assign available_online = false
+        endif
+      endif
+  endif
+
+  assign b2b_tag = false
+  for tag in coll_prod.tags
+    if tag == 'B2B'
+      assign b2b_tag = true
+      break
+    endif
+  endfor
+
+  
+
+  assign b2b_product_in_stock = 'no'
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign b2b_product_in_stock = product.metafields.custom.availability | default: false    
+  elsif b2b_tag == true
+    assign b2b_product_in_stock = product.metafields.custom.availability | default: false
+  endif
+  if b2b_product_in_stock == 'true'
+    assign b2b_product_in_stock = true
+  endif
+
+  assign current_variant_ava = current_variant.available
+  if b2b_product_in_stock != 'no'				
+    if b2b_product_in_stock == true
+      assign current_variant_ava = b2b_product_in_stock
+    else
+      assign current_variant_ava = false
+    endif
+  endif
+
+  unless _currentVaraint.available
+    assign available_online = false
+  endunless
+
+  unless current_variant_ava
+    assign available_online = false
+  endunless
+
+-%}
+
+
 <div class="product-item {% if coll_prod.variants.size > 1 %}varient-select{% endif %}">
   {% if coll_prod.variants.size > 1 %}
   <div class="product-wrapper">
@@ -36,7 +93,7 @@
             {% if variant.sku %}<span class="sku"><span class="mobile-header">Sku</span>{{ variant.sku }}</span>{% else %}-{% endif %}
             <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
             <div class="quantity-btn-wrap">
-                <div class="quantity-selector {% unless variant.available %}disabled{% endunless %}" data-item="{{ variant.id }}">
+                <div class="quantity-selector {% unless available_online %}disabled{% endunless %}" data-item="{{ variant.id }}">
                     <button class="qtyminus" style="opacity: 0.5; cursor: not-allowed;" onclick="clickAttrMinus(this);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                         <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg></button>
@@ -95,7 +152,7 @@
     <span class="price"><span class="mobile-header">Price</span>{{ coll_prod.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
     <span class="grid-price"><span>Your price:</span><span>{{ coll_prod.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span></span>
     <div class="quantity-btn-wrap">
-      <div class="quantity-selector {% unless coll_prod.selected_or_first_available_variant.available %}disabled{% endunless %}" data-item="{{ coll_prod.selected_or_first_available_variant.id }}">
+      <div class="quantity-selector {% unless available_online %}disabled{% endunless %}" data-item="{{ coll_prod.selected_or_first_available_variant.id }}">
         <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg></button>

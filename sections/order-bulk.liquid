@@ -85,7 +85,13 @@
                 {% assign _temp_count = _temp_count | plus:1 %}
                 {% capture product_json %}
                     {{ product_json }}
-                    {{ coll_prod | json }}{% unless prod_counter == _temp_count %},{% endunless %}
+                    {% assign product_with_metafield = coll_prod | json %}
+                    {% assign product_with_metafield_temp = product_with_metafield | remove_last: '}' %}
+                    {% assign meta1 = coll_prod.metafields.accentuate.available_online | default:false | json %}
+                    {% assign meta2 = coll_prod.metafields.custom.availability | default: false | json %}
+                    {% assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json %}
+                    {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
+                    {{ product_with_metafield }}{% unless prod_counter == _temp_count %},{% endunless %}
                 {% endcapture %}
             {% endfor %}
 
@@ -187,7 +193,7 @@
             cents   = parts[1] ? (decimal + parts[1]) : '';
     
         return dollars + cents;
-      }
+      };
     
       switch(formatString.match(placeholderRegex)[1]) {
         case 'amount':
@@ -265,23 +271,25 @@
                         count++;
                         checkCount++;
                     }else{
-                        if(checkCount == 0){
-                            checkCount++;
-                        }
-                        count++;
+                        var store_month = (Tomorrow.getMonth() + 1);
+                        var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                        Availdays.push(DateFormat);
+                        checkCount++;
                     }
-                    Tomorrow.setDate(Tomorrow.getDate() + 1)
+                }else{
+                    if(checkCount == 0){
+                        checkCount++;
+                    }
+                    count++;
                 }
-
-                var currentstore_month = (Today.getMonth() + 1);
-                var currentDateFormat = `${Today.getFullYear()}-${currentstore_month < 10 ? ('0'+currentstore_month) : currentstore_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`
-                Availdays.push(currentDateFormat)
-            
-                return Availdays;
-            }else{
-                var Availdays = '';
-                return Availdays;
+                Tomorrow.setDate(Tomorrow.getDate() + 1)
             }
+
+            var currentstore_month = (Today.getMonth() + 1);
+            var currentDateFormat = `${Today.getFullYear()}-${currentstore_month < 10 ? ('0'+currentstore_month) : currentstore_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`
+            Availdays.push(currentDateFormat)
+        
+            return Availdays;
 
             
         }
@@ -615,19 +623,37 @@
     function appendHTML(item){   
         if( typeof item == "undefined" ) return '';
 
+        {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+            var B2B_check = 'true';
+        {% else %}
+            var B2B_check = 'false';
+        {% endif %}
+
         //console.log(typeof item.custom, 'asd');
 
         var varCus = item.variants;
         var _item = typeof item.custom != 'undefined' ? item[0]:item;
         var currentVAraints = varCus.filter((variant) => { return variant; });        
         var _returnHTML = '';
+        if(item.metafields.unit_of_measure != null){
+            var _item_price = Shopify.formatMoney(_item.price, amount_text) + '/' + item.metafields.unit_of_measure
+        }else{
+            var _item_price = Shopify.formatMoney(_item.price, amount_text)
+        }
+        
         
         {% comment %} console.log(item,'items'); {% endcomment %}
         if(currentVAraints.length > 1){
             var split_v = (_item.title).split(' - Sauvez')[0];
             var disable_class = '';
-            if(_item.available == false){
-                var disable_class = 'disabled';
+            if(item.available == false){
+                disable_class = 'disabled';
+            }
+            if(B2B_check == 'false' && item.metafields.available_online == false){
+                disable_class = 'disabled';
+            }
+            if(B2B_check == 'true' && item.metafields.availability_b2b == false){
+                disable_class = 'disabled';
             }
             _returnHTML = 
                 `<div class="product-item varient-select">
@@ -647,9 +673,9 @@
                             </span>
                         </div>
                         <span class="price">-</span>
-                        <span class="grid-price"><span>Your price:</span><span>${Shopify.formatMoney(_item.price, amount_text)}</span></span>
+                        <span class="grid-price"><span>Your price:</span><span>${_item_price}</span></span>
                         <div class="quantity-btn-wrap">
-                            <button class="variant-select-btn" onclick="toggleVariant(this)">select a variant</button>
+                            <button class="variant-select-btn ${disable_class}" onclick="toggleVariant(this)">select a variant</button>
                             <div class="quantity-selector ${disable_class}" data-item="${ _item.variants[0].id }">
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -747,6 +773,12 @@
                 if(currentVAraint.available == false){
                     var disable_class = 'disabled';
                 }
+                if(B2B_check == 'false' && item.metafields.available_online == false){
+                    disable_class = 'disabled';
+                }
+                if(B2B_check == 'true' && item.metafields.availability_b2b == false){
+                    disable_class = 'disabled';
+                }
 
                 _returnHTML += `<div class="product-item ">
                     <div class="product-wrapper">
@@ -763,8 +795,8 @@
                                 <a href="/products/${_item.handle}">${_item.title }</a>
                             </span>
                         </div>
-                        <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
-                        <span class="grid-price"><span>Your price:</span><span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span></span>
+                        <span class="price"><span class="mobile-header">Price</span>${_item_price}</span>
+                        <span class="grid-price"><span>Your price:</span><span>${_item_price}</span></span>
                         <div class="quantity-btn-wrap">
                             <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">

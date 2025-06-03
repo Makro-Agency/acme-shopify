@@ -6,7 +6,7 @@
 {% assign sku = entry_parts[4] %}
 {% assign vendor = entry_parts[5] %}
 {% assign v_id = entry_parts[6] %}
-
+{% assign v_measure = entry_parts[7] %}
 
 <div class="swiper-slide collection-product-card">
 	<div class="product-grid-item  card-basic">
@@ -47,7 +47,7 @@
 								<div class="price__pricing-group ">
 									<div class="price__regular">
 										<span class="visually-hidden">Regular price</span>
-										<span class="price-item price-item--regular" data-regular-price=""> $10.00 </span>
+										<span class="price-item price-item--regular" data-regular-price=""> $10.00 {% if v_measure != blank %}/{{ v_measure }}{% endif %}</span>
 									</div>
 									<div class="price__sale">
 										<span class="visually-hidden">Sale price</span>

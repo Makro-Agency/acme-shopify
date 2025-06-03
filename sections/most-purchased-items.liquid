@@ -1,6 +1,8 @@
-<div class="most-purchased-items-section container">
-  <h2>{{ section.settings.title }}</h2>
+{{ 'most-purchased-items-section.css' | asset_url | stylesheet_tag }}
+<div class="most-purchased-items-section container hide">
+  <h2 class="heading">{{ section.settings.title }}</h2>
   {% if customer and customer.orders.size > 0 %}
+    <script>document.querySelector('.most-purchased-items-section').classList.remove('hide');</script>
     {% assign latest_orders = customer.orders | sort: 'created_at' | reverse | slice: 0, 20 %}
     {% assign product_data = '' %}
     {% for order in latest_orders %}
@@ -17,8 +19,13 @@
           {% endfor %}
         {% endif %}
         {% if found == false %}
-          {% assign image_link = item.image | image_url:width:100 %}
-          {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' %}
+          {% assign image_link = item.image | image_url: width: 400 %}
+          {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
+          {% assign item_vendor = item.product.vendor %}
+          {% assign item_v_id = item.variant_id %}
+          {% assign item_v_measure = item.product.metafields.accentuate.unit_of_measure %}
+          =>{{ item_v_measure }}
+          {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id | append: ':::' | append: item_v_measure %}
           {% if product_data == '' %}
             {% assign product_data = entry %}
           {% else %}
@@ -34,16 +41,35 @@
       {% assign prod_id = entry_parts[0] %}
       {% assign title = entry_parts[1] %}
       {% assign img = entry_parts[2] %}
+      {% assign sku = entry_parts[4] %}
+      {% assign vendor = entry_parts[5] %}
+      {% assign v_id = entry_parts[6] %}
+      {% assign v_measure = entry_parts[7] %}
       {% assign total_qty = 0 %}
       {% for order in latest_orders %}
         {% for item in order.line_items %}
-            {% assign con_int = prod_id | plus: 0 %}
+          {% assign con_int = prod_id | plus: 0 %}
           {% if item.product.id == con_int %}
             {% assign total_qty = total_qty | plus: item.quantity %}
           {% endif %}
         {% endfor %}
       {% endfor %}
-      {% assign new_entry = prod_id | append: ':::' | append: title | append: ':::' | append: img | append: ':::' | append: total_qty %}
+      {% assign new_entry = prod_id
+        | append: ':::'
+        | append: title
+        | append: ':::'
+        | append: img
+        | append: ':::'
+        | append: total_qty
+        | append: ':::'
+        | append: sku
+        | append: ':::'
+        | append: vendor
+        | append: ':::'
+        | append: v_id
+        | append: ':::'
+        | append: v_measure
+      %}
       {% if updated_product_data == '' %}
         {% assign updated_product_data = new_entry %}
       {% else %}
@@ -72,158 +98,32 @@
         {% assign used_indexes = used_indexes | append: ',' | append: max_idx %}
       {% endif %}
     {% endfor %}
-    <div class="most-purchased-items-list">
-      {% assign sorted_array = sorted_data | split: '|||' %}
-      {% for entry in sorted_array %}
-        {% assign entry_parts = entry | split: ':::' %}
-        {% assign title = entry_parts[1] %}
-        {% assign img = entry_parts[2] %}
-        {% assign qty = entry_parts[3] %}
-        {% if qty != '0' and title != blank %}
-          <div class="most-purchased-item">
-            {% if img != blank %}<img src="{{ img }}" alt="{{ title }}" width="100" height="100" />{% endif %}
-            <div class="item-title">{{ title }}</div>
-            <div class="item-qty">Purchased: {{ qty }}</div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  {% elsif customer %}
-    <p>You have not placed any orders yet.</p>
-  {% else %}
-    <p>Please log in to see your most purchased items.</p>
-  {% endif %}
-</div>
-
-{% schema %}
-{
-  "name": "Most Purchased Items",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Title",
-      "default": "Your Most Purchased Items"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Most Purchased Items"
-    }
-  ]
-}
-{% endschema %} 
-{{ 'most-purchased-items-section.css' | asset_url | stylesheet_tag }}
-
-<div class="most-purchased-items-section container hide">
-    <h2 class="heading">{{ section.settings.title }}</h2>
-    {% if customer and customer.orders.size > 0 %}
-      <script>
-        document.querySelector('.most-purchased-items-section').classList.remove('hide');
-      </script>
-      {% assign latest_orders = customer.orders | sort: 'created_at' | reverse | slice: 0, 20 %}
-      {% assign product_data = '' %}
-      {% for order in latest_orders %}
-        {% for item in order.line_items %}
-          {% assign prod_id = item.product.id | append: '' %}
-          {% assign found = false %}
-          {% if product_data != '' %}
-            {% assign product_data_array = product_data | split: '|||' %}
-            {% for entry in product_data_array %}
-              {% assign entry_parts = entry | split: ':::' %}
-              {% if entry_parts[0] == prod_id %}
-                {% assign found = true %}
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-          {% if found == false %}
-            {% assign image_link = item.image | image_url:width:400 %}
-            {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
-            {% assign item_vendor = item.product.vendor %}
-            {% assign item_v_id = item.variant_id %}
-            {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id  %}
-            {% if product_data == '' %}
-              {% assign product_data = entry %}
-            {% else %}
-              {% assign product_data = product_data | append: '|||' | append: entry %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-      {% endfor %}
-      {% assign product_data_array = product_data | split: '|||' %}
-      {% assign updated_product_data = '' %}
-      {% for entry in product_data_array %}
-        {% assign entry_parts = entry | split: ':::' %}
-        {% assign prod_id = entry_parts[0] %}
-        {% assign title = entry_parts[1] %}
-        {% assign img = entry_parts[2] %}
-        {% assign sku = entry_parts[4] %}
-        {% assign vendor = entry_parts[5] %}
-        {% assign v_id = entry_parts[6] %}
-        {% assign total_qty = 0 %}
-        {% for order in latest_orders %}
-          {% for item in order.line_items %}
-              {% assign con_int = prod_id | plus: 0 %}
-            {% if item.product.id == con_int %}
-              {% assign total_qty = total_qty | plus: item.quantity %}
-            {% endif %}
-          {% endfor %}
-        {% endfor %}
-        {% assign new_entry = prod_id | append: ':::' | append: title | append: ':::' | append: img | append: ':::' | append: total_qty | append: ':::' | append: sku | append: ':::' | append: vendor | append: ':::' | append: v_id %}
-        {% if updated_product_data == '' %}
-          {% assign updated_product_data = new_entry %}
-        {% else %}
-          {% assign updated_product_data = updated_product_data | append: '|||' | append: new_entry %}
-        {% endif %}
-      {% endfor %}
-      {% assign sorted_data = '' %}
-      {% assign used_indexes = '' %}
-      {% for i in (0..product_data_array.size) %}
-        {% assign max_qty = -1 %}
-        {% assign max_idx = -1 %}
-        {% assign updated_array = updated_product_data | split: '|||' %}
-        {% for j in (0..updated_array.size) %}
-          {% if used_indexes contains j %}{% continue %}{% endif %}
-          {% assign entry = updated_array[j] %}
+    <div class="most-purchased-items-list most-purchased-product-list swiper">
+      <div class="swiper-wrapper">
+        {% assign sorted_array = sorted_data | split: '|||' %}
+        {% for entry in sorted_array %}
           {% assign entry_parts = entry | split: ':::' %}
-          {% assign qty = entry_parts[3] | plus: 0 %}
-          {% if qty > max_qty %}
-            {% assign max_qty = qty %}
-            {% assign max_idx = j %}
+          {% assign title = entry_parts[1] %}
+          {% assign img = entry_parts[2] %}
+          {% assign qty = entry_parts[3] %}
+          {% if qty != '0' and title != blank %}
+            {% comment %} <div class="most-purchased-item"> {% endcomment %}
+            <div class="swiper-slide collection-product-card">
+              {% render 'product-frequent-item', prod_obj: entry %}
+            </div>
+            {% comment %}
+              {% if img != blank %}<img src="{{ img }}" alt="{{ title }}" width="100" height="100" />{% endif %}
+              <div class="item-title">{{ title }}</div>
+              <div class="item-qty">Purchased: {{ qty }}</div>
+            {% endcomment %}
+            {% comment %} </div> {% endcomment %}
           {% endif %}
         {% endfor %}
-        {% if max_idx != -1 %}
-          {% if sorted_data != '' %}{% assign sorted_data = sorted_data | append: '|||' %}{% endif %}
-          {% assign sorted_data = sorted_data | append: updated_array[max_idx] %}
-          {% assign used_indexes = used_indexes | append: ',' | append: max_idx %}
-        {% endif %}
-      {% endfor %}
-      <div class="most-purchased-items-list most-purchased-product-list swiper">
-        <div class="swiper-wrapper">
-          {% assign sorted_array = sorted_data | split: '|||' %}
-          {% for entry in sorted_array %}
-            {% assign entry_parts = entry | split: ':::' %}
-            {% assign title = entry_parts[1] %}
-            {% assign img = entry_parts[2] %}
-            {% assign qty = entry_parts[3] %}
-            {% if qty != '0' and title != blank %}
-              {% comment %} <div class="most-purchased-item"> {% endcomment %}
-                
-                <div class="swiper-slide collection-product-card">
-                  {% render 'product-frequent-item', prod_obj:entry %}
-                </div>
-                
-                {% comment %} {% if img != blank %}<img src="{{ img }}" alt="{{ title }}" width="100" height="100" />{% endif %}
-                <div class="item-title">{{ title }}</div>
-                <div class="item-qty">Purchased: {{ qty }}</div> {% endcomment %}
-              {% comment %} </div> {% endcomment %}
-            {% endif %}
-          {% endfor %}
-        </div>
       </div>
-    {% endif %}
-    
-    <!-- Navigation buttons -->
+    </div>
+  {% endif %}
+
+  <!-- Navigation buttons -->
     <div class="swiper-button-next swiper-button">
       <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
         <g clip-path="url(#clip0_616_3315)">
@@ -252,9 +152,9 @@
         </defs>
       </svg>
     </div>
-  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", (event) => {
       var swiper = new Swiper(".most-purchased-product-list", {
@@ -284,9 +184,7 @@
         }
       });
     });
-
     function getNextMondays(count = 7) {
-
       const inputTime = "{{settings.cut-time}}:00";
       var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
       if(tempBitValue.split("").length == 7){
@@ -417,6 +315,7 @@
             }
         };
       }
+
       fetch("/cart/change.js", {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
@@ -435,66 +334,64 @@
         console.log('finally');
       });
     };
-
     var clickAttrMinus = function (minusSelector){
-
-        var currentVal = parseInt(minusSelector.dataset.val);
-        if(currentVal > 0){
-          minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
-          var v_id = minusSelector.closest('.product-qty').dataset.id;
-          var updates = {};
-          nextMondays = '';
-          if(nextMondays == ''){
-            var productData = { 
+      var currentVal = parseInt(minusSelector.dataset.val);
+      if(currentVal > 0){
+        minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
+        var v_id = minusSelector.closest('.product-qty').dataset.id;
+        var updates = {};
+        nextMondays = '';
+        if(nextMondays == ''){
+          var productData = { 
+            id: v_id,
+            quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
+          };
+        }else{
+          var productData = { 
               id: v_id,
-              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
-            };
-          }else{
-            var productData = { 
-                id: v_id,
-                quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value),
-                properties: {
-                    "_delivery_date":nextMondays,
-                    "_addtocart_date":tempcurrentDay
-                }
-            };
-          }
-          fetch("/cart/change.js", {
-            method: "POST",
-            headers: { "Accept": "application/json", "Content-Type": "application/json" },
-            body: JSON.stringify(productData)
-          }).then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          }).then(result => {
-              console.log('updated',result);
-              document.querySelector('[sh-cart-count]').textContent = result.item_count;
-          }).catch(error => {
-              console.error('There was a problem with the fetch operation:', error);;
-          }).finally(() => {
-            console.log('finally');
-          });
+              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value),
+              properties: {
+                  "_delivery_date":nextMondays,
+                  "_addtocart_date":tempcurrentDay
+              }
+          };
         }
+        fetch("/cart/change.js", {
+          method: "POST",
+          headers: { "Accept": "application/json", "Content-Type": "application/json" },
+          body: JSON.stringify(productData)
+        }).then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        }).then(result => {
+            console.log('updated',result);
+            document.querySelector('[sh-cart-count]').textContent = result.item_count;
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);;
+        }).finally(() => {
+          console.log('finally');
+        });
+      }
     };
   </script>
-  
-  {% schema %}
-  {
-    "name": "Most Purchased Items",
-    "settings": [
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Section Title",
-        "default": "Your Most Purchased Items"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Most Purchased Items"
-      }
-    ]
-  }
-  {% endschema %}
+
+{% schema %}
+{
+  "name": "Most Purchased Items",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Your Most Purchased Items"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Most Purchased Items"
+    }
+  ]
+}
+{% endschema %}

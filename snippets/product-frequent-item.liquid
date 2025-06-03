@@ -7,12 +7,13 @@
 {% assign vendor = entry_parts[5] %}
 {% assign v_id = entry_parts[6] %}
 {% assign v_measure = entry_parts[7] %}
+{% assign v_handle = entry_parts[8] %}
 
 <div class="swiper-slide collection-product-card">
 	<div class="product-grid-item  card-basic">
 		<!-- Image --> 
 		<div class="product-grid-item__inner">
-			<a href="/products/12-oz-herring-in-cream">
+			<a href="/products/{{v_handle}}">
 				<div class="image-wrap">
 					<img class="product-image img-fluid" src="{{img}}" width="317" height="317" alt="{{title}}" loading="lazy">
 					<img class="product-image product-image-hover img-fluid" width="317" height="317" src="{{img}}" alt="{{title}}" loading="lazy">
@@ -28,7 +29,7 @@
 					<span>SKU: {{sku}}</span>
 				</div>
 			
-				<a href="/products/12-oz-herring-in-cream" class="product-grid-item__content"> 
+				<a href="/products/{{handle}}" class="product-grid-item__content"> 
 					<h2 class="card-basic__header">{{title}}</h2>
 				</a>
 			</div>

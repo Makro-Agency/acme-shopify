@@ -19,11 +19,6 @@
       },
       "blocks": {}
     },
-    "058aa77c-6cc0-4133-8ad8-c28c9947fba5": {
-      "disabled": true,
-      "settings": {},
-      "blocks": {}
-    },
     "two_column_swiper_aeNLTF": {
       "disabled": true,
       "settings": {},
@@ -33,6 +28,41 @@
           "settings": {}
         }
       }
+    },
+    "058aa77c-6cc0-4133-8ad8-c28c9947fba5": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "most_purchased_items_mmCRi": {
+      "type": "most-purchased-items",
+      "disabled": false,
+      "settings": {
+        "title": "Your Most Purchased Items"
+      },
+      "blocks": {},
+      "block_order": [],
+      "name": "Most Purchased Items"
     }
-  }
+  },
+  "order": [
+    "split_hero_iLW3aK",
+    "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3",
+    "most_purchased_items_mmCRi",
+    "hero_section_AG7Gij",
+    "header_content_mehHp6",
+    "two_column_swiper_aeNLTF",
+    "1b56f47d-dd27-4c7a-af07-dfe86fab82ec",
+    "header_content_KbFFfD",
+    "b2049783-56d5-4f1f-9033-f993b51af154",
+    "058aa77c-6cc0-4133-8ad8-c28c9947fba5",
+    "e42e5ee8-81f2-4dca-9b66-d5d3d57d7993",
+    "e8e1192d-b2fc-42c2-835a-ec6cdf0dd392",
+    "fb4edcb3-2a9e-4311-a6d4-035a301a7e06",
+    "e7f2050a-a86e-416c-906c-534b5fcad997",
+    "34117dc8-47aa-407e-bb53-9d0f57413667",
+    "a83b49b0-6557-4c8a-8b02-291e25990080",
+    "a90a4a52-3044-4b1e-b689-d72e5f0ef59c",
+    "most_purchased_items_zxA43R"
+  ]
 }

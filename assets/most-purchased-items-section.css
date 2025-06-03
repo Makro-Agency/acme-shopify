@@ -40,10 +40,12 @@
     left: -15px;
     right: auto;
     transform: rotate(180deg);
+    margin-left: -30px;
 }
 .most-purchased-items-section .swiper-button-next.swiper-button {
     right: -15px;
     left: auto;
+    margin-right: -30px;
 }
 
 .most-purchased-items-list .product-qty,.most-purchased-items-list .coll-cart-btn.active span.addbtn {
@@ -91,10 +93,12 @@
     .most-purchased-items-section .swiper-button-prev.swiper-button {
         left: -60px;
         right: 0;
+        margin-left: 0;
     }
     .most-purchased-items-section .swiper-button-next.swiper-button {
         right: -60px;
         left: 0;
+        margin-right: 0;
     }
     .most-purchased-items-section {
         padding: 30px 0 0px;

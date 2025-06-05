@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -191,7 +190,9 @@ transform:rotate(180deg);
 /* TWO-COLUMN LAYOUT FOR CERTAIN FIELDS */
 .custom-wholesale-application .two-column {
   display: flex;
-  gap: 30px;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 .custom-wholesale-application .form-control::placeholder{
   opacity:0.4; 
@@ -385,3 +386,117 @@ bottom:25px;
 @media screen and (max-width:989px){
   .custom-wholesale-application{ padding-left:31px; padding-right:31px; }
 }
+
+.two-column-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.checkbox-group-section h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #001f3f;
+}
+
+.checkbox-group {
+    margin-bottom: 10px;
+}
+
+.custom-checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.custom-checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkmark (box) */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border: 1px solid #001f3f;
+}
+
+/* On hover, add a light grey background */
+.custom-checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a dark blue background */
+.custom-checkbox-container input:checked ~ .checkmark {
+    background-color: #001f3f;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.custom-checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.custom-checkbox-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.checkbox-label {
+    font-size: 16px;
+    color: #333;
+}
+
+.custom-wholesale-application fieldset.form-fieldset.check-list {
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrap-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.wrap-checkbox input[type="checkbox"] {
+  margin-left: 20px;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+
+.wrap-checkbox input[type=checkbox]:checked{
+  background-color: #14315C;
+}
+
+.wrap-checkbox input[type=checkbox]:after{border-color: #FFF;}

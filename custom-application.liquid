@@ -1,0 +1,94 @@
+{% comment %}
+<!-- Order Details Checkboxes -->
+{% endcomment %}
+<div class="two-column">
+    <div class="two-column-inner">
+        <div class="checkbox-group-section">
+            <h3>ORDER ACKNOWLEDGEMENT *</h3>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="order_acknowledgement_email">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Email</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="order_acknowledgement_none">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">None</span>
+                </label>
+            </div>
+        </div>
+        <div class="checkbox-group-section">
+            <h3>BACK-ORDERS *</h3>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="backorders_hold">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Hold order until complete</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="backorders_ship_partial">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Ship partial & back-order missing items</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="backorders_ship_available">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Ship available items & cancel unavailable</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="two-column-inner">
+        <div class="checkbox-group-section">
+            <h3>P.O. REQUIRED *</h3>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="po_required_yes">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Yes</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="po_required_no">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">No</span>
+                </label>
+            </div>
+        </div>
+        <div class="checkbox-group-section">
+            <h3>COPY INVOICE *</h3>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="copy_invoice_email">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Email</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="copy_invoice_statement">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Statement</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" name="copy_invoice_delivery">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Only on delivery</span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+{% comment %}
+<!-- End Order Details Checkboxes -->
+{% endcomment %} 

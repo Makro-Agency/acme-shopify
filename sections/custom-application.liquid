@@ -8,139 +8,516 @@
     </div>
     {% if section.settings.formlink != blank %}
     <div class="custom-application-form">
-        <form method="post" action="{{section.settings.formlink}}" id="wholesale-form">
-            <!-- First & Last Name Side-by-Side -->
-            <div class="two-column">
-                <div class="two-column-inner">
-                    <fieldset class="form-fieldset">
-                        <legend class="required">First Name</legend>
-                        <input type="text" id="first-name" name="first_name" class="form-control" placeholder="First Name" required>
-                    </fieldset>
-                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-                </div>
-                <div class="two-column-inner">
-                    <fieldset class="form-fieldset">
-                        <legend class="required">Last Name</legend>
-                        <input type="text" id="last-name" name="last_name" class="form-control" placeholder="Last Name" required>
-                    </fieldset>
-                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-                </div>
-            </div>
+        {% comment %} <form method="post" action="{{section.settings.formlink}}" id="wholesale-form"> {% endcomment %}
+          <form method="post" action="{{section.settings.formlink}}" id="wholesale-form">
 
-            <!-- Email -->
+            {% comment %}
+              <!-- First & Last Name Side-by-Side -->
+              <div class="two-column">
+                  <div class="two-column-inner">
+                      <fieldset class="form-fieldset">
+                          <legend class="required">First Name</legend>
+                          <input type="text" id="first-name" name="first_name" class="form-control" placeholder="First Name" required>
+                      </fieldset>
+                      <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                  </div>
+                  <div class="two-column-inner">
+                      <fieldset class="form-fieldset">
+                          <legend class="required">Last Name</legend>
+                          <input type="text" id="last-name" name="last_name" class="form-control" placeholder="Last Name" required>
+                      </fieldset>
+                      <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                  </div>
+              </div>
+
+              <!-- Email -->
+              <fieldset class="form-fieldset">
+                  <legend class="required">Email</legend>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- Name of Business -->
+              <fieldset class="form-fieldset">
+                  <legend class="required">Name of Your Business</legend>
+                  <input type="text" id="business-name" name="business_name" class="form-control" placeholder="Name of your business" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              
+              <!-- Tax ID/EIN Number -->
+              <fieldset class="form-fieldset">
+                  <legend class="required">Tax ID/EIN Number</legend>
+                  <input type="text" id="tax-id" name="tax_id" class="form-control" placeholder="Tax ID/EIN Number" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              
+              <!-- Shipping Address -->
+              <fieldset class="form-fieldset">
+                  <legend class="required">Your Shipping Address</legend>
+                  <input type="text" id="address" name="address" class="form-control" placeholder="Your Shipping Address" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              
+              <!-- ZIP Code -->
+              <fieldset class="form-fieldset">
+                  <legend class="required">ZIP Code</legend>
+                  <input type="text" id="zip-code" name="zip_code" class="form-control" placeholder="ZIP Code" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              
+              <fieldset class="form-fieldset dropdown" data-form-dropdwon-wrapper>
+                  <legend class="required">Country</legend>
+                  
+                  {% capture country_data %}
+                    {{ all_country_option_tags }}
+                  {% endcapture %}
+                  <div class="custom-dropdown">
+                      <select class="hide" id="country-drop" required name="country-drop"><option value=""></option>{{ all_country_option_tags }}</select>
+                      <div class="selected-option" data-form-dropdwon-active>Please Select</div>
+                      <div class="dropdown-arrow">
+                          {% render 'custom-dropdown-icon' %}
+                      </div>
+                      <div class="dropdown-options" data-province-append="#stateProvince-drop" data-tag="#country-drop">
+                        {{ country_data | replace:'<option','<div class="option"' | replace:'</option','</div' | replace:'value=','data-value=' }}
+                      </div>
+                  </div>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <fieldset class="form-fieldset dropdown" data-form-dropdwon-wrapper>
+                  <legend class="required">State</legend>
+                  <div class="custom-dropdown">
+                      <select class="hide" id="stateProvince-drop" name="stateProvince" required></select>
+                      <div class="selected-option" data-form-dropdwon-active>Please Select</div>
+                      <!-- SVG arrow rendered from your snippet -->
+                      <div class="dropdown-arrow">
+                          {% render 'custom-dropdown-icon' %}
+                      </div>
+                      <div class="dropdown-options" data-tag="#stateProvince-drop">
+                          <div class="option" data-value="California">California</div>
+                          <div class="option" data-value="Texas">Texas</div>
+                          <div class="option" data-value="New York">New York</div>
+                          <div class="option" data-value="Florida">Florida</div>
+                          <div class="option" data-value="Other">Other</div>
+                          <!-- Add more options as needed -->
+                      </div>
+                  </div>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              
+              <!-- City -->
+              <fieldset class="form-fieldset">
+                  <legend class="required">City</legend>
+                  <input type="text" id="city" name="city" class="form-control" placeholder="City" required>
+              </fieldset>
+              <div class="error-message" style="display:none"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              
+              <!-- Country Code & Phone Number Side-by-Side -->
+              <div class="two-column last-fields">
+                  <div class="two-column-inner country-code">
+                      <fieldset class="form-fieldset country-code">
+                          <legend class="required">Country Code</legend>
+                          <input type="text" id="country-code" name="country_code" class="form-control" placeholder="+" required oninput="limitToTwoDigits(this)">
+                      </fieldset>
+                      <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                  </div>
+                  <div class="two-column-inner">
+                      <fieldset class="form-fieldset">
+                          <legend class="required">Phone Number</legend>
+                          <input type="text" id="phone-number" name="phone_number" class="form-control" placeholder="(___) ___-____" required oninput="formatPhoneNumber(this)" maxlength="14">
+                      </fieldset>
+                      <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                  </div>
+              </div>
+              <div class="checkbox-group">
+                  <label class="custom-checkbox-container">
+                      <input type="checkbox" name="agree_terms" required>
+                      <span class="checkmark"></span>
+                      <span class="checkbox-label">
+                      I Agree to the <a href="#" class="conditions">Terms and Conditions </a>
+                      <span class="required-asterisk">*</span>
+                      </span>
+                  </label>
+              </div>
+              <button type="submit" class="btn-submit">SUBMIT
+                <div class="loading-overlay__spinner hide">
+                  {% render 'icon-spinner' %}
+                </div>
+              </button>
+            {% endcomment %}
+
+            <!-- Address -->
             <fieldset class="form-fieldset">
-                <legend class="required">Email</legend>
-                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                <legend class="required">Address</legend>
+                <input type="text" id="address" name="address" class="form-control" placeholder="Address" required>
             </fieldset>
             <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
 
-            <!-- Name of Business -->
-            <fieldset class="form-fieldset">
-                <legend class="required">Name of Your Business</legend>
-                <input type="text" id="business-name" name="business_name" class="form-control" placeholder="Name of your business" required>
-            </fieldset>
-            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-            
-            <!-- Tax ID/EIN Number -->
-            <fieldset class="form-fieldset">
-                <legend class="required">Tax ID/EIN Number</legend>
-                <input type="text" id="tax-id" name="tax_id" class="form-control" placeholder="Tax ID/EIN Number" required>
-            </fieldset>
-            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-            
-            <!-- Shipping Address -->
-            <fieldset class="form-fieldset">
-                <legend class="required">Your Shipping Address</legend>
-                <input type="text" id="address" name="address" class="form-control" placeholder="Your Shipping Address" required>
-            </fieldset>
-            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-            
-            <!-- ZIP Code -->
-            <fieldset class="form-fieldset">
-                <legend class="required">ZIP Code</legend>
-                <input type="text" id="zip-code" name="zip_code" class="form-control" placeholder="ZIP Code" required>
-            </fieldset>
-            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-            
-            <fieldset class="form-fieldset dropdown" data-form-dropdwon-wrapper>
-                <legend class="required">Country</legend>
-                
-                {% capture country_data %}
-                  {{ all_country_option_tags }}
-                {% endcapture %}
-                <div class="custom-dropdown">
-                    <select class="hide" id="country-drop" required name="country-drop"><option value=""></option>{{ all_country_option_tags }}</select>
-                    <div class="selected-option" data-form-dropdwon-active>Please Select</div>
-                    <div class="dropdown-arrow">
-                        {% render 'custom-dropdown-icon' %}
-                    </div>
-                    <div class="dropdown-options" data-province-append="#stateProvince-drop" data-tag="#country-drop">
-                      {{ country_data | replace:'<option','<div class="option"' | replace:'</option','</div' | replace:'value=','data-value=' }}
-                    </div>
-                </div>
-            </fieldset>
-            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-
-            <fieldset class="form-fieldset dropdown" data-form-dropdwon-wrapper>
-                <legend class="required">State</legend>
-                <div class="custom-dropdown">
-                    <select class="hide" id="stateProvince-drop" name="stateProvince" required></select>
-                    <div class="selected-option" data-form-dropdwon-active>Please Select</div>
-                    <!-- SVG arrow rendered from your snippet -->
-                    <div class="dropdown-arrow">
-                        {% render 'custom-dropdown-icon' %}
-                    </div>
-                    <div class="dropdown-options" data-tag="#stateProvince-drop">
-                        <div class="option" data-value="California">California</div>
-                        <div class="option" data-value="Texas">Texas</div>
-                        <div class="option" data-value="New York">New York</div>
-                        <div class="option" data-value="Florida">Florida</div>
-                        <div class="option" data-value="Other">Other</div>
-                        <!-- Add more options as needed -->
-                    </div>
-                </div>
-            </fieldset>
-            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-            
             <!-- City -->
             <fieldset class="form-fieldset">
-                <legend class="required">City</legend>
-                <input type="text" id="city" name="city" class="form-control" placeholder="City" required>
+              <legend class="required">City</legend>
+              <input type="text" id="city" name="city" class="form-control" placeholder="City" required>
             </fieldset>
-            <div class="error-message" style="display:none"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
-            
-            <!-- Country Code & Phone Number Side-by-Side -->
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+            <!-- State -->
+            <fieldset class="form-fieldset">
+              <legend class="required">State</legend>
+              <input type="text" id="state" name="state" class="form-control" placeholder="State" required>
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+            <!-- ZIP & Phone Number Side-by-Side -->
             <div class="two-column last-fields">
-                <div class="two-column-inner country-code">
-                    <fieldset class="form-fieldset country-code">
-                        <legend class="required">Country Code</legend>
-                        <input type="text" id="country-code" name="country_code" class="form-control" placeholder="+" required oninput="limitToTwoDigits(this)">
+              <div class="two-column-inner">
+                  <fieldset class="form-fieldset">
+                      <legend class="required">ZIP</legend>
+                      <input type="text" id="zip" name="zip" class="form-control" placeholder="ZIP" required>
+                  </fieldset>
+                  <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              </div>
+              <div class="two-column-inner">
+                  <fieldset class="form-fieldset">
+                      <legend class="required">Phone Number</legend>
+                      <input type="text" id="phone-number" name="phone_number" class="form-control" placeholder="(___) ___-____" required oninput="formatPhoneNumber(this)" maxlength="14">
+                  </fieldset>
+                  <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              </div>
+            </div>
+
+            <!-- Purchasing Detail Side-by-Side -->
+            <div class="two-column last-fields">
+              <div class="two-column-inner">
+                  <fieldset class="form-fieldset">
+                      <legend class="required">Purchasing Contact</legend>
+                      <input type="text" id="purchasing_contact" name="purchasing_contact" class="form-control" placeholder="Purchasing Contact" required>
+                  </fieldset>
+                  <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              </div>
+              <div class="two-column-inner">
+                <fieldset class="form-fieldset">
+                    <legend class="required">Purchasing E-mail</legend>
+                    <input type="email" id="purchasing_email" name="purchasing_email" class="form-control" placeholder="Purchasing E-mail" required>
+                </fieldset>
+                <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              </div>
+            </div>
+            
+
+
+            <!-- Billing Address -->
+            <h2>Billing Address</h2>
+
+            <!-- Address -->
+            <fieldset class="form-fieldset">
+              <legend>Bill To (if different)</legend>
+              <input type="text" id="bill-to" name="bill-to" class="form-control" placeholder="Bill To (if different)">
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+            <!-- A/P Side-by-Side -->
+            <div class="two-column last-fields">
+              <div class="two-column-inner">
+                  <fieldset class="form-fieldset">
+                      <legend>A/P Contact</legend>
+                      <input type="text" id="a-p-contact" name="a-p-contact" class="form-control" placeholder="A/P Contact">
+                  </fieldset>
+                  <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              </div>
+              <div class="two-column-inner">
+                  <fieldset class="form-fieldset">
+                      <legend>A/P E-mail</legend>
+                      <input type="email" id="a-p-email" name="a-p-email" class="form-control" placeholder="A/P E-mail">
+                  </fieldset>
+                  <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              </div>
+            </div>
+
+            <!-- Bill to Address -->
+            <fieldset class="form-fieldset">
+              <legend>Bill-To Address</legend>
+              <input type="text" id="bill-to-address" name="bill-to-address" class="form-control" placeholder="Bill-To Address">
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+            <!-- Bill to City -->
+            <fieldset class="form-fieldset">
+              <legend>Bill-To City</legend>
+              <input type="text" id="bill-to-city" name="bill-to-city" class="form-control" placeholder="Bill-To City">
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+            <!-- Bill to State -->
+            <fieldset class="form-fieldset">
+              <legend>Bill-To State</legend>
+              <input type="text" id="bill-to-state" name="bill-to-state" class="form-control" placeholder="Bill-To State">
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+            <!-- bill-to-ZIP & bill-to-Phone Number Side-by-Side -->
+            <div class="two-column last-fields">
+              <div class="two-column-inner">
+                  <fieldset class="form-fieldset">
+                      <legend>Bill-To ZIP</legend>
+                      <input type="text" id="bill-to-zip" name="bill-to--zip" class="form-control" placeholder="Bill-To ZIP">
+                  </fieldset>
+                  <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              </div>
+              <div class="two-column-inner">
+                  <fieldset class="form-fieldset">
+                      <legend>Bill-To Phone</legend>
+                      <input type="text" id="bill-to-phone" name="bill-to-phone" class="form-control" placeholder="(___) ___-____" oninput="formatPhoneNumber(this)" maxlength="14">
+                  </fieldset>
+                  <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              </div>
+            </div>
+
+            <!-- Bill to Ext -->
+            <fieldset class="form-fieldset">
+              <legend>Bill-To Ext</legend>
+              <input type="text" id="bill-to-ext" name="bill-to-ext" class="form-control" placeholder="Bill-To Ext">
+            </fieldset>
+            <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+
+
+
+
+
+            <!-- Shipping Address -->
+            <div class="wrap-checkbox">
+              <h2>Shipping Address</h2>
+              <label>
+                <input type="checkbox" onchange="hideShip(this)" />
+                Same as Billing Address
+              </label>
+            </div>
+
+            <div class="ship-data">
+              <!-- Address -->
+              <fieldset class="form-fieldset">
+                <legend>Ship To (if different)</legend>
+                <input type="text" id="ship-to" name="ship-to" class="form-control" placeholder="Ship To (if different)">
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- A/P Side-by-Side -->
+              <div class="two-column last-fields">
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend>Ship-To Contact</legend>
+                        <input type="text" id="shipto-contact" name="shipto-contact" class="form-control" placeholder="Ship-To Contact">
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
                 <div class="two-column-inner">
                     <fieldset class="form-fieldset">
-                        <legend class="required">Phone Number</legend>
-                        <input type="text" id="phone-number" name="phone_number" class="form-control" placeholder="(___) ___-____" required oninput="formatPhoneNumber(this)" maxlength="14">
+                        <legend>Ship-To E-mail</legend>
+                        <input type="email" id="shipto-email" name="shipto-email" class="form-control" placeholder="Ship-To E-mail">
                     </fieldset>
                     <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
                 </div>
-            </div>
-            <div class="checkbox-group">
-                <label class="custom-checkbox-container">
-                    <input type="checkbox" name="agree_terms" required>
-                    <span class="checkmark"></span>
-                    <span class="checkbox-label">
-                    I Agree to the <a href="#" class="conditions">Terms and Conditions </a>
-                    <span class="required-asterisk">*</span>
-                    </span>
-                </label>
-            </div>
-            <button type="submit" class="btn-submit">SUBMIT
-              <div class="loading-overlay__spinner hide">
-                {% render 'icon-spinner' %}
               </div>
-            </button>
+
+              <!-- Bill to Address -->
+              <fieldset class="form-fieldset">
+                <legend>Ship-To Address</legend>
+                <input type="text" id="ship-to-address" name="ship-to-address" class="form-control" placeholder="Ship-To Address">
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- Bill to City -->
+              <fieldset class="form-fieldset">
+                <legend>Ship-To City</legend>
+                <input type="text" id="ship-to-city" name="ship-to-city" class="form-control" placeholder="Ship-To State">
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- Bill to State -->
+              <fieldset class="form-fieldset">
+                <legend>Ship-To State</legend>
+                <input type="text" id="ship-to-state" name="ship-to-state" class="form-control" placeholder="Ship-To State">
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- bill-to-ZIP & bill-to-Phone Number Side-by-Side -->
+              <div class="two-column last-fields">
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend>Ship-To ZIP</legend>
+                        <input type="text" id="ship-to-zip" name="ship-to--zip" class="form-control" placeholder="Ship-To ZIP">
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend>Ship-To Phone</legend>
+                        <input type="text" id="ship-to-phone" name="ship-to-phone" class="form-control" placeholder="(___) ___-____" oninput="formatPhoneNumber(this)" maxlength="14">
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+              </div>
+
+              <!-- Bill to Ext -->
+              <fieldset class="form-fieldset">
+                <legend>Ship-To Ext</legend>
+                <input type="text" id="ship-to-ext" name="ship-to-ext" class="form-control" placeholder="Ship-To Ext">
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+            </div>
+
+              <!-- checkboxlist1 -->
+              <div class="two-column last-fields two-column-check-list">
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset check-list">
+                      <h5>ORDER ACKNOWLEDGEMENT *</h5>
+                      <label><input type="checkbox" name="order_acknowledgement" value="email"> Email</label>
+                      <label><input type="checkbox" name="order_acknowledgement" value="none"> None</label>
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset check-list">
+                      <h5>P.O. REQUIRED *</h5>
+                      <label><input type="checkbox" name="po_required" value="yes"> Yes</label>
+                      <label><input type="checkbox" name="po_required" value="no"> No</label>
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+              </div>
+
+              <!-- checkboxlist2 -->
+              <div class="two-column last-fields two-column-check-list">
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset check-list">
+                      <h5>BACK-ORDERS *</h5>
+                      <label><input type="checkbox" name="back_orders" value="hold"> Hold order until complete</label>
+                      <label><input type="checkbox" name="back_orders" value="partial"> Ship partial & back-order missing items</label>
+                      <label><input type="checkbox" name="back_orders" value="ship"> Ship available items & cancel unavailable</label>
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset check-list">
+                      <h5>COPY INVOICE *</h5>
+                      <label><input type="checkbox" name="copy_invoice" value="email"> Email</label>
+                      <label><input type="checkbox" name="copy_invoice" value="statement"> Statement</label>
+                      <label><input type="checkbox" name="copy_invoice" value="delivery"> Only on delivery</label>
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+              </div>
+
+
+
+              <!-- Invoice Email -->
+              <fieldset class="form-fieldset">
+                <legend class="required">Invoice E-mail </legend>
+                <input type="email" id="invoice-mail" name="invoice-mail" class="form-control" placeholder="Invoice E-mail" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+
+
+
+              <!-- Receiving Contact Information -->
+              <h2>Receiving Contact Information</h2>
+
+              <!-- Receiving Contact -->
+              <fieldset class="form-fieldset">
+                <legend class="required">Receiving Contact</legend>
+                <input type="text" id="receive-contact" name="receive-contact" class="form-control" placeholder="Receiving Contact" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- Receiving Phone & Receiving Hours Side-by-Side -->
+              <div class="two-column last-fields">
+                <div class="two-column-inner">
+                  <fieldset class="form-fieldset">
+                      <legend class="required">Receiving Phone</legend>
+                      <input type="text" id="receiving-phone" name="receiving-phone" class="form-control" placeholder="(___) ___-____" required oninput="formatPhoneNumber(this)" maxlength="14">
+                  </fieldset>
+                  <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend class="required">Receiving Hours</legend>
+                        <input type="text" id="receiving-hours" name="receiving-hours" class="form-control" placeholder="Receiving Hours" required>
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+              </div>
+
+              <!-- Receiving Ext -->
+              <fieldset class="form-fieldset">
+                <legend>Receiving Ext</legend>
+                <input type="text" id="receiving-ext" name="receiving-ext" class="form-control" placeholder="Receiving Ext">
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+
+              <!-- Bank Information -->
+              <h2>Bank Information</h2>
+
+              <!-- Bank Reference Name -->
+              <fieldset class="form-fieldset">
+                <legend class="required">Bank Reference Name</legend>
+                <input type="text" id="bank-reference-name" name="bank-reference-name" class="form-control" placeholder="Bank Reference Name " required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+              
+              <!-- Bank Address -->
+              <fieldset class="form-fieldset">
+                <legend class="required">Bank Address</legend>
+                <input type="text" id="bank-address" name="bank-address" class="form-control" placeholder="Bank Address" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- Bank City -->
+              <fieldset class="form-fieldset">
+                <legend class="required">Bank City</legend>
+                <input type="text" id="bank-city" name="bank-city" class="form-control" placeholder="Bank City" required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- Bank State -->
+              <fieldset class="form-fieldset">
+                <legend class="required">Bank State</legend>
+                <input type="text" id="bank-state" name="bank-state" class="form-control" placeholder="Bank State " required>
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+              <!-- bill-to-ZIP & bill-to-Phone Number Side-by-Side -->
+              <div class="two-column last-fields">
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend class="required">Bank ZIP</legend>
+                        <input type="text" id="bank-zip" name="bank-zip" class="form-control" placeholder="Bank ZIP" required>
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+                <div class="two-column-inner">
+                    <fieldset class="form-fieldset">
+                        <legend class="required">Bank Phone</legend>
+                        <input type="text" id="bank-phone" name="bank-phone" class="form-control" placeholder="(___) ___-____" required oninput="formatPhoneNumber(this)" maxlength="14">
+                    </fieldset>
+                    <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+                </div>
+              </div>
+
+              <!-- Bill to Ext -->
+              <fieldset class="form-fieldset">
+                <legend>Ship-To Ext</legend>
+                <input type="text" id="ship-to-ext" name="ship-to-ext" class="form-control" placeholder="Ship-To Ext">
+              </fieldset>
+              <div class="error-message" style="display: none;"> <span class="error-icon"> {% render 'custom-error' %}</span> THIS FIELD IS REQUIRED</div>
+
+
+              <button type="button" class="btn-submit">SUBMIT
+                <div class="loading-overlay__spinner hide">
+                  {% render 'icon-spinner' %}
+                </div>
+              </button>
             
         </form>
         <div class="custom-wholesale-application success hide">
@@ -148,7 +525,7 @@
               <div class="success-icon">
                   {% render 'success-message' %}
               </div>
-              <h1 class="success-title">THANK YOU!</h1>
+              <h2 class="success-title">THANK YOU!</h2>
               <p class="success-message">The form has been successfully submitted</p>
               <a href="#" class="go-back-button" onclick="goBack()">GO BACK</a>
           </div>
@@ -224,11 +601,19 @@
         _passwrodMatch = true;
       }
   
-      this.closest('form').querySelector('input[type="email"]').closest('.form-fieldset').nextElementSibling.style.display = 'none';
+      this.closest('form').querySelectorAll('input[type="email"][required]').forEach((email_selector) => {
+        email_selector.closest('.form-fieldset').nextElementSibling.style.display = 'none';
+        if( email_selector && !validateEmail(email_selector.value) ){
+          email_selector.closest('.form-fieldset').nextElementSibling.style.display = 'block';
+          _passwrodMatch = false;
+        }
+      })
+
+      {% comment %} this.closest('form').querySelector('input[type="email"]').closest('.form-fieldset').nextElementSibling.style.display = 'none';
       if( this.closest('form').querySelector('input[type="email"]') && !validateEmail(this.closest('form').querySelector('input[type="email"]').value) ){
         this.closest('form').querySelector('input[type="email"]').closest('.form-fieldset').nextElementSibling.style.display = 'block';
         _passwrodMatch = false;
-      }
+      } {% endcomment %}
   
       var _requiredFiledCount = this.closest('form').querySelectorAll('*[required]').length, _FiledFilledCount = 0;
       this.closest('form').querySelectorAll('*[required]').forEach(function(ele, eleIndex, eleArray){
@@ -264,6 +649,28 @@
       if(!_passwrodMatch){
         e.preventDefault();
       }else{
+        
+        const data = {};
+        const formData = new FormData(this.closest('form'));
+        var checkStatus = document.querySelector('[onchange="hideShip(this)"]').checked;
+
+        if(checkStatus == true){
+          formData.delete('ship-to');
+          formData.delete('shipto-contact');
+          formData.delete('shipto-email');
+          formData.delete('ship-to-address');
+          formData.delete('ship-to-city');
+          formData.delete('ship-to-state');
+          formData.delete('ship-to--zip');
+          formData.delete('ship-to-phone');
+          formData.delete('ship-to-ext');
+        }
+
+        {% comment %} formData.forEach((value, key) => {
+          // If multiple values (e.g. checkboxes with same name), you may want to handle that too
+          data[key] = value;
+        }); {% endcomment %}
+        
         formSubmit(e);
       }
     });
@@ -334,7 +741,22 @@
     var config = fetchConfig('javascript');
     delete config.headers['Content-Type'];
     config.headers['Accept'] = '/';
-    var formData = new FormData(form);
+    var formData = new FormData(form);    
+
+    var checkStatus = document.querySelector('[onchange="hideShip(this)"]').checked;
+
+    if(checkStatus == true){
+      formData.delete('ship-to');
+      formData.delete('shipto-contact');
+      formData.delete('shipto-email');
+      formData.delete('ship-to-address');
+      formData.delete('ship-to-city');
+      formData.delete('ship-to-state');
+      formData.delete('ship-to--zip');
+      formData.delete('ship-to-phone');
+      formData.delete('ship-to-ext');
+    }
+
     config.body = formData;
     fetch(`${url}`, config)
       .then((response) => response.json())
@@ -342,6 +764,7 @@
         if (response.status) {
           window.scrollTo({top: 0, behavior: 'smooth'});
           e.target.closest('form').classList.add('hide');
+          e.target.closest(".custom-wholesale-application").querySelector('.section-heading').classList.add('hide');
           e.target.closest(".custom-application-form").querySelector(".custom-wholesale-application.success").classList.remove('hide');
         }
       })
@@ -426,6 +849,14 @@
     errorMessages.forEach(function(msg) {
       msg.style.display = 'none';
     });
+  }
+
+  function hideShip(ele){
+    if(ele.checked){
+      document.querySelector('.ship-data').classList.add('hide');
+    }else{
+      document.querySelector('.ship-data').classList.remove('hide');
+    }
   }
 </script>
 

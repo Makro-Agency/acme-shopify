@@ -417,11 +417,12 @@ text-align: center;
 }
 
 
-.custom-application-form form > h2{
-  margin-block: 2.5rem 1.5rem;
-}
+.custom-application-form form > h2,
 .custom-application-form form > .wrap-checkbox {
-  margin-block: 2.5rem;
+  margin-block: 2.5rem 1.5rem;
+  }
+  .custom-application-form form>.wrap-checkbox+.ship-data.hide+* {
+    margin-top: 2.5rem;
   }
   .custom-application-form form > h2,
   .custom-application-form form > .wrap-checkbox h2 {
@@ -577,6 +578,16 @@ text-align: center;
 }
 
 @media screen and (max-width:767px){
+
+  input[type=checkbox]:after {    
+    top: 16%;
+    left: 10%;    
+  }
+  .check-list input[type=checkbox]:after {
+    top: 3px;
+    left: 1px;
+  }
+
   .custom-wholesale-application p{ font-size:16px; margin-bottom: 2.5rem; }
 
   .custom-wholesale-application .two-column.two-column.last-fields {
@@ -596,7 +607,10 @@ text-align: center;
   .custom-application-form form>h2,
   .custom-application-form form>.wrap-checkbox {
     margin-block: 2.1875rem 1.5rem;
-  }
+  }  
+  .custom-application-form form>.wrap-checkbox+.ship-data.hide+* {
+    margin-top: 2.1875rem;
+  }  
   .custom-application-form form>.wrap-checkbox {
     flex-direction: column;
     align-items: flex-start;

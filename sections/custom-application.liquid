@@ -714,10 +714,10 @@
       });
     }); {% endcomment %}
 
-    document.querySelectorAll('.custom-application-form form *[required]').forEach(function(ele, eleIndex, eleArray){
+    {% comment %} document.querySelectorAll('.custom-application-form form *[required]').forEach(function(ele, eleIndex, eleArray){
       ele.addEventListener("focus", inputFunction);
       ele.addEventListener("blur", inputFunction);    
-    });
+    }); {% endcomment %}
     
   });
 

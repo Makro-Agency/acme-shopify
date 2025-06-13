@@ -1,82 +1,33 @@
 {
-  "article": [
-    {
-      "key": "reference_products",
-      "namespace": "wirenation",
-      "name": "Reference Products",
-      "description": "Reference Products",
-      "type": {
-        "name": "list.product_reference",
-        "category": "REFERENCE"
-      }
-    }
-  ],
+  "article": [],
   "blog": [],
   "collection": [
     {
-      "key": "grouping_attribute",
+      "key": "primary_collection",
+      "namespace": "collection",
+      "name": "Primary Collection",
+      "description": "Check True if this is a primary collection",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
+  "company": [
+    {
+      "key": "block_checkout",
       "namespace": "custom",
-      "name": "Grouping Attribute",
+      "name": "block_checkout",
       "description": "",
       "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
     },
     {
-      "key": "group_images",
-      "namespace": "custom",
-      "name": "Group Images",
-      "description": "",
-      "type": {
-        "name": "list.file_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "top_filters",
-      "namespace": "custom",
-      "name": "Hide Top filters",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "side_filters",
-      "namespace": "custom",
-      "name": "Hide Side filters",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "algolia_top_filters",
-      "namespace": "custom",
-      "name": "Algolia Top Filters",
-      "description": "",
-      "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "algolia_side_filters",
-      "namespace": "custom",
-      "name": "Algolia Side Filters",
-      "description": "",
-      "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "show_group_columns",
-      "namespace": "custom",
-      "name": "Show group columns",
+      "key": "delivery_date",
+      "namespace": "acme",
+      "name": "Delivery date",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -84,52 +35,124 @@
       }
     }
   ],
-  "company": [],
-  "company_location": [],
-  "location": [],
+  "company_location": [
+    {
+      "key": "test_name",
+      "namespace": "custom",
+      "name": "Test Name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "delivery_date",
+      "namespace": "acme",
+      "name": "Delivery date",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "block_checkout",
+      "namespace": "custom",
+      "name": "block_checkout",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "sales",
+      "namespace": "custom",
+      "name": "sales",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "location": [
+    {
+      "key": "email",
+      "namespace": "custom",
+      "name": "email",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
   "market": [],
   "order": [
     {
-      "key": "additional_phone_number_option",
+      "key": "choose_your_delivery_day",
       "namespace": "checkoutblocks",
-      "name": "Additional Phone Number (Optional) ",
+      "name": "Choose your delivery day",
+      "description": "test",
+      "type": {
+        "name": "date",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "test",
+      "namespace": "checkoutblocks",
+      "name": "PO Number",
       "description": null,
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
-    }
-  ],
-  "page": [],
-  "product": [
-    {
-      "key": "recommended_product",
-      "namespace": "content",
-      "name": "Recommended Product",
-      "description": "Recommended Product",
-      "type": {
-        "name": "product_reference",
-        "category": "REFERENCE"
-      }
     },
     {
-      "key": "grouping",
+      "key": "is_new_address",
       "namespace": "custom",
-      "name": "Grouping",
+      "name": "is_new_address",
       "description": "",
       "type": {
-        "name": "list.single_line_text_field",
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
+  "page": [
+    {
+      "key": "navbar_background",
+      "namespace": "page",
+      "name": "Navbar Background",
+      "description": "Choose Light or Dark. ",
+      "type": {
+        "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "algolia_filters",
-      "namespace": "custom",
-      "name": "Algolia Filters",
-      "description": "",
+      "key": "navbar_transparency",
+      "namespace": "page",
+      "name": "Navbar Transparency",
+      "description": "Should the navbar be transparent before scroll",
       "type": {
-        "name": "json",
-        "category": "JSON"
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
+  "product": [
+    {
+      "key": "hidden",
+      "namespace": "seo",
+      "name": "SEO HIdden",
+      "description": "Hide this product from the Sitemap.xml",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
       }
     },
     {
@@ -143,1212 +166,102 @@
       }
     },
     {
-      "key": "vendor_sources",
-      "namespace": "Fulfilment",
-      "name": "Vendor Source Options",
-      "description": null,
+      "key": "rating",
+      "namespace": "reviews",
+      "name": "Product rating",
+      "description": "Average rating from customers",
       "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
+        "name": "rating",
+        "category": "RATING"
       }
     },
     {
-      "key": "warehouse_locations",
-      "namespace": "Fulfilment_",
-      "name": "Stocking Locations",
-      "description": null,
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "min_order_length",
-      "namespace": "Fulfilment",
-      "name": "Minimum Order Length",
-      "description": null,
+      "key": "rating_count",
+      "namespace": "reviews",
+      "name": "Product rating count",
+      "description": "Total number of ratings from customers",
       "type": {
         "name": "number_integer",
         "category": "NUMBER"
       }
     },
     {
-      "key": "Shortdescription",
-      "namespace": "Content",
-      "name": "Short Description",
-      "description": null,
+      "key": "where_to_buy_code",
+      "namespace": "accentuate",
+      "name": "Where To Buy Code",
+      "description": "Enter product code from where to buy ",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "main_category",
-      "namespace": "Content",
-      "name": "Main Category",
-      "description": null,
+      "key": "custom_featured_image",
+      "namespace": "product",
+      "name": "Custom Featured Image",
+      "description": "Choose an image to show first in the product carousel",
       "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "subcategory",
-      "namespace": "Content",
-      "name": "Subcategory",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "manufacturer",
-      "namespace": "Content",
-      "name": "Manufacturer/Brand",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "RecommendedProduct",
-      "namespace": "Content",
-      "name": "Recommended Accessories",
-      "description": null,
-      "type": {
-        "name": "product_reference",
+        "name": "file_reference",
         "category": "REFERENCE"
       }
     },
     {
-      "key": "compatible_products",
-      "namespace": "Content",
-      "name": "Compatible Products",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "alternative_products",
-      "namespace": "Content",
-      "name": "Alternative Products",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "wire_size",
-      "namespace": "Physical_Spec",
-      "name": "Wire Size (AWG/MCM)",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "conductor_material",
-      "namespace": "Physical_Spec",
-      "name": "Conductor Material",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "conductor_type",
-      "namespace": "Physical_Spec",
-      "name": "Conductor Type",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "strand_count",
-      "namespace": "Physical_Spec",
-      "name": "Strand Count",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "outer_diameter",
-      "namespace": "Physical_Spec",
-      "name": "Outer Diameter (OD) (in/mm)",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "jacket_material",
-      "namespace": "Physical_Spec",
-      "name": "Jacket Material",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "jacket_type",
-      "namespace": "Physical_Spec",
-      "name": "Jacket Type",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "conductor_count",
-      "namespace": "Physical_Spec",
-      "name": "Conductor Count",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "shield_coverage",
-      "namespace": "Physical_Spec",
-      "name": "Shield Coverage %",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "overall_length",
-      "namespace": "Physical_Spec",
-      "name": "Extended Length",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "Retracted_Length",
-      "namespace": "Physical_Spec",
-      "name": "Retracted Length",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "shield_type",
-      "namespace": "Physical_Spec",
-      "name": "Shield Type",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "Shield",
-      "namespace": "Physical_Spec",
-      "name": "Shield",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "riser_rating",
-      "namespace": "Physical_Spec",
-      "name": "Riser Rating",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "insulation_type",
-      "namespace": "Physical_Spec",
-      "name": "Insulation Type",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "lug_size",
-      "namespace": "Physical_Spec",
-      "name": "Lug Size (AWG/MCM)",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "insulation_thickness_combined",
-      "namespace": "Physical_Spec",
-      "name": "Insulation Thickness (in/mm)",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "ul_listings",
-      "namespace": "Physical_Spec",
-      "name": "UL Listing Numbers",
-      "description": null,
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "plenum_rating",
-      "namespace": "Physical_Spec",
-      "name": "Plenum Rating",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "insulation_thickness",
-      "namespace": "Physical_Spec",
-      "name": "Insulation Thickness",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "barrel_size",
-      "namespace": "Physical_Spec",
-      "name": "Barrel Size",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "hole_count",
-      "namespace": "Physical_Spec",
-      "name": "Number of Holes",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "breaker_type",
-      "namespace": "Physical_Spec",
-      "name": "Breaker Type",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "pole_count",
-      "namespace": "Physical_Spec",
-      "name": "Number of Poles",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "stud_hole_size",
-      "namespace": "Physical_Spec",
-      "name": "Stud Hole Size",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "nema_config",
-      "namespace": "Physical_Spec",
-      "name": "Nema Configuration",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "voltage_rating",
-      "namespace": "Technical_Spec",
-      "name": "Voltage Rating",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "ampacity_rating",
-      "namespace": "Technical_Spec",
-      "name": "Ampacity Rating",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "capacitance",
-      "namespace": "Technical_Spec",
-      "name": "Capacitance",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "direct_burial",
-      "namespace": "Technical_Spec",
-      "name": "Direct Burial Rating",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "Submersible",
-      "namespace": "Technical_Spec",
-      "name": "Submersible",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "pulling_tension",
-      "namespace": "Technical_Spec",
-      "name": "Pulling Tension",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "impedance",
-      "namespace": "Technical_Spec",
-      "name": "Impedance Rating",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "attenuation",
-      "namespace": "Technical_Spec",
-      "name": "Attenuation Values",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "chemical_resistance",
-      "namespace": "Technical_Spec",
-      "name": "Chemical Resistance Rating",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "indoor_outdoor_rating",
-      "namespace": "Technical_Spec",
-      "name": "Indoor/Outdoor Rating",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "oil_resistance",
-      "namespace": "Technical_Spec",
-      "name": "Oil Resistance Rating",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "flexibility",
-      "namespace": "Technical_Spec",
-      "name": "Flexibility Rating",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "insulation_resistance",
-      "namespace": "Technical_Spec",
-      "name": "Insulation Resistance",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "inductance",
-      "namespace": "Technical_Spec",
-      "name": "Inductance",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "bandwidth",
-      "namespace": "Technical_Spec",
-      "name": "Bandwidth",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "sunlight_resistance",
-      "namespace": "Technical_Spec",
-      "name": "Sunlight Resistance Rating",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "temperature_rating",
-      "namespace": "Technical_Spec",
-      "name": "Temperature Rating",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "bend_radius",
-      "namespace": "Technical_Spec",
-      "name": "Bend Radius",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "install_temp_range",
-      "namespace": "Technical_Spec",
-      "name": "Installation Temperature Range",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "max_temp_dry",
-      "namespace": "Technical_Spec",
-      "name": "Max Operating Temp (Dry)",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "conductor_resistance",
-      "namespace": "Technical_Spec",
-      "name": "Conductor Resistance",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "standards",
-      "namespace": "Technical_Spec",
-      "name": "Standards",
-      "description": null,
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "misc_info",
-      "namespace": "Technical_Spec",
-      "name": "Miscellaneous Information",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "other_certifications",
-      "namespace": "Technical_Spec",
-      "name": "Other Certifications",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "csa_certified",
-      "namespace": "Technical_Spec",
-      "name": "CSA Certification",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "industry_standards",
-      "namespace": "Technical_Spec",
-      "name": "Industry Standards Met",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "env_compliance",
-      "namespace": "Technical_Spec",
-      "name": "Environmental Compliance",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "nec_compliance",
-      "namespace": "Technical_Spec",
-      "name": "NEC Compliance",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "hazardous_rating",
-      "namespace": "Technical_Spec",
-      "name": "Hazardous Location Ratings",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "rohs_compliant",
-      "namespace": "Technical_Spec",
-      "name": "RoHS Compliance",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "max_temp_wet",
-      "namespace": "Technical_Spec",
-      "name": "Max Operating Temp (Wet)",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "applications",
-      "namespace": "Content_Usage_and_Installation",
-      "name": "Applications",
-      "description": null,
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "weight_per_unit",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Weight per Unit",
-      "description": null,
-      "type": {
-        "name": "number_decimal",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "package_types",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Standard Package Types",
-      "description": null,
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "package_weight",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Package Weight",
-      "description": null,
-      "type": {
-        "name": "number_decimal",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "spool_lengths",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Standard Spool Lengths",
-      "description": null,
-      "type": {
-        "name": "list.single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "spool_dimensions",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Spool Dimensions",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "master_pack_qty",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Master Pack Quantity",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "packaging_material",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Packaging Material",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "special_packaging",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Special Packaging Requirements",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "shipping_restrictions",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Shipping Restrictions",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "shipping_dimensions",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Shipping Dimensions",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "special_handling",
-      "namespace": "Packaging_and_Dimensions",
-      "name": "Special Handling Required",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "required_accessories",
-      "namespace": "Usage_and_Installation",
-      "name": "Required Accessories",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "installation_env",
-      "namespace": "Usage_and_Installation",
-      "name": "Installation Environment",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "primary_applications",
-      "namespace": "Usage_and_Installation",
-      "name": "Primary Applications",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "industry_usage",
-      "namespace": "Usage_and_Installation",
-      "name": "Industry Usage",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "conduit_requirements",
-      "namespace": "Usage_and_Installation",
-      "name": "Conduit Requirements",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "common_uses",
-      "namespace": "Usage_and_Installation",
-      "name": "Common Uses",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "installation_method",
-      "namespace": "Usage_and_Installation",
-      "name": "Installation Method",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "application_limitations",
-      "namespace": "Usage_and_Installation",
-      "name": "Application Limitations",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "environmental_restrictions",
-      "namespace": "Usage_and_Installation",
-      "name": "Environmental Restrictions",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "spec_sheet_url",
-      "namespace": "Documents",
-      "name": "Manufacturer Spec Sheet",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "technical_drawings",
-      "namespace": "Documents",
-      "name": "Technical Drawings",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "spec_sheets",
-      "namespace": "Documents",
-      "name": "Specification Sheets (downloadable pdf)",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "installation_guides",
-      "namespace": "Documents",
-      "name": "Installation Guides",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "cross_reference_numbers",
-      "namespace": "marketing",
-      "name": "Cross Reference Numbers",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "safety_requirements",
-      "namespace": "safety",
-      "name": "Safety Requirements",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "special_handling_instructions",
-      "namespace": "safety",
-      "name": "Special Handling Instructions",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "msds_required",
-      "namespace": "safety",
-      "name": "MSDS Required (yes/no)",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "msds_link",
-      "namespace": "safety",
-      "name": "MSDS Link",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "warning_labels",
-      "namespace": "safety",
-      "name": "Warning Labels",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "disposal_instructions",
-      "namespace": "safety",
-      "name": "Disposal Instructions",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "emergency_contact",
-      "namespace": "safety",
-      "name": "Emergency Contact Information",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "first_aid_procedures",
-      "namespace": "safety",
-      "name": "First Aid Procedures",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "ppe_requirements",
-      "namespace": "safety",
-      "name": "PPE Requirements",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "primary_vendor",
-      "namespace": "vendor",
-      "name": "Primary Vendor",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "secondary_vendors",
-      "namespace": "vendor",
-      "name": "Secondary Vendors",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "vendor_part_numbers",
-      "namespace": "vendor",
-      "name": "Vendor Part Numbers",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "vendor_min_orders",
-      "namespace": "vendor",
-      "name": "Vendor Minimum Orders",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "vendor_lead_times",
-      "namespace": "vendor",
-      "name": "Vendor Lead Times",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "vendor_pricing_tiers",
-      "namespace": "vendor",
-      "name": "Vendor Pricing Tiers",
-      "description": null,
-      "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "vendor_requirements",
-      "namespace": "vendor",
-      "name": "Vendor-Specific Requirements",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "Manufacturer_contactinfo",
-      "namespace": "vendor",
-      "name": "Manufacturer Contact Info",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "country_of_origin",
-      "namespace": "vendor",
-      "name": "Country of Origin",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "import_requirements",
-      "namespace": "vendor",
-      "name": "Import Requirements",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "export_restrictions",
-      "namespace": "vendor",
-      "name": "Export Restrictions",
-      "description": null,
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "visible",
-      "namespace": "website",
-      "name": "Show on Website (yes/no)",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "featured",
-      "namespace": "website",
-      "name": "Featured Product (yes/no)",
-      "description": null,
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "category_sort_order",
-      "namespace": "website",
-      "name": "Category Sort Order",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "product_sort_order",
-      "namespace": "website",
-      "name": "Product Sort Order",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "stock_status",
-      "namespace": "custom",
-      "name": "stock_status",
+      "key": "hover_image",
+      "namespace": "product",
+      "name": "Hover Image",
       "description": "",
       "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "product_label",
-      "namespace": "custom",
-      "name": "product_label",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "color-pattern",
-      "namespace": "shopify",
-      "name": "Color",
-      "description": "Defines the primary color or pattern, such as blue or striped",
-      "type": {
-        "name": "list.metaobject_reference",
+        "name": "file_reference",
         "category": "REFERENCE"
       }
     },
     {
-      "key": "bulk_pricing_tiers",
+      "key": "fish_calculator_options",
+      "namespace": "product",
+      "name": "Fish Calculator",
+      "description": "Choose fish calculator options for this product",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "availability",
       "namespace": "custom",
-      "name": "Bulk Pricing Tiers",
+      "name": "Availability",
       "description": "",
       "type": {
-        "name": "list.single_line_text_field",
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "weight",
+      "namespace": "custom",
+      "name": "Weight",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "catch_weight",
+      "namespace": "custom",
+      "name": "catch_weight",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "unit_of_measurement",
+      "namespace": "custom",
+      "name": "Unit of Measurement",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
         "category": "TEXT"
       }
     }
@@ -1358,17 +271,7 @@
       "key": "custom_label_4",
       "namespace": "mm-google-shopping",
       "name": "Google: Custom Label 4",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "custom_label_3",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 3",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -1378,17 +281,17 @@
       "key": "custom_label_2",
       "namespace": "mm-google-shopping",
       "name": "Google: Custom Label 2",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "custom_label_1",
+      "key": "custom_label_3",
       "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 1",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
+      "name": "Google: Custom Label 3",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -1398,27 +301,7 @@
       "key": "custom_label_0",
       "namespace": "mm-google-shopping",
       "name": "Google: Custom Label 0",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "size_system",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Size System",
-      "description": "The country of the size system used by your product.",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "size_type",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Size Type",
-      "description": "Your apparel product’s cut.",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -1435,10 +318,20 @@
       }
     },
     {
-      "key": "gender",
+      "key": "size_type",
       "namespace": "mm-google-shopping",
-      "name": "Google: Gender",
-      "description": "The gender for which your product is intended.",
+      "name": "Google: Size Type",
+      "description": "Your apparel product’s cut.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_1",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 1",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -1455,50 +348,30 @@
       }
     },
     {
+      "key": "gender",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Gender",
+      "description": "The gender for which your product is intended.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "size_system",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Size System",
+      "description": "The country of the size system used by your product.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
       "key": "age_group",
       "namespace": "mm-google-shopping",
       "name": "Google: Age Group",
       "description": "The demographic for which your product is intended.",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "shipping_time",
-      "namespace": "Fulfilment",
-      "name": "Shipping time",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "MaximumQuantity",
-      "namespace": "Fulfilment",
-      "name": "Maximum Quantity ",
-      "description": null,
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "min_order_qty",
-      "namespace": "Fulfilment",
-      "name": "Minimum Order Quantity",
-      "description": null,
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "stockthreshold",
-      "namespace": "Fulfilment",
-      "name": "Inventory threeshold ",
-      "description": null,
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -1517,9 +390,9 @@
       }
     },
     {
-      "key": "blocks_list_checkout_line_item_content",
+      "key": "blocks_list_checkout_static_content",
       "namespace": "checkoutblocks",
-      "name": "Checkout Blocks: Blocks List for: checkout_line_item_content",
+      "name": "Checkout Blocks: Blocks List for: checkout_static_content",
       "description": null,
       "type": {
         "name": "list.metaobject_reference",

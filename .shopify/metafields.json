@@ -57,7 +57,38 @@
   "company_location": [],
   "location": [],
   "market": [],
-  "order": [],
+  "order": [
+    {
+      "key": "choose_your_delivery_day",
+      "namespace": "checkoutblocks",
+      "name": "Choose your delivery day",
+      "description": "test",
+      "type": {
+        "name": "date",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "test",
+      "namespace": "checkoutblocks",
+      "name": "PO Number",
+      "description": null,
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "is_new_address",
+      "namespace": "custom",
+      "name": "is_new_address",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
   "page": [
     {
       "key": "slideshow_data",

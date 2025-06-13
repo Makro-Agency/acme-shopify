@@ -288,12 +288,12 @@
             <div class="wrap-checkbox">
               <h2>Shipping Address</h2>
               <label>
-                <input type="checkbox" onchange="hideShip(this)" />
+                <input type="checkbox" onchange="hideShip(this)" checked />
                 Same as Billing Address
               </label>
             </div>
 
-            <div class="ship-data">
+            <div class="ship-data hide">
               <!-- Address -->
               <fieldset class="form-fieldset">
                 <legend>Ship To (if different)</legend>
@@ -714,10 +714,10 @@
       });
     }); {% endcomment %}
 
-    document.querySelectorAll('.custom-application-form form *[required]').forEach(function(ele, eleIndex, eleArray){
+    {% comment %} document.querySelectorAll('.custom-application-form form *[required]').forEach(function(ele, eleIndex, eleArray){
       ele.addEventListener("focus", inputFunction);
       ele.addEventListener("blur", inputFunction);    
-    });
+    }); {% endcomment %}
     
   });
 

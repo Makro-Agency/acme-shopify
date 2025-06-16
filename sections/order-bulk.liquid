@@ -48,7 +48,7 @@
                 <option>Date: new to old</option> {% endcomment %}
                 <option>Price: low to high</option>
                 <option>Price: high to low</option>
-                <option>Frequently Purchase</option>
+                {% if customer and customer.orders.size > 0 %}<option>Frequently Purchase</option>{% endif %}
             </select>
         </div>
         <div class="searchbar">

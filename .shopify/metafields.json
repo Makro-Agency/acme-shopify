@@ -254,6 +254,16 @@
         "name": "boolean",
         "category": "TRUE_FALSE"
       }
+    },
+    {
+      "key": "unit_of_measurement",
+      "namespace": "custom",
+      "name": "Unit of Measurement",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [

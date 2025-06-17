@@ -37,6 +37,14 @@
     <p>{{ section.settings.des }}</p>
 </div>
 
+{% assign check_shared = false %}
+{% for coll_prod in section.settings.coll.products %}
+    {% if coll_prod.tags contains 'shared' %}
+        {% assign check_shared = true %}
+        {% break %}
+    {% endif %}
+{% endfor %}
+
 {% capture bundle-list %}
 <div class="container-fluid">
     <div class="search-bar bundle-search-bar">
@@ -213,6 +221,36 @@
     {% endif %}
 
 
+
+
+    {% if check_shared %}
+        <div class="tab_wrapper">
+            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=my-product" onclick="tabClick(this)" data-title="my-product" class="active">My products</a>
+            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=all-product" onclick="tabClick(this)" data-title="all-product">All products</a>
+        </div>
+
+        
+
+        <script>
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            
+            if (tabParam) {
+                const tabLinks = document.querySelectorAll('.tab_wrapper a');
+                tabLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.title === tabParam) {
+                        link.classList.add('active');
+                    }
+                });
+            }else{
+                const url = new URL(window.location.href);
+                url.searchParams.set('tab', 'my-product');
+                window.history.replaceState({}, '', url);
+            }
+        </script>
+    {% endif %}
 
     <div class="product-list">
         <div class="product-header">

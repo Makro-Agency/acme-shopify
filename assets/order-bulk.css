@@ -704,6 +704,29 @@ span.title a{
     
 }
 
+/* tab css */
+.tab_wrapper {
+    display: inline-block;
+    border-radius: 100px;
+    background: rgba(20, 49, 92, 0.05);
+}
+
+.tab_wrapper a {
+    color: var(--Blue, #14315C);
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase; /* 21px */
+    text-decoration: none;
+    padding: 12px 30px;
+    display: inline-block;
+}
+
+.tab_wrapper a.active {
+    border-radius: 100px;
+    background: var(--Blue, #14315C);
+    color: #FFF;
+}
+
 
 /* pagination css */
 .order-bulk .pagination-wrapper { margin-top: 1.875rem; }

@@ -255,7 +255,6 @@
 
             {% for coll_prod in coll.products limit:10 %}
                 {% if coll_prod.variants.size > 1 %}
-                    {% comment %} {%- render 'b2b-product-item', Product_variant:coll_prod.selected_or_first_available_variant, coll_prod:coll_prod cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%} {% endcomment %}
                     {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
                 {% else %}
                     {% if coll_prod.variants.size > 1 %}
@@ -265,7 +264,6 @@
                     {% else %}
                         {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
                     {% endif %}
-                    {% comment %} {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%} {% endcomment %}
                 {% endif %}
             {% endfor %}
             <script type="application/json" class="json-div">

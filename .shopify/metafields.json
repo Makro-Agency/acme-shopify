@@ -1,42 +1,74 @@
 {
   "article": [],
   "blog": [],
-  "collection": [],
+  "collection": [
+    {
+      "key": "image_sub_nav",
+      "namespace": "custom",
+      "name": "Image Sub Nav",
+      "description": "Custom image for collection sub navigation",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "collection_filters",
+      "namespace": "custom",
+      "name": "Collection Filters",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
   "company": [],
   "company_location": [],
   "location": [],
-  "market": [],
+  "market": [
+    {
+      "key": "carousel_slider",
+      "namespace": "custom",
+      "name": "Carousel Slider",
+      "description": "Slider",
+      "type": {
+        "name": "list.file_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
   "order": [],
   "page": [],
   "product": [
     {
-      "key": "custom_product",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Product",
-      "description": "Use to indicate whether or not the unique product identifiers (UPIs) GTIN, MPN, and brand are available for your product.",
+      "key": "category",
+      "namespace": "custom",
+      "name": "Category",
+      "description": "Product Filter - Category",
       "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
-      "key": "hidden",
-      "namespace": "seo",
-      "name": "SEO Hidden",
-      "description": "",
+      "key": "season",
+      "namespace": "custom",
+      "name": "Season",
+      "description": "Product Filter - Season",
       "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
-      "key": "pdp_custom_video_url",
-      "namespace": "pdp_custom_data",
-      "name": "Pdp custom video url",
-      "description": "Pdp custom video url",
+      "key": "size",
+      "namespace": "custom",
+      "name": "Size",
+      "description": "Product Filter - Size",
       "type": {
-        "name": "url",
-        "category": "URL"
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
@@ -58,13 +90,73 @@
         "name": "number_integer",
         "category": "NUMBER"
       }
+    },
+    {
+      "key": "custom_product",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Product",
+      "description": "Use to indicate whether or not the unique product identifiers (UPIs) GTIN, MPN, and brand are available for your product.",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "short_description",
+      "namespace": "custom",
+      "name": "Short Description",
+      "description": "Product Short Description After Title",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "cruiser_new_sizing_infos",
+      "namespace": "custom",
+      "name": "Additional Info ",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "color-pattern",
+      "namespace": "shopify",
+      "name": "Color",
+      "description": "Defines the primary color or pattern, such as blue or striped",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "closure-type",
+      "namespace": "shopify",
+      "name": "Closure type",
+      "description": "Defines the method used to fasten or secure a product, such as zipper or buckles",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "target-gender",
+      "namespace": "shopify",
+      "name": "Target gender",
+      "description": "Identifies the intended gender for a product, such as female, male or unisex",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
     }
   ],
   "variant": [
     {
-      "key": "custom_label_2",
+      "key": "custom_label_4",
       "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 2",
+      "name": "Google: Custom Label 4",
       "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
@@ -82,10 +174,10 @@
       }
     },
     {
-      "key": "size_type",
+      "key": "custom_label_2",
       "namespace": "mm-google-shopping",
-      "name": "Google: Size Type",
-      "description": "Your apparel product’s cut.",
+      "name": "Google: Custom Label 2",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -102,10 +194,10 @@
       }
     },
     {
-      "key": "mpn",
+      "key": "custom_label_0",
       "namespace": "mm-google-shopping",
-      "name": "Google: MPN",
-      "description": "Your product’s Manufacturer Part Number (MPN).",
+      "name": "Google: Custom Label 0",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -122,10 +214,30 @@
       }
     },
     {
-      "key": "custom_label_0",
+      "key": "size_type",
       "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 0",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "name": "Google: Size Type",
+      "description": "Your apparel product’s cut.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "mpn",
+      "namespace": "mm-google-shopping",
+      "name": "Google: MPN",
+      "description": "Your product’s Manufacturer Part Number (MPN).",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "gender",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Gender",
+      "description": "The gender for which your product is intended.",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
@@ -142,56 +254,6 @@
       }
     },
     {
-      "key": "custom_label_4",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 4",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "minimum_quantity_required",
-      "namespace": "inventory",
-      "name": "Minimum Quantity Required",
-      "description": "Minimum inventory for item to be available",
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "box_quantity",
-      "namespace": "inventory",
-      "name": "Box Quantity",
-      "description": "Amount of unit per box",
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "gender",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Gender",
-      "description": "The gender for which your product is intended.",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "box_sku",
-      "namespace": "inventory",
-      "name": "Box SKU",
-      "description": "SKU of parent breakdown box",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
       "key": "age_group",
       "namespace": "mm-google-shopping",
       "name": "Google: Age Group",
@@ -200,27 +262,17 @@
         "name": "single_line_text_field",
         "category": "TEXT"
       }
-    },
-    {
-      "key": "sync_disabled",
-      "namespace": "inventory",
-      "name": "Inventory Sync Disabled",
-      "description": "Prevents product from being adjust by GD inventory",
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
     }
   ],
   "shop": [
     {
-      "key": "blocks_list_checkout_static_content",
-      "namespace": "checkoutblocks",
-      "name": "Checkout Blocks: Blocks List for: checkout_static_content",
-      "description": null,
+      "key": "fastbundleconf",
+      "namespace": "rbrfb",
+      "name": "Fast Bundle Conf",
+      "description": "App's config for the widgets",
       "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
+        "name": "json",
+        "category": "JSON"
       }
     }
   ]

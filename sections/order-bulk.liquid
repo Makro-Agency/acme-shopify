@@ -38,7 +38,8 @@
 </div>
 
 {% assign check_shared = false %}
-{% for coll_prod in section.settings.coll.products %}
+{% assign collection_get = section.settings.coll %}
+{% for coll_prod in collection_get.products %}
     {% if coll_prod.tags contains 'shared' %}
         {% assign check_shared = true %}
         {% break %}
@@ -225,8 +226,8 @@
 
     {% if check_shared %}
         <div class="tab_wrapper">
-            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=my-product" onclick="tabClick(this)" data-title="my-product" class="active">My products</a>
-            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=all-product" onclick="tabClick(this)" data-title="all-product">All products</a>
+            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=my-product" data-title="my-product" class="active">My products</a>
+            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=all-product" data-title="all-product">All products</a>
         </div>
 
         
@@ -259,8 +260,10 @@
             <span>PRICE</span>
         </div>
         <div class="product-item-wrapper">
-            {% assign coll = section.settings.coll %}
+            {% assign coll = collection_get %}
             {% assign product_json = '' %}
+            {% assign product_json_shared = '' %}
+            {% assign product_json_not_shared = '' %}
             {% assign prod_counter = 0 %}
 
             {% for coll_prod in coll.products %}
@@ -289,30 +292,109 @@
                     {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
                     {{ product_with_metafield }}{% unless prod_counter == _temp_count %},{% endunless %}
                 {% endcapture %}
+
+                {% capture product_json_shared %}
+                    {{ product_json_shared }}
+                    {% if coll_prod.tags contains 'shared' %}
+                        {% assign product_with_metafield = coll_prod | json %}
+                        {% assign product_with_metafield_temp = product_with_metafield | remove_last: '}' %}
+                        {% if coll_prod.metafields.accentuate.available_online == true %}
+                            {% assign meta1 = coll_prod.metafields.accentuate.available_online %}
+                        {% else %}
+                            {% assign meta1 = false %}
+                        {% endif %}
+
+                        {% if coll_prod.metafields.custom.availability == true %}
+                            {% assign meta2 = coll_prod.metafields.custom.availability %}
+                        {% else %}
+                            {% assign meta2 = false %}
+                        {% endif %}
+                        {% assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json %}
+                        {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
+                        {{ product_with_metafield }}
+                    {% endif %}
+                {% endcapture %}
+
+                {% capture product_json_not_shared %}
+                    {% unless coll_prod.tags contains 'shared' %}
+                        {{ product_json_not_shared }}
+                        {% assign product_with_metafield = coll_prod | json %}
+                        {% assign product_with_metafield_temp = product_with_metafield | remove_last: '}' %}
+                        {% if coll_prod.metafields.accentuate.available_online == true %}
+                            {% assign meta1 = coll_prod.metafields.accentuate.available_online %}
+                        {% else %}
+                            {% assign meta1 = false %}
+                        {% endif %}
+
+                        {% if coll_prod.metafields.custom.availability == true %}
+                            {% assign meta2 = coll_prod.metafields.custom.availability %}
+                        {% else %}
+                            {% assign meta2 = false %}
+                        {% endif %}
+                        {% assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json %}
+                        {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
+                        {{ product_with_metafield }}{% unless prod_counter == _temp_count %},{% endunless %}
+                    {% endunless %}
+                {% endcapture %}
             {% endfor %}
 
-            {% for coll_prod in coll.products limit:10 %}
-                {% if coll_prod.variants.size > 1 %}
-                    {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
+            {% comment %} {% for coll_prod in coll.products limit:10 %}
+                {% assign shared = false %}
+                {% if canonical_url contains '?tab=all-product' %}
+                    {% assign shared = true %}
+                {% endif %}
+                {% if check_shared and shared == true %}
+                    {% if coll_prod.tags contains 'shared' %}
+                        {% if coll_prod.variants.size > 1 %}
+                            {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
+                        {% else %}
+                            {% if coll_prod.variants.size > 1 %}
+                                {%- for variant in coll_prod.variants -%}
+                                    {%- render 'b2b-product-item', coll_prod:variant, collProd: coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
+                                {% endfor %}
+                            {% else %}
+                                {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
                 {% else %}
                     {% if coll_prod.variants.size > 1 %}
-                        {%- for variant in coll_prod.variants -%}
-                            {%- render 'b2b-product-item', coll_prod:variant, collProd: coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
-                        {% endfor %}
-                    {% else %}
                         {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
+                    {% else %}
+                        {% if coll_prod.variants.size > 1 %}
+                            {%- for variant in coll_prod.variants -%}
+                                {%- render 'b2b-product-item', coll_prod:variant, collProd: coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
+                            {% endfor %}
+                        {% else %}
+                            {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
+                        {% endif %}
                     {% endif %}
                 {% endif %}
-            {% endfor %}
+
+                
+            {% endfor %} {% endcomment %}
             <script type="application/json" class="json-div">
                 [{{ product_json | strip }}]
+            </script>
+            <script type="application/json" class="json-div-shared">
+                [{{ product_json_shared | strip }}]
+            </script>
+            <script type="application/json" class="json-div-not-shared">
+                [{{ product_json_not_shared | strip }}]
             </script>
         </div>
     </div>
     <div class="pagination-wrapper ">
         <ul class="pagination-lists">
-            
-            {% assign length_count = prod_counter | divided_by: 10.0 | ceil %}
+            {%- capture _prevItem -%}
+            <li onclick="paginateItemPrev(event)" class="page-item prev-item disabled"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
+            {%- endcapture -%}{% assign _prevItem = _prevItem | strip | strip_newlines %}
+            {{ _prevItem }}
+            {%- capture _nextItem -%}
+            <li onclick="paginateItemNext(event)" class="page-item next-item disabled"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
+            {%- endcapture -%}{% assign _nextItem = _nextItem | strip | strip_newlines %}
+            {{ _nextItem }}
+            {% comment %} {% assign length_count = prod_counter | divided_by: 10.0 | ceil %}
             {% if length_count > 1 %}
                 {% if length_count == 1 %}
                     {% capture _style %}style="pointer-events: none;"{% endcapture %}
@@ -340,7 +422,7 @@
                 <li onclick="paginateItemNext(event)" class="page-item next-item{% if length_count == 1 %} disabled{% endif %}"><a href="#">{% render 'icon-next-white-filled' %}</a></li>
                 {%- endcapture -%}{% assign _nextItem = _nextItem | strip | strip_newlines %}
                 {{ _nextItem }}
-            {% endif %}          
+            {% endif %}           {% endcomment %}
         </ul>
     </div>
     <div class="mini-cart-sticky">
@@ -579,7 +661,9 @@
     }
 
     var json_val = JSON.parse("["+document.querySelector('.json-div').innerText.trim()+"]")[0];
-    var _json_val = [];      
+    var json_val_shared = JSON.parse("["+document.querySelector('.json-div-shared').innerText.trim()+"]")[0];
+    var json_val_not_shared = JSON.parse("["+document.querySelector('.json-div-not-shared').innerText.trim()+"]")[0];
+    var _json_val = [], _json_val_shared = [], _json_val_not_shared = [];      
     
     json_val.forEach(function(iteam){
         var _i = iteam;
@@ -599,7 +683,52 @@
         }
     });
 
-    Array.prototype.push.apply(json_data_array,_json_val);
+    json_val_shared.forEach(function(iteam){
+        var _i = iteam;
+        if( _i.variants.length > 1 ){
+            var _tempArray = [];    
+            var _tempVars = _i.variants;    
+            _tempVars.forEach(function(variant, index){
+                var _temp = [];
+                _temp.push(_i);
+                _temp.variants = [];  
+                _temp.variants.push(variant);
+                _temp.custom = true;        
+                _json_val_shared.push(_temp);
+            });
+        }else{
+            _json_val_shared.push(_i);
+        }
+    });
+
+    json_val_not_shared.forEach(function(iteam){
+        var _i = iteam;
+        if( _i.variants.length > 1 ){
+            var _tempArray = [];    
+            var _tempVars = _i.variants;    
+            _tempVars.forEach(function(variant, index){
+                var _temp = [];
+                _temp.push(_i);
+                _temp.variants = [];  
+                _temp.variants.push(variant);
+                _temp.custom = true;        
+                _json_val_not_shared.push(_temp);
+            });
+        }else{
+            _json_val_not_shared.push(_i);
+        }
+    });
+
+    if(document.querySelector('.tab_wrapper') != null){
+        if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+            Array.prototype.push.apply(json_data_array,_json_val_not_shared);
+        }else{
+            Array.prototype.push.apply(json_data_array,_json_val_shared);
+        }
+    }else{
+        Array.prototype.push.apply(json_data_array,_json_val);
+    }
+    
     var key = 'id';
     var UniqueFr_item = [...new Map(json_data_array.map(item =>{
         
@@ -616,10 +745,12 @@
     var select_eles = document.querySelectorAll('.bundle-search-bar .custom-select select');
     select_eles.forEach(select_ele => {
         select_ele.addEventListener('change', function(){
+            console.log('in');
             var sortType = this.value;
             if( sortType == '' ) return;
-            console.log('sortType',sortType);
+            
             var sortJson = json_searched.length > 0 ? json_searched : json_val;
+            
             if(sortType === "Alphabetically: A-Z") {
             sortJson.sort((a, b) => (a.title < b.title) ? -1 : 1);
             } else if(sortType === "Alphabetically: Z-A") {
@@ -788,6 +919,7 @@
     }
 
     function appendItems(searchedJSON){
+        console.log('apzpzend')
         var finl_html = '';
         var _pageLimit = searchedJSON.length > 10 ? 9 : (searchedJSON.length - 1);
         for(var i=0;i<=_pageLimit;i++){
@@ -1152,7 +1284,22 @@
             document.querySelector('.bundle-search-bar .select-styled').closest('.select').querySelector('ul.select-options').style.display = 'none';
   
             var sortType = li_wrap.textContent;
-            var sortJson = json_searched.length > 0 ? json_searched : json_val;
+
+            if(document.querySelector('.tab_wrapper') != null){
+                console.log('in');
+                if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+                    console.log('1');
+                    var sortJson = json_searched.length > 0 ? json_searched : _json_val_not_shared;
+                }else{
+                    console.log('2');
+                    var sortJson = json_searched.length > 0 ? json_searched : _json_val_shared;
+                }
+                
+            }else{
+                console.log('out');
+                var sortJson = json_searched.length > 0 ? json_searched : json_val;
+            }
+            {% comment %} var sortJson = json_searched.length > 0 ? json_searched : json_val; {% endcomment %}
             if(sortType === "Alphabetically: A->Z") {
               sortJson.sort((a, b) => (a.title < b.title) ? -1 : 1);
             } else if(sortType === "Alphabetically: Z->A") {
@@ -1205,6 +1352,29 @@
             selectOptions.style.display = 'none';
         }
     });
+
+    function LoadData(startindex,endindex){
+        var finl_html = '';
+        if(document.querySelector('.tab_wrapper') != null){
+            if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+                var selector_json = _json_val_not_shared;
+            }else{
+                var selector_json = _json_val_shared;
+            }
+        }else{
+            var selector_json = json_val;
+        }
+        
+        for(var i=Number(startindex);i<=Number(endindex);i++){
+            finl_html += appendHTML(selector_json[i]);
+        }
+        document.querySelector('.product-item-wrapper').innerHTML = finl_html;
+        genratePagination(selector_json);
+    }
+
+    addEventListener("DOMContentLoaded", (event) => {
+        LoadData(0,9);
+    })
 
 </script>
 

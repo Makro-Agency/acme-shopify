@@ -1,14 +1,16 @@
-{%- if collProd -%}
-  {%- assign _currentVaraint = coll_prod -%}
+{%- assign product_card = coll_prod -%}
+{%- if Product_variant -%}
+  {%- assign _currentVaraint = Product_variant -%}
+  {%- assign product_card = coll_prod -%}
 {%- else -%}
   {%- assign _currentVaraint = coll_prod.selected_or_first_available_variant -%}
 {%- endif -%}
 
+
 {%- liquid
 
-
   
-  assign available_online = coll_prod.metafields.accentuate.available_online    
+  assign available_online = product_card.metafields.accentuate.available_online    
   if customer and customer.b2b? and customer.company_available_locations_count > 0
       assign available_online = true
   endif
@@ -22,7 +24,7 @@
   endif
 
   assign b2b_tag = false
-  for tag in coll_prod.tags
+  for tag in product_card.tags
     if tag == 'B2B'
       assign b2b_tag = true
       break
@@ -33,13 +35,15 @@
 
   assign b2b_product_in_stock = 'no'
   if customer and customer.b2b? and customer.company_available_locations_count > 0
-    assign b2b_product_in_stock = product.metafields.custom.availability | default: false    
+    assign b2b_product_in_stock = product_card.metafields.custom.availability | default: false    
   elsif b2b_tag == true
-    assign b2b_product_in_stock = product.metafields.custom.availability | default: false
+    assign b2b_product_in_stock = product_card.metafields.custom.availability | default: false
   endif
   if b2b_product_in_stock == 'true'
     assign b2b_product_in_stock = true
   endif
+
+
 
   assign current_variant_ava = current_variant.available
   if b2b_product_in_stock != 'no'				
@@ -54,20 +58,20 @@
     assign available_online = false
   endunless
 
-  unless current_variant_ava
+  if current_variant_ava == false
     assign available_online = false
-  endunless
+  endif
 
 -%}
 
 
-<div class="product-item {% if coll_prod.variants.size > 1 %}varient-select{% endif %}">
-  {% if coll_prod.variants.size > 1 %}
+<div class="product-item {% if product_card.variants.size > 1 %}varient-select{% endif %}">
+  {% if product_card.variants.size > 1 %}
   <div class="product-wrapper">
-      <a href="{{ coll_prod.url }}" class="product-wrap">
-          <img src="{{ coll_prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
+      <a href="{{ product_card.url }}" class="product-wrap">
+          <img src="{{ product_card.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
           <span class="title">
-            {{ coll_prod.title }}
+            {{ product_card.title }}
           </span>
       </a>
       <span class="sku">-</span>
@@ -77,21 +81,21 @@
       </div>
   </div>
   <div class="varient-select-item">
-    {%- for variant in coll_prod.variants -%}
+    {%- for variant in product_card.variants -%}
       <div class="variant-inner-item">
         <div class="product-wrapper">
-            <a href="{{ coll_prod.url }}" class="product-wrap">
+            <a href="{{ product_card.url }}" class="product-wrap">
                 {% if variant.featured_image %}
                   <img src="{{ variant.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
                 {% else %}
-                  <img src="{{ coll_prod.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
+                  <img src="{{ product_card.featured_image | img_url:'master' }}" alt="Salmon" height="auto" width="auto">
                 {% endif %}
                 <span class="title">
-                  {{ coll_prod.title }} / {{ variant.title }}
+                  {{ product_card.title }} / {{ variant.title }}
                 </span>
             </a>
             {% if variant.sku %}<span class="sku"><span class="mobile-header">Sku</span>{{ variant.sku }}</span>{% else %}-{% endif %}
-            <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
+            <span class="price"><span class="mobile-header">Price</span>{{ variant.price | money }}{% if product_card.metafields.accentuate.unit_of_measure != blank %}/{{ product_card.metafields.accentuate.unit_of_measure }}{% endif %}</span>
             <div class="quantity-btn-wrap">
                 <div class="quantity-selector {% unless available_online %}disabled{% endunless %}" data-item="{{ variant.id }}">
                     <button class="qtyminus" style="opacity: 0.5; cursor: not-allowed;" onclick="clickAttrMinus(this);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -130,29 +134,29 @@
     {% if cart_items_array != blank %}
       {% for chk_qty in cart_items_array %}
         {% assign temp_chk_qty = chk_qty | strip | times:1 %}
-        {% if coll_prod.selected_or_first_available_variant.id == temp_chk_qty %}
+        {% if product_card.selected_or_first_available_variant.id == temp_chk_qty %}
           {% assign qty = cart_items_array_qty[forloop.index0] %}
           {% break %}
         {% endif %}
       {% endfor %}
     {% endif %}
-    <a href="{{ coll_prod.url }}" class="product-wrap">
-      <img src="{{ coll_prod.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
+    <a href="{{ product_card.url }}" class="product-wrap">
+      <img src="{{ product_card.featured_image | image_url }}" alt="Salmon" height="auto" width="auto">
       <span class="title">
-        {{ coll_prod.title }}
+        {{ product_card.title }}
       </span>
     </a>
-    <span class="sku"><span class="mobile-header">Sku</span>{{ coll_prod.selected_or_first_available_variant.sku }}</span>
+    <span class="sku"><span class="mobile-header">Sku</span>{{ product_card.selected_or_first_available_variant.sku }}</span>
     <div class="product-details">
-      <span class="grid-sku"><span>SKU:</span><span>{{ coll_prod.selected_or_first_available_variant.sku }}</span></span>
+      <span class="grid-sku"><span>SKU:</span><span>{{ product_card.selected_or_first_available_variant.sku }}</span></span>
       <span class="grid-title">
-        <a href="{{ coll_prod.url }}">{{ coll_prod.title }}</a>
+        <a href="{{ product_card.url }}">{{ product_card.title }}</a>
       </span>
     </div>
-    <span class="price"><span class="mobile-header">Price</span>{{ coll_prod.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span>
-    <span class="grid-price"><span>Your price:</span><span>{{ coll_prod.price | money }}{% if coll_prod.metafields.accentuate.unit_of_measure != blank %}/{{ coll_prod.metafields.accentuate.unit_of_measure }}{% endif %}</span></span>
+    <span class="price"><span class="mobile-header">Price</span>{{ product_card.price | money }}{% if product_card.metafields.accentuate.unit_of_measure != blank %}/{{ product_card.metafields.accentuate.unit_of_measure }}{% endif %}</span>
+    <span class="grid-price"><span>Your price:</span><span>{{ product_card.price | money }}{% if product_card.metafields.accentuate.unit_of_measure != blank %}/{{ product_card.metafields.accentuate.unit_of_measure }}{% endif %}</span></span>
     <div class="quantity-btn-wrap">
-      <div class="quantity-selector {% unless available_online %}disabled{% endunless %}" data-item="{{ coll_prod.selected_or_first_available_variant.id }}">
+      <div class="quantity-selector {% unless available_online %}disabled{% endunless %}" data-item="{{ product_card.selected_or_first_available_variant.id }}">
         <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg></button>

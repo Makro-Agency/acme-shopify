@@ -299,7 +299,7 @@
     </div>
   </div>
 
-  {% if cart.item_count > 0 %}
+  {% if cart.item_count > 0 and customer.current_location.metafields.acme.delivery_date != blank %}
     <script>
       function getNextMondays(count = 7) {
   
@@ -310,6 +310,9 @@
         var count = 7;
     
         var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
+        if(tempBitValue.length == 0){
+          return;
+        }
         var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
         BitValue.split('');
     
@@ -372,6 +375,8 @@
         
         return nowEstDate >= targetEstTime;
       }
+
+      document.addEventListener("DOMContentLoaded", (event) => {
   
       var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
       const inputTime = "{{settings.cut-time}}:00";
@@ -466,6 +471,8 @@
           {% endfor %}
         }
       {% endif %}
+
+      })
       
     </script>
   {% endif %}

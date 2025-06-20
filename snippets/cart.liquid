@@ -378,99 +378,99 @@
 
       document.addEventListener("DOMContentLoaded", (event) => {
   
-        var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
-        const inputTime = "{{settings.cut-time}}:00";
-        var store_month = (Today.getMonth() + 1);
-        var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
-            
-        {% if changed_day %}
-    
-          var check_change_line = false;
-          if(DateFormat != order_date){
+      var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      const inputTime = "{{settings.cut-time}}:00";
+      var store_month = (Today.getMonth() + 1);
+      var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
+          
+      {% if changed_day %}
+  
+        var check_change_line = false;
+        if(DateFormat != order_date){
+          check_change_line = true;
+        }else{
+          if(hasEstTimePassedToday(inputTime)){
             check_change_line = true;
-          }else{
-            if(hasEstTimePassedToday(inputTime)){
-              check_change_line = true;
-            }
           }
-    
-          var update_main_arry = [];
-          if(check_change_line){
-            document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
-    
-            var get_new_date = getNextMondays();
-            var tempcurrentDay = get_new_date.pop();
-    
-            {% for item in cart.items %}
-              {% if item.properties['_addtocart_date'] %}
-                var date_array = [];
-                var prop = {}
-    
-                {% for item_prop in item.properties %}
-                  {% assign val = item_prop.last | split:',' %}
-                  {% if val.size > 1 %}
-                    prop['{{ item_prop.first }}']=get_new_date;
-                  {% elsif item_prop.first == '_addtocart_date' %}
-                    prop['{{ item_prop.first }}']=tempcurrentDay
-                  {% else %}
-                    prop['{{ item_prop.first }}']={{ item_prop.last }}
-                  {% endif %}
-                {% endfor %}
-    
-                var cart_item_data = {
-                  id: '{{item.key}}',
-                  quantity: {{item.quantity}},
-                  properties: prop
-                };
-                var UPDATE_OBJ = {
-                  method: 'POST',
-                  headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                  body: JSON.stringify(cart_item_data)
-                };
-                update_main_arry.push(UPDATE_OBJ);
-              {% endif %}
-              {% if forloop.last %}
-                updateProp(update_main_arry);
-                if(update_main_arry.length == 0){
-                  document.querySelector('[name="checkout"]').removeAttribute('disabled');
-                }
-              {% endif %}
-            {% endfor %}
-          }
-        {% elsif customer_b2B == true and changed_day == false %}
-          var check_change_line = true;
-    
-          var update_main_arry = [];
-          if(check_change_line){
-            document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
-    
-            var get_new_date = getNextMondays();
-            var tempcurrentDay = get_new_date.pop();
-    
-            {% for item in cart.items %}
-              console.log('item', {{item | json}});
-                var date_array = [];
-                var prop = {}
-    
-                prop['_delivery_date']=get_new_date;
-                prop['_addtocart_date']=tempcurrentDay;
-    
-                var cart_item_data = {
-                  id: '{{item.key}}',
-                  quantity: {{item.quantity}},
-                  properties: prop
-                };
-                var UPDATE_OBJ = {
-                  method: 'POST',
-                  headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                  body: JSON.stringify(cart_item_data)
-                };
-                update_main_arry.push(UPDATE_OBJ);
-                updateProp(update_main_arry);
-                {% break %}
-            {% endfor %}
-          }
-        {% endif %}
+        }
+  
+        var update_main_arry = [];
+        if(check_change_line){
+          document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+  
+          var get_new_date = getNextMondays();
+          var tempcurrentDay = get_new_date.pop();
+  
+          {% for item in cart.items %}
+            {% if item.properties['_addtocart_date'] %}
+              var date_array = [];
+              var prop = {}
+  
+              {% for item_prop in item.properties %}
+                {% assign val = item_prop.last | split:',' %}
+                {% if val.size > 1 %}
+                  prop['{{ item_prop.first }}']=get_new_date;
+                {% elsif item_prop.first == '_addtocart_date' %}
+                  prop['{{ item_prop.first }}']=tempcurrentDay
+                {% else %}
+                  prop['{{ item_prop.first }}']={{ item_prop.last }}
+                {% endif %}
+              {% endfor %}
+  
+              var cart_item_data = {
+                id: '{{item.key}}',
+                quantity: {{item.quantity}},
+                properties: prop
+              };
+              var UPDATE_OBJ = {
+                method: 'POST',
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify(cart_item_data)
+              };
+              update_main_arry.push(UPDATE_OBJ);
+            {% endif %}
+            {% if forloop.last %}
+              updateProp(update_main_arry);
+              if(update_main_arry.length == 0){
+                document.querySelector('[name="checkout"]').removeAttribute('disabled');
+              }
+            {% endif %}
+          {% endfor %}
+        }
+      {% elsif customer_b2B == true and changed_day == false %}
+        var check_change_line = true;
+  
+        var update_main_arry = [];
+        if(check_change_line){
+          document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+  
+          var get_new_date = getNextMondays();
+          var tempcurrentDay = get_new_date.pop();
+  
+          {% for item in cart.items %}
+            console.log('item', {{item | json}});
+              var date_array = [];
+              var prop = {}
+  
+              prop['_delivery_date']=get_new_date;
+              prop['_addtocart_date']=tempcurrentDay;
+  
+              var cart_item_data = {
+                id: '{{item.key}}',
+                quantity: {{item.quantity}},
+                properties: prop
+              };
+              var UPDATE_OBJ = {
+                method: 'POST',
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify(cart_item_data)
+              };
+              update_main_arry.push(UPDATE_OBJ);
+              updateProp(update_main_arry);
+              {% break %}
+          {% endfor %}
+        }
+      {% endif %}
 
       })
       

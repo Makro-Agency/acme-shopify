@@ -57,7 +57,7 @@
                 <option>Date: new to old</option> {% endcomment %}
                 <option>Price: low to high</option>
                 <option>Price: high to low</option>
-                {% if customer and customer.orders.size > 0 %}<option>Frequently Purchase</option>{% endif %}
+                {% if customer and customer.orders.size > 0 %}<option data-title="faq">Frequently Purchase</option>{% endif %}
             </select>
         </div>
         <div class="searchbar">
@@ -82,6 +82,7 @@
             var json_data_array = [];
         </script>
         {% assign product_data = '' %}
+        {% assign prod_found_count = 0 %}
         {% for order in latest_orders %}
           {% for item in order.line_items %}
             {% assign prod_id = item.product.id | append: '' %}
@@ -102,29 +103,36 @@
               {% assign item_v_id = item.variant_id %}
               {% assign item_v_measure = item.product.metafields.accentuate.unit_of_measure %}
               {% assign item_handle = item.product.handle %}
-              <script>
-                {% capture product_obj_json %}
-                    {% assign product_with_metafield = item.product | json %}
-                    {% assign product_with_metafield_temp = product_with_metafield | remove_last: '}' %}
-                    {% if item.product.metafields.accentuate.available_online == true %}
-                        {% assign meta1 = item.product.metafields.accentuate.available_online %}
-                    {% else %}
-                        {% assign meta1 = false %}
-                    {% endif %}
 
-                    {% if item.product.metafields.custom.availability == true %}
-                        {% assign meta2 = item.product.metafields.custom.availability %}
-                    {% else %}
-                        {% assign meta2 = false %}
-                    {% endif %}
-                    
-                    {% assign meta3 = item.product.metafields.accentuate.unit_of_measure | json %}
-                    {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
-                    {{ product_with_metafield }}
-                {% endcapture %}
-                
-                json_data_array.push({{ product_obj_json }});
-              </script>
+              {% for prod_object in collection_get.products %}
+
+                {% if prod_object.title == item.product.title %}
+                    {% assign prod_found_count = prod_found_count | plus:1 %}
+                    <script>
+                        {% capture product_obj_json %}
+                            {% assign product_with_metafield = item.product | json %}
+                            {% assign product_with_metafield_temp = product_with_metafield | remove_last: '}' %}
+                            {% if item.product.metafields.accentuate.available_online == true %}
+                                {% assign meta1 = item.product.metafields.accentuate.available_online %}
+                            {% else %}
+                                {% assign meta1 = false %}
+                            {% endif %}
+
+                            {% if item.product.metafields.custom.availability == true %}
+                                {% assign meta2 = item.product.metafields.custom.availability %}
+                            {% else %}
+                                {% assign meta2 = false %}
+                            {% endif %}
+                            
+                            {% assign meta3 = item.product.metafields.accentuate.unit_of_measure | json %}
+                            {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
+                            {{ product_with_metafield }}
+                        {% endcapture %}
+                        
+                        json_data_array.push({{ product_obj_json }});
+                    </script>
+                {% endif %}
+              {% endfor %}
               {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id | append: ':::' | append: item_v_measure | append: ':::' | append: item_handle %}
               {% if product_data == '' %}
                 {% assign product_data = entry %}
@@ -996,6 +1004,13 @@
             if(B2B_check == 'true' && _item.metafields.availability_b2b == false){
                 disable_class = 'disabled';
             }
+
+            if(_item.featured_image){
+                var image_div = `<img src="${ _item.featured_image }" alt="Salmon" height="auto" width="auto">`;
+            }else{
+                var image_div = ``;
+            }
+
             _returnHTML = 
                 `<div class="product-item varient-select">
 
@@ -1055,11 +1070,19 @@
                                 var disable_class = 'disabled';
                             }
 
+                            if(currentVAraint.featured_image){
+                                var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">`;
+                            }else if(_item.featured_image){
+                                var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">`;
+                            }else{
+                                var image_div = ``;
+                            }
+
                             _returnHTML += `
                             <div class="variant-inner-item">
                                 <div class="product-wrapper">
                                     <a href="/products/${_item.handle}" class="product-wrap">
-                                        <img src="//makro-staging-rc-creations-1954.myshopify.com/cdn/shop/files/MAshirtfront_4b7c46fe-9cfd-497b-bec7-3abc6ca71b68.png?v=1742437687" alt="Salmon" height="auto" width="auto">
+                                        ${image_div}
                                         <span class="title">
                                             ${_item.title} / ${currentVAraint.title}
                                         </span>
@@ -1121,10 +1144,18 @@
                     disable_class = 'disabled';
                 }
 
+                if(currentVAraint.featured_image){
+                    var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">`;
+                }else if(_item.featured_image){
+                    var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">`;
+                }else{
+                    var image_div = ``;
+                }
+
                 _returnHTML += `<div class="product-item ">
                     <div class="product-wrapper">
                         <a href="/products/${_item.handle}" class="product-wrap">
-                            <img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">
+                            ${image_div}
                             <span class="title">
                                 ${_item.title}
                             </span>
@@ -1254,6 +1285,7 @@
         for(var i=0;i<select_box.querySelectorAll('option').length;i++){
             var li = document.createElement('li');
             li.innerHTML = select_box.querySelectorAll('option')[i].innerHTML;
+            li.setAttribute('data-title',select_box.querySelectorAll('option')[i].innerHTML)
             wrapperul.appendChild(li);
         }
   
@@ -1261,6 +1293,10 @@
         wrapperul.style.display = 'none';
         select_box.classList.add('select-hidden');
     });
+
+    {% if prod_found_count == 0 %}
+        document.querySelector('li[data-title="Frequently Purchase"]').classList.add('hide');
+    {% endif %}
 
     document.querySelector('.select-styled').addEventListener('click',function(){
        if(this.classList.contains('active')){

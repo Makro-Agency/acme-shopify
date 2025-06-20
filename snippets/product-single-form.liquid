@@ -132,3 +132,35 @@ product-add-form product-form product-form-{{ product.id }}
 
 
 
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Handle plus button click
+		document.querySelectorAll('.qty-inc.clickable.qty-btn').forEach(function(plusBtn) {
+			plusBtn.addEventListener('click', function(e) {
+				var qtyInput = plusBtn.closest('.product-qty').querySelector('.qty-input');
+				var minusBtn = plusBtn.closest('.product-qty').querySelector('.qty-dec');
+				if (minusBtn.classList.contains('disabled')) {
+					minusBtn.classList.remove('disabled');
+				}
+			});
+		});
+		// Handle minus button click
+		document.querySelectorAll('.qty-dec.clickable.qty-btn').forEach(function(minusBtn) {
+			minusBtn.addEventListener('click', function(e) {
+				var qtyInput = minusBtn.closest('.product-qty').querySelector('.qty-input');
+				if (qtyInput) {
+					var val = parseInt(qtyInput.value) || 1;
+					if (val > 1) {
+						if (val - 1 == 0) {
+							minusBtn.classList.add('disabled');
+						}
+					} else {
+						minusBtn.classList.add('disabled');
+					}
+				}
+			});
+		});
+	});
+</script>
+
+

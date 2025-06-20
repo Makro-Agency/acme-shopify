@@ -200,106 +200,106 @@
 
 
 <div class="container  cart-template pb-5 {% if cart.item_count == 0 %} empty {% endif %}" data-section-id="{{ section.id }}" sh-cart-wrapper >
-    <div class = 'cart'  >     
-      <div class="cart-partial-form-ajax-container" >
-        <div class="cart-partial-form row pt-4 pt-lg-5">
-          <div class="col-12 col-lg-11 offset-lg-1">
-            <div class="d-none">{{ customer.current_location.name }}</div>
-            <h2 class="header-1 mt-1 mb-4 {% unless customer_b2B %}mb-lg-5{% endunless %}">{{ 'cart.headers.title' | t }}</h2>
-            {% if customer.current_location.metafields.custom.block_checkout == true %}
-              <style>
+  <div class = 'cart'  >     
+    <div class="cart-partial-form-ajax-container" >
+      <div class="cart-partial-form row pt-4 pt-lg-5">
+        <div class="col-12 col-lg-11 offset-lg-1">
+          <div class="d-none">{{ customer.current_location.name }}</div>
+          <h2 class="header-1 mt-1 mb-4 {% unless customer_b2B %}mb-lg-5{% endunless %}">{{ 'cart.headers.title' | t }}</h2>
+          {% if customer.current_location.metafields.custom.block_checkout == true %}
+            <style>
+              .prevent-msg{
+                display: flex;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 10px;
+                align-self: stretch;
+                border-radius: 4px;
+                background: rgba(235, 28, 31, 0.05);
+              }
+              .prevent-msg .svg-icon{
+                width: 16px;
+                height: 16px;
+                display: flex;
+              }
+              .prevent-msg .msg-text{
+                color: #EB1C1F;
+                font-family: ITCClearfaceRegular;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 150%; /* 21px */
+              }
+        
+              .prevent-msg .msg-text a{
+                color: #EB1C1F;
+                font-family: ITCClearfaceRegular;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 550;
+                line-height: 150%;
+                text-decoration-line: underline;
+                text-decoration-style: solid;
+                text-decoration-skip-ink: auto;
+                text-decoration-thickness: auto;
+                text-underline-offset: auto;
+                text-underline-position: from-font;
+              }
+        
+              @media(max-width:575px){
                 .prevent-msg{
-                  display: flex;
-                  padding: 8px 16px;
-                  align-items: center;
-                  gap: 10px;
-                  align-self: stretch;
-                  border-radius: 4px;
-                  background: rgba(235, 28, 31, 0.05);
+                  padding: 8px 12px;
+                  align-items: flex-start;
+                  gap: 8px;
                 }
-                .prevent-msg .svg-icon{
-                  width: 16px;
-                  height: 16px;
-                  display: flex;
-                }
-                .prevent-msg .msg-text{
-                  color: #EB1C1F;
-                  font-family: ITCClearfaceRegular;
-                  font-size: 14px;
-                  font-style: normal;
-                  font-weight: 400;
-                  line-height: 150%; /* 21px */
-                }
-          
-                .prevent-msg .msg-text a{
-                  color: #EB1C1F;
-                  font-family: ITCClearfaceRegular;
-                  font-size: 14px;
-                  font-style: normal;
-                  font-weight: 550;
-                  line-height: 150%;
-                  text-decoration-line: underline;
-                  text-decoration-style: solid;
-                  text-decoration-skip-ink: auto;
-                  text-decoration-thickness: auto;
-                  text-underline-offset: auto;
-                  text-underline-position: from-font;
-                }
-          
-                @media(max-width:575px){
-                  .prevent-msg{
-                    padding: 8px 12px;
-                    align-items: flex-start;
-                    gap: 8px;
-                  }
-                }
-              </style>
-          
-              <div class="cart-checkout-error col-error">
-                <div class="wrapper font-itc">
-                  {% render 'icon-warning' %} 
-                  <span>{{ section.settings.prevent_msg | replace:'<p>' | replace:'</p>' }}</span>
-                </div>
-              </div>
-            {% endif %}
-            <h3 class="header-3">Order Summary</h3>
-            <h4 class="header-5 mb-lg-4" data-cart-count >{{cart.item_count}} Item{% unless cart.item_count == 1 %}s{% endunless %}</h4>
-          </div>
-          {% comment %} <div class="col-5 col-md-6 text-right">
-          </div> {% endcomment %}
-          {% comment %} <div class="row flex-row-center">
-          </div> {% endcomment %}
-          <!-- .row -->          
-          {% comment %} <div class="row  ">
-              <div class="col-sm-12 text-center">
-              </div><!-- // col-sm-6' -->
-          </div><!-- // row -->  {% endcomment %}
-          <form action="{{ routes.cart_url }}" method="post" novalidate class="cart cart-form col-lg-11 offset-lg-1">
-            <div class = 'cart__table'>
-              <div class="row cart__row cart__row--heading">
-                <div class='col-5 col-md-3 col-lg-2 text-center' ><h4></h4></div>
-                <div class="col-7 col-md-5 col-lg-7 text-right" ><h4></h4></div>
-                <div class="col-md-4 col-lg-3 text-right " ><h4></h4></div>
-                <div class="col-sm-3 text-right  d-none" ><h4>{{ 'cart.labels.total' | t }}</h4></div>
-              </div>
-              <div data-cart-line-items-ajax-container >
-                {% render 'cart-partial-line-items', customer_b2B:customer_b2B %}
+              }
+            </style>
+        
+            <div class="cart-checkout-error col-error">
+              <div class="wrapper font-itc">
+                {% render 'icon-warning' %} 
+                <span>{{ section.settings.prevent_msg | replace:'<p>' | replace:'</p>' }}</span>
               </div>
             </div>
-      
-            {% render 'cart-partial-footer', section:section, customer_b2B:customer_b2B %}
-          </form>
+          {% endif %}
+          <h3 class="header-3">Order Summary</h3>
+          <h4 class="header-5 mb-lg-4" data-cart-count >{{cart.item_count}} Item{% unless cart.item_count == 1 %}s{% endunless %}</h4>
         </div>
-      </div> 
-    </div>
-    <div class="empty-page-content text-center mt-5 py-5 " data-empty-page-content>
-      <h1>{{ 'cart.headers.title' | t }}</h1>
-      <p class="cart--empty-message header-5 my-5">{{ 'cart.messages.empty' | t }}</p>
-      <a href="/collections/fish-friday" class="btn  btn-primary cart__continue-btn">{{ 'general.buttons.continue_shopping' | t }}</a>
-    </div>
+        {% comment %} <div class="col-5 col-md-6 text-right">
+        </div> {% endcomment %}
+        {% comment %} <div class="row flex-row-center">
+        </div> {% endcomment %}
+        <!-- .row -->          
+        {% comment %} <div class="row  ">
+            <div class="col-sm-12 text-center">
+            </div><!-- // col-sm-6' -->
+        </div><!-- // row -->  {% endcomment %}
+        <form action="{{ routes.cart_url }}" method="post" novalidate class="cart cart-form col-lg-11 offset-lg-1">
+          <div class = 'cart__table'>
+            <div class="row cart__row cart__row--heading">
+              <div class='col-5 col-md-3 col-lg-2 text-center' ><h4></h4></div>
+              <div class="col-7 col-md-5 col-lg-7 text-right" ><h4></h4></div>
+              <div class="col-md-4 col-lg-3 text-right " ><h4></h4></div>
+              <div class="col-sm-3 text-right  d-none" ><h4>{{ 'cart.labels.total' | t }}</h4></div>
+            </div>
+            <div data-cart-line-items-ajax-container >
+              {% render 'cart-partial-line-items', customer_b2B:customer_b2B %}
+            </div>
+          </div>
+    
+          {% render 'cart-partial-footer', section:section, customer_b2B:customer_b2B %}
+        </form>
+      </div>
+    </div> 
   </div>
+  <div class="empty-page-content text-center mt-5 py-5 " data-empty-page-content>
+    <h1>{{ 'cart.headers.title' | t }}</h1>
+    <p class="cart--empty-message header-5 my-5">{{ 'cart.messages.empty' | t }}</p>
+    <a href="/collections/fish-friday" class="btn  btn-primary cart__continue-btn">{{ 'general.buttons.continue_shopping' | t }}</a>
+  </div>
+</div>
 
-  {% if cart.item_count > 0 %}
+  {% if cart.item_count > 0 and customer.current_location.metafields.acme.delivery_date != blank %}
     <script>
       function getNextMondays(count = 7) {
   
@@ -310,12 +310,19 @@
         var count = 7;
     
         var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
+        console.log(tempBitValue.length,'cgklen');
+        if(tempBitValue.length == 0){
+          return;
+        }
         var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
         BitValue.split('');
     
         var checkCount = 0;
+        
         for (let i = 0; i < count; i++) {
             const dayOfWeek = Tomorrow.getDay();
+            console.log(BitValue,dayOfWeek,'{{customer.current_location.metafields.acme.delivery_date}}','sf');
+            console.log(BitValue[(dayOfWeek)],'BitValue[(dayOfWeek)]');
             if(BitValue[(dayOfWeek)] == '1'){
                 if(checkCount==0 && hasEstTimePassedToday(inputTime)){
                     count++;
@@ -334,6 +341,7 @@
             }
             Tomorrow.setDate(Tomorrow.getDate() + 1)
         }
+        return;
   
         var currentstore_month = (Today.getMonth() + 1);
         var currentDateFormat = `${Today.getFullYear()}-${currentstore_month < 10 ? ('0'+currentstore_month) : currentstore_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`
@@ -372,100 +380,104 @@
         
         return nowEstDate >= targetEstTime;
       }
+
+      document.addEventListener("DOMContentLoaded", (event) => {
   
-      var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
-      const inputTime = "{{settings.cut-time}}:00";
-      var store_month = (Today.getMonth() + 1);
-      var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
-  
-      {% if changed_day %}
-  
-        var check_change_line = false;
-        if(DateFormat != order_date){
-          check_change_line = true;
-        }else{
-          if(hasEstTimePassedToday(inputTime)){
+        var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+        const inputTime = "{{settings.cut-time}}:00";
+        var store_month = (Today.getMonth() + 1);
+        var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
+            
+        {% if changed_day %}
+    
+          var check_change_line = false;
+          if(DateFormat != order_date){
             check_change_line = true;
+          }else{
+            if(hasEstTimePassedToday(inputTime)){
+              check_change_line = true;
+            }
           }
-        }
-  
-        var update_main_arry = [];
-        if(check_change_line){
-          document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
-  
-          var get_new_date = getNextMondays();
-          var tempcurrentDay = get_new_date.pop();
-  
-          {% for item in cart.items %}
-            {% if item.properties['_addtocart_date'] %}
-              var date_array = [];
-              var prop = {}
-  
-              {% for item_prop in item.properties %}
-                {% assign val = item_prop.last | split:',' %}
-                {% if val.size > 1 %}
-                  prop['{{ item_prop.first }}']=get_new_date;
-                {% elsif item_prop.first == '_addtocart_date' %}
-                  prop['{{ item_prop.first }}']=tempcurrentDay
-                {% else %}
-                  prop['{{ item_prop.first }}']={{ item_prop.last }}
-                {% endif %}
-              {% endfor %}
-  
-              var cart_item_data = {
-                id: '{{item.key}}',
-                quantity: {{item.quantity}},
-                properties: prop
-              };
-              var UPDATE_OBJ = {
-                method: 'POST',
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify(cart_item_data)
-              };
-              update_main_arry.push(UPDATE_OBJ);
-            {% endif %}
-            {% if forloop.last %}
-              updateProp(update_main_arry);
-              if(update_main_arry.length == 0){
-                document.querySelector('[name="checkout"]').removeAttribute('disabled');
-              }
-            {% endif %}
-          {% endfor %}
-        }
-      {% elsif customer_b2B == true and changed_day == false %}
-        var check_change_line = true;
-  
-        var update_main_arry = [];
-        if(check_change_line){
-          document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
-  
-          var get_new_date = getNextMondays();
-          var tempcurrentDay = get_new_date.pop();
-  
-          {% for item in cart.items %}
-            console.log('item', {{item | json}});
-              var date_array = [];
-              var prop = {}
-  
-              prop['_delivery_date']=get_new_date;
-              prop['_addtocart_date']=tempcurrentDay;
-  
-              var cart_item_data = {
-                id: '{{item.key}}',
-                quantity: {{item.quantity}},
-                properties: prop
-              };
-              var UPDATE_OBJ = {
-                method: 'POST',
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify(cart_item_data)
-              };
-              update_main_arry.push(UPDATE_OBJ);
-              updateProp(update_main_arry);
-              {% break %}
-          {% endfor %}
-        }
-      {% endif %}
+    
+          var update_main_arry = [];
+          if(check_change_line){
+            document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+    
+            var get_new_date = getNextMondays();
+            var tempcurrentDay = get_new_date.pop();
+    
+            {% for item in cart.items %}
+              {% if item.properties['_addtocart_date'] %}
+                var date_array = [];
+                var prop = {}
+    
+                {% for item_prop in item.properties %}
+                  {% assign val = item_prop.last | split:',' %}
+                  {% if val.size > 1 %}
+                    prop['{{ item_prop.first }}']=get_new_date;
+                  {% elsif item_prop.first == '_addtocart_date' %}
+                    prop['{{ item_prop.first }}']=tempcurrentDay
+                  {% else %}
+                    prop['{{ item_prop.first }}']={{ item_prop.last }}
+                  {% endif %}
+                {% endfor %}
+    
+                var cart_item_data = {
+                  id: '{{item.key}}',
+                  quantity: {{item.quantity}},
+                  properties: prop
+                };
+                var UPDATE_OBJ = {
+                  method: 'POST',
+                  headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                  body: JSON.stringify(cart_item_data)
+                };
+                update_main_arry.push(UPDATE_OBJ);
+              {% endif %}
+              {% if forloop.last %}
+                updateProp(update_main_arry);
+                if(update_main_arry.length == 0){
+                  document.querySelector('[name="checkout"]').removeAttribute('disabled');
+                }
+              {% endif %}
+            {% endfor %}
+          }
+        {% elsif customer_b2B == true and changed_day == false %}
+          var check_change_line = true;
+    
+          var update_main_arry = [];
+          if(check_change_line){
+            document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+    
+            var get_new_date = getNextMondays();
+            var tempcurrentDay = get_new_date.pop();
+    
+            {% for item in cart.items %}
+              console.log('item', {{item | json}});
+                var date_array = [];
+                var prop = {}
+    
+                prop['_delivery_date']=get_new_date;
+                prop['_addtocart_date']=tempcurrentDay;
+    
+                var cart_item_data = {
+                  id: '{{item.key}}',
+                  quantity: {{item.quantity}},
+                  properties: prop
+                };
+                var UPDATE_OBJ = {
+                  method: 'POST',
+                  headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                  body: JSON.stringify(cart_item_data)
+                };
+                update_main_arry.push(UPDATE_OBJ);
+                updateProp(update_main_arry);
+                {% break %}
+            {% endfor %}
+          }
+        {% endif %}
+
+      })
       
     </script>
   {% endif %}

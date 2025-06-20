@@ -33,15 +33,15 @@
 
   assign b2b_product_in_stock = 'no'
   if customer and customer.b2b? and customer.company_available_locations_count > 0
-    assign b2b_product_in_stock = product.metafields.custom.availability | default: false    
+    assign b2b_product_in_stock = coll_prod.metafields.custom.availability | default: false    
   elsif b2b_tag == true
-    assign b2b_product_in_stock = product.metafields.custom.availability | default: false
+    assign b2b_product_in_stock = coll_prod.metafields.custom.availability | default: false
   endif
   if b2b_product_in_stock == 'true'
     assign b2b_product_in_stock = true
   endif
 
-  assign current_variant_ava = current_variant.available
+  assign current_variant_ava = _currentVaraint.available
   if b2b_product_in_stock != 'no'				
     if b2b_product_in_stock == true
       assign current_variant_ava = b2b_product_in_stock

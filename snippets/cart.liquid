@@ -316,7 +316,7 @@
         var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
         BitValue.split('');
     
-        var checkCount = 0;        
+        var checkCount = 0;
         for (let i = 0; i < count; i++) {
             const dayOfWeek = Tomorrow.getDay();
             if(BitValue[(dayOfWeek)] == '1'){
@@ -382,7 +382,7 @@
       const inputTime = "{{settings.cut-time}}:00";
       var store_month = (Today.getMonth() + 1);
       var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
-          
+  
       {% if changed_day %}
   
         var check_change_line = false;

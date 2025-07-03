@@ -107,6 +107,7 @@
     {% endfor %}
     
         {% assign sorted_array = sorted_data | split: '|||' %}
+        {% assign already_added = '' %}
         {% for entry in sorted_array %}
           {% assign entry_parts = entry | split: ':::' %}
           {% assign title = entry_parts[1] %}
@@ -116,24 +117,25 @@
             {% comment %} <div class="most-purchased-item"> {% endcomment %}
 
             {% for prod_object in section.settings.coll_obj.products %}
-              {% if prod_object.title == title %}
-                {% capture html_capture %}
-                  {{ html_capture }}
-                  {% render 'product-frequent-item', prod_obj: entry %}
-                {% endcapture %}
-              {% endif %}
-            {% endfor %}
-            
-            {% comment %} <div class="swiper-slide collection-product-card">
-              {% render 'product-frequent-item', prod_obj: entry %}
-            </div> {% endcomment %}
 
-            {% comment %}
-              {% if img != blank %}<img src="{{ img }}" alt="{{ title }}" width="100" height="100" />{% endif %}
-              <div class="item-title">{{ title }}</div>
-              <div class="item-qty">Purchased: {{ qty }}</div>
-            {% endcomment %}
-            {% comment %} </div> {% endcomment %}
+              {% unless already_added contains prod_object.title %}
+
+                {% if prod_object.title == title %}
+                  {% if already_added == '' %}
+                    {% assign already_added = prod_object.title  %}
+                  {% else %}
+                    {% assign already_added = already_added | append:',' | append:prod_object.title  %}
+                  {% endif %}
+                  
+                  {% capture html_capture %}
+                    {{ html_capture }}
+                    {% render 'product-frequent-item', prod_obj: entry %}
+                  {% endcapture %}
+                {% endif %}
+
+              {% endunless %}
+              
+            {% endfor %}
           {% endif %}
         {% endfor %}
       

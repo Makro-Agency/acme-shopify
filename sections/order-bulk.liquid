@@ -335,9 +335,9 @@
               {%- endcapture -%}
 
               {%- capture product_json_not_shared -%}
+                  {{ product_json_not_shared }}
                   {%- unless coll_prod.tags contains 'shared' -%}
                     {%- assign prod_notshared_counter = prod_notshared_counter | minus:1 -%}
-                      {{ product_json_not_shared }}
                       {%- assign product_with_metafield = coll_prod | json -%}
                       {%- assign product_with_metafield_temp = product_with_metafield | remove_last: '}' -%}
                       {%- if coll_prod.metafields.accentuate.available_online == true -%}
@@ -394,16 +394,8 @@
 
                 
             {% endfor %} {% endcomment %}
-            <script type="application/json" class="json-div">
-                [{{ product_json | strip }}]
-            </script>
-            <script type="application/json" class="json-div-shared">
-                [{{ product_json_shared | strip }}]
-            </script>
-            <script type="application/json" class="json-div-not-shared">
-                [{{ product_json_not_shared | strip }}]
-            </script>
         </div>
+        
     </div>
     <div class="pagination-wrapper ">
         <ul class="pagination-lists">
@@ -454,6 +446,16 @@
 {% endcapture %}
 
 {{ bundle-list }}
+
+<script type="application/json" class="json-div">
+    [{{ product_json | strip }}]
+</script>
+<script type="application/json" class="json-div-shared">
+    [{{ product_json_shared | strip }}]
+</script>
+<script type="application/json" class="json-div-not-shared">
+    [{{ product_json_not_shared | strip }}]
+</script>
 
 <script>
 
@@ -706,7 +708,8 @@
 
     json_val_shared.forEach(function(iteam){
         var _i = iteam;
-        if( _i.variants.length > 1 ){
+        _json_val_shared.push(_i);
+        {% comment %} if( _i.variants.length > 1 ){
             var _tempArray = [];    
             var _tempVars = _i.variants;    
             _tempVars.forEach(function(variant, index){
@@ -719,25 +722,26 @@
             });
         }else{
             _json_val_shared.push(_i);
-        }
+        } {% endcomment %}
     });
 
     json_val_not_shared.forEach(function(iteam){
-        var _i = iteam;
-        if( _i.variants.length > 1 ){
+        var _ins = iteam;
+        _json_val_not_shared.push(_ins);
+        {% comment %} if( _ins.variants.length > 1 ){
             var _tempArray = [];    
-            var _tempVars = _i.variants;    
+            var _tempVars = _ins.variants;    
             _tempVars.forEach(function(variant, index){
                 var _temp = [];
-                _temp.push(_i);
+                _temp.push(_ins);
                 _temp.variants = [];  
                 _temp.variants.push(variant);
                 _temp.custom = true;        
                 _json_val_not_shared.push(_temp);
             });
         }else{
-            _json_val_not_shared.push(_i);
-        }
+            _json_val_not_shared.push(_ins);
+        } {% endcomment %}
     });
 
     if(document.querySelector('.tab_wrapper') != null){

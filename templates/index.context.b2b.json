@@ -38,7 +38,8 @@
       "type": "most-purchased-items",
       "disabled": false,
       "settings": {
-        "title": "Your Most Purchased Items"
+        "title": "Your Most Purchased Items",
+        "coll_obj": "all"
       },
       "blocks": {},
       "block_order": [],

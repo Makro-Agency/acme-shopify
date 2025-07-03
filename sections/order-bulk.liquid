@@ -273,78 +273,91 @@
             {% assign product_json_shared = '' %}
             {% assign product_json_not_shared = '' %}
             {% assign prod_counter = 0 %}
+            {% assign prod_shared_counter = 0 %}
+            {% assign prod_notshared_counter = 0 %}
 
             {% for coll_prod in coll.products %}
                 {% assign prod_counter = prod_counter | plus:1 %}
+                {% if coll_prod.tags contains 'shared' %}
+                  {% assign prod_shared_counter = prod_shared_counter | plus:1 %}
+                {% endif %}
+                {% unless coll_prod.tags contains 'shared' %}
+                  {% assign prod_notshared_counter = prod_notshared_counter | plus:1 %}
+                {% endunless %}
             {% endfor %}
     
             {% assign _temp_count = 0 %}
-            {% for coll_prod in coll.products %}
-                {% assign _temp_count = _temp_count | plus:1 %}
-                {% capture product_json %}
-                    {{ product_json }}
-                    {% assign product_with_metafield = coll_prod | json %}
-                    {% assign product_with_metafield_temp = product_with_metafield | remove_last: '}' %}
-                    {% if coll_prod.metafields.accentuate.available_online == true %}
-                        {% assign meta1 = coll_prod.metafields.accentuate.available_online %}
-                    {% else %}
-                        {% assign meta1 = false %}
-                    {% endif %}
+            {%- for coll_prod in coll.products -%}
+              {%- assign _temp_count = _temp_count | plus:1 -%}
+              {%- capture product_json -%}
+                  {{ product_json }}
+                  {%- assign product_with_metafield = coll_prod | json -%}
+                  {%- assign product_with_metafield_temp = product_with_metafield | remove_last: '}' -%}
+                  {%- if coll_prod.metafields.accentuate.available_online == true -%}
+                      {%- assign meta1 = coll_prod.metafields.accentuate.available_online -%}
+                  {%- else -%}
+                      {%- assign meta1 = false -%}
+                  {%- endif -%}
 
-                    {% if coll_prod.metafields.custom.availability == true %}
-                        {% assign meta2 = coll_prod.metafields.custom.availability %}
-                    {% else %}
-                        {% assign meta2 = false %}
-                    {% endif %}
-                    {% assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json %}
-                    {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
-                    {{ product_with_metafield }}{% unless prod_counter == _temp_count %},{% endunless %}
-                {% endcapture %}
+                  {%- if coll_prod.metafields.custom.availability == true -%}
+                      {%- assign meta2 = coll_prod.metafields.custom.availability -%}
+                  {%- else -%}
+                      {%- assign meta2 = false -%}
+                  {%- endif -%}
+                  {%- assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json -%}
+                  {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
+                  {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
+                  {{ product_with_metafield }}{%- unless prod_counter == _temp_count -%},{%- endunless -%}
+              {%- endcapture -%}
 
-                {% capture product_json_shared %}
-                    {{ product_json_shared }}
-                    {% if coll_prod.tags contains 'shared' %}
-                        {% assign product_with_metafield = coll_prod | json %}
-                        {% assign product_with_metafield_temp = product_with_metafield | remove_last: '}' %}
-                        {% if coll_prod.metafields.accentuate.available_online == true %}
-                            {% assign meta1 = coll_prod.metafields.accentuate.available_online %}
-                        {% else %}
-                            {% assign meta1 = false %}
-                        {% endif %}
+              {%- capture product_json_shared -%}
+                  {{ product_json_shared }}
+                  {%- if coll_prod.tags contains 'shared' -%}
+                      {%- assign prod_shared_counter = prod_shared_counter | minus:1 -%}
+                      {%- assign product_with_metafield = coll_prod | json -%}
+                      {%- assign product_with_metafield_temp = product_with_metafield | remove_last: '}' -%}
+                      {%- if coll_prod.metafields.accentuate.available_online == true -%}
+                          {%- assign meta1 = coll_prod.metafields.accentuate.available_online -%}
+                      {%- else -%}
+                          {%- assign meta1 = false -%}
+                      {%- endif -%}
 
-                        {% if coll_prod.metafields.custom.availability == true %}
-                            {% assign meta2 = coll_prod.metafields.custom.availability %}
-                        {% else %}
-                            {% assign meta2 = false %}
-                        {% endif %}
-                        {% assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json %}
-                        {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
-                        {{ product_with_metafield }}
-                    {% endif %}
-                {% endcapture %}
+                      {%- if coll_prod.metafields.custom.availability == true -%}
+                          {%- assign meta2 = coll_prod.metafields.custom.availability -%}
+                      {%- else -%}
+                          {%- assign meta2 = false -%}
+                      {%- endif -%}
+                      {%- assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json -%}
+                      {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
+                      {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
+                      {{ product_with_metafield }}{%- if prod_shared_counter > 0 -%},{%- endif -%}
+                  {%- endif -%}
+              {%- endcapture -%}
 
-                {% capture product_json_not_shared %}
-                    {% unless coll_prod.tags contains 'shared' %}
-                        {{ product_json_not_shared }}
-                        {% assign product_with_metafield = coll_prod | json %}
-                        {% assign product_with_metafield_temp = product_with_metafield | remove_last: '}' %}
-                        {% if coll_prod.metafields.accentuate.available_online == true %}
-                            {% assign meta1 = coll_prod.metafields.accentuate.available_online %}
-                        {% else %}
-                            {% assign meta1 = false %}
-                        {% endif %}
+              {%- capture product_json_not_shared -%}
+                  {%- unless coll_prod.tags contains 'shared' -%}
+                    {%- assign prod_notshared_counter = prod_notshared_counter | minus:1 -%}
+                      {{ product_json_not_shared }}
+                      {%- assign product_with_metafield = coll_prod | json -%}
+                      {%- assign product_with_metafield_temp = product_with_metafield | remove_last: '}' -%}
+                      {%- if coll_prod.metafields.accentuate.available_online == true -%}
+                          {%- assign meta1 = coll_prod.metafields.accentuate.available_online -%}
+                      {%- else -%}
+                          {%- assign meta1 = false -%}
+                      {%- endif -%}
 
-                        {% if coll_prod.metafields.custom.availability == true %}
-                            {% assign meta2 = coll_prod.metafields.custom.availability %}
-                        {% else %}
-                            {% assign meta2 = false %}
-                        {% endif %}
-                        {% assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json %}
-                        {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
-                        {{ product_with_metafield }}{% unless prod_counter == _temp_count %},{% endunless %}
-                    {% endunless %}
-                {% endcapture %}
-            {% endfor %}
+                      {%- if coll_prod.metafields.custom.availability == true -%}
+                          {%- assign meta2 = coll_prod.metafields.custom.availability -%}
+                      {%- else -%}
+                          {%- assign meta2 = false -%}
+                      {%- endif -%}
+                      {%- assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json -%}
+                      {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
+                      {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
+                      {{ product_with_metafield }}{%- if prod_notshared_counter > 0 -%},{%- endif -%}
+                  {%- endunless -%}
+              {%- endcapture -%}
+            {%- endfor -%}
 
             {% comment %} {% for coll_prod in coll.products limit:10 %}
                 {% assign shared = false %}

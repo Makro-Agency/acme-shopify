@@ -248,3 +248,11 @@ span.addbtn svg {
   }
 /* cart footer  */
 
+.w-value {
+  text-transform: none;
+  letter-spacing: -.01rem;
+  font-family: SaaSeriesED W05 Regular;
+  font-size: 1.375rem;
+  line-height: 1.5rem;
+  margin-top: 20px;
+} 

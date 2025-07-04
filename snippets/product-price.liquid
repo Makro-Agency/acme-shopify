@@ -121,7 +121,7 @@
   </div>
   
     {% if product.metafields.custom.weight != blank %}
-      <div class="w-value">{{ product.metafields.custom.weight }}{% if product.metafields.custom.unit_of_measurement != blank %}/{{product.metafields.custom.unit_of_measurement}}{% endif %}</div>
+      <div class="w-value">{{ product.metafields.custom.weight }}{% if product.metafields.custom.unit_of_measurement != blank %} {{product.metafields.custom.unit_of_measurement}}{% endif %}</div>
     {% endif %}
   
 </div>

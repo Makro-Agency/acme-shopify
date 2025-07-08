@@ -1,8 +1,9 @@
 {% if section.settings.coll_obj != blank %}
+
+  
 {{ 'most-purchased-items-section.css' | asset_url | stylesheet_tag }}
 <div class="most-purchased-items-section container hide">
   {% assign html_capture = blank %}
-  
   {% if customer and customer.orders.size > 0 %}
     <script>document.querySelector('.most-purchased-items-section').classList.remove('hide');</script>
     {% assign latest_orders = customer.orders | sort: 'created_at' | reverse | slice: 0, 20 %}

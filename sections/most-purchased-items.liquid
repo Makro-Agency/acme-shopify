@@ -117,8 +117,6 @@
           {% if qty != '0' and title != blank %}
             {% comment %} <div class="most-purchased-item"> {% endcomment %}
 
-            ==>{{ title }}<br>
-
             {% for prod_object in section.settings.coll_obj.products %}
 
               {% unless already_added contains prod_object.title %}

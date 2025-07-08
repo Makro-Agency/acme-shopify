@@ -616,6 +616,7 @@
       } {% endcomment %}
   
       var _requiredFiledCount = this.closest('form').querySelectorAll('*[required]').length, _FiledFilledCount = 0;
+      _requiredFiledCount = _requiredFiledCount + this.closest('form').querySelectorAll('.check-list').length;
       this.closest('form').querySelectorAll('*[required]').forEach(function(ele, eleIndex, eleArray){
         /*if( ele.tagName == "SELECT" ){console.log(ele.tagName, ele.value, ele);}*/
         
@@ -627,7 +628,7 @@
             ele.closest('.form-fieldset').nextElementSibling.style.display = 'block';
           }else{
             if( ele.closest('.form-fieldset') && ele.closest('.form-fieldset').nextElementSibling.style.display == 'block'){
-              ele.closest('.form-fieldset').nextElementSibling.style.display == 'none';
+              ele.closest('.form-fieldset').nextElementSibling.style.display = 'none';
             }
             _FiledFilledCount += 1;
           }
@@ -640,6 +641,17 @@
 
         
       });
+
+      this.closest('form').querySelectorAll('.check-list').forEach(function(ele, eleIndex, eleArray){
+        
+        if(ele.querySelectorAll('input:checked').length > 0){
+          _FiledFilledCount += 1;
+          ele.nextElementSibling.style.display = 'none';
+        }else{
+          ele.nextElementSibling.style.display = 'block';
+        }
+      })
+
       console.log(_requiredFiledCount, _FiledFilledCount);
       if( _requiredFiledCount != _FiledFilledCount ){
         _passwrodMatch = false;

@@ -39,7 +39,7 @@
       "disabled": false,
       "settings": {
         "title": "Your Most Purchased Items",
-        "coll_obj": "all"
+        "coll_obj": "master-product-collection"
       },
       "blocks": {},
       "block_order": [],

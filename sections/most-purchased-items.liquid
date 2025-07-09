@@ -2,6 +2,7 @@
 
   
 {{ 'most-purchased-items-section.css' | asset_url | stylesheet_tag }}
+
 <div class="most-purchased-items-section container hide">
   {% assign html_capture = blank %}
   {% if customer and customer.orders.size > 0 %}
@@ -38,6 +39,8 @@
       {% endfor %}
     {% endfor %}
 
+    
+
     {% assign product_data_array = product_data | split: '|||' %}
     {% assign updated_product_data = '' %}
     {% for entry in product_data_array %}
@@ -55,6 +58,7 @@
         {% for item in order.line_items %}
           {% assign con_int = prod_id | plus: 0 %}
           {% if item.product.id == con_int %}
+            
             {% assign total_qty = total_qty | plus: item.quantity %}
           {% endif %}
         {% endfor %}
@@ -85,12 +89,15 @@
     {% endfor %}
     {% assign sorted_data = '' %}
     {% assign used_indexes = '' %}
+    
 
-    {% for i in (0..product_data_array.size) %}
+    {% comment %} {% for i in (0..product_data_array.size) %}
+      
       {% assign max_qty = -1 %}
       {% assign max_idx = -1 %}
       {% assign updated_array = updated_product_data | split: '|||' %}
       {% for j in (0..updated_array.size) %}
+        
         {% if used_indexes contains j %}{% continue %}{% endif %}
         {% assign entry = updated_array[j] %}
         {% assign entry_parts = entry | split: ':::' %}
@@ -98,34 +105,38 @@
         {% if qty > max_qty %}
           {% assign max_qty = qty %}
           {% assign max_idx = j %}
+          {% break %}
         {% endif %}
       {% endfor %}
+      
       {% if max_idx != -1 %}
         {% if sorted_data != '' %}{% assign sorted_data = sorted_data | append: '|||' %}{% endif %}
         {% assign sorted_data = sorted_data | append: updated_array[max_idx] %}
         {% assign used_indexes = used_indexes | append: ',' | append: max_idx %}
       {% endif %}
-    {% endfor %}
+    {% endfor %} {% endcomment %}
     
-        {% assign sorted_array = sorted_data | split: '|||' %}
+        {% comment %} {% assign sorted_array = sorted_data | split: '|||' %} {% endcomment %}
+        {% assign sorted_array = updated_product_data | split: '|||' %}
         {% assign already_added = '' %}
         {% for entry in sorted_array %}
           {% assign entry_parts = entry | split: ':::' %}
-          {% assign title = entry_parts[1] %}
+          {% assign title = entry_parts[0] | strip | plus:0 %}
           {% assign img = entry_parts[2] %}
           {% assign qty = entry_parts[3] %}
           {% if qty != '0' and title != blank %}
             {% comment %} <div class="most-purchased-item"> {% endcomment %}
 
-            {% for prod_object in section.settings.coll_obj.products %}
+            
+            {% for prod_object in section.settings.coll_obj.products %} 
 
-              {% unless already_added contains prod_object.title %}
+              {% unless already_added contains prod_object.id %}
 
-                {% if prod_object.title == title %}
+                {% if prod_object.id == title %}
                   {% if already_added == '' %}
-                    {% assign already_added = prod_object.title  %}
+                    {% assign already_added = prod_object.id  %}
                   {% else %}
-                    {% assign already_added = already_added | append:',' | append:prod_object.title  %}
+                    {% assign already_added = already_added | append:',' | append:prod_object.id  %}
                   {% endif %}
                   
                   {% capture html_capture %}
@@ -186,6 +197,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", (event) => {
+    var parent = document.querySelector('.most-purchased-items-list .swiper-wrapper');
+    var cards = Array.from(parent.querySelectorAll('.collection-product-card'));
+
+    cards.sort(function(a, b) {
+        return Number(b.getAttribute('data-qty')) - Number(a.getAttribute('data-qty'));
+    });
+
+    cards.forEach(function(card) {
+      parent.removeChild(card);
+    });
+
+    cards.forEach(function(card) {
+      parent.appendChild(card);
+    });
+
     var swiper = new Swiper(".most-purchased-product-list", {
       slidesPerView: 1,
       spaceBetween: 20,

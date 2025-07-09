@@ -101,7 +101,7 @@
               {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
               {% assign item_vendor = item.product.vendor %}
               {% assign item_v_id = item.variant_id %}
-              {% assign item_v_measure = item.product.metafields.accentuate.unit_of_measure %}
+              {% assign item_v_measure = item.product.metafields.custom.unit_of_measurement %}
               {% assign item_handle = item.product.handle %}
 
               {% for prod_object in collection_get.products %}
@@ -124,7 +124,7 @@
                                 {% assign meta2 = false %}
                             {% endif %}
                             
-                            {% assign meta3 = item.product.metafields.accentuate.unit_of_measure | json %}
+                            {% assign meta3 = item.product.metafields.custom.unit_of_measurement | json %}
                             {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
                             {{ product_with_metafield }}
                         {% endcapture %}
@@ -204,6 +204,7 @@
             {% if qty > max_qty %}
               {% assign max_qty = qty %}
               {% assign max_idx = j %}
+              {% break %}
             {% endif %}
           {% endfor %}
           {% if max_idx != -1 %}
@@ -304,7 +305,7 @@
                   {%- else -%}
                       {%- assign meta2 = false -%}
                   {%- endif -%}
-                  {%- assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json -%}
+                  {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%}
                   {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
                   {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                   {{ product_with_metafield }}{%- unless prod_counter == _temp_count -%},{%- endunless -%}
@@ -327,7 +328,7 @@
                       {%- else -%}
                           {%- assign meta2 = false -%}
                       {%- endif -%}
-                      {%- assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json -%}
+                      {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%}
                       {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
                       {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                       {{ product_with_metafield }}{%- if prod_shared_counter > 0 -%},{%- endif -%}
@@ -351,7 +352,7 @@
                       {%- else -%}
                           {%- assign meta2 = false -%}
                       {%- endif -%}
-                      {%- assign meta3 = coll_prod.metafields.accentuate.unit_of_measure | json -%}
+                      {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%}
                       {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
                       {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                       {{ product_with_metafield }}{%- if prod_notshared_counter > 0 -%},{%- endif -%}
@@ -744,6 +745,7 @@
         } {% endcomment %}
     });
 
+    console.log(json_data_array,'json_data_array')
     if(document.querySelector('.tab_wrapper') != null){
         if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
             Array.prototype.push.apply(json_data_array,_json_val_not_shared);
@@ -972,7 +974,6 @@
     }
 
     function appendItems(searchedJSON){
-        console.log('apzpzend')
         var finl_html = '';
         var _pageLimit = searchedJSON.length > 10 ? 9 : (searchedJSON.length - 1);
         for(var i=0;i<=_pageLimit;i++){
@@ -1271,7 +1272,7 @@
             var selector_json = json_val;
         }
         
-        if(document.querySelector('li.is-selected')?.innerText.trim() == 'Frequently Purchase'){
+        if(document.querySelector('li.is-selected')?.innerText.trim() == 'Frequently Bought'){
             selector_json = UniqueFr_item;
         }
         for(var i=Number(split_val[0]);i<=Number(split_val[1]);i++){
@@ -1349,7 +1350,7 @@
     });
 
     {% if prod_found_count == 0 %}
-        document.querySelector('li[data-title="Frequently Purchase"]').classList.add('hide');
+        document.querySelector('li[data-title="Frequently Bought"]').classList.add('hide');
     {% endif %}
 
     document.querySelector('.select-styled').addEventListener('click',function(){
@@ -1376,12 +1377,12 @@
             var sortType = li_wrap.textContent;
 
             if(document.querySelector('.tab_wrapper') != null){
-                console.log('in');
+                {% comment %} console.log('in'); {% endcomment %}
                 if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
-                    console.log('1');
+                    {% comment %} console.log('1'); {% endcomment %}
                     var sortJson = json_searched.length > 0 ? json_searched : _json_val_not_shared;
                 }else{
-                    console.log('2');
+                    {% comment %} console.log('2'); {% endcomment %}
                     var sortJson = json_searched.length > 0 ? json_searched : _json_val_shared;
                 }
                 
@@ -1390,9 +1391,9 @@
                 var sortJson = json_searched.length > 0 ? json_searched : json_val;
             }
             {% comment %} var sortJson = json_searched.length > 0 ? json_searched : json_val; {% endcomment %}
-            if(sortType === "Alphabetically: A->Z") {
+            if(sortType === "Alphabetically: A-Z") {
               sortJson.sort((a, b) => (a.title < b.title) ? -1 : 1);
-            } else if(sortType === "Alphabetically: Z->A") {
+            } else if(sortType === "Alphabetically: Z-A") {
               sortJson.sort((a, b) => (a.title > b.title) ? -1 : 1);
             } else if(sortType === "Date: old to new") {
               sortJson.sort((a, b) => {
@@ -1410,7 +1411,7 @@
               sortJson.sort((a, b) => a.price - b.price);
             } else if(sortType === "Price: high to low") {
               sortJson.sort((a, b) => b.price - a.price);
-            } else if(sortType === "Frequently Purchase") {
+            } else if(sortType === "Frequently Bought") {
               var sortJson = json_searched.length > 0 ? json_searched : UniqueFr_item;
             }
 

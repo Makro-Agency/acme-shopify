@@ -252,7 +252,19 @@ span.addbtn svg {
   text-transform: none;
   letter-spacing: -.01rem;
   font-family: SaaSeriesED W05 Regular;
-  font-size: 1.375rem;
-  line-height: 1.5rem;
-  margin-top: 20px;
-} 
+  font-size: 22px;
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  padding-left: 12px;
+}
+
+.w-value:before {
+  content: '';
+  width: 1px;
+  background-color: #14315c;
+  position: absolute;
+  left: 0;
+  height: 72.72%;
+  top: calc(50% - 72.72% / 2);
+}

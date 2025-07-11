@@ -106,7 +106,7 @@
 
               {% for prod_object in collection_get.products %}
 
-                {% if prod_object.title == item.product.title %}
+                {% if prod_object.id == item.product.id %}
                     {% assign prod_found_count = prod_found_count | plus:1 %}
                     <script>
                         {% capture product_obj_json %}
@@ -745,7 +745,7 @@
         } {% endcomment %}
     });
 
-    console.log(json_data_array,'json_data_array')
+    //console.log(json_data_array,'json_data_array')
     if(document.querySelector('.tab_wrapper') != null){
         if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
             Array.prototype.push.apply(json_data_array,_json_val_not_shared);
@@ -755,7 +755,6 @@
     }else{
         Array.prototype.push.apply(json_data_array,_json_val);
     }
-    
     var key = 'id';
     var UniqueFr_item = [...new Map(json_data_array.map(item =>{
         
@@ -772,7 +771,7 @@
     var select_eles = document.querySelectorAll('.bundle-search-bar .custom-select select');
     select_eles.forEach(select_ele => {
         select_ele.addEventListener('change', function(){
-            console.log('in');
+            {% comment %} console.log('in'); {% endcomment %}
             var sortType = this.value;
             if( sortType == '' ) return;
             
@@ -1379,15 +1378,13 @@
             if(document.querySelector('.tab_wrapper') != null){
                 {% comment %} console.log('in'); {% endcomment %}
                 if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
-                    {% comment %} console.log('1'); {% endcomment %}
                     var sortJson = json_searched.length > 0 ? json_searched : _json_val_not_shared;
                 }else{
-                    {% comment %} console.log('2'); {% endcomment %}
                     var sortJson = json_searched.length > 0 ? json_searched : _json_val_shared;
                 }
                 
             }else{
-                console.log('out');
+                {% comment %} console.log('out'); {% endcomment %}
                 var sortJson = json_searched.length > 0 ? json_searched : json_val;
             }
             {% comment %} var sortJson = json_searched.length > 0 ? json_searched : json_val; {% endcomment %}
@@ -1412,7 +1409,30 @@
             } else if(sortType === "Price: high to low") {
               sortJson.sort((a, b) => b.price - a.price);
             } else if(sortType === "Frequently Bought") {
-              var sortJson = json_searched.length > 0 ? json_searched : UniqueFr_item;
+              if(json_searched.length > 0){
+                var sortJson = json_searched;
+              }else{
+                if(document.querySelector('.tab_wrapper') != null){
+                    var result_data = UniqueFr_item.filter(function(element){
+                        if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+                            if (element.tags.indexOf('shared') == -1){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }else{
+                            if (element.tags.indexOf('shared') > -1){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    });
+                    var sortJson = result_data;
+                }else{
+                    var sortJson = UniqueFr_item;
+                }
+              }
             }
 
             document.querySelector('.mini-cart-sticky').classList.remove('active');
@@ -1426,7 +1446,7 @@
         var gettype = ele.dataset.type;
         ele.closest('.view-btn').querySelector('span.active').classList.remove('active');
         ele.classList.add('active');
-        console.log('in',gettype);
+        {% comment %} console.log('in',gettype); {% endcomment %}
         if(gettype == 'grid'){
             document.querySelector('.product-list').classList.add('grid');
         }else{

@@ -7,20 +7,19 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
-    "parent": "page.order-bulk.json",
-    "context": {
-      "b2b": true
-    },
-    "sections": {
-      "order-bulk": {
-        "settings": {
-            "title": "Wholesale Order Form",
-            "des": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco",
-            "coll": "master-product-collection"
-        },
-        "blocks": {}
-      }
+{
+  "parent": "page.order-bulk.json",
+  "context": {
+    "b2b": true
+  },
+  "sections": {
+    "order-bulk": {
+      "settings": {
+        "title": "Wholesale Order Form",
+        "des": "Add products to your order below.",
+        "coll": "master-product-collection"
+      },
+      "blocks": {}
     }
   }
-  
+}

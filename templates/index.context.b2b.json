@@ -13,6 +13,17 @@
     "b2b": true
   },
   "sections": {
+    "most_purchased_items_mmCRi": {
+      "type": "most-purchased-items",
+      "disabled": false,
+      "settings": {
+        "title": "Your Most Purchased Items",
+        "coll_obj": "master-product-collection"
+      },
+      "blocks": {},
+      "block_order": [],
+      "name": "Most Purchased Items"
+    },
     "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3": {
       "settings": {
         "body": "<p>20 grams protein per serving. Ready to eat, right out of the pack. Wild caught and sustainably sourced. What else could you need?!</p>"
@@ -34,16 +45,20 @@
       "settings": {},
       "blocks": {}
     },
-    "most_purchased_items_mmCRi": {
-      "type": "most-purchased-items",
-      "disabled": false,
-      "settings": {
-        "title": "Your Most Purchased Items",
-        "coll_obj": "master-product-collection"
-      },
-      "blocks": {},
-      "block_order": [],
-      "name": "Most Purchased Items"
+    "e8e1192d-b2fc-42c2-835a-ec6cdf0dd392": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "e42e5ee8-81f2-4dca-9b66-d5d3d57d7993": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "b2049783-56d5-4f1f-9033-f993b51af154": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
     }
   },
   "order": [

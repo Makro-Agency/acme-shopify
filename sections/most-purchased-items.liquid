@@ -27,7 +27,8 @@
           {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
           {% assign item_vendor = item.product.vendor %}
           {% assign item_v_id = item.variant_id %}
-          {% assign item_v_measure = item.product.metafields.custom.unit_of_measurement %}
+          {% comment %} {% assign item_v_measure = item.product.metafields.custom.unit_of_measurement %} {% endcomment %}
+          {% assign item_v_measure = item.product.metafields.custom.price_uom %}
           {% assign item_handle = item.product.handle %}
           {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id | append: ':::' | append: item_v_measure | append: ':::' | append: item_handle %}
           {% if product_data == '' %}

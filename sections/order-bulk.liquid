@@ -101,7 +101,8 @@
               {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
               {% assign item_vendor = item.product.vendor %}
               {% assign item_v_id = item.variant_id %}
-              {% assign item_v_measure = item.product.metafields.custom.unit_of_measurement %}
+              {% comment %} {% assign item_v_measure = item.product.metafields.custom.unit_of_measurement %} {% endcomment %}
+              {% assign item_v_measure = item.product.metafields.custom.price_uom %}
               {% assign item_handle = item.product.handle %}
 
               {% for prod_object in collection_get.products %}
@@ -124,7 +125,8 @@
                                 {% assign meta2 = false %}
                             {% endif %}
                             
-                            {% assign meta3 = item.product.metafields.custom.unit_of_measurement | json %}
+                            {% comment %} {% assign meta3 = item.product.metafields.custom.unit_of_measurement | json %} {% endcomment %}
+                            {% assign meta3 = item.product.metafields.custom.price_uom | json %}
                             {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
                             {{ product_with_metafield }}
                         {% endcapture %}
@@ -305,7 +307,8 @@
                   {%- else -%}
                       {%- assign meta2 = false -%}
                   {%- endif -%}
-                  {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%}
+                  {% comment %} {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%} {% endcomment %}
+                  {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%}
                   {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
                   {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                   {{ product_with_metafield }}{%- unless prod_counter == _temp_count -%},{%- endunless -%}
@@ -328,7 +331,8 @@
                       {%- else -%}
                           {%- assign meta2 = false -%}
                       {%- endif -%}
-                      {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%}
+                      {% comment %} {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%} {% endcomment %}
+                      {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%}
                       {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
                       {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                       {{ product_with_metafield }}{%- if prod_shared_counter > 0 -%},{%- endif -%}
@@ -352,7 +356,8 @@
                       {%- else -%}
                           {%- assign meta2 = false -%}
                       {%- endif -%}
-                      {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%}
+                      {% comment %} {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%} {% endcomment %}
+                      {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%}
                       {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
                       {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                       {{ product_with_metafield }}{%- if prod_notshared_counter > 0 -%},{%- endif -%}

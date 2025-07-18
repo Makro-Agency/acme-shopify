@@ -77,10 +77,12 @@
     <div class="price__regular">
         <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
         <span class="price-item price-item--regular" data-regular-price>
-          {{ money_price }}{% if has_b2b %}{% if product.metafields.custom.unit_of_measurement != blank %}/{{ product.metafields.custom.unit_of_measurement }}{% endif %}{% endif %}
+          {{ money_price }}{% if has_b2b %}{% if product.metafields.custom.price_uom != blank %}/{{ product.metafields.custom.price_uom }}{% endif %}{% endif %}
         </span>
-        {% if product.metafields.custom.weight != blank %}
-          <div class="w-value">{{ product.metafields.custom.weight }}{% if product.metafields.custom.unit_of_measurement != blank %} {{product.metafields.custom.unit_of_measurement}}{% endif %}</div>
+        {% if has_b2b %}
+          {% if product.metafields.custom.weight != blank %}
+            <div class="w-value">{{ product.metafields.custom.weight }}{% if product.metafields.custom.unit_of_measurement != blank %} {{product.metafields.custom.unit_of_measurement}}{% endif %}</div>
+          {% endif %}
         {% endif %}
     </div>
     <div class="price__sale">

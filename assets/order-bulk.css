@@ -228,6 +228,7 @@ li.page-item.disabled {
     height: 80px;
     flex-shrink: 0;
     aspect-ratio: 1/1;
+    object-fit: contain;
 }
 .quantity-btn-wrap {
     display: flex;

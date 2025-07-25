@@ -786,6 +786,15 @@ span.title a{
     color: #fff;
 }
 
+.product-list.grid+.pagination-wrapper .pagination-lists .prev-item {
+    margin-right: 0;
+}
+
+.product-list.grid+.pagination-wrapper .pagination-lists {
+    justify-content: center;
+    gap: 5px;
+}
+
 @media screen and (min-width: 750px){
     .order-bulk .pagination-wrapper { margin-top: 2rem; }
     .pagination-lists .page-item a {

@@ -1014,6 +1014,8 @@
         document.querySelector('.pagination-lists').innerHTML = _li;
         if( numberOfPages == 1 ){
             document.querySelector('.pagination-lists .next-item').classList.add('disabled');
+        }else{
+            document.querySelector('.pagination-lists .next-item').classList.remove('disabled');
         }
     }
 
@@ -1485,7 +1487,12 @@
             finl_html += appendHTML(selector_json[i]);
         }
         document.querySelector('.product-item-wrapper').innerHTML = finl_html;
-        genratePagination(selector_json);
+        if(finl_html == ''){
+            document.querySelector('.pagination-wrapper').classList.add('hide');
+        }else{
+            document.querySelector('.pagination-wrapper').classList.remove('hide');
+            genratePagination(selector_json);
+        }
     }
 
     addEventListener("DOMContentLoaded", (event) => {

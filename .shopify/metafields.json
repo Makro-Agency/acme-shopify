@@ -64,6 +64,16 @@
         "name": "single_line_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "test_location_id_metafield",
+      "namespace": "custom",
+      "name": "Test Location ID Metafield",
+      "description": "",
+      "type": {
+        "name": "id",
+        "category": "ID"
+      }
     }
   ],
   "location": [
@@ -75,6 +85,16 @@
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
+      }
+    },
+    {
+      "key": "test_location_id_metafield_loc",
+      "namespace": "custom",
+      "name": "Test Location ID Metafield Loc",
+      "description": "",
+      "type": {
+        "name": "id",
+        "category": "ID"
       }
     }
   ],

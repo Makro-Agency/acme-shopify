@@ -14,19 +14,21 @@
                 <a id="mini-nav--details" class="mini-nav__link header-6 mb-3" href="#mini-nav__details">Details</a>
             {% endif %}
 
-            {% if related_on != null %}
-                <a id="mini-nav--recipes" class="mini-nav__link header-6 mb-3" href="#mini-nav__recipes">Related</a>
-            {% endif %}
+            {% unless customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+                {% if related_on != null %}
+                    <a id="mini-nav--recipes" class="mini-nav__link header-6 mb-3" href="#mini-nav__recipes">Related</a>
+                {% endif %}
 
-            {% if product.metafields.accentuate.media_gallery_handle != blank %}
-                <a id="mini-nav--media" class="mini-nav__link header-6 mb-3" href="#mini-nav__media">Media</a>
-            {% endif %}
+                {% if product.metafields.accentuate.media_gallery_handle != blank %}
+                    <a id="mini-nav--media" class="mini-nav__link header-6 mb-3" href="#mini-nav__media">Media</a>
+                {% endif %}
 
-            <a id="mini-nav--recommended" class="mini-nav__link header-6 mb-3" href="#mini-nav__recommended">Recommended</a>
+                <a id="mini-nav--recommended" class="mini-nav__link header-6 mb-3" href="#mini-nav__recommended">Recommended</a>
 
-            <a id="mini-nav--faqs" class="mini-nav__link header-6 mb-3" href="#mini-nav__faqs">FAQs</a>
-            {% if faqs_on != null %}
-            {% endif %}
+                <a id="mini-nav--faqs" class="mini-nav__link header-6 mb-3" href="#mini-nav__faqs">FAQs</a>
+                {% if faqs_on != null %}
+                {% endif %}
+            {% endunless %}
         </div>
     </div>
 </div>

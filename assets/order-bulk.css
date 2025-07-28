@@ -730,6 +730,21 @@ span.title a{
 
 
 /* pagination css */
+
+.more-pages {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+}
+.more-pages .pagination-button {
+    border: 1px solid #14315c;
+    padding: 10px 20px;
+    border-radius: 100px;
+}
+.pagination-wrapper {
+    display: none !important;
+}
+
 .order-bulk .pagination-wrapper { margin-top: 1.875rem; }
 .pagination-lists {
     padding: 0;

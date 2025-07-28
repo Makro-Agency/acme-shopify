@@ -409,6 +409,14 @@
         </div>
         
     </div>
+    <ajaxinate-loading>
+        <div class="more-pages">
+            <div class="pagination-button">
+                <span>Load More</span>
+                <span class="hidden loader">loader</span>
+            </div>
+        </div>
+    </ajaxinate-loading>
     <div class="pagination-wrapper ">
         <ul class="pagination-lists">
             {%- capture _prevItem -%}
@@ -995,6 +1003,10 @@
             document.querySelector('.pagination-wrapper .page-item.active').classList.remove('active');
             document.querySelector('.pagination-wrapper .page-item[data-index="1"]').classList.add('active');
         }
+        if(document.querySelector('ajaxinate-loading') && document.querySelector('ajaxinate-loading').classList.contains('hide') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length != 3){
+            document.querySelector('ajaxinate-loading').classList.remove('hide');
+        }
+        
         genratePagination(searchedJSON);
     }
 
@@ -1291,15 +1303,17 @@
             
             finl_html += appendHTML(selector_json[i]);
         }
-        document.querySelector('.product-item-wrapper').innerHTML = finl_html;
+        document.querySelector('.product-item-wrapper').innerHTML += finl_html;
         if(paginate_item.getAttribute('end') != null){
             paginate_item.closest('.pagination-lists').querySelector('.page-item.next-item').classList.add('disabled');
+            document.querySelector('ajaxinate-loading') && document.querySelector('ajaxinate-loading').classList.add('hide');
         }
         if(paginate_item.getAttribute('data-index') == '1'){
             paginate_item.closest('.pagination-lists').querySelector('.page-item.prev-item').classList.add('disabled');
+            document.querySelector('ajaxinate-loading') && document.querySelector('ajaxinate-loading').classList.add('hide');
         }
-        var store_scroll = document.querySelector('.bundle-search-bar').offsetTop - 100;
-        window.scrollTo({top: store_scroll, behavior: 'smooth'});
+        {% comment %} var store_scroll = document.querySelector('.bundle-search-bar').offsetTop - 100;
+        window.scrollTo({top: store_scroll, behavior: 'smooth'}); {% endcomment %}
         return true;
     };
 
@@ -1503,7 +1517,39 @@
 
     addEventListener("DOMContentLoaded", (event) => {
         LoadData(0,9);
+        customElements.define('ajaxinate-loading', infiniteCardLoading);
     })
+
+    class infiniteCardLoading extends HTMLElement {
+        constructor() {
+            super();
+            
+            //this.url = this.querySelector('[data-loading-type]').getAttribute('href');
+            this.callbackForViewPort();
+        }
+        
+        callbackForViewPort(){
+            const handleIntersection = (entries, observer) => {
+                if (!entries[0].isIntersecting) return;
+                observer.unobserve(this);
+                this.onPaginationChange();
+            };
+            new IntersectionObserver(handleIntersection.bind(this), { rootMargin: '0px 0px 30px 0px' }).observe(this);
+        }
+        
+        onPaginationChange(event){
+            console.log('call pagination');
+            if(event) event.preventDefault();
+            if(!document.querySelector('.pagination-wrapper .pagination-lists .next-item').classList.contains('disabled')){
+                document.querySelector('.pagination-wrapper .pagination-lists .next-item').click();
+                this.callbackForViewPort();
+            }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 3){
+                document.querySelector('ajaxinate-loading').classList.add('hide');
+            }
+            this.querySelector('.pagination-button .loader').classList.remove('hidden');
+        }
+    
+    }
 
 </script>
 

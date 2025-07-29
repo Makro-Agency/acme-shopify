@@ -1540,10 +1540,12 @@
         onPaginationChange(event){
             console.log('call pagination');
             if(event) event.preventDefault();
-            if(!document.querySelector('.pagination-wrapper .pagination-lists .next-item').classList.contains('disabled')){
+            if(document.querySelector('.pagination-wrapper .pagination-lists .next-item').classList.contains('disabled') == false){
                 document.querySelector('.pagination-wrapper .pagination-lists .next-item').click();
                 this.callbackForViewPort();
             }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 3){
+                document.querySelector('ajaxinate-loading').classList.add('hide');
+            }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 2){
                 document.querySelector('ajaxinate-loading').classList.add('hide');
             }
             this.querySelector('.pagination-button .loader').classList.remove('hidden');

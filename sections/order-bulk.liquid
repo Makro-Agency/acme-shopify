@@ -413,7 +413,7 @@
         <div class="more-pages">
             <div class="pagination-button">
                 <span>Load More</span>
-                <span class="hidden loader">loader</span>
+                {% comment %} <span class="hidden loader">loader</span> {% endcomment %}
             </div>
         </div>
     </ajaxinate-loading>
@@ -1548,7 +1548,7 @@
             }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 2){
                 document.querySelector('ajaxinate-loading').classList.add('hide');
             }
-            this.querySelector('.pagination-button .loader').classList.remove('hidden');
+            //this.querySelector('.pagination-button .loader').classList.remove('hidden');
         }
     
     }

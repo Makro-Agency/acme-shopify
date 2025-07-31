@@ -17,7 +17,7 @@
     "social_tiktok_link": "https://www.tiktok.com/@acmesmokedfish",
     "show_cart_alert": true,
     "index_navbar_background": "light",
-    "index_navbar_transparency": false,
+    "index_navbar_transparency": true,
     "find_in_store_provider": "where_to_buy",
     "cut-time": "17",
     "b2b_text_no_product": "No products.",

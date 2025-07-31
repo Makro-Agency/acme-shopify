@@ -48,7 +48,6 @@
       "blocks": {
         "slide_R7F9nh": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "color": "light",
             "alignment": "left",
@@ -61,7 +60,6 @@
         },
         "slide_iQahgj": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "color": "light",
             "alignment": "left",
@@ -74,7 +72,6 @@
         },
         "slide_nWcUUX": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "color": "light",
             "alignment": "left",
@@ -514,7 +511,8 @@
       "disabled": true,
       "name": "Most Purchased Items",
       "settings": {
-        "title": "Your Most Purchased Items"
+        "title": "Your Most Purchased Items",
+        "coll_obj": ""
       }
     }
   },

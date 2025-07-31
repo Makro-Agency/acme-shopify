@@ -76,11 +76,13 @@
         <span class="temp-text"></span>
     </div> {% endcomment %}
 
+    <script>
+        var json_data_array = [];
+    </script>
+
     {% if customer and customer.orders.size > 0 %}
         {% assign latest_orders = customer.orders | sort: 'created_at' | reverse | slice: 0, 20 %}
-        <script>
-            var json_data_array = [];
-        </script>
+        
         {% assign product_data = '' %}
         {% assign prod_found_count = 0 %}
         {% for order in latest_orders %}

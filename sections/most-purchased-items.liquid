@@ -30,7 +30,8 @@
           {% comment %} {% assign item_v_measure = item.product.metafields.custom.unit_of_measurement %} {% endcomment %}
           {% assign item_v_measure = item.product.metafields.custom.price_uom %}
           {% assign item_handle = item.product.handle %}
-          {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id | append: ':::' | append: item_v_measure | append: ':::' | append: item_handle %}
+          {% assign item_price = item.product.price %}
+          {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id | append: ':::' | append: item_v_measure | append: ':::' | append: item_handle | append: ':::' | append: item_price %}
           {% if product_data == '' %}
             {% assign product_data = entry %}
           {% else %}
@@ -54,6 +55,7 @@
       {% assign v_id = entry_parts[6] %}
       {% assign v_measure = entry_parts[7] %}
       {% assign v_handle = entry_parts[8] %}
+      {% assign v_price = entry_parts[9] %}
       {% assign total_qty = 0 %}
       {% for order in latest_orders %}
         {% for item in order.line_items %}
@@ -81,6 +83,8 @@
         | append: v_measure
         | append: ':::'
         | append: v_handle
+        | append: ':::'
+        | append: v_price
       %}
       {% if updated_product_data == '' %}
         {% assign updated_product_data = new_entry %}

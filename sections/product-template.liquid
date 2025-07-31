@@ -47,7 +47,15 @@
       window.location.href = '/';
     {% endunless %}
   {% endif %}
+
+  {% assign check_b2b = product.tags | has:'ExtKey:' %}
+  {% if customer_b2B == false and check_b2b %}
+    window.location.href = '/';
+  {% endif %}
+
 </script>
+
+
 
 
 {% comment %} get the primary collection {% endcomment %}

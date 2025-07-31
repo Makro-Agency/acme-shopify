@@ -25,8 +25,10 @@
       "name": "Most Purchased Items"
     },
     "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3": {
+      "disabled": true,
       "settings": {
-        "body": "<p>20 grams protein per serving. Ready to eat, right out of the pack. Wild caught and sustainably sourced. What else could you need?!</p>"
+        "body": "<p>20 grams protein per serving. Ready to eat, right out of the pack. Wild caught and sustainably sourced. What else could you need?!</p>",
+        "image": "shopify://shop_images/IMG_0970_1.jpg"
       },
       "blocks": {}
     },
@@ -40,12 +42,12 @@
         }
       }
     },
-    "058aa77c-6cc0-4133-8ad8-c28c9947fba5": {
+    "b2049783-56d5-4f1f-9033-f993b51af154": {
       "disabled": true,
       "settings": {},
       "blocks": {}
     },
-    "e8e1192d-b2fc-42c2-835a-ec6cdf0dd392": {
+    "058aa77c-6cc0-4133-8ad8-c28c9947fba5": {
       "disabled": true,
       "settings": {},
       "blocks": {}
@@ -55,17 +57,40 @@
       "settings": {},
       "blocks": {}
     },
-    "b2049783-56d5-4f1f-9033-f993b51af154": {
+    "e8e1192d-b2fc-42c2-835a-ec6cdf0dd392": {
       "disabled": true,
       "settings": {},
       "blocks": {}
+    },
+    "hero_section_AG7Gij": {
+      "disabled": false,
+      "settings": {},
+      "blocks": {
+        "slide_697t6": {
+          "type": "slide",
+          "disabled": false,
+          "settings": {
+            "color": "light",
+            "alignment": "left",
+            "header": "Order Wholesale Online",
+            "sub_header": "<p>Streamline your ordering. Reorder top items and explore new products—all in one place.</p>",
+            "cta": "",
+            "url": "",
+            "external": false,
+            "image": "shopify://shop_images/IMG_0970_1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "slide_697t6"
+      ]
     }
   },
   "order": [
     "split_hero_iLW3aK",
     "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3",
-    "most_purchased_items_mmCRi",
     "hero_section_AG7Gij",
+    "most_purchased_items_mmCRi",
     "header_content_mehHp6",
     "two_column_swiper_aeNLTF",
     "1b56f47d-dd27-4c7a-af07-dfe86fab82ec",

@@ -8,6 +8,7 @@
 {% assign v_id = entry_parts[6] %}
 {% assign v_measure = entry_parts[7] %}
 {% assign v_handle = entry_parts[8] %}
+{% assign v_price = entry_parts[9] %}
 
 <div class="swiper-slide collection-product-card" data-qty="{{ qty }}">
 	<div class="product-grid-item  card-basic">
@@ -48,11 +49,11 @@
 								<div class="price__pricing-group ">
 									<div class="price__regular">
 										<span class="visually-hidden">Regular price</span>
-										<span class="price-item price-item--regular" data-regular-price=""> $10.00{% if v_measure != blank %}/{{ v_measure }}{% endif %}</span>
+										<span class="price-item price-item--regular" data-regular-price=""> {{v_price | money }}{% if v_measure != blank %}/{{ v_measure }}{% endif %}</span>
 									</div>
 									<div class="price__sale">
 										<span class="visually-hidden">Sale price</span>
-										<span class="price-item price-item--sale" data-sale-price="">$10.00</span>
+										<span class="price-item price-item--sale" data-sale-price="">{{v_price | money }}</span>
 										<span class="visually-hidden">Regular price</span>
 										<span class="price-item price-item--regular" data-regular-price=""></span>
 									</div>

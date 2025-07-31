@@ -81,7 +81,7 @@
         </span>
         {% if has_b2b %}
           {% if product.metafields.custom.weight != blank %}
-            <div class="w-value">{{ product.metafields.custom.weight }}{% if product.metafields.custom.unit_of_measurement != blank %} {{product.metafields.custom.unit_of_measurement}}{% endif %}</div>
+            <div class="w-value">{{ product.metafields.custom.weight }}{%comment %}{% if product.metafields.custom.unit_of_measurement != blank %} {{product.metafields.custom.unit_of_measurement}}{% endif %}{% endcomment %}</div>
           {% endif %}
         {% endif %}
     </div>

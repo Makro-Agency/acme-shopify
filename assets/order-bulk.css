@@ -818,3 +818,10 @@ span.title a{
     }
 }
 /* pagination css end */
+
+.serach_result {
+    text-align: center;
+}
+.serach_result:not(.hide)~* {
+    display: none !important;
+}

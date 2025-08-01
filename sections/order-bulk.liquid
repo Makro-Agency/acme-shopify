@@ -45,7 +45,6 @@
         {% break %}
     {% endif %}
 {% endfor %}
-
 {% capture bundle-list %}
 <div class="container-fluid">
     <div class="search-bar bundle-search-bar">
@@ -268,12 +267,14 @@
         </script>
     {% endif %}
 
+    <div class="serach_result hide">No results found for terms <strong></strong></div>
     <div class="product-list">
         <div class="product-header">
             <span>PRODUCT</span>
             <span>SKU</span>
             <span>PRICE</span>
         </div>
+        
         <div class="product-item-wrapper">
             {% assign coll = collections[collection_get] %}
             {% assign product_json = '' %}
@@ -973,11 +974,11 @@
 
         //console.log('json_searched',json_searched.length);
         if( json_searched.length == 0 && searchbox.length > 0 ){
-            document.querySelector('.serach_result').classList.remove('hidden');
-            document.querySelector('.serach_result strong').innerHTML = `"${  document.querySelector('.search-bar').value }"`;
+            document.querySelector('.serach_result').classList.remove('hide');
+            document.querySelector('.serach_result strong').innerHTML = `"${  document.querySelector('.searchbar input').value }"`;
         }else{
-            if( document.querySelector('.serach_result:not(.hidden)') ){
-            document.querySelector('.serach_result').classList.add('hidden');
+            if( document.querySelector('.serach_result:not(.hide)') ){
+            document.querySelector('.serach_result').classList.add('hide');
             }
             if(document.querySelector('.tab_wrapper') != null){
                 if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){

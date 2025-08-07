@@ -74,6 +74,26 @@
         "name": "id",
         "category": "ID"
       }
+    },
+    {
+      "key": "infor_billing_address_id",
+      "namespace": "custom",
+      "name": "infor_billing_address_id",
+      "description": "The Infor Address Id for the billing address of the location",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "infor_shipping_address_id",
+      "namespace": "custom",
+      "name": "infor_shipping_address_id",
+      "description": "The Infor Address Id for the shipping address of the location.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "location": [

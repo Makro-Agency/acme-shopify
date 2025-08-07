@@ -50,13 +50,16 @@
     <div class="search-bar bundle-search-bar">
         <div class="custom-select">
             <select>
+                {% if customer and customer.orders.size > 0 %}
+                    <option data-title="faq active">Frequently Bought</option>
+                {% endif %}
                 <option>Alphabetically: A-Z</option>
                 <option>Alphabetically: Z-A</option>
                 {% comment %} <option>Date: old to new</option>
                 <option>Date: new to old</option> {% endcomment %}
                 <option>Price: low to high</option>
                 <option>Price: high to low</option>
-                {% if customer and customer.orders.size > 0 %}<option data-title="faq">Frequently Bought</option>{% endif %}
+                
             </select>
         </div>
         <div class="searchbar">
@@ -1516,6 +1519,8 @@
             document.querySelector('.pagination-wrapper').classList.remove('hide');
             genratePagination(selector_json);
         }
+
+        document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].click();
     }
 
     addEventListener("DOMContentLoaded", (event) => {

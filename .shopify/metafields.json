@@ -131,23 +131,13 @@
       }
     },
     {
-      "key": "test",
-      "namespace": "checkoutblocks",
+      "key": "po_number",
+      "namespace": "custom",
       "name": "PO Number",
-      "description": null,
+      "description": "The customer's purchase order number for the order.",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
-      }
-    },
-    {
-      "key": "is_new_address",
-      "namespace": "custom",
-      "name": "is_new_address",
-      "description": "",
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
       }
     }
   ],

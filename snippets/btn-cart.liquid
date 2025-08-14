@@ -1,7 +1,7 @@
 
 <div class="nav-cart {{ classes}} {% if cart.item_count == 0 %} empty{% endif %}" 		
 		sh-nav-cart 
-		href="/cart/"  
+		href="/cart"  
 		 >
 		{% if template.name == 'product' or template.name == 'collection' %}
 			{% render 'icon-cart-blue' %}

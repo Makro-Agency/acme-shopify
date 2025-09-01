@@ -2,6 +2,7 @@
 
 <script>
     var cart_items = {};
+    var store_location_data = []
     var add_obj = {};
     {% assign cart_items_array = blank %}
     {% assign cart_items_array_qty = blank %}
@@ -21,6 +22,9 @@
     {% endif %}
     {% unless request.design_mode %}
         {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+            {% if customer.current_location.metafields.custom.location_sale_price != blank %}
+                store_location_data.push({{ customer.current_location.metafields.custom.location_sale_price }});
+            {% endif %}
         {% else %}  
             window.location.href = '/'
         {% endif %}
@@ -73,10 +77,6 @@
             <span data-type="grid" onclick="changeview(this)">{% render 'icon-grid' %}</span>
         </div>
     </div>
-    {% comment %} <div class="temp-msg">
-        <span class="icon">{% render 'icon-tickmark' %}</span>
-        <span class="temp-text"></span>
-    </div> {% endcomment %}
 
     <script>
         var json_data_array = [];
@@ -275,7 +275,8 @@
         <div class="product-header">
             <span>PRODUCT</span>
             <span>SKU</span>
-            <span>PRICE</span>
+            <span>SALE PRICE</span>
+            <span>ORDER PRICE</span>
         </div>
         
         <div class="product-item-wrapper">
@@ -376,42 +377,6 @@
                 {%- endcapture -%}
                 {%- endfor -%}
             {% endpaginate %}
-
-            {% comment %} {% for coll_prod in coll.products limit:10 %}
-                {% assign shared = false %}
-                {% if canonical_url contains '?tab=all-product' %}
-                    {% assign shared = true %}
-                {% endif %}
-                {% if check_shared and shared == true %}
-                    {% if coll_prod.tags contains 'shared' %}
-                        {% if coll_prod.variants.size > 1 %}
-                            {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
-                        {% else %}
-                            {% if coll_prod.variants.size > 1 %}
-                                {%- for variant in coll_prod.variants -%}
-                                    {%- render 'b2b-product-item', coll_prod:variant, collProd: coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
-                                {% endfor %}
-                            {% else %}
-                                {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                {% else %}
-                    {% if coll_prod.variants.size > 1 %}
-                        {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
-                    {% else %}
-                        {% if coll_prod.variants.size > 1 %}
-                            {%- for variant in coll_prod.variants -%}
-                                {%- render 'b2b-product-item', coll_prod:variant, collProd: coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
-                            {% endfor %}
-                        {% else %}
-                            {%- render 'b2b-product-item', coll_prod:coll_prod, cart_items_array:cart_items_array, cart_items_array_qty:cart_items_array_qty -%}
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-
-                
-            {% endfor %} {% endcomment %}
         </div>
         
     </div>
@@ -1065,6 +1030,8 @@
         }else{
             var _item_price = Shopify.formatMoney(_item.price, amount_text)
         }
+
+        
         
         
         {% comment %} console.log(item,'items'); {% endcomment %}
@@ -1205,6 +1172,18 @@
             
         }else{
             currentVAraints.forEach(function(currentVAraint){
+                
+                if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
+                    var _sale_price = store_location_data[0][currentVAraint.sku];
+                    var _sale_price_mobile = `<div class="sale-price">
+                                <span>Sale price:</span>
+                                <span>${store_location_data[0][currentVAraint.sku]}</span>
+                            </div>`;
+                }else{
+                    var _sale_price = '';
+                    var _sale_price_mobile = '';
+                }
+
                 var qty = '0';
                 if(cart_items[currentVAraint.id] != undefined){
                     qty = cart_items[currentVAraint.id].quantity;
@@ -1243,8 +1222,15 @@
                                 <a href="/products/${_item.handle}">${_item.title }</a>
                             </span>
                         </div>
+                        <span class="price"><span class="mobile-header">Price</span>${_sale_price}</span>
                         <span class="price"><span class="mobile-header">Price</span>${_item_price}</span>
-                        <span class="grid-price"><span>Your price:</span><span>${_item_price}</span></span>
+                        <span class="grid-price">
+                            ${_sale_price_mobile}
+                            <div>
+                                <span>Your price:</span>
+                                <span>${_item_price}</span>
+                            </div>
+                        </span>
                         <div class="quantity-btn-wrap">
                             <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">

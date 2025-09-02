@@ -1054,6 +1054,19 @@
                 var image_div = ``;
             }
 
+            if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
+                var _sale_price = store_location_data[0][currentVAraint.sku];
+                var _sale_price_mobile = `<div class="sale-price">
+                            <span>Sale price:</span>
+                            <span>${store_location_data[0][currentVAraint.sku]}</span>
+                        </div>`;
+                var price_lable = 'Order price:';
+            }else{
+                var _sale_price = '';
+                var _sale_price_mobile = '';
+                var price_lable = 'Your price:';
+            }
+
             _returnHTML = 
                 `<div class="product-item varient-select">
 
@@ -1179,9 +1192,15 @@
                                 <span>Sale price:</span>
                                 <span>${store_location_data[0][currentVAraint.sku]}</span>
                             </div>`;
+                    var price_lable = 'Order price:';
+                    var mobile_sale = `<span class="price"><span class="mobile-header">Sale Price</span>${store_location_data[0][currentVAraint.sku]}</span>`;
+                    var mobile_order = `<span class="price"><span class="mobile-header">Order Price</span>${_item_price}</span>`;
                 }else{
                     var _sale_price = '';
                     var _sale_price_mobile = '';
+                    var price_lable = 'Your price:';
+                    var mobile_sale = `<span class="price"></span>`;
+                    var mobile_order = `<span class="price"><span class="mobile-header">Price</span>${_item_price}</span>`;
                 }
 
                 var qty = '0';
@@ -1222,12 +1241,12 @@
                                 <a href="/products/${_item.handle}">${_item.title }</a>
                             </span>
                         </div>
-                        <span class="price"><span class="mobile-header">Price</span>${_sale_price}</span>
-                        <span class="price"><span class="mobile-header">Price</span>${_item_price}</span>
+                        ${mobile_sale}
+                        ${mobile_order}
                         <span class="grid-price">
                             ${_sale_price_mobile}
                             <div>
-                                <span>Your price:</span>
+                                <span>${price_lable}</span>
                                 <span>${_item_price}</span>
                             </div>
                         </span>

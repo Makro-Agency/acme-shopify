@@ -663,6 +663,9 @@ span.title a{
     .product-item .product-wrapper > span.price {
         margin: 0;
     }
+    .product-item .product-wrapper>span.price:empty {
+        display: none;
+    }
     .mobile-header {
         display: block;
     }
@@ -702,6 +705,10 @@ span.title a{
         width: 100%;
         background: linear-gradient(0deg, rgba(20, 49, 92, 0.10) 0%, rgba(20, 49, 92, 0.10) 100%), #F2F2F2;
         align-items: center;
+    }
+
+    .tab_wrapper{
+        margin-top: 20px;
     }
 
     /* grid css */

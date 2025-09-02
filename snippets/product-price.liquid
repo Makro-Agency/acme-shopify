@@ -43,8 +43,9 @@
   
 -%}
 
-{% if available_online %}    
-<div class="price price--has_b2b-{{ has_b2b }}
+{% if available_online %}
+      
+<div id="v-id-{{ variant.id }}" class="price price--has_b2b-{{ has_b2b }}
   {% if available == false %} price--sold-out {% endif %}
   {% if compare_at_price > price %} price--on-sale {% endif %}
   {% if variant.unit_price_measurement %} price--unit-available {% endif %}
@@ -130,4 +131,51 @@
     
   
 </div>
+
+<script>
+  var store_location_data = []
+  {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+      {% if customer.current_location.metafields.custom.location_sale_price != blank %}
+          store_location_data.push({{ customer.current_location.metafields.custom.location_sale_price }});
+      {% endif %}
+  {% endif %}
+
+  {% if template.name == 'cart' %}
+    var variant_syntax = store_location_data[0]['{{variant.sku}}'];
+    if(store_location_data.length > 0 && variant_syntax != undefined){
+      var sale_price = variant_syntax;
+      document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
+        <div class="price__b2b-label">Sale Price: </div>
+        <div class="price__pricing-group ">
+          <div class="price__regular">
+              <span class="visually-hidden">Regular price</span>
+              <span class="price-item price-item--regular" data-regular-price="">${sale_price}</span>
+          </div>
+          <div class="price__sale"></div>
+        </div>
+      </div>`);
+      document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').classList.add('avail-sale');
+      document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Order Price:';
+    }
+  {% else %}
+    var variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'];
+    if(store_location_data.length > 0 && variant_syntax != undefined){
+      var sale_price = variant_syntax;
+      document.querySelector('.price') && document.querySelector('.price').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
+        <div class="price__b2b-label">Sale Price: </div>
+        <div class="price__pricing-group ">
+          <div class="price__regular">
+              <span class="visually-hidden">Regular price</span>
+              <span class="price-item price-item--regular" data-regular-price="">${sale_price}</span>
+          </div>
+          <div class="price__sale"></div>
+        </div>
+      </div>`);
+      document.querySelector('.product-single__single-variant').classList.add('avail-sale');
+      document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Order Price:';
+    }
+  {% endif %}
+
+  
+</script>
 {% endif %}

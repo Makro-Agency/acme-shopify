@@ -63,6 +63,9 @@
 {% comment %} assign navbar_background = 'navbar-light'
 assign navbar_transparency = false  {% endcomment %}
 
+{% unless customer %}
+	{% assign navbar_transparency = 'opaque' %}
+{% endunless %}
 
 <header class="main-header">
 	<header class="main-header">

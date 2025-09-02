@@ -13,7 +13,18 @@
       }
     }
   ],
-  "company": [],
+  "company": [
+    {
+      "key": "infor_customer_name",
+      "namespace": "custom",
+      "name": "Infor Customer Name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
   "company_location": [
     {
       "key": "test_name",
@@ -93,6 +104,16 @@
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
+      }
+    },
+    {
+      "key": "location_sale_price",
+      "namespace": "custom",
+      "name": "Location Sale Price",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
       }
     }
   ],
@@ -328,6 +349,16 @@
       "key": "price_uom",
       "namespace": "custom",
       "name": "Price UOM",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "cofa",
+      "namespace": "custom",
+      "name": "COFA",
       "description": "",
       "type": {
         "name": "single_line_text_field",

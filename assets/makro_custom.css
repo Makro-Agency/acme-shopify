@@ -83,6 +83,13 @@ span.addbtn svg {
 .product-single__details .price.price--has_b2b-true {
   margin-block: 2rem;
 }
+.avail-sale {
+  display: flex;
+  gap: 30px;
+}
+.sale-price-b2b{
+  opacity: .8;
+}
 .product-description p:last-child {
   margin-bottom: 0;
 }

@@ -43,7 +43,8 @@
   
 -%}
 
-{% if available_online %}    
+{% if available_online %}
+      
 <div class="price price--has_b2b-{{ has_b2b }}
   {% if available == false %} price--sold-out {% endif %}
   {% if compare_at_price > price %} price--on-sale {% endif %}
@@ -130,4 +131,29 @@
     
   
 </div>
+
+<script>
+  var store_location_data = []
+  {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+      {% if customer.current_location.metafields.custom.location_sale_price != blank %}
+          store_location_data.push({{ customer.current_location.metafields.custom.location_sale_price }});
+      {% endif %}
+  {% endif %}
+
+  if(store_location_data.length > 0){
+    var sale_price = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'];
+    document.querySelector('.price') && document.querySelector('.price').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
+      <div class="price__b2b-label">Sale Price: </div>
+      <div class="price__pricing-group ">
+        <div class="price__regular">
+            <span class="visually-hidden">Regular price</span>
+            <span class="price-item price-item--regular" data-regular-price="">${sale_price}</span>
+        </div>
+        <div class="price__sale"></div>
+      </div>
+    </div>`);
+    document.querySelector('.product-single__single-variant').classList.add('avail-sale');
+    document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Order Price:';
+  }
+</script>
 {% endif %}

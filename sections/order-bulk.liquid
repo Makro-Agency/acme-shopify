@@ -756,6 +756,8 @@
         
     })).values()];
 
+    {% comment %} console.log(UniqueFr_item,'UniqueFr_item') {% endcomment %}
+
     var json_searched = [];
 
     var select_eles = document.querySelectorAll('.bundle-search-bar .custom-select select');
@@ -1306,10 +1308,29 @@
         }else{
             var selector_json = json_val;
         }
+
+        var selector_json = UniqueFr_item.filter(function(element){
+            if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+                if (element.tags.indexOf('shared') == -1){
+                    return true;
+                } else {
+                    return false;
+                }
+            }else{
+                if (element.tags.indexOf('shared') > -1){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
         
-        if(document.querySelector('li.is-selected')?.innerText.trim() == 'Frequently Bought'){
+        {% comment %} if(document.querySelector('li.is-selected')?.innerText.trim() == 'Frequently Bought'){
             selector_json = UniqueFr_item;
-        }
+        } {% endcomment %}
+        //var selector_json = UniqueFr_item;
+
+        //console.log(selector_json,'selector_json2')
         for(var i=Number(split_val[0]);i<=Number(split_val[1]);i++){
             
             finl_html += appendHTML(selector_json[i]);
@@ -1513,8 +1534,28 @@
         }else{
             var selector_json = json_val;
         }
+
+        {% comment %} var selector_json = UniqueFr_item; {% endcomment %}
+        var selector_json = UniqueFr_item.filter(function(element){
+            if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+                if (element.tags.indexOf('shared') == -1){
+                    return true;
+                } else {
+                    return false;
+                }
+            }else{
+                if (element.tags.indexOf('shared') > -1){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        //console.log(selector_json,'selector_json')
         
         for(var i=Number(startindex);i<=Number(endindex);i++){
+            //console.log(selector_json[i],'selector_json[i]');
             finl_html += appendHTML(selector_json[i]);
         }
         document.querySelector('.product-item-wrapper').innerHTML = finl_html;
@@ -1525,7 +1566,8 @@
             genratePagination(selector_json);
         }
 
-        document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].click();
+        //document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].click();
+        document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
     }
 
     addEventListener("DOMContentLoaded", (event) => {
@@ -1533,6 +1575,7 @@
         customElements.define('ajaxinate-loading', infiniteCardLoading);
     })
 
+    var onload_item = false;
     class infiniteCardLoading extends HTMLElement {
         constructor() {
             super();

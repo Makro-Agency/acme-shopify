@@ -78,7 +78,14 @@
     <div class="price__regular">
         <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
         <span class="price-item price-item--regular" data-regular-price>
-          {{ money_price }}{% if has_b2b %}{% if product.metafields.custom.price_uom != blank %}/{{ product.metafields.custom.price_uom }}{% endif %}{% endif %}
+          {{ money_price }}
+          {% if has_b2b %}
+            {% if template.name == 'cart' %}
+              {% if main_obj.product.metafields.custom.price_uom != blank %}/{{ main_obj.product.metafields.custom.price_uom }}{% endif %}
+            {% else %}
+              {% if product.metafields.custom.price_uom != blank %}/{{ product.metafields.custom.price_uom }}{% endif %}
+            {% endif %}
+          {% endif %}
         </span>
         {%comment %}
         {% if has_b2b %}
@@ -141,7 +148,7 @@
   {% endif %}
 
   {% if template.name == 'cart' %}
-    var variant_syntax = store_location_data[0]['{{variant.sku}}'];
+    var variant_syntax = store_location_data[0]['{{variant.sku}}'][0];
     if(store_location_data.length > 0 && variant_syntax != undefined){
       var sale_price = variant_syntax;
       document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
@@ -149,7 +156,7 @@
         <div class="price__pricing-group ">
           <div class="price__regular">
               <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">${sale_price}</span>
+              <span class="price-item price-item--regular" data-regular-price="">$${sale_price}</span>
           </div>
           <div class="price__sale"></div>
         </div>
@@ -158,7 +165,7 @@
       document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Order Price:';
     }
   {% else %}
-    var variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'];
+    var variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
     if(store_location_data.length > 0 && variant_syntax != undefined){
       var sale_price = variant_syntax;
       document.querySelector('.price') && document.querySelector('.price').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
@@ -166,7 +173,7 @@
         <div class="price__pricing-group ">
           <div class="price__regular">
               <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">${sale_price}</span>
+              <span class="price-item price-item--regular" data-regular-price="">$${sale_price}</span>
           </div>
           <div class="price__sale"></div>
         </div>

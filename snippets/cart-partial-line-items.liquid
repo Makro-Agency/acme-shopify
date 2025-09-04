@@ -52,7 +52,7 @@
 
       {% if customer_b2B %}
         <div class="col-8 col-md-4 cart__meta price-wrap">
-          {% render 'product-price', product:item, variant: item.product.selected_or_first_available_variant, show_vendor: false, available_online: true %}
+          {% render 'product-price', product:item, main_obj:item, variant: item.product.selected_or_first_available_variant, show_vendor: false, available_online: true %}
         </div>
       {% endif %}
 

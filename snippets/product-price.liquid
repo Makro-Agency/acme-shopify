@@ -81,9 +81,9 @@
           {{ money_price }}
           {% if has_b2b %}
             {% if template.name == 'cart' %}
-              {% if main_obj.product.metafields.custom.price_uom != blank %}/{{ main_obj.product.metafields.custom.price_uom }}{% endif %}
+              {% if main_obj.product.metafields.custom.unit_of_measurement != blank %}/{{ main_obj.product.metafields.custom.unit_of_measurement }}{% endif %}
             {% else %}
-              {% if product.metafields.custom.price_uom != blank %}/{{ product.metafields.custom.price_uom }}{% endif %}
+              {% if product.metafields.custom.unit_of_measurement != blank %}/{{ product.metafields.custom.unit_of_measurement }}{% endif %}
             {% endif %}
           {% endif %}
         </span>
@@ -147,6 +147,17 @@
       {% endif %}
   {% endif %}
 
+  {% assign pom_data = '' %}
+  {% if template.name == 'cart' %}
+    {% if main_obj.product.metafields.custom.price_uom != blank %}
+      {% assign pom_data = ' / ' | append:main_obj.product.metafields.custom.price_uom %}
+    {% endif %}
+  {% else %}
+    {% if product.metafields.custom.price_uom != blank %}
+      {% assign pom_data = ' / ' | append:product.metafields.custom.price_uom %}
+    {% endif %}
+  {% endif %}
+
   {% if template.name == 'cart' %}
     var variant_syntax = store_location_data[0]['{{variant.sku}}'][0];
     if(store_location_data.length > 0 && variant_syntax != undefined){
@@ -156,7 +167,7 @@
         <div class="price__pricing-group ">
           <div class="price__regular">
               <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">$${sale_price}</span>
+              <span class="price-item price-item--regular" data-regular-price="">$${sale_price}{{ pom_data }}</span>
           </div>
           <div class="price__sale"></div>
         </div>
@@ -173,7 +184,7 @@
         <div class="price__pricing-group ">
           <div class="price__regular">
               <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">$${sale_price}</span>
+              <span class="price-item price-item--regular" data-regular-price="">$${sale_price}{{ pom_data }}</span>
           </div>
           <div class="price__sale"></div>
         </div>

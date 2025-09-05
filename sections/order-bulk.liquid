@@ -41,14 +41,14 @@
     <p>{{ section.settings.des }}</p>
 </div>
 
-{% assign check_shared = false %}
+{% comment %} {% assign check_shared = false %} {% endcomment %}
 {% assign collection_get = section.settings.coll %}
-{% for coll_prod in collection_get.products %}
+{% comment %} {% for coll_prod in collection_get.products %}
     {% if coll_prod.tags contains 'shared' %}
         {% assign check_shared = true %}
         {% break %}
     {% endif %}
-{% endfor %}
+{% endfor %} {% endcomment %}
 {% capture bundle-list %}
 <div class="container-fluid">
     <div class="search-bar bundle-search-bar">
@@ -59,8 +59,6 @@
                 {% endif %}
                 <option>Alphabetically: A-Z</option>
                 <option>Alphabetically: Z-A</option>
-                {% comment %} <option>Date: old to new</option>
-                <option>Date: new to old</option> {% endcomment %}
                 <option>Price: low to high</option>
                 <option>Price: high to low</option>
                 
@@ -131,7 +129,8 @@
                                 
                                 {% comment %} {% assign meta3 = item.product.metafields.custom.unit_of_measurement | json %} {% endcomment %}
                                 {% assign meta3 = item.product.metafields.custom.price_uom | json %}
-                                {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' %}
+                                {% assign meta4 = item.product.metafields.custom.unit_of_measurement | json %}
+                                {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"price_uom":' | append:meta3 | append: ',"unit_of_measure":' | append:meta4 | append:'}}' %}
                                 {{ product_with_metafield }}
                             {% endcapture %}
                             
@@ -241,7 +240,7 @@
 
 
 
-    {% if check_shared %}
+    {% comment %} {% if check_shared %}
         <div class="tab_wrapper">
             <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=my-product" data-title="my-product" class="active">My products</a>
             <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=all-product" data-title="all-product">All products</a>
@@ -268,7 +267,7 @@
                 window.history.replaceState({}, '', url);
             }
         </script>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     <div class="serach_result hide">No results found for terms <strong></strong></div>
     <div class="product-list">
@@ -282,8 +281,8 @@
         <div class="product-item-wrapper">
             {% assign coll = collections[collection_get] %}
             {% assign product_json = '' %}
-            {% assign product_json_shared = '' %}
-            {% assign product_json_not_shared = '' %}
+            {% comment %} {% assign product_json_shared = '' %}
+            {% assign product_json_not_shared = '' %} {% endcomment %}
             {% assign prod_counter = 0 %}
             {% assign prod_shared_counter = 0 %}
             {% assign prod_notshared_counter = 0 %}
@@ -320,13 +319,15 @@
                         {%- assign meta2 = false -%}
                     {%- endif -%}
                     {% comment %} {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%} {% endcomment %}
-                    {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%}
-                    {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
+                    {% comment %} {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%} {% endcomment %}
+                    {% assign meta3 = coll_prod.metafields.custom.price_uom | json %}
+                    {% assign meta4 = coll_prod.metafields.custom.unit_of_measurement | json %}
+                    {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"price_uom":' | append:meta3 | append: ',"unit_of_measure":' | append:meta4 | append:'}}' -%}
                     {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                     {{ product_with_metafield }}{%- unless prod_counter == _temp_count -%},{%- endunless -%}
                 {%- endcapture -%}
 
-                {%- capture product_json_shared -%}
+                {% comment %} {%- capture product_json_shared -%}
                     {{ product_json_shared }}
                     {%- if coll_prod.tags contains 'shared' -%}
                         {%- assign prod_shared_counter = prod_shared_counter | minus:1 -%}
@@ -374,7 +375,7 @@
                         {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                         {{ product_with_metafield }}{%- if prod_notshared_counter > 0 -%},{%- endif -%}
                     {%- endunless -%}
-                {%- endcapture -%}
+                {%- endcapture -%} {% endcomment %}
                 {%- endfor -%}
             {% endpaginate %}
         </div>
@@ -412,12 +413,12 @@
 <script type="application/json" class="json-div">
     [{{ product_json | strip }}]
 </script>
-<script type="application/json" class="json-div-shared">
+{% comment %} <script type="application/json" class="json-div-shared">
     [{{ product_json_shared | strip }}]
-</script>
-<script type="application/json" class="json-div-not-shared">
+</script> {% endcomment %}
+{% comment %} <script type="application/json" class="json-div-not-shared">
     [{{ product_json_not_shared | strip }}]
-</script>
+</script> {% endcomment %}
 
 <script>
 
@@ -646,8 +647,8 @@
     }
 
     var json_val = JSON.parse("["+document.querySelector('.json-div').innerText.trim()+"]")[0];
-    var json_val_shared = JSON.parse("["+document.querySelector('.json-div-shared').innerText.trim()+"]")[0];
-    var json_val_not_shared = JSON.parse("["+document.querySelector('.json-div-not-shared').innerText.trim()+"]")[0];
+    {% comment %} var json_val_shared = JSON.parse("["+document.querySelector('.json-div-shared').innerText.trim()+"]")[0];
+    var json_val_not_shared = JSON.parse("["+document.querySelector('.json-div-not-shared').innerText.trim()+"]")[0]; {% endcomment %}
     var _json_val = [], _json_val_shared = [], _json_val_not_shared = [];      
     
     json_val.forEach(function(iteam){
@@ -668,7 +669,26 @@
         }
     });
 
-    json_val_shared.forEach(function(iteam){
+    json_val.forEach(function(iteam){
+
+        var hasAllProducts = false;
+        var sku = iteam.variants && iteam.variants.length > 0 ? iteam.variants[0].sku : null;
+        if (sku && Array.isArray(store_location_data) && store_location_data.length > 0) {
+            
+            var locationData = store_location_data[0];
+            var skuExists = false;
+            
+            var hasAllProducts = locationData[sku].some(function(val) {
+                return val.includes('All Products');
+            });
+            if(hasAllProducts){
+                var _i = iteam;
+                _json_val_shared.push(_i);
+            }
+        }
+    })
+
+    {% comment %} json_val_shared.forEach(function(iteam){
         var _i = iteam;
         _json_val_shared.push(_i);
         {% comment %} if( _i.variants.length > 1 ){
@@ -685,9 +705,28 @@
         }else{
             _json_val_shared.push(_i);
         } {% endcomment %}
-    });
+    }); {% endcomment %}
 
-    json_val_not_shared.forEach(function(iteam){
+    json_val.forEach(function(iteam){
+
+        var hasAllProducts = false;
+        var sku = iteam.variants && iteam.variants.length > 0 ? iteam.variants[0].sku : null;
+        if (sku && Array.isArray(store_location_data) && store_location_data.length > 0) {
+            
+            var locationData = store_location_data[0];
+            var skuExists = false;
+            
+            var hasAllProducts = locationData[sku].some(function(val) {
+                return val.includes('My Products');
+            });
+            if(hasAllProducts){
+                var _ins = iteam;
+                _json_val_not_shared.push(_ins);
+            }
+        }
+    })
+
+    {% comment %} json_val_not_shared.forEach(function(iteam){
         var _ins = iteam;
         _json_val_not_shared.push(_ins);
         {% comment %} if( _ins.variants.length > 1 ){
@@ -704,7 +743,7 @@
         }else{
             _json_val_not_shared.push(_ins);
         } {% endcomment %}
-    });
+    }); {% endcomment %}
 
     //console.log(json_data_array,'json_data_array')
     if(document.querySelector('.tab_wrapper') != null){
@@ -1028,10 +1067,10 @@
             }
 
             if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
-                var _sale_price = store_location_data[0][currentVAraint.sku];
+                var _sale_price = store_location_data[0][currentVAraint.sku][0];
                 var _sale_price_mobile = `<div class="sale-price">
                             <span>Sale price:</span>
-                            <span>${store_location_data[0][currentVAraint.sku].split(',')[0]}</span>
+                            <span>${store_location_data[0][currentVAraint.sku][0]}</span>
                         </div>`;
                 var price_lable = 'Order price:';
             }else{
@@ -1160,13 +1199,18 @@
             currentVAraints.forEach(function(currentVAraint){
                 
                 if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
-                    var _sale_price = store_location_data[0][currentVAraint.sku];
+                    if(item.metafields.price_uom != null){
+                        var _sale_price = store_location_data[0][currentVAraint.sku][0] + '/' + item.metafields.price_uom;
+                    }else{
+                        var _sale_price = store_location_data[0][currentVAraint.sku][0];
+                    }
+                    
                     var _sale_price_mobile = `<div class="sale-price">
                                 <span>Sale price:</span>
-                                <span>$${store_location_data[0][currentVAraint.sku][0]}</span>
+                                <span>$${_sale_price}</span>
                             </div>`;
                     var price_lable = 'Order price:';
-                    var mobile_sale = `<span class="price"><span class="mobile-header">Sale Price</span>$${store_location_data[0][currentVAraint.sku][0]}</span>`;
+                    var mobile_sale = `<span class="price"><span class="mobile-header">Sale Price</span>$${_sale_price}</span>`;
                     var mobile_order = `<span class="price"><span class="mobile-header">Order Price</span>${_item_price}</span>`;
                 }else{
                     var _sale_price = '';
@@ -1262,7 +1306,6 @@
     let paginateItem = function(e) {
         e.preventDefault();
         let paginate_item = e.target.nodeName != 'LI' ? e.target.parentElement : e.target;
-        // console.log(e.target, paginate_item);
         paginate_item.closest('.pagination-lists').querySelector('.active').classList.remove('active');
         paginate_item.closest('.pagination-lists').querySelector('.page-item.next-item').classList.remove('disabled');
         paginate_item.closest('.pagination-lists').querySelector('.page-item.prev-item').classList.remove('disabled');
@@ -1280,7 +1323,7 @@
             var selector_json = json_val;
         }
 
-        var selector_json = UniqueFr_item.filter(function(element){
+        {% comment %} var selector_json = UniqueFr_item.filter(function(element){
             if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
                 if (element.tags.indexOf('shared') == -1){
                     return true;
@@ -1294,12 +1337,7 @@
                     return false;
                 }
             }
-        });
-        
-        {% comment %} if(document.querySelector('li.is-selected')?.innerText.trim() == 'Frequently Bought'){
-            selector_json = UniqueFr_item;
-        } {% endcomment %}
-        //var selector_json = UniqueFr_item;
+        }); {% endcomment %}
 
         //console.log(selector_json,'selector_json2')
         for(var i=Number(split_val[0]);i<=Number(split_val[1]);i++){
@@ -1442,7 +1480,7 @@
               if(json_searched.length > 0){
                 var sortJson = json_searched;
               }else{
-                if(document.querySelector('.tab_wrapper') != null){
+                {% comment %} if(document.querySelector('.tab_wrapper') != null){
                     var result_data = UniqueFr_item.filter(function(element){
                         if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
                             if (element.tags.indexOf('shared') == -1){
@@ -1461,7 +1499,8 @@
                     var sortJson = result_data;
                 }else{
                     var sortJson = UniqueFr_item;
-                }
+                } {% endcomment %}
+                var sortJson = UniqueFr_item;
               }
             }
 
@@ -1506,29 +1545,9 @@
             var selector_json = json_val;
         }
 
-        {% comment %} var selector_json = UniqueFr_item; {% endcomment %}
-        if(document.querySelector('.tab_wrapper') != null){
-            var selector_json = UniqueFr_item.filter(function(element){
-                if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
-                    if (element.tags.indexOf('shared') == -1){
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }else{
-                    if (element.tags.indexOf('shared') > -1){
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            });
-        }
-
-        //console.log(selector_json,'selector_json')
+        console.log(selector_json,'selector_json')
         
         for(var i=Number(startindex);i<=Number(endindex);i++){
-            //console.log(selector_json[i],'selector_json[i]');
             finl_html += appendHTML(selector_json[i]);
         }
         document.querySelector('.product-item-wrapper').innerHTML = finl_html;
@@ -1544,7 +1563,58 @@
     }
 
     addEventListener("DOMContentLoaded", (event) => {
-        LoadData(0,9);
+
+        var hasMyProducts = false;
+
+        for(var i=0; i < json_val.length; i++){
+            var sku = json_val[i].variants && json_val[i].variants.length > 0 ? json_val[i].variants[0].sku : null;
+            if (sku && Array.isArray(store_location_data) && store_location_data.length > 0) {
+                
+                var locationData = store_location_data[0];
+                
+                var skuExists = false;
+                var hasMyProducts = locationData[sku].some(function(val) {
+                    return val.includes('My Products');
+                });
+                if(hasMyProducts == true){
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const tabParam = urlParams.get('tab');
+
+                    const tab_data = {
+                        "my-product":"",
+                        "all-product":""
+                    }
+                    
+                    if (tabParam) {
+                        tab_data[tabParam] = 'active'
+                    }else{
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('tab', 'my-product');
+                        window.history.replaceState({}, '', url);
+                    }
+
+
+                    var tab_html = `<div class="tab_wrapper">
+                        <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=my-product" data-title="my-product" class="${tab_data['my-product']}">My products</a>
+                        <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=all-product" data-title="all-product" class="${tab_data['all-product']}">All products</a>
+                    </div>`;
+                    
+                    var serachResultElem = document.querySelector('.serach_result');
+                    if (serachResultElem && !document.querySelector('.tab_wrapper')) {
+                        serachResultElem.insertAdjacentHTML('beforebegin', tab_html);
+                    }
+                    LoadData(0,9);
+                    break;
+                }
+            }
+
+            if(i == (json_val.length - 1)){
+                LoadData(0,9);
+            }
+        }
+
+        {% comment %} LoadData(0,9); {% endcomment %}
         customElements.define('ajaxinate-loading', infiniteCardLoading);
     })
 

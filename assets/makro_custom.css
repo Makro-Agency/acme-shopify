@@ -83,12 +83,28 @@ span.addbtn svg {
 .product-single__details .price.price--has_b2b-true {
   margin-block: 2rem;
 }
-.avail-sale {
+.avail-sale, .order-bulk .product-list.grid span.grid-price {
   display: flex;
-  gap: 30px;
+  gap: 16px;
+  align-items: center;
 }
+
+.cart__table .avail-sale{
+  gap: 24px;
+}
+
+.avail-sale .price[data-price] {
+  margin: 20px 0;
+}
+
+.product-single__details .price.price--has_b2b-true:not(.sale-price-b2b),.cart__table .price.price--has_b2b-true:not(.sale-price-b2b), .order-bulk .product-list.grid span.grid-price div:not(.sale-price) {
+  border-radius: 4px;
+  background: rgba(20, 49, 92, 0.04);
+  padding: 9px 10px;
+}
+
 .sale-price-b2b{
-  opacity: .8;
+  opacity: 0.6;
 }
 .product-description p:last-child {
   margin-bottom: 0;

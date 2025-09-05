@@ -561,7 +561,11 @@ span.title a{
 }
 
 .product-list.grid span.grid-price div.sale-price {
-    opacity: 0.8;
+    opacity: 0.6;
+}
+
+.sale-p-avail{
+    opacity: 0.5;
 }
 
 .product-list.grid .product-details span.grid-title {

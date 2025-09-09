@@ -1603,6 +1603,9 @@
                     var serachResultElem = document.querySelector('.serach_result');
                     if (serachResultElem && !document.querySelector('.tab_wrapper')) {
                         serachResultElem.insertAdjacentHTML('beforebegin', tab_html);
+                        if(document.querySelector('.tab_wrapper .active') == null){
+                            document.querySelectorAll('.tab_wrapper a')[0].classList.add('active');
+                        }
                     }
                     LoadData(0,9);
                     break;

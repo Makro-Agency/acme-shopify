@@ -115,6 +115,16 @@
         "name": "json",
         "category": "JSON"
       }
+    },
+    {
+      "key": "sales_id",
+      "namespace": "custom",
+      "name": "Sales ID",
+      "description": "Sales Rep ID",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "location": [

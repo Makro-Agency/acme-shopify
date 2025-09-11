@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "split_hero_iLW3aK": {
       "type": "split-hero",
@@ -37,6 +37,7 @@
         "label": "",
         "header": "Two Packs. Endless possibilities.",
         "body": "<p>Now available at Costco! 13 grams protein per serving. Ready to eat, right out of the pack. Wild caught and sustainably sourced. What else could you need?</p>",
+        "image": "shopify://shop_images/tuna_header_1_5e6bb1f0-d017-48ea-b16b-c073ef65e628.png",
         "cta": "See where you can sample",
         "url": "https://acmesmokedfish.co/salmon-candy-hero",
         "external": true
@@ -161,6 +162,7 @@
         "block_hrkCCQ",
         "block_MRzbGH"
       ],
+      "disabled": true,
       "name": "Basic Card Swiper",
       "settings": {
         "anchor_id": "",
@@ -239,12 +241,13 @@
           "type": "Slide",
           "settings": {
             "anchor_id": "",
-            "label": "",
-            "header": "Read our Blog",
+            "label": "Becoming Citizens of Seafood",
+            "header": "1% for the Planet",
             "title": "",
             "sub_title": "",
-            "image_size": "cover",
-            "body": "<p>From recipes to community to family history, explore our stories. Get tips, get inspired, and most importantly, get to know us here at Acme!</p>",
+            "image": "shopify://shop_images/1percent_web_image_v2_1.png",
+            "image_size": "contain",
+            "body": "<p>Acme Smoked Fish Corporation is a proud member of 1% for the Planet. Through this partnership, 1% of sales from all Acme brand cold smoked salmon retail products are donated to support climate initiatives.</p>",
             "link_url": "https://acmesmokedfish.com/blogs/news",
             "external": true,
             "link_label": "All Articles"
@@ -257,9 +260,9 @@
       "name": "Two Column Slider",
       "settings": {
         "anchor_id": "",
-        "color": "dark",
+        "color": "light",
         "layout": "swiper",
-        "image_position": "left"
+        "image_position": "right"
       }
     },
     "two_column_panels_qqTPfi": {
@@ -568,11 +571,11 @@
       "settings": {
         "anchor_id": "",
         "color": "light",
-        "lead": "Follow us @acmesmokedfish",
-        "header": "",
+        "lead": "",
+        "header": "Find Your Inspiration",
         "subheader": "",
-        "cta": "",
-        "url": "",
+        "cta": "See All Recipes",
+        "url": "shopify://blogs/recipes",
         "external": false
       }
     },
@@ -639,7 +642,6 @@
         "3ccc0984-c37a-49b5-80c1-48372484b58b",
         "6f78499c-ff20-4b89-90b5-45bf7f93d801"
       ],
-      "disabled": true,
       "settings": {
         "anchor_id": "",
         "color": "light",
@@ -835,9 +837,9 @@
     "b2049783-56d5-4f1f-9033-f993b51af154",
     "058aa77c-6cc0-4133-8ad8-c28c9947fba5",
     "header_content_f7YkDB",
+    "e8e1192d-b2fc-42c2-835a-ec6cdf0dd392",
     "1751558522e0c37a8c",
     "e42e5ee8-81f2-4dca-9b66-d5d3d57d7993",
-    "e8e1192d-b2fc-42c2-835a-ec6cdf0dd392",
     "fb4edcb3-2a9e-4311-a6d4-035a301a7e06",
     "e7f2050a-a86e-416c-906c-534b5fcad997",
     "34117dc8-47aa-407e-bb53-9d0f57413667",

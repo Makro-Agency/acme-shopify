@@ -1,0 +1,92 @@
+{%- assign social_icons = false -%}
+{%- assign inline_list = false -%}
+
+{%- if
+  settings.social_twitter_link != blank
+  or settings.social_facebook_link != blank
+  or settings.social_pinterest_link != blank
+  or settings.social_instagram_link != blank
+  or settings.social_tumblr_link != blank
+  or settings.social_snapchat_link != blank
+  or settings.social_youtube_link != blank
+  or settings.social_vimeo_link != blank
+-%}
+  {%- assign social_icons = true -%}
+{%- endif -%}
+
+{%- if social_icons -%}
+    <ul class="">
+        {%- if settings.social_facebook_link != blank -%}
+        <li>
+            <a  href="{{ settings.social_facebook_link | escape }}" aria-describedby="a11y-external-message">
+            {%- include 'icon-facebook' -%}
+            <span >Facebook</span>
+            </a>
+        </li>
+        {%- endif -%}
+        {%- if settings.social_twitter_link != blank -%}
+        <li>
+            <a  href="{{ settings.social_twitter_link | escape }}" aria-describedby="a11y-external-message">
+            {%- include 'icon-twitter' -%}
+            <span >Twitter</span>
+            </a>
+        </li>
+        {%- endif -%}
+        {%- if settings.social_pinterest_link != blank -%}
+        <li>
+            <a  href="{{ settings.social_pinterest_link | escape }}" aria-describedby="a11y-external-message">
+            {%- include 'icon-pinterest' -%}
+            <span >Pinterest</span>
+            </a>
+        </li>
+        {%- endif -%}
+        {%- if settings.social_instagram_link != blank -%}
+        <li>
+            <a  href="{{ settings.social_instagram_link | escape }}" aria-describedby="a11y-external-message">
+            {%- include 'icon-instagram' -%}
+            <span >Instagram</span>
+            </a>
+        </li>
+        {%- endif -%}
+        {%- if settings.social_tumblr_link != blank -%}
+        <li>
+            <a  href="{{ settings.social_tumblr_link | escape }}" aria-describedby="a11y-external-message">
+            {%- include 'icon-tumblr' -%}
+            <span >Tumblr</span>
+            </a>
+        </li>
+        {%- endif -%}
+        {%- if settings.social_snapchat_link != blank -%}
+        <li>
+            <a  href="{{ settings.social_snapchat_link | escape }}" aria-describedby="a11y-external-message">
+            {%- include 'icon-snapchat' -%}
+            <span >Snapchat</span>
+            </a>
+        </li>
+        {%- endif -%}
+        {%- if settings.social_youtube_link != blank -%}
+        <li>
+            <a  href="{{ settings.social_youtube_link | escape }}" aria-describedby="a11y-external-message">
+            {%- include 'icon-youtube' -%}
+            <span >YouTube</span>
+            </a>
+        </li>
+        {%- endif -%}
+        {%- if settings.social_vimeo_link != blank -%}
+        <li>
+            <a  href="{{ settings.social_vimeo_link | escape }}" aria-describedby="a11y-external-message">
+            {%- include 'icon-vimeo' -%}
+            <span >Vimeo</span>
+            </a>
+        </li>
+        {%- endif -%}
+        {%- if template.name == 'blog' or template.name == 'article' -%}
+        <li>
+            <a  href="{{ shop.url }}{{ blog.url }}.atom">
+            {%- include 'icon-rss' -%}
+            <span >RSS</span>
+            </a>
+        </li>
+        {%- endif -%}
+    </ul>
+{% endif %}

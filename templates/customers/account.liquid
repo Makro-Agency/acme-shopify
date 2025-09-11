@@ -1,0 +1,123 @@
+<div class="mx-sec my-account-container">
+  <div class="container-fluid text-blue">
+    <div class="row">
+      <div class="sixteen columns col-10 offset-1 ps-0 ps-lg-3">
+        <div class="section clearfix">
+          <h1 class="header-1">{{ 'customer.account.details' | t }}</h1>
+        </div>
+      </div>
+  
+      {{ 'Sign out' | customer_logout_link | replace: '<a', '<a class="btn btn-primary offset-1 logout-btn"' }}
+      
+      <div class="clear"></div>
+      <div class="section clearfix col-10 offset-1 d-lg-flex ps-0 ps-lg-3">
+        
+        <div class="twelve columns col-lg-7">
+          <div id="customer_orders">
+            <h2 class="header-1 mb-4 mb-lg-5">{{ 'customer.orders.title' | t }}</h2>
+            {% if customer.orders.size != 0 %}
+            <div class="order-history order-history__mobile d-lg-none">
+              {% assign i = 1 %}
+              {% for order in customer.orders %}
+                <div class="order-details" id="order-number-{{i}}">
+                  <dl>
+                    <dt>{{ 'customer.orders.order_number' | t }}</dt>
+                    <dd>{{ order.name | link_to: order.customer_url }}</dd>
+                  </dl>
+                  <dl>
+                    <dt>{{ 'customer.orders.date' | t }}</dt>
+                    <dd>{{ order.created_at | date: "%b %d, %Y" }}</dd>
+                  </dl>
+                  <dl>
+                    <dt>Payment</dt>
+                    <dd>{{ order.financial_status_label }}</dd>
+                  </dl>
+                  <dl>
+                    <dt>Fulfillment</dt>
+                    <dd>{{ order.fulfillment_status_label }}</dd>
+                  </dl>
+                  <dl>
+                    <dt>{{ 'customer.orders.total' | t }}</dt>
+                    <dd>{{ order.total_price | money }}</dd>
+                  </dl>
+                </div>
+                {% assign i = i | plus: 1 %}
+              {% endfor %}
+            </div>
+            <!-- <div>
+              {% for order in customer.orders %}
+              <ul class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+                  <li>{{ order.name | link_to: order.customer_url }}</li>
+                  <li>{{ order.created_at | date: format: "month_day_year" }}</li>
+                  <li>{{ order.financial_status_label }}</li>
+                  <li>{{ order.fulfillment_status_label }}</li>
+                  <li>{{ order.total_price | money }}</li>
+              </ul>
+              {% endfor %}
+            </div> -->
+            <table class="order-history order-history__desktop d-none d-lg-block" width="100%">
+              <thead>
+                <tr>
+                  <th>{{ 'customer.orders.order_number' | t }}</th>
+                  <th>{{ 'customer.orders.date' | t }}</th>
+                  <th>Payment</th>
+                  <th>Fulfillment</th>
+                  <th>{{ 'customer.orders.total' | t }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in customer.orders %}
+                <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+                    <td>{{ order.name | link_to: order.customer_url | replace: '<a', '<a class="order-link"' }}</td>
+                    <td>{{ order.created_at | date: "%b %d, %Y" }}</td>
+                    <td>{{ order.financial_status_label }}</td>
+                    <td>{{ order.fulfillment_status_label }}</td>
+                    <td>{{ order.total_price | money }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+              <p>{{ 'customer.orders.none' | t }}</p>
+            {% endif %}
+          </div>
+        </div>
+  
+        <div class="four columns col-lg-4 offset-lg-1">
+          
+          <div id="customer_detail" class="group">
+            {% if customer.metafields.subscriptions.customer_string %}
+            <!--BeginRechargeCode-->
+            <p><a href="/tools/recurring/customer/{{customer.metafields.subscriptions.customer_string}}/subscriptions/">Manage Subscriptions</a></p>
+            <!--EndRechargeCode-->
+            {% endif %}
+            <h2 class="header-1">Details</h2>
+            <h4 class="">Default Address</h4>
+            <address class="address note body-1">
+              <p class="name">{{ customer.name }}</p>
+              {% if customer.default_address != nil %}
+                <p>{{ customer.default_address.address1 }}{% if customer.default_address.address2 != blank %}, {{ customer.default_address.address2 }}{% endif %}</p>
+                <p>
+                  {% if customer.default_address.province_code != blank and customer.default_address.city != blank %}
+                    {{ customer.default_address.city}}, {{ customer.default_address.province_code}}
+                  {% elsif customer.default_address.province_code == blank and customer.default_address.city != blank %}
+                    {{ customer.default_address.city}}
+                  {% elsif customer.default_address.province_code != blank and customer.default_address.city == blank %}
+                    {{ customer.default_address.province_code}}
+                  {% endif %}
+                  <!-- {% if address.province_code %}
+                    {{customer.default_address.province_code}}
+                  {% else %}
+                    {{ customer.default_address.province }}
+                  {% endif %}  -->
+                </p>
+                <p>{{customer.default_address.country}} {{ customer.default_address.zip}}</p>
+              {% endif %}
+                <p class="view-addresses"><a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+            </address>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+</div>

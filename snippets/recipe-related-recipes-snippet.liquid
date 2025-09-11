@@ -1,0 +1,113 @@
+{% liquid
+  assign course = ''
+  assign recipeFilter = linklists.recipe-filter.links
+  for recipeMenuItem in recipeFilter
+    if recipeMenuItem.title == 'Course'
+      for child_link in recipeMenuItem.links
+        if article.tags contains child_link.title
+          assign course = child_link.title
+        endif
+      endfor
+    elsif recipeMenuItem.title == 'Product Category'
+      capture categories
+        for child_link in recipeMenuItem.links
+          echo child_link.title
+          echo '|'
+        endfor
+      endcapture
+    endif
+  endfor
+
+  comment
+    Must use linklist since  for blog in blogs  doesn't work
+    Pulls related articles from all blogs
+  endcomment
+  paginate blogs['Recipes'].articles by 1000
+    for recipe in blogs['Recipes'].articles
+      unless recipe.handle == article.handle
+        if recipe.tags contains course
+          if related_recipes_string != blank
+            assign related_recipes_string = related_recipes_string | append: '|'
+          endif
+          assign related_recipes_string = related_recipes_string | append: recipe.handle
+          assign related_recipes = related_recipes_string | split: '|'
+          if related_recipes.size >= 8
+            break
+          endif
+        endif
+      endunless
+    endfor
+  endpaginate
+%}
+
+<section 
+  class="product-section-related-content recipe-related-content">
+  <div class="container heading-container">
+    <div class="row mb-4 align-items-start row-laptop">
+      <div class="col-12 col-md-8 col-lg-6">
+        <h2 class="header-1">More Recipes</h2>
+      </div>
+      <div class="d-md-flex col-lg-6 align-items-center align-items-lg-end justify-content-lg-end px-lg-0">
+        <a href="/blogs/recipes" class="btn btn-primary me-3">View All Recipes</a>
+        <div class="button-container d-none d-md-flex align-items-center justify-content-end mb-md-0 me-md-2">
+          <div class="swiper-button-prev me-3">
+            {% render 'icon-next' %}                      
+          </div> 
+          <div class="swiper-button-next">
+            {% render 'icon-next' %}  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="swiper container">
+    <div class="">
+      <div class="related-content-swiper">
+        <div class="swiper-wrapper row">
+
+          {% for article_handle in related_recipes limit: section.settings.limit %}
+  
+            {% liquid
+              assign article = articles[article_handle]
+              assign first = true
+              capture category
+                for tag in article.tags
+                  if categories contains tag
+                    if first == false
+                      echo ', '
+                    else
+                      assign first = false
+                    endif
+                    echo tag
+                  endif
+                endfor
+              endcapture
+
+              assign prep_time = article.metafields.recipes.prep_time
+              assign cook_time = article.metafields.recipes.cook_time
+            %}
+  
+            <div class="swiper-slide card-basic" {{ block.shopify_attributes }}>
+              <a href="{{ article.url }}" class="related-content-item">
+                <div class="image-wrap">
+                  <picture>
+                    <img src="{{ article.image | img_url: '400x' }}" alt="{{ article.image.alt }}" loading="lazy">
+                    <source media="(min-width: 992px)" srcset="{{ article.image | img_url: '600x' }}">
+                  </picture>
+                </div>
+                <div class="content">
+                  <h2 class="card-basic__header">{{ article.title }}</h2>
+                  <h3 class="card-basic__sub-header">{{ category }}</h3>
+                  <h3 class="card-basic__sub-header">Prep Time {{ prep_time }} | Cook Time {{ cook_time }}</h3>
+                  {% comment %} <a href="{{ article.url }}" class="btn btn-primary">Go To Recipe</a> {% endcomment %}
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+          
+        </div>
+      </div><!-- .swiper -->
+    </div>
+  </div>
+</section>

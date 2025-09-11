@@ -1,0 +1,84 @@
+{%- liquid 
+  assign on_sale = false
+  assign sold_out = false
+  if product.compare_at_price > product.price  or product.compare_at_price_max > 0
+    assign on_sale = true
+  endif
+  if product.available == false
+  assign sold_out = true
+  endif
+  assign current_variant = product.selected_or_first_available_variant
+
+
+-%}
+
+{% comment %} get the primary collection {% endcomment %}
+{% liquid
+  assign primary_collection = false
+  for collection in product.collections
+      if collection.metafields.collection.primary_collection == true
+          assign primary_collection = collection
+      endif
+  endfor
+%} 
+
+
+
+{%- capture product_flags -%}{%- if on_sale -%} flag-on-sale {%- endif -%} {%- if sold_out -%} flag-out-of-stock {%- endif -%}{%- endcapture -%}
+
+<div 
+  class="product-section-template product-section-top-row gsap-mininav" id="mini-nav__overview" style="overflow:visible;">
+  <div class="container px-xxl-0">
+    <div class="row product-single" id="product-single">
+      <div class="col-12 col-md-6 col-lg-5">
+        {%- render 'product-single-images' -%}
+      </div><!-- // col-12 -->
+
+      <div class="product-single__details col-md-6 col-lg-5 offset-lg-1 mt-lg-4 pt-lg-2">
+        <div class="content-container">
+          <div class="top-line mb-0">
+            <span class="product-category header-5">{{ primary_collection.title }}</span>
+          </div>
+          <h1 class="product-title header-1 my-3">{{ product.title }}</h1> 
+<!-- Start of Judge.me code --> 
+  <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}'> 
+    {{ product.metafields.judgeme.badge }} 
+  </div> 
+<!-- End of Judge.me code -->
+          
+          <div class="product-description body-2 mb-2">{{ product.description }}</div>
+            {% render 'product-single-form' product:product  available_online:product.metafields.accentuate.available_online %}
+
+          {% if product.metafields.accentuate.where_to_buy_code != blank and product.metafields.accentuate.available_online != true %}
+            <div class="destini-buttons d-flex flex-column">
+              {% render 'product-destini-buttons' product:product %}
+            </div>
+          {% endif %}
+        </div>
+      </div><!-- // product-single__details -->
+    </div><!-- row -->
+  </div><!-- // container --> 
+  
+  {% render 'modal-fish-calculator' product:product %}
+
+</div><!-- // product container -->
+
+
+{% schema %}
+{
+  "name": "Product Hero",
+  "templates": [
+    "product"
+  ],
+  "settings": [
+  ],
+  "presets": [
+    {
+      "name": "Product Hero",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}
+

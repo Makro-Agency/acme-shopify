@@ -1,0 +1,31 @@
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=641cbcb600da630019138c4a&product=sop' async='async'></script>
+
+<ul class="share-container mb-3">
+    <li>
+        <button class="st-btn icon-facebook st-custom-button" aria-label="Share on Facebook" data-network="facebook">
+            {% render 'icon-social-facebook' %}
+        </button>
+    </li>
+    <li>
+        <button class="st-btn icon-twitter st-custom-button" aria-label="Share on Twitter" data-network="twitter">
+            {% render 'icon-social-twitter' %}
+        </button>
+    </li>
+    <li>
+        <button class="st-btn icon-linkedin st-custom-button" aria-label="Share on LinkedIn" data-network="linkedin">
+            {% render 'icon-social-linkedin' %}
+        </button>
+    </li>
+    {% if blog.title == 'Recipes' %}
+        <script>
+            function handlePrint() {
+                window.print();
+            }
+        </script>
+        <li>
+            <button onclick="handlePrint()" class="st-btn icon-print st-custom-button" aria-label="Print">
+                {% render 'icon-social-print' %}
+            </button>
+        </li>
+    {% endif %}
+</ul> 

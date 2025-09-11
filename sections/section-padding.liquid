@@ -1,0 +1,47 @@
+<section class="section-padding
+{%- if section.settings.padding == 'small' -%}__small{%- endif -%}
+{%- if section.settings.padding == 'medium' -%}__medium{%- endif -%}
+{%- if section.settings.padding == 'large' -%}__large{%- endif -%}
+{%- if section.settings.padding == 'xl' -%}__xl{%- endif -%}
+">
+
+</section>
+
+{% schema %}
+    {
+        "name": "Section Padding",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "select",
+                "id": "padding",
+                "label": "Select Padding Amount",
+                "options": [
+                    {
+                        "value": "small",
+                        "label": "Small"
+                    },
+                    {
+                        "value": "medium",
+                        "label": "Medium"
+                    },
+                    {
+                        "value": "large",
+                        "label": "Large"
+                    },
+                    {
+                        "value": "xl",
+                        "label": "Extra Large"
+                    }
+                ],
+                "default": "large"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Section Padding",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}

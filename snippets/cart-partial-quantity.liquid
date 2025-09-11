@@ -1,0 +1,15 @@
+<div class="row d-flex align-items-center">
+	<div class="col-5 col-md-6">
+	  <div class="cart__qty mb-4" >
+		{% render "product-form__qty" product:item index:forloop.index%}
+	  </div>
+	</div>
+	<div class="col-2 col-md-6 mt-lg-3">
+		<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" 
+		  class="text-link text-link--accent cart__remove " 
+		  aria-label="{{ 'cart.buttons.remove' | t: product: item.title }}" 
+		  data-cart-remove>
+		  {% render 'animation-close' %}
+		</a>
+	</div>
+  </div>

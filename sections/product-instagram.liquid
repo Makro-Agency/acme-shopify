@@ -1,0 +1,61 @@
+{% if product.metafields.accentuate.instagram_on %}
+    <section class="recipe-instagram">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8 px-md-0">
+                    <h2 class="recipe-instagram__header header-1 mb-4 mb-lg-5 pb-2">{{ product.metafields.accentuate.ig_header }}</h2>
+                </div>
+                <div class="button-container d-none d-md-flex col-md-2 offset-md-2 justify-content-end align-items-end">
+                    <div class="swiper-button-prev dark me-3">
+                        {% render 'icon-next' %}
+                    </div> 
+                    <div class="swiper-button-next dark">
+                        {% render 'icon-next' %}
+                    </div>
+                </div>
+                <div class="swiper recipe-instagram__swiper">
+                    <div class="swiper-wrapper recipe-instagram__swiper-wrapper">
+                        {% for multi_images in product.metafields.accentuate.ig_image %}
+                            <div class="swiper-slide recipe-instagram__swiper-slide">
+                                <div class="card-basic">
+                                    <a class="" href="{{ product.metafields.accentuate.ig_url  }}" target="_blank" aria-label="Visit Instagram page for {{ product.metafields.accentuate.ig_handle[forloop.index0] }}">
+                                        {% for block in multi_images %}
+                                            <div class="image-wrap">
+                                                {% comment %} <div class="icon-ig">{% render 'icon-social-instagram' %}</div> {% endcomment %}
+                                                <div class="filter"></div>
+                                                <img src="{{ block.src }}" alt="{{ block.alt }}" loading="lazy"/>
+                                            </div>
+                                        {% endfor %}
+                                        <h3 class="card-basic__header">{{ product.metafields.accentuate.ig_handle[forloop.index0] }}</h3>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div><!-- .swiper -->
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product Instagram Section",
+  "templates": [
+    "product"
+  ],
+  "settings": [
+    {
+        "type" : "header",
+        "content" : "No Settings Required"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Instagram Section",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

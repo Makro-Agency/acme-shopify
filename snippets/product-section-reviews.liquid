@@ -1,0 +1,152 @@
+<style>
+	.mx-review-sec{}
+	.mx-review-sec .spr-container{
+		border:none;
+		width:100%;
+		padding:0;
+	}
+
+	.mx-review-sec .spr-container .spr-header{}
+	.mx-review-sec .spr-container .spr-header .spr-header-title{
+		font-size: 2.5rem;
+		font-family: 'Prompt', sans-serif;
+		font-weight: 600;
+        margin-bottom: .5rem;
+        line-height: 1.2;
+        margin-top:0;
+	}
+	.mx-review-sec .spr-container .spr-header .spr-summary {
+	}
+	.mx-review-sec .spr-container .spr-header .spr-summary .spr-starrating{
+		margin-top:2px;
+		color:#E8A500;
+	}
+	.mx-review-sec .spr-container .spr-header .spr-summary .spr-summary-caption{
+		padding-left:15px;
+		font-family:"Barlow Condensed",sans-serif;
+		font-size:16px;
+	}
+	.mx-review-sec .spr-container .spr-header .spr-summary .spr-summary-actions-newreview{
+		height:44px;
+		line-height:44px;
+		border-radius:22px;
+		border:1px solid #222222;
+		color:#222222;
+		font-weight:600;
+		padding:0 20px;
+	}
+	.mx-review-sec .spr-container .spr-header .spr-summary .spr-summary-actions-newreview:hover{
+		color:#fff;
+		background:#33992C;
+		border-color:#33992C;
+		text-decoration:none;
+	}
+
+	/*-- form --*/
+	.mx-review-sec .spr-container .spr-content .spr-form{
+		border-top:none;
+		margin:0;
+		padding:15px 0;
+	}
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-form-label{
+		font-weight:600;
+		color:#222;
+		margin:10px 0 0 0;
+	}
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-form-input-text,
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-form-input-email{
+		padding:10px 0px;
+		border:none;
+		border-bottom:1px solid #222;
+		color:#222;
+		font-weight:600;
+		background:transparent;
+	}
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-form-input-textarea {
+		padding:10px;
+		border:1px solid #222;
+		color:#222;
+		font-weight:600;
+		background:transparent;
+		margin-top:10px;
+	}
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-form-input-text:focus,
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-form-input-email:focus,
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-form-input-textarea:focus {
+		outline:none;
+	}
+	.mx-review-sec .spr-container .spr-content .spr-form ::-webkit-input-placeholder,
+	.mx-review-sec .spr-container .spr-content .spr-form ::-moz-placeholder,
+	.mx-review-sec .spr-container .spr-content .spr-form :-ms-input-placeholder,
+	.mx-review-sec .spr-container .spr-content .spr-form :-moz-placeholder{
+		color:#222;
+	}
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-icon-star,
+	.mx-review-sec .spr-container .spr-content .spr-form .spr-icon-star-empty{
+		opacity:1;
+		color:#E8A500;
+	}
+
+	/*-- reviews --*/
+	.mx-review-sec .spr-container .spr-content .spr-reviews{
+		margin-left:-15px;
+		margin-right:-15px;
+		display:flex;
+		align-items:stretch;
+		flex-wrap:wrap;
+		/*justify-content:center;*/
+	}
+	.mx-review-sec .spr-container .spr-content .spr-reviews .spr-review{
+		background:#33992C;
+		border:none;
+		margin:15px;
+		padding:15px 15px 0px 15px;
+		min-width:calc(100% - 30px);
+		color:#fff;
+	}
+		@media screen and (min-width: 768px) {
+			.mx-review-sec .spr-container .spr-content .spr-reviews .spr-review{
+				min-width:calc(50% - 30px);
+				padding:30px 30px 15px 30px;
+			}
+		}
+		@media screen and (min-width: 992px) {
+			.mx-review-sec .spr-container .spr-content .spr-reviews .spr-review{
+				min-width:calc(33.33% - 30px);
+				padding:50px 50px 30px 50px;
+			}
+		}
+	.mx-review-sec .spr-container .spr-content .spr-reviews .spr-review	.spr-review-header-byline{
+		font-style:normal;
+		color:#fff;
+		opacity:1;
+	}
+	.mx-review-sec .spr-container .spr-content .spr-reviews .spr-review	.spr-review-header-byline strong{
+		font-weight:600;
+	}
+	.mx-review-sec .spr-container .spr-content .spr-reviews .spr-review	.spr-review-footer{
+		display:none;
+	}
+	.template-product section.mx-product-top-sec {
+		background: {{settings.color_product_bg}} !important;
+	}
+	.product-main-swiper .img-fluid {
+		max-height: 78vh;
+	}
+
+</style>
+
+
+
+
+<section class="product-section-reviews">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="mx-review-sec" id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .container -->
+</section>
+
+

@@ -1,0 +1,147 @@
+{% liquid
+  assign block_size = section.blocks | size
+  assign is_single = null
+  assign first_block = null
+
+  if block_size < 2
+    assign is_single = true
+  else
+    assign is_single = false
+  endif
+
+  for block in section.blocks
+    if forloop.first
+      assign first_block = block
+    endif
+  endfor
+%}
+
+{% if section.settings.anchor_id != blank %}
+  <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+
+<section id="hero-section--{{ section.id }}" class="hero-section hero-carousel {% if is_single %}theme--{{ first_block.settings.color }} alignment--{{ first_block.settings.alignment }}{% endif %}" swiper-hero-section>
+  {% if is_single %}
+    <div class="container hero-carousel__slide--wrapper">
+      <div class="row">
+        <div class="content-wrap col-12 theme--{{ first_block.settings.color }} alignment--{{ first_block.settings.alignment }}">
+          {% render 'hero-slide', block: first_block, single: is_single %}
+        </div>
+      </div>
+    </div>
+
+  {% else %}
+    <div class="swiper hero-carousel__slide--wrapper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide content-wrap theme--{{ block.settings.color }} alignment--{{ block.settings.alignment }}">
+            {% render 'hero-slide', block: block %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="slide-controls container">
+        <button class="swiper-button swiper-button-prev" aria-label="previous">
+          {% render 'icon-next' %}
+        </button>
+    
+        <button class="swiper-button swiper-button-next" aria-label="next">
+          {% render 'icon-next' %}
+        </button>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Hero Section",
+  "tag": "section",
+  "class": "hero-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor Link ID"
+    }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "name": "Hero Slide",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "select",
+          "id": "color",
+          "label": "Color Scheme",
+          "options": [
+            {
+              "value": "dark",
+              "label": "Dark Text & Button"
+            },
+            {
+              "value": "light",
+              "label": "Light Text & Button"
+            }
+          ],
+          "default": "light"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Text Alignment on Mobile",
+          "options": [
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "header",
+          "label": "Header Text"
+        },
+        {
+          "type": "richtext",
+          "id": "sub_header",
+          "label": "Subheader Text"
+        },
+        {
+          "type": "text",
+          "id": "cta",
+          "label": "CTA Text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "external",
+          "label": "Open Link in New Window",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Choose Background Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Section",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

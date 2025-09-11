@@ -1,0 +1,136 @@
+{% 
+    liquid
+    assign is_product = false
+    if template.name == 'product'
+        assign is_product = true 
+    endif
+%}
+
+{% comment %} get the primary collection {% endcomment %}
+{% liquid
+    assign metafields = product.metafields.accentuate
+    if is_product == true 
+        assign has_metafields = false
+        assign primary_collection = false
+        if metafields.faq_question != blank 
+            assign has_metafields = true
+        endif 
+        if has_metafields == false 
+            for collection in product.collections
+                if collection.metafields.collection.primary_collection == true
+                    assign primary_collection = collection
+                endif
+            endfor
+        endif
+    endif 
+%} 
+
+
+<section class="faqs-section {% if template == 'product' %}gsap-mininav{% endif %}">
+    {% if template == 'product' %}
+      <div id="mini-nav__faqs" class="mini-nav__anchor"></div>
+    {% endif %}
+    <div class="container">
+        <div class="row d-lg-flex">
+            <div class="faqs-section__header col-lg-5 offset-lg-1 mb-3 laptop">
+                <h2 class="faqs-section__header--title header-1 mt-md-5">FAQs</h2>
+            </div>
+            <div class="accordion accordion-flush col-lg-6 mb-5" id="faqsAccordion">
+                {% if is_product %}   
+                    {% liquid                     
+                        if has_metafields
+                            for question in metafields.faq_question
+                                render 'faq-accordion-item'  index:forloop.index  title:metafields.faq_question[forloop.index0]  content:metafields.faq_answer[forloop.index0]
+                            endfor
+                        endif
+                        if has_metafields == false and primary_collection != false 
+                            for article in blogs.faq.articles
+                                unless article.title.size > 60
+                                    assign index = forloop.index
+                                    for tag in article.tags
+                                        if tag contains primary_collection.title
+                                            render 'faq-accordion-item' index:index title:article.title  content:article.content
+                                        endif
+                                    endfor
+                                endunless
+                            endfor
+                        endif
+                    %}
+                {% else %}
+                    {% liquid 
+                        if section.blocks.size > 0 
+                            for block in section.blocks
+                                render 'faq-accordion-item'  index:forloop.index title:block.settings.question content:block.settings.answer
+                            endfor
+                            else
+                                if section.settings.tag 
+                                    for article in blogs.faq.articles
+                                        unless article.title.size > 60
+                                            if article.tags contains section.settings.tag
+                                                render 'faq-accordion-item'  index:forloop.index title:article.title content:article.content
+                                            endif
+                                        endunless
+                                    endfor
+                                endif
+                        endif
+                    %}
+                {% endif %}
+            </div>
+            <a class="btn btn-primary offset-lg-6" href="{{section.settings.link_url}}">{{section.settings.link_label}}</a>
+        </div>
+    </div>
+</section>
+
+
+
+{% schema %}
+    {
+        "name": "FAQs Section",
+        "tag": "section",
+        "settings": [
+            {
+                "type":"text",
+                "id":"link_label",
+                "label":"Link Label",
+                "default" : "View All FAQs"
+             },
+            {
+                "type":"text",
+                "id":"link_url",
+                "label":"Link Url",
+                "default" : "/blogs/faq"
+             },
+            {
+                "type":"text",
+                "id":"tag",
+                "label":"Tag"
+             }
+        ],
+        "blocks": [
+            {
+                "name":"Item",
+                "type":"faq",
+                "settings":[
+                   {
+                      "type":"text",
+                      "id":"question",
+                      "label":"Question"
+                   },
+                   {
+                      "type":"textarea",
+                      "id":"answer",
+                      "label":"Answer"
+                   }
+                ]
+             }
+       
+        ],
+        "presets": [
+            {
+                "name": "FAQs Section",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}
+<!-- Start of Judge.me code --><div style='clear:both'></div><div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-auto-install='false'>{{ product.metafields.judgeme.widget }}</div><!-- End of Judge.me code -->

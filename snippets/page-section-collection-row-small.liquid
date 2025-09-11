@@ -1,0 +1,43 @@
+{% if settings.collection != blank %} {% assign collection = settings.collection%} {% endif %}
+{% if settings.header != blank %} {% assign header = settings.header%} {% endif %}
+
+{% assign coll = collections[collection]%}
+
+{% if coll.products.size == 1 %}
+{% assign col_size  = 'col-12' %}
+{% endif %}
+
+{% if coll.products.size == 2 %}
+{% assign col_size  = 'col-md-6' %}
+{% endif %}
+
+{% if coll.products.size == 3 %}
+{% assign col_size  = ' col-sm-10 offset-sm-1 offset-md-0  col-md-6 col-lg-4' %}
+{% endif %}
+
+{% if coll.products.size > 3 %}
+{% assign col_size  = ' col-md-3' %}
+{% endif %}
+<section class = 'position-relative  '>
+    <div class = 'd-flex flex-column'>
+      <div class = 'd-flex align-items-center section-height--short py-5'>
+          <div class = 'container'>
+              <div class ='h-100'>
+				<div class="row text-center mb-4">
+					<h2 class = 'section-header text-center w-100'>{{header}}</h2>			
+				</div>
+				<div class="row">
+					{% for product in coll.products %}
+						<div class="{{ col_size }} mb-5">
+							{% render 'product-grid-item' product:product  %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% assign settings = false %}
+{% assign collection = false %}
+{% assign header = false %}

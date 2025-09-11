@@ -1,0 +1,139 @@
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="section-image-gallery container">
+  {% if section.settings.header != blank %}
+    <h3 class="header-1">{{ section.settings.header }}</h3>
+  {% endif %}
+  <div class="image-gallery-holder">
+    <div class="image-gallery row justify-content-lg-between">
+      {% for block in section.blocks %}
+        {% liquid
+          case forloop.index0
+            when 0
+              assign colLgVal = 'col-lg-7'
+            when 1
+              assign colLgVal = 'col-lg-4 offset-lg-1'
+            when 2
+              assign colLgVal = 'col-lg-4'
+            else
+              assign colLgVal = 'col-lg-7 offset-lg-1'
+          endcase
+        %}
+        <div class="gallery-image-slide col-12 col-md-6 mb-4">
+          {% if block.settings.link %}
+            <a
+              href="{{block.settings.link}}"
+              {% if block.settings.external %}
+                target="_blank"
+              {% endif %}
+            >
+          {% endif %}
+          <figure {{ block.shopify_attributes }}>
+            {{ block.settings.image | image_url: width: 900 | image_tag }}
+            {% if block.settings.header != blank or block.settings.body != blank %}
+              <figcaption class="image-data">
+                <h4 class="header-4">{{ block.settings.header }}</h4>
+                <p class="body-2">{{ block.settings.body }}</p>
+                {% if block.settings.link %}
+                  <div class="read-more d-flex">
+                    <p class="read-more__text">Read More</p>
+                    <svg
+                      class="read-more__arrow"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="17.614"
+                      height="17.902"
+                      viewBox="0 0 17.614 17.902"
+                    >
+                      <g data-name="Group 95804" transform="translate(0.697 0.697)">
+                          <path id="Path_172930" data-name="Path 172930" d="M0,5.069,5.068,0l5.068,5.069" transform="translate(16.22 6.082) rotate(90)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.394"/>
+                          <path id="Path_172931" data-name="Path 172931" d="M0,16.22H7.1a4.055,4.055,0,0,0,4.055-4.055V0" transform="translate(16.22 0) rotate(90)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.394"/>
+                      </g>
+                    </svg>
+                  </div>
+                {% endif %}
+              </figcaption>
+            {% endif %}
+          </figure>
+          {% if block.settings.link %}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="background-image">
+    {% if section.settings.background_image != blank %}
+      {{ section.settings.background_image | image_url: width: 1346 | image_tag }}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image Gallery",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor Link ID"
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header"
+    },
+    {
+      "type": "text",
+      "id": "second_header",
+      "label": "Second Header"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "header",
+          "label": "Headline"
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "label": "body"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "external",
+          "label": "Open Link in New Window",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Gallery"
+    }
+  ]
+}
+{% endschema %}

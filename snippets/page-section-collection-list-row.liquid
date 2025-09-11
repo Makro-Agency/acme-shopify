@@ -1,0 +1,29 @@
+{% assign collection = collections[collection_name] %}
+<section class = 'container'>  
+	<div class="row">
+		<div class="col">
+			<h2 class="text-center py-3 mt-5">{{collection.title}}</h1>
+		</div>
+	</div>
+	{% for product in collection.products %}
+	  {% unless product.tags contains 'free_product' %}
+		{% include 'product-data' product%}
+		<div class = 'row product-row' id = "{{product.handle}}">    
+		  <div class = "col-md-6 col-lg-5 text-center ">
+			<div class = 'product-img bg-{{product_theme}} '>
+			  <img class="img-fluid  " src="{{product.featured_image | img_url :  'master'}}" alt="{{product.title}}">
+			</div>
+		  </div>
+		  <div class = 'col-md-5 offset-md-1 d-flex  flex-column justify-content-center '>
+			  <div class = 'product-content'>
+				  <h1 class = '  '>{{product.title}}  </h1>
+				  <h2 class = 'display-5 mb-4' >{{product.metafields.c_f.header}}</h2>
+				  <h3 class = 'h-serif-3 '>{{product.metafields.c_f.tagline}}</h3>
+				  <a href="{{product.url}}" class = 'd-inline-block mt-3 btn btn-outline-primary btn-lg'>SHOP</a>
+			  </div>
+		  </div>
+		</div>
+	  {% endunless %}
+	{% endfor %}
+  </section>
+  

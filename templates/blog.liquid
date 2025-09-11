@@ -1,0 +1,265 @@
+{% liquid
+  assign is_tag_page = false 
+  assign is_landing_page = true
+  if current_tags
+    assign is_tag_page = true
+    assign is_landing_page = false
+  endif
+  if canonical_url contains 'page='
+    assign is_landing_page = false 
+  endif
+  %}
+{% paginate blog.articles by 11 %}
+{% liquid 
+  if paginate.current_page > 1 and is_tag_page == false
+    assign is_landing_page = false
+  endif
+  assign first_post = 1
+  if is_landing_page == false
+    assign first_post = 0
+  endif
+
+%}
+
+
+<section class="blog-template">
+  <div class="container">
+    {% comment %} begin feature {% endcomment %}
+    {% if is_landing_page %}
+      <p class="blog-template__lead header-5 text-blue d-md-none">Blog</p>
+      {% for article in blog.articles limit: 1 %}
+        <div class="blog-template__featured text-blue d-md-flex justify-content-between align-items-start">
+          <h1 class="blog-template__featured--title font-ee-medium mb-5 d-md-none">{{ article.title }}</h1>
+          <div id="{{ img_wrapper_id }}" class="blog-template__featured--image mb-5 col-md-6 mb-lg-0">
+              <picture>
+                <source media="(min-width: 992px)" srcset="{{ article.image | img_url: '900x' }}">
+                <img id="{{ img_id }}"
+                  class="img-fluid lazyload"
+                  src="{{ article.image | img_url: '300x' }}"
+                  data-src="{{ img_url }}"
+                  alt="{{ article.image.alt }}"
+                  width="900"
+                  height="700" >
+              </picture>
+            </div>
+            <div class="content-wrap col-md-5">
+              <p class="blog-template__lead header-5 text-blue d-none d-md-block">Blog</p>
+              <h2 class="blog-template__featured--title font-ee-medium mb-5 mb-lg-4 d-none d-md-block">{{ article.title }}</h2>
+              <p class="blog-template__featured--content body-1 mb-5">{{ article.excerpt | strip_html | truncate: 250 }}</p>
+              {% assign href = article.url %}
+              {% assign external = false %}
+              {% if article.metafields.accentuate.external_link != blank %}
+                {% assign href = article.metafields.accentuate.external_link %}
+                {% assign external = true %}
+              {% endif %}
+  
+              <a class="blog-template__featured--url btn btn-primary" href="{{ href }}" {% if external %} target="_blank" {% endif%}>Read Article</a>
+            </div>
+          </div>
+      {% endfor %}
+    {% endif %}
+    {% comment %} end feature {% endcomment %}
+
+    {% comment %} begin filter {% endcomment %}
+    {% if blog.all_tags.size > 0 %}
+      {%- capture tags_list -%} 
+        {%- for tag in blog.all_tags -%}
+          {{ tag }}|
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign tags_array = tags_list | split: "|" -%}
+
+      {%- capture parent_array -%}
+        {%- for tag in tags_array -%}
+          {%- assign subtag = tag | split: "_" -%}
+            {{- subtag[0] -}}|
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign parent_tags = parent_array | split: "|" | uniq -%}
+
+      {% unless is_landing_page %}
+        <a class="back-button header-5 btn-tertiary mb-4" href="{{ blog.url }}">Back to All Articles</a>
+        <h1 class="header-1 text-blue pt-3 mb-4">Blog</h1>
+      {% endunless %}
+
+      {% if is_tag_page %}
+        {% assign url = shop.url | plus : '/blogs/news/tagged/' %}
+        {% assign current_tag = canonical_url | remove: url %}
+        {% assign tag_words = current_tag | split: "_" %}
+        {% assign filter = tag_words[1] | split: "?" %}
+        <h2 class="body-1 text-blue mb-5">Showing articles tagged with "{{ filter[0] | camelcase }}"</h2>
+      {% endif %}
+      
+      {% comment %} <aside class="mx-blog-filters"> {% endcomment %}
+        <div id="blogFilter" blog-filter-sticky class="d-none d-lg-flex section-blog-filter">
+          {%- for parent in parent_tags -%}
+            {% assign has_children = false %}
+              {% capture tag_options %}
+              <div class="blog-select">
+                <select name="{{ parent }}" id="blog-select-{{forloop.index}}">
+                  <option value="{{ parent_tags[forloop.index0] }}">{{ parent_tags[forloop.index0] }}</option>
+                  {% for tag in tags_array %}
+                    {% assign parts = tag | split: "_" %}
+                    {% if parts[0] == parent  %}
+                      {% assign has_children = true %}
+                      <option value="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ parts[1] }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              {% endcapture %}
+              {% if has_children == false %}
+                <a class="header-5" href="{{ blog.url }}/tagged/{{ parent | handleize }}">{{parent}}</a>
+              {% endif %}
+              {% if has_children == true %}
+                {{tag_options}}
+              {% endif %}
+          {%- endfor -%}
+        </div>
+        
+        <div blog-filter-sticky blog-filter-mobile class="blog-filter pt-5 d-lg-none section-blog-filter--mobile">
+          <div class="form-group d-flex flex-column">
+            <a class="btn btn-primary" 
+              role="button"
+              data-bs-toggle="modal" 
+              data-bs-target="#modal-{{ article.id }}">Filter
+            </a>
+            {% assign i = 0 %}
+            {% for article in blog.articles %}
+              {% assign i = i | plus: 1 %}
+            {% endfor %}
+            <p class="tag-count header-5 ps-2 mt-4">Showing {{ i }} results</p>
+          </div>
+        </div>
+      {% comment %} </aside> {% endcomment %}
+    {% endif %}
+    {% comment %} end filter {% endcomment %}
+  </div>
+
+  {% comment %} begin filter modal {% endcomment %}
+  <div class="modal modal-xl fade modal-filters" 
+  id="modal-{{ article.id }}" 
+  tabindex="-1" 
+  aria-labelledby="Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        {% render 'icon-close-blue' %}
+      </button>
+      <div class="modal-body">
+      <h3 class="filters-header header-1 mb-3">Filter By</h3>
+        {%- for parent in parent_tags -%}
+          {% assign has_children = false %}
+          {% capture children %}
+          <h4 class="filters-cat header-6 mt-5">{{ parent }}</h4>
+            {% for tag in tags_array %}
+              {% assign parts = tag | split: "_" %}
+              {% if parts[0] == parent  %}
+                {% assign has_children = true %}
+                <div class="filters-filter d-flex flex-column my-4">
+                  <a class="header-5" href="{{ blog.url }}/tagged/{{ tag | handleize }}">
+                  {{ parts[1] }}
+                  {% render 'icon-chevron-white' %}
+                  </a>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endcapture %}
+          {% if has_children == true %}
+            {{children}}
+          {% endif %}
+          {% if has_children == false %}
+            <h4 class="filters-cat header-6 mt-5">
+              <div class="filters-filter">
+                <a href="{{ blog.url }}/tagged/{{ parent | handleize }}">
+                  {{parent}}
+                  {% render 'icon-chevron-white' %}
+                </a>
+              </div>
+            </h4>
+          {% endif %}
+        {%- endfor -%}  
+      </div>
+    </div>  
+    </div>
+  </div>
+  {% comment %} end filter modal {% endcomment %}
+
+  {% comment %} begin grid {% endcomment %}
+  <div class="container article-grid section-blog-grid">
+    <div class="row {% if is_landing_page == true  %}grid{% else %}d-lg-flex justify-content-between{% endif %}">
+      {% for article in blog.articles %}
+        {% if forloop.index > first_post %}
+          <div class="col-md-6 col-lg-4 article-grid__block card-basic {% if is_landing_page == false  %}mb-lg-5 pb-lg-4{% endif %}">
+            {% liquid 
+              assign href = article.url
+              assign external = false
+              if article.metafields.accentuate.external_link != blank
+                assign href = article.metafields.accentuate.external_link
+                assign external = true
+              endif
+            %}
+            <a href="{{ href }}" class="article-grid__url" {% if external %} target="_blank" {% endif%}>
+              {% if article.image %}
+                <div class="image-wrap article-grid__image mb-3 mb-lg-4">
+                  <div class="filter"></div>
+                  <picture>
+                    <source media="(min-width: 992px)" srcset="{{ article.image | img_url: '900x' }}">
+                    {% liquid
+                        assign img_url = article.image | img_url: '450x'
+                        if forloop.index == 2 or forloop.index == 11
+                          assign img_url = article.image | img_url: '800x'
+                        endif
+                    %}
+                    <img src="{{img_url}}" class="img-fluid" alt="{{ article.image.alt }}" loading="lazy" width="900" height="600">
+                  </picture>
+                </div>
+              {% endif %}
+  
+              <h2 class="card-basic__header mt-3 mb-2{% if article.image %} article__title--has-image{% endif %}">
+                {{ article.title | escape }}
+              </h2>  
+            </a>
+            <div class="article-grid__tags-wrapper d-flex flex-wrap mb-3">
+              {% for tag in article.tags %}
+                {% assign article_tag = tag | split: "_" %}
+                  <h3 class="tag me-3 mb-2 header-5 text-blue">{{ article_tag[1] }}</h3>
+              {% endfor %}
+              {% comment %} {% assign read_time = article.content | strip_html | split: ' ' | size | times: 1.0 | divided_by: 250 | ceil %}
+              <h4 class="card-basic__sub-header_2 mt-0 col-12">Estimated Read Time: {{ read_time  }} min</h4>  {% endcomment %}
+            </div>
+  
+            <div class="article__grid-meta{% if article.image %} article__grid-meta--has-image{% endif %} mt-4">
+              <div class="rte article-grid__content body-1 text-blue pt-lg-0 mb-4">
+                {% if article.excerpt.size > 0 %}
+                  {{ article.excerpt | strip_html | truncate: 450 }}
+                {% else %}
+                  {{ article.content | strip_html | truncate: 450 }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+      {% comment %}
+        Show ghost grid item to fill in the 12th item if not landing page and current page is greater than 1 
+      {% endcomment %}
+      {% if paginate.next and is_landing_page == false %}
+        <div class = 'ghost-grid-item col-md-6 col-lg-4 '>
+          <a href="{{ paginate.next.url }}" class="next header-5 text-blue-secondary d-flex align-items-center justify-content-center ">
+            <h2>Next Page</h2>
+          </a>        
+        </div>
+      {% endif %}
+
+    </div>  
+  </div>
+  {% comment %} end grid {% endcomment %}
+
+  {%- if paginate.pages > 1 -%}
+    {% render 'pagination', paginate: paginate %}
+  {%- endif -%}
+
+</section>
+
+{% endpaginate %}

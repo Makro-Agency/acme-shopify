@@ -1,0 +1,45 @@
+
+{% if section.blocks.size > 0 %}
+    <section class = 'sticky-nav'>
+        <ul >
+          {% for block in section.blocks %}
+            {% if block.settings.link_label != blank  and block.settings.link_url != blank  %}
+                <li {{shopify_attributes}}>
+                <a class="header-5 px-2 px-xl-0" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+                </li>
+                {% endif %}
+          {% endfor %}
+        </ul>
+    </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Sticky Nav",
+  "blocks": [
+    {
+      "type": "link_block",
+      "name": "Link Block",
+      "settings": [
+        {
+          "id": "link_label",
+          "type": "text",
+          "label": "Link Label"
+        },
+        {
+          "id": "link_url",
+          "type": "url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+        "name": "Sticky Nav",
+        "settings" : {}
+    }
+  ]
+
+}
+{% endschema %}

@@ -1,0 +1,247 @@
+{% liquid
+    assign num_columns = section.blocks | size
+    if num_columns > 0
+        assign has_columns = 'has-columns'
+    endif
+%}
+
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="media-hero theme--{{section.settings.color}} alignment--{{ section.settings.alignment }} {{ has_columns }}">
+    <div class="content-wrap">
+        <div class="container">
+            <div class="row ">
+                <div class="col-12">
+                    <div id="video-aria">
+                        <h1 class="media-hero__header header-1 mb-4 pb-2 col-lg-9 col-xl-7 col-xxl-6">{{ section.settings.header }}</h1>
+                        {% if section.settings.sub_header != blank %}
+                            <h2 class="media-hero__subheader body-1 my-0 col-md-9 col-lg-6 col-xxl-5">{{ section.settings.sub_header }}</h2>
+                        {% endif  %}
+                    </div>
+                    {% if section.settings.link_url and section.settings.link_label %}                    
+                        <a class="btn media-hero__btn mt-4 pt-2 ms-lg-0{% if section.settings.color == 'dark' %} btn-primary {% else %} btn-light {% endif %}" href="{{ section.settings.link_url }}" {% if section.settings.external %}target="_blank"{% endif %}>{{ section.settings.link_label  }}</a>
+                    {% endif %}
+                    {% if section.settings.has_modal_video %}
+                        <button type="button" 
+                            class="btn-play" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modal-{{ section.settings.id }}"
+                            aria-label="play video">
+                            <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.242188 23.0005V0.649414L21.3161 12.1443L0.242188 23.0005Z" fill="#14315C"/>
+                            </svg>                                
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if has_columns %}
+    <div class="columns-wrapper">
+        <div class="container container--columns">
+            <div class="row row-cols-2 row-cols-md-4 row-cols-xl-7 row--columns">
+                {% for block in section.blocks %}
+                    <div class="col media-hero__column {% if section.blocks.size < 2 %}single{% endif %}">
+                        <h3 class="media-hero__column-header header-5">{{ block.settings.header }}</h3>
+                        <div class="media-hero__column-body body-2">{{ block.settings.body }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="filter"></div>
+    {% if section.settings.background_video_url != blank %}
+        <div class="media-hero__video {% unless section.settings.show_mobile %}d-none d-md-block{% endunless %}" aria-describedby="#video-aria">
+            <video muted loop="true" autoplay muted>
+                <source src="{{ section.settings.background_video_url }}" >
+            </video>
+        </div>
+    {% endif %}
+    {% if section.settings.image %}    
+        <picture class="media-hero__image img-fluid mt-3 mb-4 {% if section.settings.background_video_url != blank %} d-block d-md-none {% endif%}"> 
+            <img src="{{ section.settings.image | img_url: 'master' }}" {% if section.settings.image.alt %} alt="{{ section.settings.image.alt }}" {% else %} alt="Acme Smoked Fish" {% endif %}>
+        </picture>
+    {% endif %}
+</section>
+
+
+{% if section.settings.has_modal_video %}
+
+    <!-- Modal -->
+    <div class="modal modal-xl fade media-hero-modal" 
+        id="modal-{{ section.settings.id }}" 
+        tabindex="-1" 
+        aria-labelledby="{{section.settings.id}}Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    {% render 'icon-close-blue' %}
+                </button>
+                <div class="modal-body">
+                    {% if section.settings.modal_video_type == 'video' %}
+                        <video autoplay muted controls src="{{ section.settings.modal_video_url }}"></video>
+                    {% endif %} 
+                    {% if section.settings.modal_video_type == 'iframe' %}
+                        <iframe src="{{ section.settings.modal_video_url }}" 
+                        width="640" 
+                        height="360" 
+                        frameborder="0" 
+                        allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    {% endif %} 
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endif %}
+
+{% schema %}
+    {
+        "name": "Media Hero",
+        "tag": "section",
+        "class": "hero",
+        "settings": [
+            {
+                "type": "text",
+                "id": "anchor_id",
+                "label": "Anchor Link ID"
+            },
+            {
+                "type": "select",
+                "id": "color",
+                "label": "Color Scheme",
+                "options": [
+                    {
+                        "value": "dark",
+                        "label": "Dark Text & Button"
+                    },
+                    {
+                        "value": "light",
+                        "label": "Light Text & Button"
+                    }
+                ],
+                "default": "light"
+            },
+
+            {
+                "type": "select",
+                "id": "alignment",
+                "label": "Text Alignment on Mobile",
+                "options": [
+                    {
+                        "value": "center",
+                        "label": "Center"
+                    },
+                    {
+                        "value": "left",
+                        "label": "Left"
+                    }
+                ],
+                "default": "left"
+            },
+            {
+                "type": "text",
+                "id": "header",
+                "label": "Header Text"
+            },
+            {
+                "type": "richtext",
+                "id": "sub_header",
+                "label": "Subheader Text"
+            },
+            {
+                "type": "text",
+                "id": "link_label",
+                "label": "Link Label"
+            },
+            {
+                "type": "url",
+                "id": "link_url",
+                "label": "Link URL"
+            },
+            {
+                "type": "checkbox",
+                "id": "external",
+                "label": "Open Link in New Window",
+                "default": false
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Choose Background Image"
+            },
+            {
+                "type": "text",
+                "id": "background_video_url",
+                "label": "Background Video URL "
+            }
+
+        ],
+        "max_blocks":6,
+        "blocks": [
+            {
+                "name":"Column",
+                "type" : "column",
+                "settings":[
+                    {
+                        "type":"text",
+                        "id":"header",
+                        "label":"Header"
+                    },
+                    {
+                        "type":"richtext",
+                        "id":"body",
+                        "label":"Body"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Media Hero",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}
+
+{% comment %}
+ // Modal Video Fields 
+            {
+                "type": "checkbox",
+                "id": "show_mobile",
+                "label": "Show Video on Mobile Devices",
+                "default": false
+            },
+            {
+                "type": "checkbox",
+                "id": "has_modal_video",
+                "label": "Show Modal Video"
+            },
+            {
+                "type": "select",
+                "id": "modal_video_type",
+                "label": "Modal Video Type",
+                "options": [
+                    {
+                        "value": "iframe",
+                        "label": "Iframe ( Youtube or Vimeo ) "
+                    },
+                    {
+                        "value": "video",
+                        "label": "Direct Link ( CDN or upload to Shopify ) "
+                    }
+                ],
+                "default": "video"
+            },
+            {
+                "type": "text",
+                "id": "modal_video_url",
+                "label": "Modal Video URL"
+            }
+
+
+{% endcomment %}

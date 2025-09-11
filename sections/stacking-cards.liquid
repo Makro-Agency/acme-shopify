@@ -1,0 +1,68 @@
+<section class="section-stacking-cards container">
+    {% assign i = 0 %}
+    {% for card in section.blocks %}
+        <div class="card">
+            <div class="row g-0 card-content">
+                <div class="col-12 col-md-6 col-lg-8 card-image">
+                    <img src="{{ card.settings.image | img_url: '900x' }}" alt="{{ card.settings.image.alt }}">
+                    {% comment %} {{ card.settings.image | image_url: width: 872 | image_tag }} {% endcomment %}
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 card-details">
+                    <h1>{{card.settings.title}}</h1>
+                    <p>{{card.settings.description}}</p>
+                    <a href="{{card.settings.url}}" class="btn btn-primary">{{card.settings.button_text}}</a>
+                </div>
+            </div>
+        </div>
+        {% assign i = i | plus: 1  %}
+    {% endfor %}
+</section>
+
+{% schema %}
+{
+   "name":"Stacking Cards",
+   "tag":"section",
+   "class":"stacking-cards",
+   "settings":[],
+   "max_blocks":8,
+   "blocks":[{
+         "name":"Card",
+         "type":"card",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"image",
+               "label":"Image"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "textarea",
+                "id": "description",
+                "label": "Description"
+            },
+            {
+                "type": "url",
+                "id": "url",
+                "label": "Button Destination"
+            },
+            {
+                "type": "text",
+                "id": "button_text",
+                "label": "Button Text"
+            }
+
+         ]
+      }],
+   "presets":[
+      {
+         "name":"Stacking Cards",
+         "settings":{},
+         "blocks":[]
+      }
+   ]
+}
+{% endschema %}

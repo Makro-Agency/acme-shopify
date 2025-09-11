@@ -1,0 +1,18 @@
+<section class = 'container list-collection-collection--{{block_type}}'>
+	{% for block in section.blocks %}
+	  {% if block.type == block_type %}
+	  {% assign collection = collections[block.settings.collection]%}
+		<div class="row">
+		  <div class="col text-center">
+			<h1 class="h2">{{collection.title}}</h1>
+		  </div>
+		</div>
+		  {% for product in coll.products %}
+			<div class="col-md-4 mb-5">
+				{% render 'product-grid-item' product:product  %}
+			</div>
+		  {% endfor %}
+	  {% endif %}
+	{% endfor %}
+  </section>
+  

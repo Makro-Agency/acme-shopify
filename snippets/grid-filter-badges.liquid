@@ -1,0 +1,23 @@
+{% for link in filterMenu %}
+    {% assign url = link.url | remove_first : '#'%}
+    {% for child_link in link.links %}
+        {% liquid
+            assign child_url = child_link.url | remove_first : '#'
+            assign full_url = url | append : '_' | append : child_url
+        %}
+        {% for tag in all_tags %}
+            {%- if tag contains child_link.title -%}
+                <li
+                    class="filter-badge"
+                    mx-filter-toggle
+                    data-group="{{ url }}"
+                    data-filter="{{ tag |  handleize }}">
+                    <button class="btn btn-filter-badge">{{ tag | remove_first: filter | remove_first: '_' }} 
+                        <span class="icon-holder d-md-none">{% render 'icon-close-blue' %}</span>
+                        <span class="icon-holder d-none d-md-block">{% render 'icon-close' %}</span>
+                    </button>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}   
+{% endfor %}

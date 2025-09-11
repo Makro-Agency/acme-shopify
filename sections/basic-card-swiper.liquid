@@ -1,0 +1,233 @@
+{% 
+    liquid
+        assign layout = section.settings.layout
+        assign is_swiper = false
+        if layout == 'swiper'
+            assign is_swiper = true
+        endif
+%}
+
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="related-content basic-card-swiper theme--{{ section.settings.color }}">
+    <div class="container">
+        <div class="row mb-4 align-items-start">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-7">
+                {% if section.settings.header %}
+                    <h2 class="header-1 pb-2 pb-lg-3">{{section.settings.header}}</h2>
+                {% endif %}
+                {% if section.settings.body != blank %}
+                    <p class="body-1 pb-2">{{section.settings.body}}</p>
+                {% endif %}
+            </div>
+            <div class="d-md-flex flex-column col-lg-6 col-xl-5 align-items-start align-items-lg-end pb-lg-2 mb-lg-2 mt-lg-0 px-lg-0">
+                {% if section.settings.link_label != blank and section.settings.link_url != blank  %}
+                    <a href="{{section.settings.link_url}}" class="btn  {% if section.settings.color == 'dark' %} btn-light {% else %} btn-primary {% endif %}  my-2 my-lg-0 me-md-2" {% if section.settings.external %}target="_blank"{% endif %}>{{ section.settings.link_label }}</a>
+                {% endif %}
+                {% if is_swiper %}
+                    <div class="button-container d-none d-md-flex align-items-center justify-content-end col-lg-3 mt-md-3 mb-md-0 me-md-2">
+                        <div class="swiper-button-prev dark me-3">
+                            {% if section.settings.color == 'light' %}
+                                {% render 'icon-next' %}
+                            {% else %}
+                                {% render 'icon-next-white' %}
+                            {% endif %}
+                        </div> 
+                        <div class="swiper-button-next dark">
+                            {% if section.settings.color == 'light' %}
+                                {% render 'icon-next' %}
+                            {% else %}
+                                {% render 'icon-next-white' %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif%}
+            </div>
+        </div>
+    </div>
+    <div class="{% if layout == 'swiper' %} swiper {% endif%} container mt-lg-4 pt-lg-2">
+        <div class="{% if layout == 'swiper' %}swiper-wrapper {% else %} flex-wrap {% endif %} row {% if layout == 'swiper'%}related-content__swiper-wrapper{% endif %}">
+            {% for block in section.blocks %}
+                <div class="{% if layout == 'swiper' %} swiper-slide {%else%} col-md-4 {{section.settings.column_width}} mb-4 {% endif %}" {{block.shopify_attributes}}>
+                    {% if layout == 'swiper' %}
+                        <div class="related-content__swiper-slide ">
+                    {% endif %}
+                            <div class="card-basic {% if layout != 'swiper' %} width-auto {% endif %} {%if block.settings.url != blank %} has-url {% endif %}">
+                                {% if block.settings.url != blank %}
+                                <a class=""
+                                    href="{% if block.settings.url %}{{block.settings.url}}{% else %}{% endif %}" aria-label="{{block.settings.url}}"
+                                    aria-label="{{ block.settings.header }}">
+                                {% endif%}
+                                    <div class="image-wrap">
+                                        <div class="filter"></div>
+                                        <picture>
+                                            <source media="(min-width: 992px)" srcset="{{ block.settings.image | img_url : '700x' }}">
+                                            <img 
+                                                src="{{ block.settings.image | img_url : '500x' }}" 
+                                                alt="{{ block.settings.image.alt }}" 
+                                                loading="lazy" 
+                                                width="370"
+                                                height="370"
+                                            />
+                                        </picture>
+                                    </div>
+                                    {% if block.settings.header != blank %}
+                                        <h2 class="card-basic__header body-2">{{ block.settings.header }}</h2>
+                                    {% endif %}
+                                    {% if block.settings.sub_header != blank %}
+                                        <h3 class="card-basic__sub-header">{{ block.settings.sub_header }}</h3>
+                                    {% endif %}
+                                    {% if block.settings.sub_header_2 != blank %}
+                                        <h3 class="header-4 card-basic__sub-header_2">{{ block.settings.sub_header_2 }}</h3>
+                                    {% endif %}
+                                    {% if block.settings.body != blank %}
+                                    <p class="card-basic__body">{{ block.settings.body }}</p>
+                                    {% endif %}
+                                {% if block.settings.url != blank %}
+                                </a>
+                                {% endif %}
+                            </div>
+                    {% if layout == 'swiper' %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div><!-- .swiper -->
+</section>
+
+
+{% schema %}
+    {
+        "name": "Basic Card Swiper",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "text",
+                "id": "anchor_id",
+                "label": "Anchor Link ID"
+            },
+            {
+                "type": "select",
+                "id": "color",
+                "label": "Color Scheme",
+                "options": [
+                    {
+                        "value": "dark",
+                        "label": "Dark Background"
+                    },
+                    {
+                        "value": "light",
+                        "label": "Light Background"
+                    }
+                ],
+                "default": "light"
+            },
+            {
+                "type": "select",
+                "id": "layout",
+                "label": "Layout",
+                "options": [
+                    {
+                        "value": "swiper",
+                        "label": "Show as Swiper"
+                    },
+                    {
+                        "value": "grid",
+                        "label": "Show As grid"
+                    }
+                ],
+                "default": "swiper"
+            },
+            {
+                "type": "select",
+                "id": "column_width",
+                "label": "Column Width",
+                "options": [
+                    {
+                        "value": "col-lg-4",
+                        "label": "3 Columns"
+                    },
+                    {
+                        "value": "col-lg-3",
+                        "label": "4 Columns"
+                    }
+                ],
+                "info" : "How many items to view on one row for desktop screens",
+                "default": "col-lg-3"
+            },
+    
+            {
+                "type": "text",
+                "id": "header",
+                "label": "Header"
+            },
+            {
+                "type": "textarea",
+                "id": "body",
+                "label": "Body"
+            },
+            {
+                "type": "text",
+                "id": "link_label",
+                "label": "Link Label"
+            },
+            {
+                "type": "url",
+                "id": "link_url",
+                "label": "Link URL"
+            },
+            {
+                "type": "checkbox",
+                "id": "external",
+                "label": "Open Link in New Window",
+                "default": false
+            }
+        ],
+        "blocks": [
+        {
+            "type": "block",
+            "name": "Block",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Choose an Image"
+                },
+                {
+                    "type": "text",
+                    "id": "header",
+                    "label": "Header"
+                },
+                {
+                    "type": "text",
+                    "id": "sub_header",
+                    "label": "Sub Header"
+                },
+                {
+                    "type": "text",
+                    "id": "sub_header_2",
+                    "label": "Sub Header 2"
+                },
+                {
+                    "type": "textarea",
+                    "id": "body",
+                    "label": "Body"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Add Link URL"
+                }
+            ]
+        }
+    ],
+        "presets": [
+            {
+                "name": "Basic Card Swiper",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}

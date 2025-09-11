@@ -1,0 +1,52 @@
+<div class = 'table' data-cart-line-items >
+  {%- for item in cart.items -%}
+    <div class="row cart__row flex-row justify-content-start align-items-center mb-5" 
+      data-cart-item 
+      data-cart-item-key="{{ item.key }}" 
+      data-cart-item-url="{{ item.url }}" 
+      data-cart-item-title="{{ item.title }}" 
+      data-cart-item-index="{{ forloop.index }}" 
+      data-cart-item-quantity="{{ item.quantity }}">
+      <div class="col-4 col-md-3 pe-0">
+        <div class="cart__image-wrapper p-0">
+          <img class="cart__image cart-thumbnail img-fluid {% if item.image == null %} d-none{% endif %}" src="{{ item | img_url: 'x190' }}" 
+            alt="{{ item.image.alt | escape }}" 
+            width="{{item.image.width}}"
+            height="{{item.image.height}}"
+            data-cart-item-image >
+        </div>
+      </div>
+
+      <div class="col-8 col-md-4 cart__meta ps-3" 
+        data-cart-table-cell>
+        <div class="cart__product-information pt-0">
+          <div class="list-view-item__title">
+            <h3><a href="{{ item.url }}" 
+              class=" cart__product-title body-1 text-blue mb-2" 
+              data-cart-item-title >
+              {{ item.product.title }}
+            </a></h3>
+          </div>
+          <div>
+            <div class=" cart__price text-left header-5 mb-2">
+              {% render 'cart-partial-price' item:item %}
+            </div>
+            <div class="header-6">
+              {% render 'cart-partial-details'item:item %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="offset-4 offset-md-0 col-md-5 cart__quantity-td text-left header-6">
+        {% render 'cart-partial-quantity' item:item %}
+      </div>
+      <div class="col-sm-3 cart__final-price text-right d-none " data-cart-item-line-price>
+        {% render 'cart-partial-price-final' item:item %}
+      </div>
+    </div>
+    {%- unless forloop.last -%}
+    {%- endunless -%}
+
+  {%- endfor -%}
+</div>

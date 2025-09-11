@@ -1,0 +1,147 @@
+<!--==================== mx-sec Section ====================-->
+<section class="mx-sec account-container">
+	<div class="container">
+		{% comment %} <div class="row">
+		  <div class="col">
+		    <h1>{{ 'customer.login.title' | t }}</h1>
+		  </div>
+		</div> {% endcomment %}
+
+		<div class="row customer-wrapper mb-5">
+			<div class="col-md-6">
+
+		    <div class="note form-success" id="resetSuccess" style="display:none;">
+				{{ 'customer.recover_password.success' | t }}
+	    	</div>
+
+			<div id="customer">
+				{% form 'customer_login' %}
+				<h2 class="header-1 text-blue">{{ 'customer.login.returning_customers' | t }}</h2>
+				{{ form.errors | default_errors }}
+
+				<div id="login_email" class="form-group">
+					<label for="customer_email" class="login">{{ 'customer.login.email' | t }} *</label>
+					<input type="email" value="" name="customer[email]" id="customer_email" class="form-control" size="30"  autocorrect="off" autocapitalize="off" required aria-required="true"/>
+	        	</div>
+
+				{% if form.password_needed %}
+					{% comment %}
+						Customer Account Login
+					{% endcomment %}
+
+					<div id="login_password" class="form-group">
+						<label for="customer_password" class="login">{{ 'customer.login.password' | t }} *</label>
+						<input type="password" value="" name="customer[password]" id="customer_password" class="form-control" size="16" required aria-required="true"/>
+					</div><!-- .form-group -->
+
+				{% endif %}
+
+				<div class="form-group">
+					<input class="btn btn-primary" type="submit" value="{{ 'customer.login.sign_in' | t }}" />
+					<small id="forgot_password" class="form-text font-saa">
+						<a class="text-blue" href="#" onclick="showRecoverPasswordForm()">{{ 'customer.login.forgot_password' | t }}</a>
+					</small>
+	        	</div><!-- .form-group -->
+				{% endform %}
+	    	</div><!-- #customer -->
+
+			<div id="recover-password" style='display:none'>
+	        	<h2 class="title header-1 text-blue">{{ 'customer.recover_password.title' | t }}</h2>
+
+				{% form 'recover_customer_password' %}
+					{{ form.errors | default_errors }}
+
+					<div id="recover_email" class="form-group">
+						<small id="emailHelp" class="form-text text-blue font-itc">{{ 'customer.recover_password.subtext' | t }}</small>
+						<label for="email" class="large mt-5">{{ 'customer.recover_password.email' | t }} *</label>
+						<input type="email" value="" size="30" name="email" id="recover-email" class="form-control" autocorrect="off" autocapitalize="off" required aria-required="true"/>
+	        		</div><!-- .form-group -->
+
+
+					<div class="form-group">
+						<input class="btn btn-primary" type="submit" value="{{ 'customer.recover_password.submit' | t }}" />
+					</div><!-- .form-group -->
+					<p class="action_bottom font-saa mt-lg-4">
+						<span class="note"><a class="text-blue" href="#" onclick="hideRecoverPasswordForm()">{{ 'customer.recover_password.cancel' | t }}</a></span>
+	        		</p>
+					
+					{% if form.posted_successfully? %}
+						{% assign reset_success = true %}
+						<div class="note form-success text-blue font-itc" id="resetSuccess">
+							{{ 'customer.recover_password.success' | t }}
+						</div>
+					{% endif %}
+
+				{% endform %}
+	    	</div>
+		</div><!-- col-md-6 -->
+
+		<div class="col-md-6 mt-5 mt-md-0" id="create-account">
+	    	<h2 class="header-1 text-blue">{{ 'customer.login.new_customers' | t }}</h2>
+				{% if shop.checkout.guest_login %}
+					{% form 'guest_login' %}
+						<input class="btn action_button btn-primary" type="submit" value="{{ 'customer.login.guest_title_html' | t }}" />
+					{% endform %}
+				{% else %}
+
+					{% form 'create_customer' %}
+						{{ form.errors | default_errors }}
+
+				        <div id="first_name" class="form-group">
+				        	<label for="first_name" class="login">{{ 'customer.login.first_name' | t }}</label>
+							<input type="text" value="" name="customer[first_name]" id="first_name" class="form-control" size="30" />
+				        </div>
+
+				        <div id="last_name" class="form-group">
+				        	<label for="last_name" class="login">{{ 'customer.login.last_name' | t }}</label>
+							<input type="text" value="" name="customer[last_name]" id="last_name" class="form-control" size="30" />
+				        </div>
+
+				        <div id="email" class="form-group">
+				    	    <label for="email" class="login">{{ 'customer.login.email' | t }} *</label>
+							<input type="email" value="" name="customer[email]" id="email" class="form-control" size="30" autocorrect="off" autocapitalize="off" required aria-required="true"/>
+				        </div>
+
+				        <div id="password" class="form-group">
+				        	<label for="password" class="login">{{ 'customer.login.password' | t }} *</label>
+							<input type="password" value="" name="customer[password]" id="password" class="form-control" size="30" required aria-required="true"/>
+				        </div>
+
+				        <div class="form-group">
+				        	<input class="btn btn-primary" type="submit" value="{{ 'customer.login.sign_up_html' | t }}" />
+				        </div>
+					{% endform %}
+				{% endif %}
+			</div><!-- col-md-6 -->
+		</div><!-- .row -->
+
+	</div><!-- .container -->
+</section><!-- .mx-sec -->
+
+<script type="text/javascript">
+	const recoverPassword = document.querySelector('#recover-password');
+	const createAccount = document.querySelector('#create-account');
+	const login = document.querySelector('#customer');
+
+	function showRecoverPasswordForm() {
+		recoverPassword.style.display = 'block';
+		createAccount.style.display = 'none';
+		login.style.display = 'none';
+		return false;
+	}
+
+	function hideRecoverPasswordForm() {
+		recoverPassword.style.display = 'none';
+		createAccount.style.display = 'block';
+		login.style.display = 'block';
+		return false;
+	}
+
+	if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+	// reset_success is only true when the reset form is
+	{% if reset_success %}
+		showRecoverPasswordForm();
+  	{% endif %}
+
+</script>

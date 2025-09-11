@@ -1,0 +1,45 @@
+{% if template == 'product' %}
+  {% if product.metafields.accentuate.related_on != null %}
+    {% render 'product-related-content-snippet' %}
+  {% endif %}
+{% else %}  
+  {% render 'product-related-content-snippet' %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Related Content",
+  "tag": "section",
+  "templates": [
+    "product"
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Related Content"
+    },
+    {
+      "type": "number",
+      "id": "min_articles",
+      "label": "Min Articles",
+      "default": 3,
+      "info": "This section will be shown if there are at least this many related articles to show."
+    },
+    {
+      "type": "number",
+      "id": "limit",
+      "label": "Max Articles",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related Content",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

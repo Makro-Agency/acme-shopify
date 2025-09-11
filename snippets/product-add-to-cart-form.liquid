@@ -1,0 +1,23 @@
+<!-- Start Dynamic Add To Cart -->
+<div sh-product-form data-product-id="{{product.id}}" >
+    {% form 'product', product, class:form_classes, novalidate: 'novalidate', data-product-form: '' %}
+        <input name='id' value="{{current_variant.id}}" type='hidden' />
+        <input type="hidden"  name="quantity" value="1"  >
+        <button type="submit" name="add" class="btn btn-add-to-cart"
+            {% unless current_variant.available %} aria-disabled="true"{% endunless %}
+            aria-label="{% unless current_variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
+            sh-add-to-cart data-product-id="{{product.id}}">
+            <span class = 'fa fa-spin fa-refresh d-none'></span>
+            <span sh-add-to-cart-text>
+                {% unless current_variant.available %}
+                {{ 'products.product.sold_out' | t }}
+                {% else %}
+                {{ 'products.product.add_to_cart' | t }}
+                {% endunless %}
+            </span>
+            <span class="d-none" data-loader></span>
+        </button>
+    {% endform %}            
+    {% render 'product-json' product:product %}
+</div>
+<!-- // End Dynamic Add To Cart -->

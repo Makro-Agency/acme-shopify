@@ -1,0 +1,48 @@
+{% if template == 'product' %}
+  {% if product.metafields.accentuate.details_on != null %}
+    {% render 'product-section-details' %}
+  {% endif %}
+{% else %}  
+  {% render 'product-section-details' %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product Details",
+  "templates": [
+    "product"
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Additional Product Details"
+    },
+    {
+      "type": "image_picker",
+      "id": "watermark_image",
+      "label": "Background/Watermark Image"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Secondary Button Text",
+      "default": "The Process"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Secondary Button URL",
+      "info": "Leaving this blank will hide the button."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Details",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

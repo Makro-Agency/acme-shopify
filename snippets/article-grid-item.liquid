@@ -1,0 +1,51 @@
+<div class="card-basic">
+    <a class="" 
+      href="{{ article.url  }}" 
+      aria-label="{{ article.title }}">
+        <div class="image-wrap">
+            <div class="filter"></div>
+            <picture>
+              <source media="(min-width: 992px)" srcset="{{ article.image | img_url : '700x' }}">
+              <img 
+                  src="{{ article.image | img_url : '500x' }}" 
+                  alt="{{ article.title }}" 
+                  loading="lazy" 
+                  width="370"
+                  height="370"
+              />
+            </picture>
+        </div>
+      <h2 class="card-basic__header">{{ article.title }}</h2>
+      {%- capture tags_array -%}
+        {%- for tag in article.tags -%}
+            {% assign article_tag = tag | split: "_" %}
+            {{ article_tag[1] }}|
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign tags = tags_array | split: "|" | uniq -%}
+      
+      {% for tag in tags limit:1 %}
+        <h3 class="card-basic__sub-header">{{ tag }}</h3>
+      {% endfor %}
+      
+      {% if blog.title == 'Recipes'%}
+        {% if article.metafields.recipes.prep_time or article.metafields.recipes.cook_time %}
+          <h3 class="header-4 card-basic__sub-header_2">
+            {% if article.metafields.recipes.prep_time %}
+              Prep Time {{ article.metafields.recipes.prep_time }}<span class="ms-1">min</span> 
+            {% endif %}
+            {%- if article.metafields.recipes.prep_time and article.metafields.recipes.cook_time -%}
+              |
+            {%- endif -%}
+            {% if article.metafields.recipes.cook_time %}
+              Cook Time {{ article.metafields.recipes.cook_time }}<span class="ms-1">min</span>
+            {% endif %}
+          </h3>
+        {% endif %}
+      {% else %}
+        {% comment %} {% assign read_time = article.content | strip_html | split: ' ' | size | times: 1.0 | divided_by: 250 | ceil %}
+        <h4 class="card-basic__sub-header_2">Estimated Read Time: {{ read_time  }} min</h4> {% endcomment %}
+      {% endif %}      
+    </a>
+  </div>
+  

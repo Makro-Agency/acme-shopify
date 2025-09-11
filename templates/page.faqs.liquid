@@ -1,0 +1,74 @@
+{% assign header = blog.title %}
+{% assign subCategories = '' %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>FAQs</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <h2>Product Category</h2>
+            <div class = 'faq_category_dropdown'>
+                {% for collection in collections %}
+                    {% if collection.metafields.collection.primary_collection == true %}
+                        <h3>{{collection.title}}</h3>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% for faqCat in shop.metaobjects['faq_categories'].values %}
+                <h2>{{faqCat.category}}</h2>
+            {% endfor %}
+        
+        </div>
+    </div>
+</div>
+
+	<section class = 'container ' data-faq-filter>
+		<div class="row">
+			<div class="col">
+				<form action="" class = 'blog-faqs__search-form' >
+					<div class="form-group">
+						<span class="icon-search" v-model="searchField"></span>
+						<input type="text" class = 'form-control' placeholder="Search" data-filter-search-text>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	  <div class="container">
+		<div class="row" >
+			<div class="col">
+
+
+				<div class="accordion" id="faqs-accordion">
+					{% for article in blog.articles %}
+
+						<div class="faq-filter-title" id="heading-{{article.id}}">
+							<a data-filtering class="clickable"  data-toggle="collapse" data-target="#panel-{{article.id}}" aria-expanded="true" aria-controls="panel-{{article.id}}">
+								{{article.title}}
+							</a>
+							<p>{{article.tags}}</p>
+						</div>
+						<div id="panel-{{article.id}}" class="collapse faq-filter-content" aria-labelledby="heading-{{article.id}}" data-parent="#faqs-accordion">
+							{{ article.content}}
+						</div><!-- // description -->
+					{% endfor %}
+					<h3 data-no-results class = 'd-none'>No FAQs Found</h3>
+				</div><!-- // accordion faqs-accordion -->
+
+				
+
+
+
+	
+			</div>
+
+		</div>
+	  </div>
+	
+	
+
+

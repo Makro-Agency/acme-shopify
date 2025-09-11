@@ -1,0 +1,157 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "MX Shopiy",
+    "theme_version": "7.0.1",
+    "theme_author": "Shopify",
+    "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/online-store\/themes",
+    "theme_support_url": "https:\/\/support.shopify.com\/"
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Chose a Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "default_search_result_image",
+        "label": "Deafult Search Result Image",
+        "info": "Show in Search Results if no banner image is found"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.social-media.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings_schema.social-media.settings.header.content"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter Link"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook LInk"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram Link"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok Link"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin_link",
+        "label": "Linked In LInk"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_cart_alert",
+        "label": "Show Cart Alert",
+        "info": "Show a banner when somethiing is added to the cart"
+      }
+    ]
+  },
+  {
+    "name": "Nav Bar Settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Home Page"
+      },
+      {
+        "type": "select",
+        "id": "index_navbar_background",
+        "label": "Navbar Background",
+        "options": [
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ],
+        "default": "light"
+      },
+      {
+        "type": "checkbox",
+        "id": "index_navbar_transparency",
+        "label": "Transparent",
+        "info": "Start Off Transparent",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Fish Friday"
+      },
+      {
+        "type": "select",
+        "id": "fish_friday_navbar_background",
+        "label": "Navbar Background",
+        "options": [
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ],
+        "default": "light"
+      },
+      {
+        "type": "checkbox",
+        "id": "fish_friday_navbar_transparency",
+        "label": "Transparent",
+        "info": "Start Off Transparent",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name" : "Find In Store Settings",
+    "settings" : [
+      {
+        "id" : "find_in_store_provider",
+        "type" : "select",
+        "default" : "destini",
+        "label": "Provider",
+        "options": [
+          {
+            "label": "Destini",
+            "value" : "destini"
+          },
+          {
+            "label": "Where To Buy",
+            "value": "where_to_buy"
+          }
+        ]
+      }      
+    ]
+  }
+]

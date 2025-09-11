@@ -1,0 +1,104 @@
+<section class="single-article">
+  <div class="container">
+      <a class="back-button d-flex align-items-center mb-4 mb-md-5" href="{{blog.url}}">    
+        {% render 'icon-menu-back' %}
+        <p class="header-5 text-blue ms-3 mb-0">BACK</p>
+      </a>
+
+      <div class="row">
+          <div class="col-12 col-lg-10 offset-lg-1">
+            <h1 class="single-article__header header-1 text-blue mb-4 mb-lg-3">{{ article.title }}</h1>
+          </div>
+          <div class="col-12 col-lg-8 offset-lg-2 d-md-flex flex-column align-items-center">
+            <h2 class="single-article__author header-5 text-blue py-2 mb-4 mb-lg-3">By: Acme Smoked Fish</h2>
+            {% render 'share-this' %}
+            {% if article.excerpt != blank %}  
+              <div class="single-article__excerpt font-itc body-1 text-blue mb-4 pb-2">
+                {{ article.excerpt }}
+              </div>
+            {% endif %}
+            
+            {% if article.tags %}
+              {% comment %} Split and hide repeat tags {% endcomment %}
+              {%- capture tags_array -%}
+                {%- for tag in article.tags -%}
+                  {%- assign subtag = tag | split: "_" -%}
+                  {{ subtag[1] }}
+                {%- endfor -%}
+              {%- endcapture -%}
+              {%- assign article_tags = tags_array | split: " " | uniq -%}
+
+              <div class="tags-wrapper d-flex flex-wrap mb-4 pt-lg-2">
+                {% for tag in article.tags %}
+                  {%- assign tag_parts = tag | split: "_" -%}
+
+                  {% comment %} <a href="/blogs/news/tagged/{{ tag | handleize }}" class="single-article__tag font-saa mb-2">{{ tag }}</a> {% endcomment %}
+                  <div class="single-article__tag header-5 text-blue mb-2">{{ tag_parts[1] | link_to_tag : tag }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% if article.image %}
+                
+            <picture class="single-article__image">
+              <source media="(min-width: 992px)" srcset="{{ article.image | img_url: "master" }}">
+              <img src="{{ article.image | img_url: "500x" }}" alt="{{ article.image.alt }}" width="500" height="250">
+            </picture>
+            {% endif %}
+
+            <div class="rte text-blue">
+              {{ article.content | remove: '<meta charset="utf-8">' }}
+            </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+
+{% if article.tags.size > 0 %}
+  {% render 'related-article-content' article:article  tag:article.tags[0] header:'Related Articles' %}
+{% endif %}
+
+<script type="application/json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Article",
+      "articleBody": {{ article.content | strip_html | json }},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": {{ shop.url | append: page.url | json }}
+      },
+      "headline": {{ article.title | json }},
+      {% if article.excerpt != blank %}
+        "description": {{ article.excerpt | strip_html | json }},
+      {% endif %}
+      {% if article.image %}
+        {% assign image_size = article.image.width | append: 'x' %}
+        "image": [
+          {{ article | img_url: image_size | prepend: "https:" | json }}
+        ],
+      {% endif %}
+      "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      "author": {
+        "@type": "Person",
+        "name": "Acme Smoked Fish"
+      },
+      "publisher": {
+        "@type": "Organization",
+        {% if settings.share_image %}
+          {% assign image_size = settings.share_image.width | append: 'x' %}
+          "logo": {
+            "@type": "ImageObject",
+            "height": {{ settings.share_image.height | json }},
+            "url": {{ settings.share_image | img_url: image_size | prepend: "https:" | json }},
+            "width": {{ settings.share_image.width | json }}
+          },
+        {% endif %}
+        "name": {{ shop.name | json }}
+      }
+    }
+    </script> 
+    

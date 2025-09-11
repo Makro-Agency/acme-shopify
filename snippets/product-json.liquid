@@ -1,0 +1,9 @@
+<script type="application/json" id="ProductJson-{{product.id}}" class='product-json'>
+	{{ product | json }}
+</script>    
+<script type="application/json" id="ProductJsonCurrentVariant-{{product.id}}" class='current-variant-json'>
+	{{ product.selected_or_first_available_variant | json }}	
+</script>  
+<script type="application/json" id="ProductOptionValuesJson-{{product.id}}" class='product-options-json'>
+	{{ product.options_with_values | json }}
+</script>

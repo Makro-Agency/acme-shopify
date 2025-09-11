@@ -1,0 +1,159 @@
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="two-column-panels pb-4 theme--{{section.settings.color}} {% if request.design_mode %} design-mode {% endif %} ">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex flex-column flex-md-row justify-content-md-between flex-wrap">
+                {% for block in section.blocks %}
+                    {% liquid 
+                        if block.type == 'article'
+                            assign article = block.settings.article 
+                            assign parts = article | split: "/"
+                            assign first_part = parts[0]
+                            assign blog = blogs[first_part]
+                            assign header = article.title
+                            assign lead = blog.title
+                            assign body = article.excerpt
+                            assign image = article.image
+                            assign link_label = 'Read Post'
+                            assign link_url = article.url
+                        endif
+                        if block.type == 'content'
+                            assign header = block.settings.header
+                            assign lead = block.settings.lead
+                            assign body = block.settings.body
+                            assign link_label = block.settings.link_label
+                            assign link_url = block.settings.link_url
+                            assign image = block.settings.image
+                        endif                        
+                    %}
+                    <div class="two-column-panels__block content mb-5 pb-3 col-12 col-md-6 px-md-2 d-lg-flex flex-column" {{block.shopify_attributes}}>
+                        <div class="content-wrap {% if link_url != blank %} has-link {% endif %}">
+                            {% if link_url != blank %}
+                                <a class="two-column-panels__link" href="{{ link_url }}" aria-label="{{ header }}" {% if block.settings.external %}target="_blank"{% endif %}></a>
+                            {% endif %}
+                            <picture>
+                                <source media="(min-width: 992px)" srcset="{{ image | img_url: 'master' }}">
+                                <img class="two-column-panels__image img-fluid mb-4" src="{{ image | img_url: 'grande' }}" {% if image.alt %} alt="{{ image.alt }}" {% else %} alt="Acme Smoked Fish" {% endif %} loading="lazy">
+                            </picture>
+                            {% if lead != blank %}
+                                <p class="two-column-panels__lead header-5 mb-3">{{ lead }}</p>
+                            {% endif %}
+                            <h3 class="two-column-panels__header header-2 mb-2 mb-lg-3 py-3 pb-lg-2 col-lg-10 col-xxl-9">{{ header }}</h3>
+                            {% if body != blank %}
+                                <div class="two-column-panels__body body-1 mb-2 col-lg-11">{{ body }}</div>
+                            {% endif %}
+                        </div>
+                        {% if link_url != blank and link_label != blank %}                    
+                            <a class="mt-3 two-column-panels__cta btn {% if section.settings.color == 'dark' %} btn-light {% else %} btn-primary {% endif %}" href="{{ link_url }}" {% if section.settings.external %}target="_blank"{% endif %}>{% if link_label != blank %}{{ link_label }}{% endif %}</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Two Column Panels",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "anchor_id",
+            "label": "Anchor Link ID"
+        },
+        {
+            "type": "select",
+            "id": "color",
+            "label": "Color Scheme",
+            "options": [
+                {
+                    "value": "dark",
+                    "label": "Dark Background"
+                },
+                {
+                    "value": "light",
+                    "label": "Light Background"
+                }
+            ],
+            "default": "light"
+        },
+        {
+            "type": "url",
+            "id": "link_url",
+            "label": "Link URL"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "article",
+            "name": "Article",
+            "settings": [
+                {
+                    "type": "article",
+                    "id": "article",
+                    "label": "Choose an Article"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "external",
+                    "label": "Open Link in New Window",
+                    "default": false
+                }
+            ]
+        },
+        {
+            "type": "content",
+            "name": "Content",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "lead",
+                    "label": "Lead Text"
+                },
+                {
+                    "type": "text",
+                    "id": "header",
+                    "label": "Header"
+                },
+                {
+                    "type": "richtext",
+                    "id": "body",
+                    "label": "Body"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Choose an Image"
+                },
+                {
+                    "type": "text",
+                    "id": "link_label",
+                    "label": "Link Label"
+                },
+                {
+                    "type": "url",
+                    "id": "link_url",
+                    "label": "Link Url"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "external",
+                    "label": "Open Link in New Window",
+                    "default": false
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Two Column Panels",
+            "settings" : {}
+        }
+    ]
+}
+{% endschema %}

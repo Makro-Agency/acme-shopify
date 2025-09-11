@@ -1,0 +1,41 @@
+<!---JSON SCHEMA ProfessionalService--->
+<script type="application/json">
+    {
+      "@context": "http://schema.org",
+      "@type": "ProfessionalService",
+      "name": "{{shop.name}}",
+      "image": "https:{{ section.settings.logo | img_url }}",
+      "url": "{{ shop.url }}",
+      "description": "{{ page_description | escape }}",
+      "telephone": "7183838585",
+      "priceRange": "$",
+      "hasMap": "https://www.google.com/maps/d/u/0/viewer?ie=UTF8&oe=UTF8&msa=0&mid=1Lfa0VkE_zTRoKqk_jBDNkVfdZgQ&ll=40.726169000000006%2C-73.95678500000001&z=17",
+      "sameAs": [
+        "https://www.pinterest.com/acmesmokedfish/",
+        "https://www.facebook.com/acmesmokedfish/",
+        "https://twitter.com/acmesmokedfish?lang=en",
+        "https://www.instagram.com/acmesmokedfish/?hl=en",
+        "https://www.tiktok.com/@acmesmokedfish"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "30 Gem St",
+        "addressLocality": "Brooklyn",
+        "postalCode": "11222",
+        "addressCountry": "US",
+        "addressRegion": "NY"
+      },
+      "location": {
+        "@type": "Place",
+        "geo": {
+          "@type": "GeoCircle",
+          "geoRadius": "50",
+          "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": "40.725410",
+            "longitude": "-73.956610"
+          }
+        }
+      }
+    }
+  </script>

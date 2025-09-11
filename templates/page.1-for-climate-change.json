@@ -1,0 +1,698 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "blank": {
+      "type": "blank",
+      "settings": {}
+    },
+    "b679157f-00bd-44e2-8dfa-7289b5c77ddb": {
+      "type": "media-hero",
+      "blocks": {
+        "7b0e27cd-f793-4317-bf92-19185fb1a663": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "header": "Entries accepted through",
+            "body": "<p>November 2nd, 2023</p>"
+          }
+        },
+        "888115b5-e5f2-4b1f-a941-4043d1574f2a": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "header": "",
+            "body": ""
+          }
+        }
+      },
+      "block_order": [
+        "7b0e27cd-f793-4317-bf92-19185fb1a663",
+        "888115b5-e5f2-4b1f-a941-4043d1574f2a"
+      ],
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "alignment": "left",
+        "header": "1% For the Planet",
+        "sub_header": "<p>We have joined 1% for the Planet, committing to donate 1% of cold smoked salmon retail sales to support verified environmental organizations focused on protecting people and planet.</p>",
+        "link_label": "",
+        "link_url": "",
+        "external": false,
+        "image": "shopify://shop_images/shutterstock_2337857187.jpg",
+        "background_video_url": "https://cdn.shopify.com/videos/c/o/v/04310da9d76044dc9669c708ad1a1c30.mp4"
+      }
+    },
+    "8df88269-a14b-47b5-b81d-10aeca854152": {
+      "type": "header-content",
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "",
+        "header": "",
+        "subheader": "<p>Curious about the new packaging you’ve seen on some of your favorite Acme cold-smoked salmon products?</p><p>Acme Smoked Fish Corporation is proud to announce our membership with 1% for the Planet. Through this partnership, 1% of sales from all Acme brand cold-smoked salmon retail products will be donated to support climate initiatives through the Acme Smoked Fish Foundation’s Seafood Industry Climate Awards. The Seafood Industry Climate Awards (SICA) fund early-stage efforts to reduce the industry’s carbon footprint in North America and Chile. </p><p>As part of our new look, we’re also reaffirming our commitment to being Citizens of Seafood in every part of our business.</p><p>Now, when you purchase your favorite Acme products, you're supporting our efforts to decarbonize the seafood industry and create a more sustainable future for ourselves and our planet.</p><p>Make a difference; one bite at a time.</p><p>Donations are subject to an annual limit.</p>",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "6df56d8a-6842-4d99-be06-4fc83097b71a": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "Donation Information",
+        "header": "",
+        "subheader": "",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "header_content_yt3CT3": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "Donation Information",
+        "header": "",
+        "subheader": "<p><strong>Name of Charity:</strong></p><p>Acme Smoked Fish Foundation - Seafood Industry Climate Awards</p><p><strong>Donation Amount:</strong></p><p>1% of gross annual wholesale revenue of Acme brand cold smoked retail items</p><p><strong>Limitations on Donation:</strong></p><p>$250,000 Maximum Donation</p><p><strong>Dates of Promotion:</strong></p><p>1/1/2024 to 12/31/2024</p><p><strong>More Information:</strong></p><p><span style=\"text-decoration:underline\">https://acmesmokedfish.com/pages/philanthropy</span></p>",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "page_content_giRHhX": {
+      "type": "page-content",
+      "settings": {
+        "section_id": "",
+        "section_width": "col-lg-10",
+        "section_offset": "none"
+      }
+    },
+    "5befb5d6-3161-494d-912f-1697ecbd1844": {
+      "type": "header-content",
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "Frequently Asked Questions",
+        "header": "",
+        "subheader": "<h3><em><strong>What is the Acme Smoked Fish Foundation?</strong></em></h3><p>The Acme Smoked Fish Foundation (ASF) is a beacon of innovation and inclusivity within the seafood industry. Established in 2021 as a 501(c)(3) non-profit, we are a living tribute to Eric Caslow, a third-generation owner of the Acme Smoked Fish Corporation. Eric's unwavering commitment to the seafood sector drove us to create a platform that champions the future of this industry.</p><p>Our mission transcends mere business. We aim to ensure that the seafood industry thrives even in the face of global challenges like climate change. We strive to achieve this by fostering innovation and education in the regions we serve, and by pushing the boundaries of what's possible.</p><p>One of our flagship initiatives, the Seafood Industry Climate Awards (SICA), seeks to amplify solutions that reduce the seafood industry's carbon footprint. But we don't stop there. We're dedicated to elevating the roles of underrepresented groups within the industry, believing that diversity is key to unlocking sustainable solutions.</p><p>ASF is more than just a foundation. We're a community of passionate individuals, driven by the belief that change is possible through collaboration. Our extensive network, including influential figures like Rob Snyder and strategic collaborators like Context Partners, solidifies our position at the intersection of seafood, sustainability, and societal change.</p><p>We're on a mission to accelerate promising solutions, build resilient communities, and leave a lasting impact on the seafood industry and the planet.</p><h3><em><strong>What are some examples of climate initiatives that are being funded with this donation?</strong></em></h3><p>Visit <a href=\"https://acmesmokedfish.com/pages/seafood-and-climate-initiatives\"><span style=\"text-decoration:underline\">https://acmesmokedfish.com/pages/seafood-and-climate-initiatives</span></a> or read more about our 2023 Seafood Industry Climate Award winners below:</p><p><strong>Minorities in Aquaculture</strong></p><p>Minorities in Aquaculture (MIA) was founded in 2020 by Imani Black, an African American oyster farmer building a career in the rapidly-growing aquaculture industry. The organization was created by a vision of more diverse and inclusive aquaculture sectors. In 3 years, MIA has educated underrepresented demographics about the environmental benefits of aquaculture & growing a viable career pipeline. Their goal is to create long-lasting diverse stewards, employees and innovators that strongly impact the industry for the future. </p><p><strong>Pine Island Redfish</strong></p><p>Pine Island Redfish is a saltwater, land-based Recirculating Aquaculture System (RAS) producing redfish in Southwest Florida. Their RAS system brings home production of a native fish, almost harvested to extinction. Rather than relying on imports, Pine Island Redfish meets the demand of this popular species while also establishing a more circular food system. The RAS facility captures and reuses the nutrient profile of the seawater to grow halophytic plants such as sea purslane and red mangrove. This addresses management of waste from marine culture, raising plant species that are integral to shoreline stabilization and carbon sequestration.</p><p><strong>Viable Gear </strong></p><p>Viable Gear is a mission-driven startup founded in 2021 in Portland, Maine to provide sustainable products to ocean harvesters in support of a healthier ocean. These products are developed from<br/>Viable Gear’s seaweed-based material alternative, intended to replace the traditional petroleum based plastics like nylon and polypropylene, that are used in the fishing and aquaculture industries.</p><h3><em><strong>Why are climate initiatives the focus of the Acme Smoked Fish Foundation?</strong></em></h3><p>Time is of the essence. Climate related impacts are already disrupting the seafood industry, with more to come, potentially leading to the collapse of fisheries, economies, and viability of the sector. The Acme Smoked Fish Foundation believes that if innovators, from researchers to product developers to entrepreneurs, have increased attention and resources, they can help turn the tide and allow the seafood industry to be a leader in the climate movement.</p><h3><em><strong>Why Acme’s cold smoked salmon products?</strong></em></h3><p>To make the biggest impact! Acme’s cold smoked salmon products are our most popular selling items, so adding our 1% for Climate Initiatives label to those items allows us to fund more innovative solutions to decarbonize the seafood industry.</p><p></p>",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "b13757f6-a86f-47b0-9006-62d257206d76": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "What is the Acme Smoked Fish Foundation?",
+        "header": "",
+        "subheader": "<p>The Acme Smoked Fish Foundation (ASF) is a beacon of innovation and inclusivity within the seafood industry. Established in 2021 as a 501(c)(3) non-profit, we are a living tribute to Eric Caslow, a third-generation owner of the Acme Smoked Fish Corporation. Eric's unwavering commitment to the seafood sector drove us to create a platform that champions the future of this industry.</p><p>Our mission transcends mere business. We aim to ensure that the seafood industry thrives even in the face of global challenges like climate change. We strive to achieve this by fostering innovation and education in the regions we serve, and by pushing the boundaries of what's possible.</p><p>One of our flagship initiatives, the Seafood Industry Climate Awards (SICA), seeks to amplify solutions that reduce the seafood industry's carbon footprint. But we don't stop there. We're dedicated to elevating the roles of underrepresented groups within the industry, believing that diversity is key to unlocking sustainable solutions.</p><p>ASF is more than just a foundation. We're a community of passionate individuals, driven by the belief that change is possible through collaboration. Our extensive network, including influential figures like Rob Snyder and strategic collaborators like Context Partners, solidifies our position at the intersection of seafood, sustainability, and societal change.</p><p>We're on a mission to accelerate promising solutions, build resilient communities, and leave a lasting impact on the seafood industry and the planet.</p>",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "32e7c71f-dbc9-43d8-93ed-d9264f86c48a": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "What are some examples of climate initiatives that are being funded with this donation?",
+        "header": "",
+        "subheader": "<p>Visit <a href=\"https://acmesmokedfish.com/pages/seafood-and-climate-initiatives\"><span style=\"text-decoration:underline\">https://acmesmokedfish.com/pages/seafood-and-climate-initiatives</span></a> or read more about our 2022 Seafood Industry Climate Award winners below:</p><p><strong>Energy Sustainability of Mi'kmaq RAS Hatchery Using Solar Power: Mi’kmaq Nation</strong></p><p>The Mi’kmaq Nation in Northern Maine is coupling renewable energy with their Recirculating Aquaculture System (RAS) to farm Eastern Brook Trout and address the food security needs of their community. By installing solar panels on their farm and hatchery, they aim to buffer disruptions to their food system brought on by climate change. </p><p><strong>Alaska Longline Fishermen’s Association Boat Energy Transition Accelerator: ALFA BETA</strong></p><p></p><p>Fuel usage in wild capture fisheries contribute significantly to carbon emission and high costs in the seafood industry. The ALFA BETA SICA Award takes on this challenge, piloting technology that will lead the way for the electrification of the SE Alaska Troll and Long Line Fleet. Read more about the project here.</p><p><strong>Lift All Boats Initiative: Luke’s Lobster</strong> </p><p>The Maine lobster industry faces many challenges; among them the rising cost of fuel, the related carbon emissions, as well as the lack of diversity. These challenges are representative of fisheries more broadly in the US, and the Lift All Boats program is taking on these challenges and demonstrating a path forward that is inclusive and climate positive. </p>",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "bb30fe33-2714-46a7-a25f-ab89a8152ff4": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "Why are climate initiatives the focus of the Acme Smoked Fish Foundation?",
+        "header": "",
+        "subheader": "<p>Awardees will be reviewed and selected by judges representing a broad set of perspectives from across the seafood industry. Judge’s will evaluate entries based on the criteria, each with equal weighting. Judges may contact applicants for clarification or additional information. Evaluation will begin once the application period has closed and winners will be announced in December 2023.</p><h2>Eligibility</h2><ul><li>Applicants must be formally affiliated with and applying through a legally registered entity that can receive unrestricted grant funding.</li><li>Be registered and located in the United States or Canada.</li><li>Meet all submission deadlines, including submitting a completed application form by the required deadline.</li><li>Ability to fulfill all grant requirements including a minimum of a midterm and final update. </li><li>Past Seafood Industry Climate Award winners are not eligible to apply.</li><li>Agree to all legal terms and conditions of the award.</li></ul><p>The Acme Smoked Fish Foundation does not fund the following:</p><ul><li>Lobbying and activities to influence specific legislation</li><li>Religious organizations</li><li>Individuals unaffiliated with a legal entity </li></ul>",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "194923a0-818d-4358-8cce-89c4d76da007": {
+      "type": "image-text-panels",
+      "blocks": {
+        "7bf0aac3-a340-4419-801b-02d5b6568d03": {
+          "type": "content",
+          "settings": {
+            "header": "3 winners",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "2418c722-4e2d-4086-bef4-afcdbb500449": {
+          "type": "content",
+          "settings": {
+            "header": "$70,000 Per Award",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "88ae5846-62af-47bb-8c8a-09bc68ac638b": {
+          "type": "content",
+          "settings": {
+            "header": "Featured in Media & At Industry Events",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        }
+      },
+      "block_order": [
+        "7bf0aac3-a340-4419-801b-02d5b6568d03",
+        "2418c722-4e2d-4086-bef4-afcdbb500449",
+        "88ae5846-62af-47bb-8c8a-09bc68ac638b"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "header": "",
+        "color": "light",
+        "header_alignment": "center",
+        "col_alignment": "center",
+        "columns": "3_col"
+      }
+    },
+    "b2a7e53b-b34d-4a9a-a899-14ec44ab7e23": {
+      "type": "image-text-panels",
+      "blocks": {
+        "3ccf3b63-e10a-46da-b5ce-105431f80433": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/amanda-batten-foster.png",
+            "header": "Amanda Foster",
+            "description": "<p>Corporate Citizenship Manager - TD Bank Foundation</p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "3c4ed338-4fd2-4d4f-a919-94c875372271": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/christian_adler.jpg",
+            "header": "Cristian Andler",
+            "description": "<p>Cofounder - Green Ticket</p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "48e70b4b-787a-4202-95b8-fd9dc0dc5ee4": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/briana-warner.jpg",
+            "header": "Bri Warner",
+            "description": "<p>Chief Executive Officer - Atlantic Sea Farms</p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "721357ec-9e33-4a56-81a3-b04ba46a1abe": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/Stacy-schultz.jpg",
+            "header": "Stacy Schultz",
+            "description": "<p>Director Marketing and Sustainability Coordinator - Fortune Fish and Gourmet, Board Member of SeaPact Foundation</p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "a6bd06aa-ce19-4f68-b592-3d6caad04d47": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/Headshot_003.jpg",
+            "header": "Cari McCall",
+            "description": "<p>Sr Strategic Sourcing Specialist - Walt Disney Parks & Resorts</p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "eb338af2-fd2d-4eb6-8fcd-ae84d84d73d3": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/SidPhoto10.png",
+            "header": "Sid Shafin",
+            "description": "<p>Plant Engineer - Acme Smoked Fish</p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "799ceb9a-142d-43be-9091-5e2d45160ce0": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/Roy-219x219.png",
+            "header": "Rob Snyder",
+            "description": "<p>Chief People and Sustainability Officer - Acme Smoked Fish, Acme Smoked Fish Foundation</p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        }
+      },
+      "block_order": [
+        "3ccf3b63-e10a-46da-b5ce-105431f80433",
+        "3c4ed338-4fd2-4d4f-a919-94c875372271",
+        "48e70b4b-787a-4202-95b8-fd9dc0dc5ee4",
+        "721357ec-9e33-4a56-81a3-b04ba46a1abe",
+        "a6bd06aa-ce19-4f68-b592-3d6caad04d47",
+        "eb338af2-fd2d-4eb6-8fcd-ae84d84d73d3",
+        "799ceb9a-142d-43be-9091-5e2d45160ce0"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "header": "",
+        "color": "light",
+        "header_alignment": "center",
+        "col_alignment": "center",
+        "columns": "3_col"
+      }
+    },
+    "854fcc35-397d-4f05-9f0b-50734bdbcc3c": {
+      "type": "image-text-panels",
+      "blocks": {
+        "0e9a43e0-6b0e-4685-9307-e46564bb10f8": {
+          "type": "content",
+          "settings": {
+            "header": "Impact",
+            "description": "<p>Ability, current or potential, to reduce the carbon footprint of discrete aspects of the seafood industry.</p><p><strong>50% of Total Score</strong></p><p><em>Application Question: How would the proposed work reduce the carbon footprint of the seafood sector?</em></p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "c760a406-af01-44df-b468-035cd71a1fb0": {
+          "type": "content",
+          "settings": {
+            "header": "Plan",
+            "description": "<p>Clear and realistic approach to achieve application goals including leverage of the award.</p><p><strong>25% of Total Score</strong></p><p><em>Application Question: What is the plan for implementation with a focus on 12 months from receiving award?</em></p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "3772682b-5ffe-49a6-8119-fe49d402fc07": {
+          "type": "content",
+          "settings": {
+            "header": "Diversity",
+            "description": "<p>Applying team and/or program improves seafood industry diversity (women, people of color, and marginalized communities).</p><p><strong>25% of Total Score</strong></p><p><em>Application Question: How is the team and/or work improving the diversity of the seafood sector?</em></p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        }
+      },
+      "block_order": [
+        "0e9a43e0-6b0e-4685-9307-e46564bb10f8",
+        "c760a406-af01-44df-b468-035cd71a1fb0",
+        "3772682b-5ffe-49a6-8119-fe49d402fc07"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "header": "",
+        "color": "light",
+        "header_alignment": "center",
+        "col_alignment": "center",
+        "columns": "3_col"
+      }
+    },
+    "79878a0c-e210-40f8-b945-eebafa2ce3ac": {
+      "type": "image-text-panels",
+      "blocks": {
+        "f26694b5-020a-48d0-b296-a4dcc6e177ac": {
+          "type": "content",
+          "settings": {
+            "header": "50% of Score",
+            "description": "<p><em>Application Question: How would the proposed work reduce the carbon footprint of the seafood sector?</em></p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "3b825a43-813c-467c-8e88-95cc6fb7cc4e": {
+          "type": "content",
+          "settings": {
+            "header": "25% of Score",
+            "description": "<p><em>Application Question: What is the plan for implementation with a focus on 12 months from receiving award?</em></p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "56da2cb0-38a9-44b9-96a3-9a4887e1a81e": {
+          "type": "content",
+          "settings": {
+            "header": "25% of Score",
+            "description": "<p><em>Application Question: How is the team and/or work improving the diversity of the seafood sector?</em></p>",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        }
+      },
+      "block_order": [
+        "f26694b5-020a-48d0-b296-a4dcc6e177ac",
+        "3b825a43-813c-467c-8e88-95cc6fb7cc4e",
+        "56da2cb0-38a9-44b9-96a3-9a4887e1a81e"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "header": "",
+        "color": "light",
+        "header_alignment": "center",
+        "col_alignment": "center",
+        "columns": "3_col"
+      }
+    },
+    "bc656e26-33c5-4597-8641-bd4074cb1259": {
+      "type": "faqs-section",
+      "disabled": true,
+      "settings": {
+        "link_label": "View All FAQs",
+        "link_url": "",
+        "tag": ""
+      }
+    },
+    "ffba3982-d4ec-4f5f-a8b2-9316d4d09f88": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "",
+        "header": "2022 North American SICA Recipients",
+        "subheader": "",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "dc1438e8-9476-4bd9-aaf3-d6e0f5347224": {
+      "type": "two-column-swiper",
+      "blocks": {
+        "cde86a4f-fad9-4d6b-9cfa-5065c2d1e411": {
+          "type": "Slide",
+          "settings": {
+            "anchor_id": "",
+            "label": "",
+            "header": "",
+            "title": "Energy Sustainability of Micmac RAS Hatchery Using Solar Power: Aroostook Band of Mi’kmaqs",
+            "sub_title": "",
+            "image": "shopify://shop_images/1_-_Mikmaq_Farms.jpg",
+            "image_size": "cover",
+            "body": "<p>With Micmac Farms and Hatchery, the Mi’kmaq Nation makes a meaningful difference. Each year, they provide about 12,000 pounds of Maine strain Eastern Brook Trout to the community using innovative Recirculating Aquaculture System (RAS) technology. Through SICA funding, they’re taking their eco-friendly approach a step further by integrating renewable solar power into their RAS. By making strides in sustainable aquaculture, the Mi’kmaq Nation has created a resilient, energy-independent food source for their community and inspired other indigenous groups to join their journey.</p>",
+            "link_url": "https://micmac-nsn.gov/",
+            "external": true,
+            "link_label": "Learn More"
+          }
+        },
+        "28a7e389-3a2e-498c-8edb-2dc18b5411a1": {
+          "type": "Slide",
+          "settings": {
+            "anchor_id": "",
+            "label": "",
+            "header": "",
+            "title": "ALFA Beta: Alaska Longline Fishermen’s Association Boat Energy Transition Accelerator",
+            "sub_title": "",
+            "image": "shopify://shop_images/2_-_ALFA1.png",
+            "image_size": "cover",
+            "body": "<p>To transition the Alaska fishing fleet to hybrid diesel/electric power, ALFA is launching an innovative pilot project—collaborating with the National Renewable Energy Laboratory,  the Energy Transitions Initiative Project Partnership, and over 300 fisher-members to lessen their industry’s carbon footprint. This all-hands-on-deck initiative to convert ships, collect crucial data, and cultivate community engagement began in the fall of 2022, powered by SICA funding. </p>",
+            "link_url": "https://www.alfafish.org/news-1/2022/10/6/alaska-longline-fishermens-association-receives-seafood-industry-climate-award",
+            "external": true,
+            "link_label": "Learn More"
+          }
+        },
+        "3e2f60f0-60d8-4be0-8d63-ff1952de6655": {
+          "type": "Slide",
+          "settings": {
+            "anchor_id": "",
+            "label": "",
+            "header": "",
+            "title": "Lift All Boats Initiative: Luke’s Seafood",
+            "sub_title": "",
+            "image": "shopify://shop_images/3_-_Lift_All_Boats.jpg",
+            "image_size": "cover",
+            "body": "<p>BIPOC students and immigrants face countless barriers to entry when it comes to the commercial fishing and lobstering industries in Maine. Luke’s Seafood is here to change that, paving pathways for prospective fishermen and women from underserved communities. Through hands-on experiences, Luke’s helps enrolled students gain insights into the environmental impact of the industry and discover opportunities to innovate. Through SICA funding, Luke’s can hire more instructors and lead more students to sustainable careers. </p>",
+            "link_url": "https://lukeslobster.com/pages/lift-all-boats",
+            "external": true,
+            "link_label": "Learn More"
+          }
+        }
+      },
+      "block_order": [
+        "cde86a4f-fad9-4d6b-9cfa-5065c2d1e411",
+        "28a7e389-3a2e-498c-8edb-2dc18b5411a1",
+        "3e2f60f0-60d8-4be0-8d63-ff1952de6655"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "layout": "rows",
+        "image_position": "left"
+      }
+    },
+    "1d8f4378-f7f7-455c-905a-1f3569dd22e5": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "",
+        "header": "2022 Chilean SICA Recipients",
+        "subheader": "<p>Addressing the climate crisis requires a global approach. Through the <a href=\"https://premioacme.cl/\" target=\"_blank\" title=\"https://premioacme.cl/\">Chilean awards program</a>, Acme acknowledges that sustainable action and seafood-industry innovation know no borders. </p>",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "76c95f98-0056-41db-b838-e65c7de9af68": {
+      "type": "two-column-swiper",
+      "blocks": {
+        "6852e5ea-77c2-4d66-b6db-57745f773fcf": {
+          "type": "Slide",
+          "settings": {
+            "anchor_id": "",
+            "label": "",
+            "header": "",
+            "title": "Electromovilidad Náutica Cero Emisiones: Antü Energía SpA",
+            "sub_title": "",
+            "image": "shopify://shop_images/Screenshot_2023-06-16_141931.png",
+            "image_size": "cover",
+            "body": "<p>In a nation with a massive coastline and booming seafood industry, everything seems to happen at sea. But all of the boating required to take care of business can take a toll on the health of the planet, contributing to the industry’s overall carbon emissions. Antü Energía SpA is working to lighten the footprint, gathering key data and designing efficient electric systems to power small outboard motorboats. </p>",
+            "link_url": "https://antuenergia.cl/quienes-somos/",
+            "external": true,
+            "link_label": "Learn More"
+          }
+        },
+        "927d085a-2116-4116-a266-fafbfc4adf87": {
+          "type": "Slide",
+          "settings": {
+            "anchor_id": "",
+            "label": "",
+            "header": "",
+            "title": "Transformación de residuos plásticos en ecocombustibles: Salmonhealth SpA",
+            "sub_title": "",
+            "image": "shopify://shop_images/Screenshot_2023-06-16_142158.png",
+            "image_size": "cover",
+            "body": "<p>Guided by the spirit of transformation, Salmonhealth SpA seeks to convert 22,000 tonnes of plastic waste from the salmon industry into clean, efficient energy. It’s a powerful idea and a promising project, one that can reduce the industry’s carbon output, preserve the biodiversity of the Los Lagos region, and inspire fellow innovators to view waste as an opportunity.</p>",
+            "link_url": "https://salmonhealth.cl/ecocombustibles/",
+            "external": true,
+            "link_label": "Learn More"
+          }
+        }
+      },
+      "block_order": [
+        "6852e5ea-77c2-4d66-b6db-57745f773fcf",
+        "927d085a-2116-4116-a266-fafbfc4adf87"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "layout": "rows",
+        "image_position": "left"
+      }
+    },
+    "5deb4185-8982-409c-8a3a-b81c0758605f": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "",
+        "header": "Our SICA Partners",
+        "subheader": "",
+        "cta": "",
+        "url": "",
+        "external": false
+      }
+    },
+    "0e9f4947-e6b6-4f1e-b76e-5b0c5958b334": {
+      "type": "image-text-panels",
+      "blocks": {
+        "228bffb1-b6ad-420c-9fb0-a6ca7cbe6fe6": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/Acmesmokedfish-01-ringlogo-Blueandgold-Rgb-2000px-w-300ppi_2.png",
+            "header": "",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "1c1d65ae-80c6-4dd4-a929-89b950ac744b": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/BuildersInitiative_Logo_3.png",
+            "header": "",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "6b4342da-ee64-4739-b8b2-c1f05bbc04f3": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/TDB_tag_cntr_RGB_003.png",
+            "header": "",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        },
+        "7da68b42-4dac-4632-bcde-ce5621ed3400": {
+          "type": "content",
+          "settings": {
+            "image": "shopify://shop_images/Acme-Acmesmokedfishfoundation-Black-Rgb-2000px-w-300ppi_2.png",
+            "header": "",
+            "description": "",
+            "cta": "",
+            "url": "",
+            "external": false
+          }
+        }
+      },
+      "block_order": [
+        "228bffb1-b6ad-420c-9fb0-a6ca7cbe6fe6",
+        "1c1d65ae-80c6-4dd4-a929-89b950ac744b",
+        "6b4342da-ee64-4739-b8b2-c1f05bbc04f3",
+        "7da68b42-4dac-4632-bcde-ce5621ed3400"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "header": "",
+        "color": "light",
+        "header_alignment": "center",
+        "col_alignment": "center",
+        "columns": "3_col"
+      }
+    },
+    "8832f926-74bf-4f5f-a514-8ea4f3717589": {
+      "type": "two-column-swiper",
+      "blocks": {
+        "23b78773-b028-47ef-add5-0fba18c60f7a": {
+          "type": "Slide",
+          "settings": {
+            "anchor_id": "",
+            "label": "",
+            "header": "Support for SICA",
+            "title": "",
+            "sub_title": "",
+            "image": "shopify://shop_images/philanthropy.jpg",
+            "image_size": "cover",
+            "body": "<p>The Seafood Industry Climate Award is made possible by a fleet of intrepid thinkers, philanthropists, and corporate leaders. Beyond Acme Smoked Fish Corp., SICA’s sponsors include The Builder's Initiative, TD Bank, Northside Packaging, Feature Foods International, Buckhead Capital Corp., Eastern Quality Foods, Rampart Insurance Services, Margolin Winer & Evens, LLP, Cole Scholtz P.C., and Marc Brownstein.</p>",
+            "link_url": "shopify://pages/contact",
+            "external": false,
+            "link_label": "Partner with Us"
+          }
+        }
+      },
+      "block_order": [
+        "23b78773-b028-47ef-add5-0fba18c60f7a"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "dark",
+        "layout": "rows",
+        "image_position": "right"
+      }
+    },
+    "page_content_DpELVC": {
+      "type": "page-content",
+      "disabled": true,
+      "settings": {
+        "section_id": "",
+        "section_width": "col-lg-10",
+        "section_offset": "none"
+      }
+    }
+  },
+  "order": [
+    "blank",
+    "b679157f-00bd-44e2-8dfa-7289b5c77ddb",
+    "8df88269-a14b-47b5-b81d-10aeca854152",
+    "6df56d8a-6842-4d99-be06-4fc83097b71a",
+    "header_content_yt3CT3",
+    "page_content_giRHhX",
+    "5befb5d6-3161-494d-912f-1697ecbd1844",
+    "b13757f6-a86f-47b0-9006-62d257206d76",
+    "32e7c71f-dbc9-43d8-93ed-d9264f86c48a",
+    "bb30fe33-2714-46a7-a25f-ab89a8152ff4",
+    "194923a0-818d-4358-8cce-89c4d76da007",
+    "b2a7e53b-b34d-4a9a-a899-14ec44ab7e23",
+    "854fcc35-397d-4f05-9f0b-50734bdbcc3c",
+    "79878a0c-e210-40f8-b945-eebafa2ce3ac",
+    "bc656e26-33c5-4597-8641-bd4074cb1259",
+    "ffba3982-d4ec-4f5f-a8b2-9316d4d09f88",
+    "dc1438e8-9476-4bd9-aaf3-d6e0f5347224",
+    "1d8f4378-f7f7-455c-905a-1f3569dd22e5",
+    "76c95f98-0056-41db-b838-e65c7de9af68",
+    "5deb4185-8982-409c-8a3a-b81c0758605f",
+    "0e9f4947-e6b6-4f1e-b76e-5b0c5958b334",
+    "8832f926-74bf-4f5f-a514-8ea4f3717589",
+    "page_content_DpELVC"
+  ]
+}

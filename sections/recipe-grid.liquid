@@ -1,0 +1,81 @@
+
+<section class="section-collection-title">
+    <div class="container">
+        <h1 class="">
+          All Recipes
+        </h1>
+    </div>
+</section>
+
+{% render "recipe-grid-filters" default_sort: section.settings.default_sort -%}
+
+<section class='section-product-grid'>
+    <div class='container'>
+        <div class='row d-flex flex-column align-items-center flex-md-row align-items-md-start justify-content-md-between' id="products-container" mx-filter-results>
+            {% paginate blog.articles by 500 %}
+                {% for article in blog.articles %}
+                    {% unless article.tags contains 'private' or article.tags contains 'Private' or product.tags contains 'PRIVATE' %}
+                        <div 
+                            mx-filter-result
+                            class='{% for tag in article.tags %} {{ tag | handleize }}{% endfor %}'
+                            data-product-id="{{ article.id }}" 
+                            data-title="{{ article.title }}" 
+                            data-date="{{ article.published_at }}" 
+                            data-price="{{ article.price }}"
+                            data-index="{{ forloop.index0 }}">
+                            {% render 'article-grid-item' article: article %}
+                        </div>
+
+                    {% endunless %}
+                {% else %}
+                    <div class="col-sm-4">
+                        <p>{{ 'collections.general.no_matches' | t }}</p>
+                    </div>
+                {% endfor %}
+
+                </div>
+            {%- if paginate.pages > 1 -%}
+                <div class="page-pagination">
+                    {% render 'pagination' paginate: paginate %}
+                </div>
+            {%- endif -%}
+        {% endpaginate %}
+    </div> 
+</section> 
+
+{% schema %}
+{
+  "name": "Recipe Grid",
+  "tag": "section",
+  "class": "section-recipe-grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sort Options"
+    },
+    {
+      "type" : "select",
+      "id" : "default_sort",
+      "label" : "Default Sort",
+      "default" : "title-ascending",
+      "options" : [
+        { "value" : "title-ascending", "label" : "Alphabetically, A-Z" },
+        { "value" : "title-descending", "label" : "Alphabetically, Z-A" },
+        { "value" : "date-ascending", "label" : "Date, old to new" },
+        { "value" : "date-descending", "label" : "Date, new to old" }
+      ]
+    }
+
+  ],
+  "templates": [
+    "blog"
+  ],
+  "presets": [
+    {
+      "name": "Recipe Grid",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

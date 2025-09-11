@@ -1,0 +1,94 @@
+{% if section.settings.anchor_id != blank %}
+    <div id="{{ section.settings.anchor_id }}" class="anchor-fix"></div>
+{% endif %}
+<section class="header-content theme--{{section.settings.color}} {% if request.design_mode %} design-mode {% endif %}">
+    <div class="container">
+        <div class="row d-lg-flex align-items-start">
+            <div class="content-wrap col-12 {% if section.settings.url %}col-xl-8{% else %}col-xl-10{% endif %} d-flex flex-column {% if section.settings.alignment == 'left' %}align-left{% endif %}">
+                {% if section.settings.lead != blank %}
+                    <p class="header-content__lead header-4 header-content__gsap">{{ section.settings.lead }}</p>
+                {% endif %}
+                {% if section.settings.header %}
+                    <h2 class="header-content__header header-1 col-12 col-xxl-10 mb-0 mb-lg-0 header-content__gsap">{{ section.settings.header }}</h2>
+                {% endif %}
+                {% if section.settings.subheader != blank %}
+                    <div class="header-content__body body-1 mb-4 mb-xl-1 col-lg-9 col-xl-10 header-content__gsap">{{ section.settings.subheader }}</div>
+                {% endif  %}
+            </div>
+            {% if section.settings.url %}                    
+            <div class="col-xl-4 d-flex justify-content-start justify-content-xl-end">
+                <a class="btn {% if section.settings.color == 'light' %}btn-primary{% else %}btn-light{% endif %} header-content__btn mt-3 mt-lg-1" href="{{ section.settings.url }}" {% if section.settings.external %}target="_blank"{% endif %}>{{ section.settings.cta }}</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+    {
+        "name": "Header Content",
+        "tag": "section",
+        "class": "section",
+        "settings": [
+            {
+                "type": "text",
+                "id": "anchor_id",
+                "label": "Anchor Link ID"
+            },
+            {
+                "type": "select",
+                "id": "color",
+                "label": "Color Scheme",
+                "options": [
+                    {
+                        "value": "dark",
+                        "label": "Dark Background"
+                    },
+                    {
+                        "value": "light",
+                        "label": "Light Background"
+                    }
+                ],
+                "default": "light"
+            },
+    
+            {
+                "type": "text",
+                "id": "lead",
+                "label": "Lead Text"
+            },
+            {
+                "type": "text",
+                "id": "header",
+                "label": "Header"
+            },
+            {
+                "type": "richtext",
+                "id": "subheader",
+                "label": "Body ( Paragraph )"
+            },
+            {
+                "type": "text",
+                "id": "cta",
+                "label": "CTA Text"
+            },
+            {
+                "type": "url",
+                "id": "url",
+                "label": "URL Link"
+            },
+            {
+                "type": "checkbox",
+                "id": "external",
+                "label": "Open Link in New Window",
+                "default": false
+            }
+        ],
+        "presets": [
+            {
+                "name": "Header Content",
+                "settings" : {}
+            }
+        ]
+    }
+{% endschema %}

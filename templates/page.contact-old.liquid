@@ -1,0 +1,88 @@
+{% if page.content != blank %}
+    <section class="mx-band-sec " >
+        <div class="bg-box"></div><!-- .bg -->
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                    {{page.content}}
+                </div>
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section>
+{% endif %}
+
+<div class = "container mb-5">
+  <div class = 'row'>
+    <div class = 'col'>
+      <div class="contact-form ">
+          {%- assign formId = 'ContactForm' -%}
+          {% form 'contact', id: formId %}
+            {% include 'form-status', form_id: formId %}
+              
+            <div class="row">
+              <div class="col">
+                <div class = 'form-group'>
+                  <label for="{{ formId }}-name">{{ 'contact.form.name' | t }}</label>
+                  <input type="text"
+                    id="{{ formId }}-name"
+                    class="form-control"
+                    name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                </div>
+              </div>
+              <div class="col">
+                <div class = 'form-group'>
+                  <label for="{{ formId }}-email">{{ 'contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+                  <input
+                    type="email"
+                    id="{{ formId }}-email"
+                    class="form-control"
+                    name="contact[email]"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                    aria-required="true"
+                    {%- if form.errors contains 'email' -%}
+                      class="input--error"
+                      aria-invalid="true"
+                      aria-describedby="{{ formId }}-email-error"
+                    {%- endif -%}
+                    >
+                  <span id="{{ formId}}-email-error" class="input-error-message">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                </div>
+              </div>
+            </div>
+            <div class = 'row'>
+              <div class = 'col'>
+                <div class = 'form-group'>
+                  <label for="{{ formId }}-phone">{{ 'contact.form.phone' | t }}</label>
+                  <input type="tel"
+                    id="{{ formId }}-phone"
+                    class="form-control"
+                    name="contact[phone]"
+                    pattern="[0-9\-]*"
+                    value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                </div>
+              </div>
+            </div>
+            <div class = 'row'>
+              <div class = 'col'>
+                <div class = 'form-group'>
+                  <label for="{{ formId }}-message">{{ 'contact.form.message' | t }}</label>
+                  <textarea
+                    rows="10" id="{{ formId }}-message"
+                    class = 'form-control'
+                    name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                </div>
+              </div>
+            </div>
+            <div class = 'row'>
+              <div class = 'col'>
+                <input type="submit" class="btn btn-primary" value="{{ 'contact.form.submit' | t }}">
+              </div>
+            </div>
+
+          {% endform %}
+        </div>
+    </div>
+  </div>
+</div>

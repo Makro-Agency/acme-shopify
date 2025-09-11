@@ -1,0 +1,8 @@
+
+  <script>
+      var Shopify = Shopify || {};
+      Shopify.theme = Shopify.theme || {};      
+      Shopify.theme.cartOnLoad = {{ cart | json }};
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
+

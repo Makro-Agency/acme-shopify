@@ -1,0 +1,42 @@
+
+{% for option in product.options %}
+  {% if option == swatch %}
+    {% assign option_index = forloop.index0 %}
+    {% if product_select == blank  %}
+      {% assign product_select = 'product-select-'%}
+    {% endif %}
+    {% assign option_id = product_select | append : product.id | append : '-option-' | append :  option_index %}
+    <style>
+      label[for="{{option_id}}"] { display: none; }
+      #{{option_id}} { display: none; }
+      #{{option_id}} + .custom-style-select-box { display: none !important; }
+    </style>
+      <!-- <script>$(window).load(function() { $('.selector-wrapper:eq({{ option_index }})').hide(); });</script> -->
+  {% endif %}
+{% endfor %}
+
+
+
+{% if option_id %}
+  <div class="swatch swatch-element-container" 
+      data-swatch-option 
+      data-option-index="{{ option_index }}" data-product-id="{{product.id}}" >
+    {% assign values = '' %}
+    {% for variant in product.variants %}
+      {% assign value = variant.options[option_index] %}
+      {%  assign swatch_id =  option_id | append :'-swatch-' | append : option_index | append : '--' | append : value | handle %}      
+      {% unless values contains value %}
+        {% liquid 
+          assign values = values | join: ',' 
+          assign values = values | append: ',' | append: value 
+          assign values = values | split: ',' 
+        %}
+        <div data-value="{{ value | escape }}" class="btn-swatch swatch-element mb-2 {% if variant.available %}available{% else %}soldout{% endif %}">
+          <input id="{{swatch_id }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+          <label for="{{swatch_id }}"> {{ value }} </label>
+        </div>
+      {% endunless %}
+    {% endfor %}
+  </div>
+
+{% endif %}

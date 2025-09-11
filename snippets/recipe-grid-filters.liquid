@@ -1,0 +1,192 @@
+{% comment %}
+  Renders filters for a product collection.
+
+  Accepts:
+  - filters: {String} (required) - Comma separated string of filters. E.g:  Brand,Category,Size.
+  Filters are created from tags using the structure:  Brand Name_Test Brand  
+  - custom_collection: {Object} (optional) - Collection Liquid object.
+
+  Usage:
+  {% render "filters" filters:section.settings.filters custom_collection:section.settings.custom_collection -%}
+
+{% endcomment %}
+
+{%liquid 
+    assign filterMenu = linklists.recipe-filter.links
+    assign all_tags = blog.all_tags
+%}
+{%- liquid
+    if custom_collection != blank
+        assign collection = custom_collection
+    endif 
+    -%}
+    
+    {% unless collection.products.size == 0 %}
+    
+    {% liquid 
+ 
+      assign show_sort_options = true
+    %}
+    <section class="section-product-filter" data-sticky>
+      <div
+        class="filters-container container"
+        mx-collection-filter
+        data-default-sort="{{ default_sort }}">
+        <div class="row mobile-filter-button d-md-none">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mobileFiltersModal">Filters</button>
+        </div>
+        <div class="row filter-options">
+          <div class="col-8 col-xl-9 col-xxl-10 gx-0 d-none d-md-flex">
+            <div
+              class="btn-group"
+              role="group"
+              aria-label="Product Filters">
+              {% render 'grid-filter-desktop' filterMenu:filterMenu all_tags:all_tags %}
+            </div>
+          </div>
+            <div class="dropdown col gx-0 sort-options">
+              <button
+                class="btn btn-filter dropdown-toggle mt-3 mt-lg-0"
+                type="button"
+                id="sortButton"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                Sort By
+              </button>
+    
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="sortButton"
+                id="sort-menu">
+                  <li
+                    class="dropdown-item"
+                    mx-sortby-toggle
+                    data-sortby="date-descending">
+                    <label for="created-at-descending">
+                      <input
+                        type="radio"
+                        id="created-at-descending"
+                        name="sort"
+                        value="created-at-descending"
+                        data-filter="sort">
+                      <span>Date, new to old</span>
+                    </label>
+                  </li>
+    
+                  <li
+                    class="dropdown-item"
+                    mx-sortby-toggle
+                    data-sortby="date-ascending">
+                    <label for="created-at-ascending">
+                      <input
+                        type="radio"
+                        id="created-at-ascending"
+                        name="sort"
+                        value="created-at-ascending"
+                        data-filter="sort">
+                      <span>Date, old to new</span>
+                    </label>
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    mx-sortby-toggle
+                    data-sortby="title-ascending">
+                    <label for="a-z">
+                      <input
+                        type="radio"
+                        id="a-z"
+                        name="sort"
+                        value="a-z"
+                        data-filter="sort">
+                      <span>Alphabetically, A-Z</span>
+                    </label>
+                  </li>
+
+                  <li
+                    class="dropdown-item"
+                    mx-sortby-toggle
+                    data-sortby="title-descending">
+                    <label for="z-a">
+                      <input
+                        type="radio"
+                        id="z-a"
+                        name="sort"
+                        value="z-a"
+                        data-filter="sort">
+                      <span>Alphabetically, Z-A</span>
+                    </label>
+                  </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row badge-row">
+          <div class="col-8 gx-0 d-none d-md-flex">
+            <ul class="badge-container">
+                {% render 'grid-filter-badges' filterMenu:filterMenu all_tags:all_tags %}
+              <li
+                class="filter-badge clear-all"
+                mx-filter-toggle
+                data-group="clear-all-filters"
+                data-filter=""
+                data-filter-active>
+                <button class="btn btn-clear-all-filters btn-outline-dark">Clear Filters</button>
+              </li>
+    
+            </ul>
+          </div>
+              
+          
+          <div class="col gx-0 d-flex justify-content-lg-end">
+            <p class="num-results header-6" mx-sort-by-text></p>
+            <p class="num-results header-6" mx-num-results></p>
+          </div>
+        </div>
+    
+    
+        {% comment %} MOBILE FILTER MODAL {% endcomment %}
+        <div class="modal modal-filters fade d-md-none" id="mobileFiltersModal" tabindex="-1" aria-label="Filters" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <button type="button" class="btn-close dark" data-bs-dismiss="modal" aria-label="Close">{% render 'icon-close-blue' %}</button>
+                  <div class="modal-body">
+                    <h2 class="filters-header header-3 mb-4">Filter By</h2>
+                    <div class="active-filters-container">
+                      {% comment %} <h3 class="active-filters-header">Active Filters</h3> {% endcomment %}
+                      <ul class="badge-container">
+                        {% render 'grid-filter-badges' filterMenu:filterMenu all_tags:all_tags %}
+                        <li class="blank-item"></li>
+        
+                        <li
+                          class="filter-badge clear-all"
+                          mx-filter-toggle
+                          data-group="clear-all-filters"
+                          data-filter=""
+                          data-filter-active>
+                          <button class="btn btn-clear-all-filters btn-outline-dark">Clear Filters</button>
+                        </li>
+        
+                        <li class="apply-all">
+                          <button class="btn btn-clear-all-filters" data-bs-dismiss="modal">Apply Filters</button>
+                        </li>
+                      </ul>
+                    </div>
+      
+                    {% render 'grid-filter-mobile' filterMenu:filterMenu all_tags:all_tags %}
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="noFish container">
+        <div class="row">
+          <div class="col-12 d-flex flex-column align-items-center">
+            <h2 class="tagline header-3 mt-3">No Results.</h2>
+          </div>
+        </div>
+      </div>
+    
+    </section>
+    
+    {% endunless %}

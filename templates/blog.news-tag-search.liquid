@@ -1,0 +1,17 @@
+{% layout none %}
+{% liquid
+    
+    if canonical_url contains "handle="
+      assign parts = canonical_url | split : 'handle='
+      assign handle = parts[1] | replace : '%2f' : '/'
+    endif
+%}
+{% paginate blog.articles by 8 %}
+  {% for article in blog.articles %}
+    {% unless article.handle contains handle %}
+      <div class="swiper-slide">
+        {% render 'article-grid-item' article:article %}
+      </div>
+    {% endunless %}
+  {% endfor %}
+{% endpaginate %}

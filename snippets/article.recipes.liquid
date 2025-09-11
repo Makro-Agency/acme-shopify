@@ -1,0 +1,291 @@
+<section class="single-recipe intro">
+    <div class="container">
+        <div class="row d-md-flex flex-row-reverse justify-content-end">
+            <div class="col-12 col-md-6 offset-md-1">
+                <p class="single-recipe__lead header-5">Recipes</p>
+                <h1 class="single-recipe__title header-1 mb-4">{{ article.title }}</h1>
+                <div class="single-recipe__content col-12 font-itc  mt-4 pt-2 d-none d-md-block">
+                    {{ article.content }}
+                    <div class="share-this">
+                        <p class="font-saa  mt-4 mb-0 pt-1">SHARE THIS</p>
+                        {% render 'share-this' %}
+                    </div>
+                </div>
+                <div class="d-none d-md-block single-recipe__directions steps-desktop px-4 px-md-0">
+                    {%- if article.metafields.recipes.directions -%}
+                        <h2 class="mb-0">Directions</h2>
+                        <div>{{ article.metafields.recipes.directions }}</div>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="image-wrap col-12 col-md-5 px-md-0">
+                <picture>
+                    <source media="(min-width: 992px)" srcset="{{ article.image | img_url: 'master' }}">
+                    <source media="(min-width: 768px)" srcset="{{ article.image | img_url: '700x' }}">
+                    <img class="image-wrap__image" src="{{ article.image | img_url: '400x' }}" alt="{{ article.image.alt }}">
+                </picture>
+                <div class="image-wrap__info mt-4 d-flex justify-content-between justify-content-md-start col-lg-10">
+                    {% if article.metafields.recipes.prep_time %}
+                        <div class="item prep-time col-4 col-lg-3">
+                            <h2 class="item__label header-6">Prep Time</h2>
+                            <p class="item__value header-6 mt-3">{{ article.metafields.recipes.prep_time }}<span class="ms-1">min</span></p>
+                        </div>
+                    {% endif %}
+                    {% if article.metafields.recipes.cook_time %}
+                        <div class="item cook-time col-4 col-lg-3">
+                            <h2 class="item__label header-6">Cook Time</h2>
+                            <p class="item__value header-6 mt-3">{{ article.metafields.recipes.cook_time }}<span class="ms-1">min</span></p>
+                        </div>
+                    {% endif %}
+                    {% if article.metafields.recipes.servings %}
+                        <div class="item servings col-4 col-lg-3">
+                            <h2 class="item__label header-6">Serves</h2>
+                            <p class="item__value header-6 mt-3">{{ article.metafields.recipes.servings }}<span class="ms-1">people</span></p>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="single-recipe instructions d-none d-md-block">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 single-recipe__ingredients pt-4 pb-4">
+                                {%- if article.metafields.recipes.ingredients -%}
+                                    <h2 class="header-2 my-4 pt-4 pb-1 pt-lg-0 my-md-0">Ingredients</h2>
+                                    <div class="body-2  mt-4 pt-2">{{ article.metafields.recipes.ingredients }}</div>
+                                {%- endif -%}
+                                {% render 'recipe-featured-products' article:article %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single-recipe__content col-12 body-1 mt-5 pt-4 d-md-none">
+                {{ article.content }}
+                <div class="share-this">
+                    <p class="font-saa  mt-4 mb-0 pt-1">SHARE THIS</p>
+                    {% render 'share-this' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="single-recipe instructions d-md-none">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 single-recipe__ingredients">
+                    {%- if article.metafields.recipes.ingredients -%}
+                        <h2 class="header-2 my-4 pt-4 pb-1 pt-lg-0 my-md-0">Ingredients</h2>
+                        <div class="body-2  mt-4 pt-2">{{ article.metafields.recipes.ingredients }}</div>
+                    {%- endif -%}
+                    {% render 'recipe-featured-products' article:article %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{%- if article.metafields.recipes.directions -%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-7 d-md-none single-recipe__directions steps-mobile offset-lg-1">
+            <h2 class="mb-0 offset-md-2">Directions</h2>
+            <div class="offset-md-2">{{ article.metafields.recipes.directions }}</div>
+        </div>
+    </div>
+</div>
+{%- endif -%}
+
+{% if article.metafields.accentuate.media_player_image %}
+    <section class='recipe-media' id="recipe-media-{{ article.id }}">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center d-md-flex flex-column align-items-center">
+                    {% if article.metafields.accentuate.media_player_header %}
+                        <h2 class="recipe-media__header header-1  col-12 mb-4 mb-lg-5 pb-2">{{ article.metafields.accentuate.media_player_header  }}</h2>
+                    {% endif %}
+                    <div class="col-12">
+                        <div class="recipe-media__image">
+                            {% for media in article.metafields.accentuate.media_player_image %}
+                                <img src="{{ media.src }}" alt="{{ media.alt }}" class="img-fluid" loading="lazy"/>
+                            {% endfor %}
+                            <button type="button" 
+                                class="btn-play" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modal-{{ article.id }}"
+                                aria-label="play video">
+                                <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0.242188 23.0005V0.649414L21.3161 12.1443L0.242188 23.0005Z" fill="#14315C"/>
+                                </svg>                                
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal modal-xl fade" 
+        id="modal-{{ article.id }}" 
+        tabindex="-1" 
+        aria-labelledby="{{gallery_id}}Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        {% render 'icon-close-blue' %}
+                    </button>
+                    <div class="modal-body">
+                        {% if article.metafields.accentuate.video_type == 'Video' %}
+                            <video autoplay muted controls src="{{ article.metafields.accentuate.video_url }}"></video>
+                        {% endif %} 
+                        {% if article.metafields.accentuate.video_type == 'iframe' %}
+                            <iframe src="{{ article.metafields.accentuate.video_url }}" 
+                            width="640" 
+                            height="360" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                        {% endif %} 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% if article.metafields.accentuate.ig_image %}
+    <section class="recipe-instagram">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8 px-md-0">
+                    <h2 class="recipe-instagram__header header-1 mb-4 mb-lg-5 pb-2">{{ article.metafields.accentuate.ig_header }}</h2>
+                </div>
+                <div class="button-container d-none d-md-flex col-md-2 offset-md-2 justify-content-end align-items-end">
+                    <div class="swiper-button-prev dark me-3">
+                        {% render 'icon-next' %}
+                    </div> 
+                    <div class="swiper-button-next dark">
+                        {% render 'icon-next' %}
+                    </div>
+                </div>
+                <div class="swiper recipe-instagram__swiper">
+                    <div class="swiper-wrapper recipe-instagram__swiper-wrapper">
+                        {% for multi_images in article.metafields.accentuate.ig_image %}
+                            <div class="swiper-slide recipe-instagram__swiper-slide">
+                                <div class="card-basic">
+                                    <a class="" href="{{ article.metafields.accentuate.ig_url  }}" target="_blank" aria-label="Visit Instagram page for {{ article.metafields.accentuate.ig_handle[forloop.index0] }}">
+                                        {% for block in multi_images %}
+                                            <div class="image-wrap">
+                                                {% comment %} <div class="icon-ig">{% render 'icon-social-instagram' %}</div> {% endcomment %}
+                                                <div class="filter"></div>
+                                                <img src="{{ block.src }}" alt="{{ block.alt }}" loading="lazy"/>
+                                            </div>
+                                        {% endfor %}
+                                        <h3 class="card-basic__header">{{ article.metafields.accentuate.ig_handle[forloop.index0] }}</h3>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div><!-- .swiper -->
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% if article.metafields.accentuate.chef_image %}
+    <section class="recipe-friends mb-5">
+        <div class="container">
+            <div class="row">
+                <picture class="col-lg-6 d-none d-lg-block">
+                    {% for media in article.metafields.accentuate.chef_image %}
+                        <source media="(min-width: 992px)" srcset="{{ media.src }}" width="900">
+                        <img src="{{ media.src }}" alt="{{ media.alt }}" class="img-fluid recipe-friends__image mb-4" loading="lazy" width="450"/>
+                    {% endfor %}
+                </picture>
+                <div class="col-12 col-lg-5 offset-lg-1">
+                    <div class="header-wrap">
+                        <p class="recipe-friends__lead font-saa  mb-0 mt-lg-4 mb-lg-3">Inspired by</p>
+                        <h2 class="recipe-friends__header header-1 mb-5">Our Friends</h2>
+                    </div>
+                    <picture class="d-lg-none">
+                        {% for media in article.metafields.accentuate.chef_image %}
+                            <source media="(min-width: 992px)" srcset="{{ media.src }}" width="900">
+                            <img src="{{ media.src }}" alt="{{ media.alt }}" class="img-fluid recipe-friends__image mb-4" loading="lazy" width="450"/>
+                        {% endfor %}
+                    </picture>
+                    <div class="content mt-2">
+                        {% capture chef_name %}
+                            {% assign name = article.metafields.accentuate.chef_name %}
+                            {% assign names_array = name | split: ' ' %}
+                        {% endcapture %}
+                        <h3 class="content__name header-3">Chef {{ name }}</h3>
+                        {% if article.metafields.accentuate.chef_title %}
+                            <h4 class="content__title header-5 mb-4 mb-lg-5">{{ article.metafields.accentuate.chef_title }}</h4>
+                        {% endif %}
+                        {% if article.metafields.accentuate.chef_body %}
+                            <div class="content__body body-1 mb-5">{{ article.metafields.accentuate.chef_body }}</div>
+                        {% endif %}
+                        {% if article.metafields.accentuate.chef_url %}
+                            <a class="content__url btn btn-primary mt-lg-2" target="_blank" href="{{ article.metafields.accentuate.chef_url }}">Read About Chef {{ names_array[0] }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% render 'recipe-related-recipes-snippet' %}
+
+{% liquid 
+	for tag in article.tags 
+ 		if tag contains "Course_" 
+	 		assign tag_ = tag 
+		 endif 
+	endfor 
+    if tag_ 
+        render 'related-article-content' article:article tag:tag_ header:"Related Recipes"
+    endif
+%}
+
+
+<script type="application/json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": {{ article.content | strip_html | json }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ shop.url | append: page.url | json }}
+  },
+  "headline": {{ article.title | json }},
+  {% if article.excerpt != blank %}
+    "description": {{ article.excerpt | strip_html | json }},
+  {% endif %}
+  {% if article.image %}
+    {% assign image_size = article.image.width | append: 'x' %}
+    "image": [
+      {{ article | img_url: image_size | prepend: "https:" | json }}
+    ],
+  {% endif %}
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    {% if settings.share_image %}
+      {% assign image_size = settings.share_image.width | append: 'x' %}
+      "logo": {
+        "@type": "ImageObject",
+        "height": {{ settings.share_image.height | json }},
+        "url": {{ settings.share_image | img_url: image_size | prepend: "https:" | json }},
+        "width": {{ settings.share_image.width | json }}
+      },
+    {% endif %}
+    "name": {{ shop.name | json }}
+  }
+}
+</script> 

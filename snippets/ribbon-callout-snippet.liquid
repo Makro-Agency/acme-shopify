@@ -1,0 +1,64 @@
+
+<!-- Testing metaobjects for ribbons -->
+{% comment %} 
+  Set the data based on section.settings
+  Next set the data based on the section first  ( based on a product page or other )
+  If the data is set, then use it to display 
+  TODO: Determine how we can set the fields to reduce the markup duplication
+{% endcomment %}
+{% liquid 
+  assign data = section.settings
+  if section.settings.meta_object_handle != blank
+    assign data = shop.metaobjects.ribbon_callout[section.settings.meta_object_handle]
+  endif
+  if product.metafields.accentuate.ribbon_handle
+    assign data = shop.metaobjects.ribbon_callout[product.metafields.accentuate.ribbon_handle]
+  endif
+%}
+{% if data %}
+  {% assign bootstrapOffset = '' %}
+  {% if data.left_margin == true %}
+    {% assign bootstrapOffset = 'col-md-10 offset-md-1' %}
+  {% endif %}
+
+  <section class='page-section-ribbon-callout section padding-top--{{ data.padding_top }} padding-bottom--{{ data.padding_bottom }} theme-{{ data.theme }} {% if template == 'product' %}gsap-mininav{% endif %}'>
+    {% if template == 'product' %}
+        <div id="mini-nav__ribbon" class="mini-nav__anchor"></div>
+    {% endif %}
+    <div class='container content-container'>
+      {% if data.background_image != blank %}
+      <div class="background-image" 
+        style='background-image: url({{ data.background_image | img_url: "master" }})' 
+        role="presentation"></div>
+      {% endif %}
+      <div class='row'>
+        <div class='{% if template == 'product' %}col-md-11 offset-md-1 {% endif %}col {{ bootstrapOffset }}'>
+          <div class="wave-text">
+            {% if data.line_1 != blank %}
+            <p class="wave-line headheader-5" data-splitting>{{ data.line_1 }}</p>
+            {% endif %}
+            {% if data.line_2 != blank %}
+            <p class="wave-line header-5" data-splitting>{{ data.line_2 }}</p>
+            {% endif %}
+          </div>
+          {% if data.link_url != blank %}
+          <a href="{{ data.link_url }}" class="link-container">
+            <div class="image-holder">
+              <img src="{{ data.circle_image | img_url: "500x" }}" alt="{{ data.circle_image.alt }}" loading="lazy">
+            </div>
+            <div class="text-container">
+              <p class="body-1">{{ data.link_text }}</p>
+              <div class="arrow-holder">
+                {% render 'icon-dropdown-filled' %}
+              </div>
+            </div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endif %}
+
+<!-- // Testing metaobjects for ribbons -->

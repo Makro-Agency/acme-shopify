@@ -1,0 +1,88 @@
+<footer class="main-footer section">
+	<div class="container-fluid footer-container">
+		<div class="row d-md-flex px-0 justify-content-start">
+			<div class="newsletter bg-gray-light col-12 col-md-5">
+				<h2 class="newsletter__lead header-4 text-gold mb-lg-4">Newsletter</h2>
+				<div class="signup d-flex flex-md-column flex-xl-row align-items-center align-items-md-start my-4 py-3 mb-lg-3 py-lg-4">
+					{% render 'icon-logo-footer' %}
+					<h3 class="newsletter__header header-1 text-blue mb-0 ms-3 ms-md-0 ms-xl-3 mt-md-3 mt-xl-0">Sign Me Up</h3>
+				</div>
+				<p class="newsletter__subheader body-1 mb-0 col-lg-9">Become a part of our hundred-year legacy today.</p>
+				<div class="klaviyo-form-UnjjpG"></div>
+				<div class="links-social mb-5 mt-2 mt-lg-0 ">
+					{% for link in section.settings.social_menu.links %}
+						<a href="{{ link.url }}" style=" {% if link.title == 'Youtube' %} position:relative;top:2px;{% endif %}" aria-label="{{ link.title }}" target="_blank">
+							{% if link.title == 'Facebook' %}{% render 'icon-social-facebook' %}{% endif %}
+							{% if link.title == 'Instagram' %}{% render 'icon-social-instagram' %}{% endif %}
+							{% if link.title == 'Twitter' %}{% render 'icon-social-twitter' %}{% endif %} 
+							{% if link.title == 'TikTok' %}{% render 'icon-social-tiktok' %}{% endif %} 
+							{% if link.title == 'LinkedIn' %}{% render 'icon-social-linkedin' %}{% endif %} 
+							{% if link.title == 'Youtube' %}{% render 'icon-social-youtube' %}{% endif %} 
+						</a>
+					{% endfor %}
+				</div>
+			</div>
+			<nav class="footer-nav col-12 col-md-6 offset-md-1 offset-lg-0 col-lg-7 offset-xxl-1 col-xxl-6 ps-lg-5 ps-xxl-0">
+				<div class="links-main d-lg-flex">
+					{% for link in section.settings.footer_menu.links %}
+						<ul class="col-12 col-lg-4 d-flex flex-wrap align-content-start mb-4 pb-1 px-0">
+							<li class="category header-5 text-gold col-12">{{ link.title }}</li>
+							{% for childLink in link.links -%}
+								<li class="category-item header-6 col-6 col-lg-12">
+									<a class="text-white" href="{{ childLink.url }}">{{ childLink.title }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					{% endfor %}
+				</div>
+				<div class="links-utility">
+					<ul class="linklist d-flex flex-column flex-lg-row">
+						<li class="category-item header-5 text-white order-last order-lg-first">&copy; {{ "now" | date: "%Y" }} {{ shop.name }}</li>
+						{% for link in section.settings.footer_utility_menu.links  %}
+							<li class="mb-3 mb-lg-0">
+								<a class="header-5" href="{{ link.url }}">{{ link.title }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div><!-- .container -->
+</footer>
+
+
+
+
+{% schema %}
+{
+	"name" : "Footer",
+	"settings" : [
+		{
+			"id" : "footer_menu",
+			"label" : "Footer Menu",
+			"type" : "link_list"				
+		},
+		{
+			"id" : "social_menu",
+			"label" : "Social Menu",
+			"type" : "link_list"				
+		},
+		{
+			"id" : "footer_utility_menu",
+			"label" : "Footer Utility Menu",
+			"type" : "link_list"				
+		}
+	],
+	"presets": [
+		{
+			"name": "Footer",
+			"settings": {
+			   "footer_menu": "footer-menu",
+			   "social_menu": "social-menu"
+			 }
+		  }
+  
+	]
+   }
+
+{% endschema %}

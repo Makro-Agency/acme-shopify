@@ -1,0 +1,32 @@
+<section class="related-content d-none"
+    data-handle="{{ article.handle }}" 
+    related-articles 
+    data-tags="{{tag}}" 
+    data-url = "/blogs/{{blog.handle}}/tagged/tags/?view={{blog.handle}}-tag-search&handle={{article.handle | replace : blog.handle : ''}}">
+    <div class="container">
+      <div class="row mb-4 align-items-end">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h2 class="related-content__header header-1">More Articles</h2>
+        </div>
+        <div class="mt-3 mb-3 col-lg-6 d-lg-flex px-lg-0 align-items-center justify-content-end">
+            <a href="/blogs/news" class="btn btn-primary me-lg-3 me-xl-0">View All Articles</a>
+            <div class="button-container d-none d-lg-flex align-items-center justify-content-end col-lg-3 mb-lg-0">
+                <div class="swiper-button-prev dark me-3">
+                    {% render 'icon-next' %}
+                </div> 
+                <div class="swiper-button-next dark">
+                    {% render 'icon-next' %}
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="row">
+        <div class="col">
+          <div class="swiper">
+            <div class="swiper-wrapper"  >
+            </div>        
+          </div><!-- .swiper -->
+        </div>
+      </div>
+    </div>    
+</section>

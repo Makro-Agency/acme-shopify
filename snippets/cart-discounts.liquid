@@ -1,0 +1,18 @@
+
+{%- assign cartDiscounts = 'template ' | split: ' ' -%}
+{%- if cart.cart_level_discount_applications.size > 0 -%}
+	{%- assign cartDiscounts = cart.cart_level_discount_applications -%}
+{%- endif -%}
+
+<div{% if cart.cart_level_discount_applications.size == 0 %} class="d-none"{% endif %} data-cart-discount-wrapper>
+	<div class="order-discount-card-wrapper" data-cart-discount>
+	{%- for discount_application in cartDiscounts -%}
+		<span class="order-discount order-discount--title order-discount--cart">
+		<span class="d-none">{{ 'customer.order.discount' | t }}:</span><span data-cart-discount-title>{{- discount_application.title -}}</span>
+		</span>
+		<span class="order-discount order-discount--cart order-discount--cart-total">
+		-<span data-cart-discount-amount>{{ discount_application.total_allocated_amount | money }}</span>
+		</span>
+	{%- endfor -%}
+	</div>
+</div>

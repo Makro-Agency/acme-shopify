@@ -1,0 +1,30 @@
+<div class="cart__footer">
+	<div class="row">
+		{% comment %} <div class="col-md-6  cart-note">
+			{% render 'cart-notes' %}
+		</div> {% endcomment %}
+	  <div class="col-md-9">
+		{% render 'cart-discounts' %}
+		{% render 'cart-subtotal' %}
+		{% render 'cart-taxes' %}
+	  </div>
+	</div>
+	<div class="row mb-2">
+		<div class="col">
+            <div class="cart-note mb-2">              				
+              <div  class="mt-2  ">
+                <textarea  name="note" class="form-control" id="order_note" maxlength="350" placeholder="Enter a note for your order here">{{cart.note}}</textarea>
+            	<p><small>We do our best to honor all notes, but we do not guarantee that all requests will be accommodated.</small></p>
+              </div>
+            </div>
+		</div>
+	</div>
+	<div class="row">
+		{% comment %} <div class="col-md-6"> </div> {% endcomment %}
+		<div class="col-md-12  text-right " >
+			<div class="cart__buttons-container text-right">
+				{% render "cart-checkout-buttons" %}
+			</div>
+		</div>
+	</div>
+</div>

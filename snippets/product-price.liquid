@@ -43,7 +43,7 @@
 
 {% if available_online %}
 
-<div class="price 
+<div id="v-id-{{ variant.id }}" class="price price--has_b2b-{{ has_b2b }}
   {% if available == false %} price--sold-out {% endif %}
   {% if compare_at_price > price %} price--on-sale {% endif %}
   {% if variant.unit_price_measurement %} price--unit-available {% endif %}
@@ -71,11 +71,19 @@
       - div.price__unit: Displayed when the first variant has a unit price
       - div.price__availability: Displayed when the product is sold out
   {%- endcomment -%}
+  {% if has_b2b %}<div class="price__b2b-label">Your Price: </div>{% endif %}
   <div class="price__pricing-group ">
     <div class="price__regular">
         <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
         <span class="price-item price-item--regular" data-regular-price>
           {{ money_price }}
+          {% if has_b2b %}
+            {% if template.name == 'cart' %}
+              {% if main_obj.product.metafields.custom.unit_of_measurement != blank %}/{{ main_obj.product.metafields.custom.unit_of_measurement }}{% endif %}
+            {% else %}
+              {% if product.metafields.custom.unit_of_measurement != blank %}/{{ product.metafields.custom.unit_of_measurement }}{% endif %}
+            {% endif %}
+          {% endif %}
         </span>
     </div>
     <div class="price__sale">

@@ -191,6 +191,12 @@
       </div>`);
       document.querySelector('.product-single__single-variant').classList.add('avail-sale');
       document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Sales Price U/M:';
+      var val1 = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
+      var val2 = document.querySelector('.sale-price-b2b .price-item--regular').innerText;
+      {% comment %} var price_prop = `Sales Price U/M = ${val1}; Quantity U/M = ${val2}`;
+      var property_field = `<input type="hidden" name="properties[_price]" value="${price_prop}">`
+      document.querySelector('.product-add-form').innerHTML += property_field;
+      console.log('in'); {% endcomment %}
     }
   {% endif %}
 

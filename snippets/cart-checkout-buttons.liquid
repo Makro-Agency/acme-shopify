@@ -1,10 +1,68 @@
-<div class="cart__submit-controls">
+{% comment %} <div class="cart__submit-controls">
 	{% comment %} <input type="submit" name="update"
 	class="btn mt-0 mb-0 btn-primary cart__submit "
-	value="{{ 'cart.buttons.update' | t }}" 
+	value="{{ 'cart.buttons.update' | t }}" c
 	data-btn-cart-update > {% endcomment %}
 	<input type="submit" name="checkout"
 	class="btn btn-primary mt-4 mb-0 cart__submit"
 	value="{{ 'cart.buttons.checkout' | t }}"
 	data-btn-cart-submit>
+</div> {% endcomment %}
+
+<div class="cart__submit-controls">
+
+	{% if customer_b2B %}
+		{% assign checkout_button_text = 'Place Order' %}
+	{% else %}
+		{% assign checkout_button_text = 'cart.buttons.checkout' | t %}
+	{% endif %}
+
+	{% if customer and customer.b2b? and customer.company_available_locations_count > 0 and customer.current_location.metafields.custom.block_checkout == true %}
+		{% if customer_b2B %}<p>Inspect the cart before finalizing the order...</p>{% endif %}
+		<input type="button" class="btn btn-primary mt-4 mb-0 cart__submit disabled" value="{{ checkout_button_text }}">
+	{% else %}
+		{% if customer_b2B %}<p>Inspect the cart before finalizing the order...</p>{% endif %}
+		<input type="submit" name="checkout"
+			class="btn btn-primary mt-4 mb-0 cart__submit"
+			value="{{ checkout_button_text }}"
+			data-btn-cart-submit>
+	{% endif %}
 </div>
+
+{% if customer.b2b? and customer.company_available_locations_count > 0 %}
+	<style>
+	#birdchime-slots-box{display:none;}
+	</style>
+{% endif %}
+
+<script>
+
+	function observeSlotsBox() {
+		const slotsBox = document.querySelector("#birdchime-slots-box");
+	
+		if (slotsBox) {
+			// Stop polling once the element is found
+			clearInterval(checkExistInterval);
+	
+			const observer = new MutationObserver(() => {
+				clearTimeout(observer.debounceTimer); // Clear any previous timers
+				observer.debounceTimer = setTimeout(() => {
+					const checkoutBtn = document.querySelector(`input[name=checkout]`);
+					if (checkoutBtn) {
+						const newBtn = checkoutBtn.cloneNode(true);
+						checkoutBtn.replaceWith(newBtn);
+					}
+				}, 1500);
+			});
+	
+			observer.observe(slotsBox, { childList: true, subtree: true });
+		}
+	}
+	
+	
+	{% if customer.b2b? and customer.company_available_locations_count > 0 %}
+	const checkExistInterval = setInterval(observeSlotsBox, 500);
+	{% endif %}
+</script>
+
+

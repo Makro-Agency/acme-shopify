@@ -21,7 +21,8 @@
 
 	{%- for p in properties -%}
 		{%- unless p.last == blank or p.first == '_BirdChimeSlotId'-%}
-			<span class="product-details__item product-details__item--property{%if property_size == 0%} d-none{% endif %}" 
+			{%- assign property_first_char = p.first | slice: 0 -%}
+			<span class="product-details__item product-details__item--property{%if property_size == 0 or property_first_char == '_' %} d-none{% endif %}" 
 			data-cart-item-property>
 			<span class="product-details__item-label" 
 				data-cart-item-property-name>{{ p.first }}: </span>

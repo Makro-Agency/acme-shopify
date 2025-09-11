@@ -281,11 +281,11 @@
                 <div class="col-sm-3 text-right  d-none" ><h4>{{ 'cart.labels.total' | t }}</h4></div>
               </div>
               <div data-cart-line-items-ajax-container >
-                {% render 'cart-partial-line-items' %}
+                {% render 'cart-partial-line-items', customer_b2B:customer_b2B %}
               </div>
             </div>
       
-            {% render 'cart-partial-footer' %}
+            {% render 'cart-partial-footer', section:section, customer_b2B:customer_b2B %}
           </form>
         </div>
       </div> 

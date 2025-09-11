@@ -1,3 +1,202 @@
+{%- liquid 
+
+  assign customer_b2B = false
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign customer_b2B = true
+  endif
+
+  assign changed_day = false
+  for item in cart.items
+    if item.properties['_addtocart_date']
+      echo '<script>var order_date="' | append:item.properties['_addtocart_date'] | append:'";</script>'
+      assign changed_day = true
+      break
+    endif
+  endfor
+  
+-%}
+{% if customer_b2B %}
+<style>
+  body.loading-screen {
+    position: relative;
+    overflow: hidden;
+  }
+
+  body.loading-screen:before {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #FFF;
+    z-index: 999;
+    opacity: 0.5;
+  }
+
+  body.loading-screen:after {
+    content: 'Loading...';
+    position: fixed;
+    top: 50%;
+    z-index: 9999;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+  }
+  .cart__sku {
+    color: var(--Blue, #14315C);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    margin-top: 6px;
+  }
+  [data-cart-line-items-ajax-container] .row.cart__row {
+    border-bottom: 1px solid var(--Blue, #14315C);
+    margin: 0;
+    justify-content: space-between;
+    min-height: 120px;
+    padding-block: 16px;
+  }
+
+  .cart-partial-form-ajax-container .offset-lg-1 {
+    margin-left: 0;
+  }
+
+  .container.cart-template {
+    max-width: 1100px;
+  }
+
+  .cart-partial-form {
+    margin-inline: 0;
+  }
+
+  .cart-partial-form>* {
+    padding-inline: 0;
+    width: 100%;
+  }
+
+  .table>:not(caption)>*>* {
+    padding: 0;
+  }
+
+  .title-wrap {
+    width: 44.6097%;
+    padding: 0;
+  }
+
+  .price-wrap {
+    {% comment %} max-width: 160px; {% endcomment %}
+    max-width: 260px;
+    padding: 0;
+  }
+
+  .cart-template .cart__quantity-td.qty-wrap {
+    max-width: 221px;
+    padding: 0;
+  }
+
+  .title-wrap h3,.title-wrap h3 a {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 150%;
+    text-decoration: none;
+    margin: 0;
+  }
+
+  .price-wrap .price__b2b-label {
+    font-weight: 400;
+    line-height: 150%;
+    margin-bottom: 8px;
+    color: #14315c;
+  }
+
+  .price-wrap .price-item {
+    color: var(--Blue, #14315C);
+    line-height: 150%;
+    font-family: 'SaaSeriesED W05 Regular';
+  }
+
+  .qty-wrap .product-form__qty-title span.option-title {
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: normal;
+  }
+
+  .qty-wrap span.animation-close {
+    height: 16px;
+    width: 17px;
+    margin-right: 0;
+  }
+
+  .cart-template .animation-close .leftright, .cart-template .animation-close .rightleft{
+    width: 17px;
+    margin-top: 0px;
+    top:50%;
+  }
+  
+  @media(max-width:767px){
+
+    .container.cart-template {
+      max-width: 90%;
+    }
+    
+    .cart-checkout-error .wrapper svg {
+      flex:1 0 auto;
+    }
+
+    [data-cart-line-items-ajax-container] .row.cart__row>* {
+      width: 100% !important;
+      max-width: 100%;
+      margin-left: 0;
+    }
+
+    [data-cart-line-items-ajax-container] .row.cart__row{
+      align-items: flex-start !important;
+      flex-direction: column !important;
+      gap:0px;
+    }
+    
+    .cart__sku {
+        font-size: 12px;
+        line-height: 1;
+        margin-top: 6px;
+        margin-bottom: 0 !important;
+    }
+    
+    .price-wrap .price__b2b-label {
+        display: none;
+    }
+    
+    .price-wrap {
+        margin-top: 12px;
+    }
+    
+    .cart-template .cart__quantity-td.qty-wrap {
+        max-width: 160px;
+        margin-top: 16px;
+    }
+    
+    .qty-wrap .row>* {
+        width: auto;
+    }
+    
+    .qty-wrap .cart__qty .product-form__qty-title {
+        display: none;
+    }
+    
+    .qty-wrap .row .col-2 {
+        padding-right: 0;
+    }
+  }
+
+  @media(max-width:390px){
+    .container.cart-template {
+      max-width: 351px;
+    }
+  }
+</style>
+{% endif %}
+
 
 <div class="container  cart-template pb-5 {% if cart.item_count == 0 %} empty {% endif %}" data-section-id="{{ section.id }}" sh-cart-wrapper >
     <div class = 'cart'  >     
@@ -5,6 +204,62 @@
         <div class="cart-partial-form row pt-4 pt-lg-5">
           <div class="col-12 col-lg-11 offset-lg-1">
             <h2 class="header-1 mt-1 mb-4 mb-lg-5">{{ 'cart.headers.title' | t }}</h2>
+            {% if customer.current_location.metafields.custom.block_checkout == true %}
+              <style>
+                .prevent-msg{
+                  display: flex;
+                  padding: 8px 16px;
+                  align-items: center;
+                  gap: 10px;
+                  align-self: stretch;
+                  border-radius: 4px;
+                  background: rgba(235, 28, 31, 0.05);
+                }
+                .prevent-msg .svg-icon{
+                  width: 16px;
+                  height: 16px;
+                  display: flex;
+                }
+                .prevent-msg .msg-text{
+                  color: #EB1C1F;
+                  font-family: ITCClearfaceRegular;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 150%; /* 21px */
+                }
+          
+                .prevent-msg .msg-text a{
+                  color: #EB1C1F;
+                  font-family: ITCClearfaceRegular;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 550;
+                  line-height: 150%;
+                  text-decoration-line: underline;
+                  text-decoration-style: solid;
+                  text-decoration-skip-ink: auto;
+                  text-decoration-thickness: auto;
+                  text-underline-offset: auto;
+                  text-underline-position: from-font;
+                }
+          
+                @media(max-width:575px){
+                  .prevent-msg{
+                    padding: 8px 12px;
+                    align-items: flex-start;
+                    gap: 8px;
+                  }
+                }
+              </style>
+          
+              <div class="cart-checkout-error col-error">
+                <div class="wrapper font-itc">
+                  {% render 'icon-warning' %} 
+                  <span>{{ section.settings.prevent_msg | replace:'<p>' | replace:'</p>' }}</span>
+                </div>
+              </div>
+            {% endif %}
             <h3 class="header-3">Order Summary</h3>
             <h4 class="header-5 mb-lg-4" data-cart-count >{{cart.item_count}} Item{% unless cart.item_count == 1 %}s{% endunless %}</h4>
           </div>
@@ -41,5 +296,193 @@
       <a href="/collections/fish-friday" class="btn  btn-primary cart__continue-btn">{{ 'general.buttons.continue_shopping' | t }}</a>
     </div>
   </div>
+
+  {% if cart.item_count > 0 and customer.current_location.metafields.acme.delivery_date != blank %}
+    <script>
+      function getNextMondays(count = 7) {
+  
+        const inputTime = "{{settings.cut-time}}:00";
+  
+        var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
+        Tomorrow.setDate(Today.getDate() + 1);
+        var count = 7;
+    
+        var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
+        if(tempBitValue.length == 0){
+          return;
+        }
+        var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
+        BitValue.split('');
+    
+        var checkCount = 0;
+        for (let i = 0; i < count; i++) {
+            const dayOfWeek = Tomorrow.getDay();
+            if(BitValue[(dayOfWeek)] == '1'){
+                if(checkCount==0 && hasEstTimePassedToday(inputTime)){
+                    count++;
+                    checkCount++;
+                }else{
+                    var store_month = (Tomorrow.getMonth() + 1);
+                    var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                    Availdays.push(DateFormat);
+                    checkCount++;
+                }
+            }else{
+                if(checkCount == 0){
+                    checkCount++;
+                }
+                count++;
+            }
+            Tomorrow.setDate(Tomorrow.getDate() + 1)
+        }
+  
+        var currentstore_month = (Today.getMonth() + 1);
+        var currentDateFormat = `${Today.getFullYear()}-${currentstore_month < 10 ? ('0'+currentstore_month) : currentstore_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`
+        Availdays.push(currentDateFormat)
+    
+        return Availdays;
+      }
+  
+      const updateProp = async(up_obj,resp = null) => {
+        if(!up_obj.length){
+          document.querySelector('[name="checkout"]').removeAttribute('disabled');
+          return;
+        }
+        
+        const response = await fetch(`/cart/change`, up_obj[0]);
+        if (!response.ok) {
+          console.log('%cHTTP error! status:','color: red; font-size: 15px; font-weight: 700', response.status);
+          console.log('%cSomething went wrong, please refresh the page and try again..!!','color: red; font-size: 15px; font-weight: 700');
+          document.querySelector('[name="checkout"]').removeAttribute('disabled');
+          return;
+        }
+        const data = await response.json();
+        up_obj.shift();
+        {% comment %} console.log(`%cItem properties update success on pickup select >>`,'color: green; font-size: 15px; font-weight: 700', data); {% endcomment %}
+        updateProp(up_obj,JSON.stringify(data));
+      }
+      
+      function hasEstTimePassedToday(inputTime) {
+        const estNow = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+        const nowEstDate = new Date(estNow);
+        
+        const [inputHour, inputMinute] = inputTime.split(':').map(Number);
+        
+        const targetEstTime = new Date(nowEstDate);
+        targetEstTime.setHours(inputHour, inputMinute, 0, 0);
+        
+        return nowEstDate >= targetEstTime;
+      }
+
+      document.addEventListener("DOMContentLoaded", (event) => {
+  
+      var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      const inputTime = "{{settings.cut-time}}:00";
+      var store_month = (Today.getMonth() + 1);
+      var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
+  
+      {% if changed_day %}
+  
+        var check_change_line = false;
+        if(DateFormat != order_date){
+          check_change_line = true;
+        }else{
+          if(hasEstTimePassedToday(inputTime)){
+            check_change_line = true;
+          }
+        }
+  
+        var update_main_arry = [];
+        if(check_change_line){
+          document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+  
+          var get_new_date = getNextMondays();
+          var tempcurrentDay = get_new_date.pop();
+  
+          {% for item in cart.items %}
+            {% if item.properties['_addtocart_date'] %}
+              var date_array = [];
+              var prop = {}
+  
+              {% for item_prop in item.properties %}
+                {% assign val = item_prop.last | split:',' %}
+                {% if val.size > 1 %}
+                  prop['{{ item_prop.first }}']=get_new_date;
+                {% elsif item_prop.first == '_addtocart_date' %}
+                  prop['{{ item_prop.first }}']=tempcurrentDay
+                {% else %}
+                  prop['{{ item_prop.first }}']='{{ item_prop.last }}'
+                {% endif %}
+              {% endfor %}
+
+              var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
+              var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
+              var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
+              prop['_price'] = prop_value;
+  
+              var cart_item_data = {
+                id: '{{item.key}}',
+                quantity: {{item.quantity}},
+                properties: prop
+              };
+              var UPDATE_OBJ = {
+                method: 'POST',
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify(cart_item_data)
+              };
+              update_main_arry.push(UPDATE_OBJ);
+            {% endif %}
+            {% if forloop.last %}
+              updateProp(update_main_arry);
+              if(update_main_arry.length == 0){
+                document.querySelector('[name="checkout"]').removeAttribute('disabled');
+              }
+            {% endif %}
+          {% endfor %}
+        }
+      {% elsif customer_b2B == true and changed_day == false %}
+        var check_change_line = true;
+  
+        var update_main_arry = [];
+        if(check_change_line){
+          document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+  
+          var get_new_date = getNextMondays();
+          var tempcurrentDay = get_new_date.pop();
+  
+          {% for item in cart.items %}
+            console.log('item', {{item | json}});
+              var date_array = [];
+              var prop = {}
+  
+              prop['_delivery_date']=get_new_date;
+              prop['_addtocart_date']=tempcurrentDay;
+
+              var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
+              var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
+              var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
+              prop['_price'] = prop_value;
+  
+              var cart_item_data = {
+                id: '{{item.key}}',
+                quantity: {{item.quantity}},
+                properties: prop
+              };
+              var UPDATE_OBJ = {
+                method: 'POST',
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify(cart_item_data)
+              };
+              update_main_arry.push(UPDATE_OBJ);
+              updateProp(update_main_arry);
+              {% break %}
+          {% endfor %}
+        }
+      {% endif %}
+
+      })
+      
+    </script>
+  {% endif %}
   
   

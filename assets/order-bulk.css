@@ -256,6 +256,13 @@ li.page-item.disabled {
     gap: 22px;
     font-family: ITCClearfaceRegular;
 }
+.quantity-selector input.qty-selector {
+    background: transparent;
+    border: none;
+    width: 50px;
+    text-align: center;
+    padding: 0;
+}
 button.select-btn {
     border-radius: 100px;
     background: var(--Blue, #14315C);

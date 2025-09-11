@@ -160,7 +160,7 @@
 
   {% if template.name == 'cart' %}
     var variant_syntax = store_location_data[0]['{{variant.sku}}'][0];
-    if(store_location_data.length > 0 && variant_syntax != undefined){
+    if(store_location_data.length > 0 && variant_syntax != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
       var sale_price = variant_syntax;
       document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
         <div class="price__b2b-label">Quantity U/M: </div>

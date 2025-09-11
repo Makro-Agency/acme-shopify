@@ -8,14 +8,26 @@
     {% assign cart_items_array_qty = blank %}
     {% if cart.item_count > 0 %}
         {% for item in cart.items %}
+
+            console.log('{{ item.properties['_price'] }}')
+            
             cart_items['{{item.variant_id}}'] = {
                 "id":{{item.variant_id}},
                 "quantity":{{item.quantity}}
             };
-            add_obj['{{item.variant_id}}'] = {
-                "id":{{item.variant_id}},
-                "quantity":{{item.quantity}}
-            };
+
+            {% if item.properties['_price'] != '' %}
+                add_obj['{{item.variant_id}}'] = {
+                    "id":{{item.variant_id}},
+                    "quantity":{{item.quantity}},
+                    "_price" : '{{item.properties['_price']}}'
+                };
+            {% else %}
+                add_obj['{{item.variant_id}}'] = {
+                    "id":{{item.variant_id}},
+                    "quantity":{{item.quantity}}
+                };
+            {% endif %}
             {% assign cart_items_array = cart_items_array | append:',' | append:item.variant_id %}
             {% assign cart_items_array_qty = cart_items_array_qty | append:',' | append:item.quantity %}
         {% endfor %}
@@ -586,21 +598,47 @@
             values.forEach((value,index) => {
                 const isLast = index === values.length - 1;
                 
-                if(nextMondays == ''){
-                    var productData = { 
-                        id: value.id,
-                        quantity: value.quantity
-                    };
+                console.log(value,value['_price'],'YES')
+                if(value['_price'] != undefined){
+                    console.log(value,value['_price'],'YES1')
+                    if(nextMondays == ''){
+                        var productData = { 
+                            id: value.id,
+                            quantity: value.quantity,
+                            properties: {
+                                "_price" : value['_price']
+                            }
+                        };
+                    }else{
+                        var productData = { 
+                            id: value.id,
+                            quantity: value.quantity,
+                            properties: {
+                                "_delivery_date":nextMondays,
+                                "_addtocart_date":tempcurrentDay,
+                                "_price" : value['_price']
+                            }
+                        };
+                    }
                 }else{
-                    var productData = { 
-                        id: value.id,
-                        quantity: value.quantity,
-                        properties: {
-                            "_delivery_date":nextMondays,
-                            "_addtocart_date":tempcurrentDay
-                        }
-                    };
+                    console.log(value,value['_price'],'YES2')
+                    if(nextMondays == ''){
+                        var productData = { 
+                            id: value.id,
+                            quantity: value.quantity
+                        };
+                    }else{
+                        var productData = { 
+                            id: value.id,
+                            quantity: value.quantity,
+                            properties: {
+                                "_delivery_date":nextMondays,
+                                "_addtocart_date":tempcurrentDay
+                            }
+                        };
+                    }
                 }
+                
                 items.push(productData);
                 if(isLast){
                     items_object['items'] = items;
@@ -831,12 +869,13 @@
         }
 
         var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
-        console.log(currentVal,'currentVal');
+        
         if (!isNaN(currentVal)) {
             if (currentVal < 99999){
                 plusSelector.closest('.quantity-selector').classList.add('active');
                 if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
+                    plusSelector.closest('.quantity-selector').classList.remove('active-div');
                 }else{
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = (currentVal + 1);
                 }
@@ -868,10 +907,24 @@
                     //document.querySelector('.temp-msg .temp-text').innerText = '';
                 }, 4000);
             }, 2000);
-            add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
-                "id":plusSelector.closest('.quantity-selector').dataset.item,
-                "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value)
-            };
+
+            console.log(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail'))
+            if(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail')){
+                var prop_value = 'Sales Price U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').nextElementSibling.innerText + '; Quantity U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').innerText;
+                add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
+                    "id":plusSelector.closest('.quantity-selector').dataset.item,
+                    "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
+                    "_price" : prop_value
+                };
+                console.log(prop_value,'prop_value',add_obj)
+            }else{
+                console.log('prop_value')
+                add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
+                    "id":plusSelector.closest('.quantity-selector').dataset.item,
+                    "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value)
+                };
+            }
+            
         }
     };
 
@@ -890,17 +943,18 @@
             return;
         }
 
-        if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
-            var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('span').textContent);
+        if(minusSelector.closest('.quantity-selector').classList.contains('active-div')){
+            var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
+            minusSelector.closest('.quantity-selector').classList.remove('active-div');
         }else{
-            var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('span').textContent) - 1;
+            var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
         }
         
         if (!isNaN(currentVal) && currentVal > 0) {
-            minusSelector.closest('.quantity-selector').querySelector('span').textContent = currentVal;
+            minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
         }else{
-            minusSelector.closest('.quantity-selector').querySelector('span').textContent = 0;
+            minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = 0;
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.opacity = 0.5;
             minusSelector.closest('.quantity-selector').classList.remove('active');
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
@@ -917,7 +971,8 @@
         }else{
             add_obj[minusSelector.closest('.quantity-selector').dataset.item] = {
                 "id":minusSelector.closest('.quantity-selector').dataset.item,
-                "quantity":parseInt(minusSelector.closest('.quantity-selector').querySelector('span').innerText)
+                "quantity":parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
+                "_price" : "Sales Price U/M = $12.50 /EA; Quantity U/M = 10 EA"
             };
         }
     };
@@ -1114,7 +1169,7 @@
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
-                                <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" >
+                                <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
                                 <span>0</span>
                                 <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1175,7 +1230,7 @@
                                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                                 </svg>
                                             </button>
-                                            <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" >
+                                            <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
                                             <span>0</span>
                                             <button onclick="clickAttrPlus(this);" class="qtyplus">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -1284,7 +1339,7 @@
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
-                                <input type="text" value="${qty}" class="qty-selector" onkeyup="InputChange(event, this);" >
+                                <input type="text" value="${qty}" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
                                 {% comment %} <span>${qty}</span> {% endcomment %}
                                 <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1318,6 +1373,10 @@
 
     var InputChange = function (ele,inputSelector){
         inputSelector.closest('div').classList.add('active-div');
+        if(event.key == 'Enter'){
+            inputSelector.blur();
+            {% comment %} clickAttrPlus(inputSelector); {% endcomment %}
+        }
     }
 
     let paginateItem = function(e) {

@@ -414,9 +414,14 @@
                 {% elsif item_prop.first == '_addtocart_date' %}
                   prop['{{ item_prop.first }}']=tempcurrentDay
                 {% else %}
-                  prop['{{ item_prop.first }}']={{ item_prop.last }}
+                  prop['{{ item_prop.first }}']='{{ item_prop.last }}'
                 {% endif %}
               {% endfor %}
+
+              var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
+              var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
+              var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
+              prop['_price'] = prop_value;
   
               var cart_item_data = {
                 id: '{{item.key}}',
@@ -455,6 +460,11 @@
   
               prop['_delivery_date']=get_new_date;
               prop['_addtocart_date']=tempcurrentDay;
+
+              var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
+              var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
+              var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
+              prop['_price'] = prop_value;
   
               var cart_item_data = {
                 id: '{{item.key}}',

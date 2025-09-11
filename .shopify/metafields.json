@@ -488,26 +488,5 @@
       }
     }
   ],
-  "shop": [
-    {
-      "key": "blocks_list_checkout_custom_field",
-      "namespace": "checkoutblocks",
-      "name": "Checkout Blocks: Blocks List for: checkout_custom_field",
-      "description": null,
-      "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "blocks_list_checkout_static_content",
-      "namespace": "checkoutblocks",
-      "name": "Checkout Blocks: Blocks List for: checkout_static_content",
-      "description": null,
-      "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
-      }
-    }
-  ]
+  "shop": []
 }

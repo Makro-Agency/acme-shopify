@@ -5,6 +5,7 @@
     assign faqs_on = product.metafields.accentuate.faqs_on
 %}
 
+{% unless customer and customer.b2b? and customer.company_available_locations_count > 0 %}
 <div class="container-fluid d-none d-lg-block">
     <div class="row">
         <div id="mini-nav" class="mini-nav d-none d-lg-flex flex-column col-lg-1">
@@ -30,6 +31,7 @@
         </div>
     </div>
 </div>
+{% endunless %}
 
 
 {% schema %}

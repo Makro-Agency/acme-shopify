@@ -28,7 +28,9 @@
     "sections": {
       "header": {
         "type": "header",
-        "settings": {}
+        "settings": {
+          "menu": "main-menu"
+        }
       },
       "footer": {
         "type": "footer",

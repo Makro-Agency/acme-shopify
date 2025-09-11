@@ -58,6 +58,10 @@
 {% comment %} assign navbar_background = 'navbar-light'
 assign navbar_transparency = false  {% endcomment %}
 
+{% unless customer %}
+	{% assign navbar_transparency = 'opaque' %}
+{% endunless %}
+
 
 <header class="main-header">
 	<header class="main-header">
@@ -69,8 +73,21 @@ assign navbar_transparency = false  {% endcomment %}
 					{% render 'acme-logo-blue' %}
 				{% endif %} {% endcomment %}
 			</a>
+			<style>
+				
+				
+				{% unless customer_b2B %}
+				#navaccount svg{margin-right: 10px;}
+				.navbar #navCart{right: 4.5rem;}
+				#navaccount{box-shadow: none;background: #14315c;position: absolute;right: 8rem;color: #FFF;border-radius: 5px;border: 1px solid;width: auto;text-decoration: none;flex-direction: row;}
+				{% else %}
+				.navbar #navCart{right: 8rem;}
+				#navaccount{box-shadow: none;background: #14315c;position: absolute;right: 4.5rem;}
+				{% endunless %}
+
+			</style>
 			<a href="/cart" id="navCart" class="navCart navbar-toggler d-lg-none" aria-label="Go to Cart page">
-				{% render 'icon-cart-white' %}
+				{% render 'icon-cart-white' %}{% unless customer_b2B %} Wholesaler Login{% endunless %}
 			</a>
 			<button id="navOpen" class="navbar-toggler open" type="button" data-toggle="bs-collapse" data-target="#top-nav" aria-controls="top-nav" aria-expanded="false" aria-label="Open navigation">
 				{% render 'icon-menu-blue' %}
@@ -198,6 +215,62 @@ assign navbar_transparency = false  {% endcomment %}
 			<a class="navbar-brand" href="/" title="<?= bloginfo('name');?>">{{settings.store.name}}</a>
 
 			<div class="navbar-utility d-none d-lg-flex align-items-center">
+				<style>
+					.navbar .navbar-utility{
+						gap: 40px;
+					}
+					.navbar .navbar-utility .nav-search{
+						margin:0;padding:0;
+					}
+					@media(max-width:991px){
+						#navaccount svg{width: 16px;height: 18px;}
+					}
+					.navbar .navbar-utility .nav-pin.nav-account svg {
+						width: 1rem;
+					}
+					{% unless customer_b2B %}
+					.nav-icon.nav-account a {
+						text-decoration: none;
+						color: inherit;
+						letter-spacing: -.01rem;
+    					font-family: SaaSeriesED W05 Regular;
+						font-size: 14px;
+						line-height: 100%;
+					}
+					
+					.nav-icon.nav-account {
+							border: 1px solid;
+							border-radius: 5px;
+							padding: 5px;
+					}
+					
+					.nav-icon.nav-account:hover {
+							border-color: #b88b20;
+							color: #b88b20;
+					}
+
+					@media(min-width:992px) and (max-width:1366px) {
+						.navbar-collapse{padding-left: 3.25rem;}
+						.navbar-nav{padding-left: 0.5rem;}
+						.navbar-nav .dropdown-toggle{margin-right: 0.5rem;}
+						.navbar .navbar-utility{gap:20px;}
+					}
+
+					@media(max-width:480px) {
+						#navaccount svg{margin:0;}
+						#navaccount{border-radius: 50%;font-size:0;}
+					}
+					{% endunless %}
+				</style>
+				<div class="nav-pin nav-icon nav-account">
+					<a href="/account">
+						{% if template.name == 'product' or template.name == 'collection' %}
+							{% render 'icon-account-blue' %}
+						{% else %}
+							{% render 'icon-account-white' %}
+						{% endif %}{% unless customer_b2B %} Wholesaler Login{% endunless %}
+					</a>
+				</div>
 				<div class="nav-cart nav-icon d-none d-lg-block">
 					{% render 'btn-cart' %}
 				</div>

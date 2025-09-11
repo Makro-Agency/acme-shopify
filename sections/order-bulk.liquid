@@ -274,8 +274,8 @@
         <div class="product-header">
             <span>PRODUCT</span>
             <span>SKU</span>
-            <span>UNIT PRICE</span>
-            <span>AVERAGE TOTAL PRICE</span>
+            <span>Quantity U/M</span>
+            <span>Sales Price U/M</span>
         </div>
         
         <div class="product-item-wrapper">
@@ -1038,7 +1038,7 @@
         
 
         if(_item.metafields.unit_of_measure != null){
-            var _item_price = Shopify.formatMoney(_item.price, amount_text) + '/' + item.metafields.unit_of_measure
+            var _item_price = Shopify.formatMoney(_item.price, amount_text) + ' /' + item.metafields.unit_of_measure
         }else{
             var _item_price = Shopify.formatMoney(_item.price, amount_text)
         }
@@ -1069,10 +1069,10 @@
             if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
                 var _sale_price = store_location_data[0][currentVAraint.sku][0];
                 var _sale_price_mobile = `<div class="sale-price">
-                            <span>Unit Price:</span>
+                            <span>Quantity U/M:</span>
                             <span>${store_location_data[0][currentVAraint.sku][0]}</span>
                         </div>`;
-                var price_lable = 'Average Total Price:';
+                var price_lable = 'Sales Price U/M:';
             }else{
                 var _sale_price = '';
                 var _sale_price_mobile = '';
@@ -1200,18 +1200,18 @@
                 
                 if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
                     if(item.metafields.price_uom != null){
-                        var _sale_price = store_location_data[0][currentVAraint.sku][0] + '/' + item.metafields.price_uom;
+                        var _sale_price = store_location_data[0][currentVAraint.sku][0] + ' ' + item.metafields.price_uom;
                     }else{
                         var _sale_price = store_location_data[0][currentVAraint.sku][0];
                     }
                     
                     var _sale_price_mobile = `<div class="sale-price">
-                                <span>Unit Price:</span>
-                                <span>$${_sale_price}</span>
+                                <span>Quantity U/M:</span>
+                                <span>${_sale_price}</span>
                             </div>`;
-                    var price_lable = 'Average Total Price:';
-                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Unit Price</span>$${_sale_price}</span>`;
-                    var mobile_order = `<span class="price"><span class="mobile-header">Average Total Price</span>${_item_price}</span>`;
+                    var price_lable = 'Sales Price U/M:';
+                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Quantity U/M</span>${_sale_price}</span>`;
+                    var mobile_order = `<span class="price"><span class="mobile-header">Sales Price U/M</span>${_item_price}</span>`;
                 }else{
                     var _sale_price = '';
                     var _sale_price_mobile = '';

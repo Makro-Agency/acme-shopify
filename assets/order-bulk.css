@@ -197,6 +197,7 @@ li.page-item.disabled {
 .product-header span {
     font-family: ITCClearfaceRegular;
     margin-bottom: -5px;
+    text-transform: uppercase;
 }
 .product-header span:first-child {
     padding-left: 20px;

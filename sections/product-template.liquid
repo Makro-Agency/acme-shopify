@@ -24,7 +24,6 @@
 
   assign b2b_tag = false
   for tag in product.tags
-    echo tag
     if tag == 'B2B'
       assign b2b_tag = true
       break
@@ -40,6 +39,9 @@
 -%}
 
 <script>
+  {% unless request.design_mode %}
+    
+  
   {% if b2b_tag == true %}
     {% unless customer %}
       window.location.href = '/';
@@ -52,6 +54,8 @@
   {% if customer_b2B == false and check_b2b %}
     window.location.href = '/';
   {% endif %}
+
+{% endunless %}
 
 </script>
 

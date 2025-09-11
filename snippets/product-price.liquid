@@ -150,47 +150,47 @@
   {% assign pom_data = '' %}
   {% if template.name == 'cart' %}
     {% if main_obj.product.metafields.custom.price_uom != blank %}
-      {% assign pom_data = ' / ' | append:main_obj.product.metafields.custom.price_uom %}
+      {% assign pom_data = ' ' | append:main_obj.product.metafields.custom.price_uom %}
     {% endif %}
   {% else %}
     {% if product.metafields.custom.price_uom != blank %}
-      {% assign pom_data = ' / ' | append:product.metafields.custom.price_uom %}
+      {% assign pom_data = ' ' | append:product.metafields.custom.price_uom %}
     {% endif %}
   {% endif %}
 
   {% if template.name == 'cart' %}
     var variant_syntax = store_location_data[0]['{{variant.sku}}'][0];
-    if(store_location_data.length > 0 && variant_syntax != undefined){
+    if(store_location_data.length > 0 && variant_syntax != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
       var sale_price = variant_syntax;
       document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
-        <div class="price__b2b-label">Unit Price: </div>
+        <div class="price__b2b-label">Quantity U/M: </div>
         <div class="price__pricing-group ">
           <div class="price__regular">
               <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">$${sale_price}{{ pom_data }}</span>
+              <span class="price-item price-item--regular" data-regular-price="">${sale_price}{{ pom_data }}</span>
           </div>
           <div class="price__sale"></div>
         </div>
       </div>`);
       document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').classList.add('avail-sale');
-      document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Average Total Price:';
+      document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Sales Price U/M:';
     }
   {% else %}
     var variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
     if(store_location_data.length > 0 && variant_syntax != undefined){
       var sale_price = variant_syntax;
       document.querySelector('.price') && document.querySelector('.price').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
-        <div class="price__b2b-label">Unit Price: </div>
+        <div class="price__b2b-label">Quantity U/M: </div>
         <div class="price__pricing-group ">
           <div class="price__regular">
               <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">$${sale_price}{{ pom_data }}</span>
+              <span class="price-item price-item--regular" data-regular-price="">${sale_price}{{ pom_data }}</span>
           </div>
           <div class="price__sale"></div>
         </div>
       </div>`);
       document.querySelector('.product-single__single-variant').classList.add('avail-sale');
-      document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Average Total Price:';
+      document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Sales Price U/M:';
     }
   {% endif %}
 

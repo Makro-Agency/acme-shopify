@@ -197,6 +197,7 @@ li.page-item.disabled {
 .product-header span {
     font-family: ITCClearfaceRegular;
     margin-bottom: -5px;
+    text-transform: uppercase;
 }
 .product-header span:first-child {
     padding-left: 20px;
@@ -254,6 +255,13 @@ li.page-item.disabled {
     align-items: center;
     gap: 22px;
     font-family: ITCClearfaceRegular;
+}
+.quantity-selector input.qty-selector {
+    background: transparent;
+    border: none;
+    width: 50px;
+    text-align: center;
+    padding: 0;
 }
 button.select-btn {
     border-radius: 100px;

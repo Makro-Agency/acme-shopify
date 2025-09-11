@@ -274,8 +274,8 @@
         <div class="product-header">
             <span>PRODUCT</span>
             <span>SKU</span>
-            <span>UNIT PRICE</span>
-            <span>AVERAGE TOTAL PRICE</span>
+            <span>Quantity U/M</span>
+            <span>Sales Price U/M</span>
         </div>
         
         <div class="product-item-wrapper">
@@ -830,24 +830,29 @@
             return;
         }
 
-        var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('span').textContent);     
+        var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
+        console.log(currentVal,'currentVal');
         if (!isNaN(currentVal)) {
             if (currentVal < 99999){
                 plusSelector.closest('.quantity-selector').classList.add('active');
-                plusSelector.closest('.quantity-selector').querySelector('span').textContent = currentVal + 1;
+                if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
+                    plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
+                }else{
+                    plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = (currentVal + 1);
+                }
                 plusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
             }else{
                 plusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.opacity = 1;
                 plusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
             }
         }else{
-            plusSelector.closest('.quantity-selector').querySelector('span').textContent = 0;
+            plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = 0;
         }
 
         {% comment %} var getCount = document.querySelectorAll('.quantity-selector.active').length; {% endcomment %}
         var getCount = 0;
         for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
-            getCount += parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('span').innerText);
+            getCount += (parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('input.qty-selector').value));
         }
         if(getCount > 0){
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
@@ -865,7 +870,7 @@
             }, 2000);
             add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
                 "id":plusSelector.closest('.quantity-selector').dataset.item,
-                "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('span').innerText)
+                "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value)
             };
         }
     };
@@ -885,7 +890,12 @@
             return;
         }
 
-        var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('span').textContent) - 1;
+        if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
+            var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('span').textContent);
+        }else{
+            var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('span').textContent) - 1;
+        }
+        
         if (!isNaN(currentVal) && currentVal > 0) {
             minusSelector.closest('.quantity-selector').querySelector('span').textContent = currentVal;
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
@@ -1038,7 +1048,7 @@
         
 
         if(_item.metafields.unit_of_measure != null){
-            var _item_price = Shopify.formatMoney(_item.price, amount_text) + '/' + item.metafields.unit_of_measure
+            var _item_price = Shopify.formatMoney(_item.price, amount_text) + ' /' + item.metafields.unit_of_measure
         }else{
             var _item_price = Shopify.formatMoney(_item.price, amount_text)
         }
@@ -1069,10 +1079,10 @@
             if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
                 var _sale_price = store_location_data[0][currentVAraint.sku][0];
                 var _sale_price_mobile = `<div class="sale-price">
-                            <span>Unit Price:</span>
+                            <span>Quantity U/M:</span>
                             <span>${store_location_data[0][currentVAraint.sku][0]}</span>
                         </div>`;
-                var price_lable = 'Average Total Price:';
+                var price_lable = 'Sales Price U/M:';
             }else{
                 var _sale_price = '';
                 var _sale_price_mobile = '';
@@ -1104,6 +1114,7 @@
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
+                                <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" >
                                 <span>0</span>
                                 <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1164,6 +1175,7 @@
                                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                                 </svg>
                                             </button>
+                                            <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" >
                                             <span>0</span>
                                             <button onclick="clickAttrPlus(this);" class="qtyplus">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -1200,18 +1212,18 @@
                 
                 if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
                     if(item.metafields.price_uom != null){
-                        var _sale_price = store_location_data[0][currentVAraint.sku][0] + '/' + item.metafields.price_uom;
+                        var _sale_price = store_location_data[0][currentVAraint.sku][0] + ' ' + item.metafields.price_uom;
                     }else{
                         var _sale_price = store_location_data[0][currentVAraint.sku][0];
                     }
                     
                     var _sale_price_mobile = `<div class="sale-price">
-                                <span>Unit Price:</span>
-                                <span>$${_sale_price}</span>
+                                <span>Quantity U/M:</span>
+                                <span>${_sale_price}</span>
                             </div>`;
-                    var price_lable = 'Average Total Price:';
-                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Unit Price</span>$${_sale_price}</span>`;
-                    var mobile_order = `<span class="price"><span class="mobile-header">Average Total Price</span>${_item_price}</span>`;
+                    var price_lable = 'Sales Price U/M:';
+                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Quantity U/M</span>${_sale_price}</span>`;
+                    var mobile_order = `<span class="price"><span class="mobile-header">Sales Price U/M</span>${_item_price}</span>`;
                 }else{
                     var _sale_price = '';
                     var _sale_price_mobile = '';
@@ -1272,7 +1284,8 @@
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
-                                <span>${qty}</span>
+                                <input type="text" value="${qty}" class="qty-selector" onkeyup="InputChange(event, this);" >
+                                {% comment %} <span>${qty}</span> {% endcomment %}
                                 <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1301,6 +1314,10 @@
         
 
         return _returnHTML;        
+    }
+
+    var InputChange = function (ele,inputSelector){
+        inputSelector.closest('div').classList.add('active-div');
     }
 
     let paginateItem = function(e) {

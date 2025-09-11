@@ -9,8 +9,51 @@
   endif
   assign current_variant = product.selected_or_first_available_variant
 
+  assign available_online = product.metafields.accentuate.available_online    
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign available_online = true
+  endif
+  if available_online == true
+    if customer and customer.b2b?
+      if customer.company_available_locations_count > 0      
+      else
+        assign available_online = false
+      endif
+    endif
+  endif
+
+  assign b2b_tag = false
+  for tag in product.tags
+    echo tag
+    if tag == 'B2B'
+      assign b2b_tag = true
+      break
+    endif
+  endfor
+
+  assign customer_b2B = false
+  if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign customer_b2B = true
+  endif
+
 
 -%}
+
+<script>
+  {% if b2b_tag == true %}
+    {% unless customer %}
+      window.location.href = '/';
+    {% elsif customer_b2B == false %}
+      window.location.href = '/';
+    {% endunless %}
+  {% endif %}
+
+  {% assign check_b2b = product.tags | has:'ExtKey:' %}
+  {% if customer_b2B == false and check_b2b %}
+    window.location.href = '/';
+  {% endif %}
+
+</script>
 
 {% comment %} get the primary collection {% endcomment %}
 {% liquid
@@ -23,7 +66,18 @@
 %} 
 
 
-
+{% comment %} B2B in stock status {% endcomment %} 
+{% liquid    
+  assign b2b_product_in_stock = 'no'
+  if customer_b2B == true
+    assign b2b_product_in_stock = product.metafields.custom.availability | default: false    
+  elsif b2b_tag == true
+    assign b2b_product_in_stock = product.metafields.custom.availability | default: false
+  endif
+  if b2b_product_in_stock == 'true'
+    assign b2b_product_in_stock = true
+  endif
+%}
 {%- capture product_flags -%}{%- if on_sale -%} flag-on-sale {%- endif -%} {%- if sold_out -%} flag-out-of-stock {%- endif -%}{%- endcapture -%}
 
 <div 
@@ -40,14 +94,54 @@
             <span class="product-category header-5">{{ primary_collection.title }}</span>
           </div>
           <h1 class="product-title header-1 my-3">{{ product.title }}</h1> 
-<!-- Start of Judge.me code --> 
-  <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}'> 
-    {{ product.metafields.judgeme.badge }} 
-  </div> 
-<!-- End of Judge.me code -->
+
+          {%- liquid
+            assign has_in_stock = false            
+            assign current_varaint = product.selected_or_first_available_variant            
+
+            if current_varaint.inventory_policy == "continue" or current_varaint.inventory_management == nil
+              assign has_in_stock = true              
+            elsif current_varaint.inventory_quantity > 0
+              assign has_in_stock = true
+            else
+              assign has_in_stock = false
+            endif
+
+           
+            if b2b_product_in_stock != 'no'            
+              if b2b_product_in_stock == true
+                assign has_in_stock = b2b_product_in_stock
+              else
+                assign has_in_stock = false              
+              endif
+            endif
+          -%}
+          
+          {% if has_in_stock %}
+            {%- if b2b_product_in_stock and b2b_product_in_stock != 'no' -%}
+            <div>
+              <span class="product-stock stock-in">In stock</span>
+            </div>
+            {%- endif -%}  
+          {% else %}
+          <div>
+            <span class="product-stock stock-out">
+              <span>{% render 'icon-warning-dot' %}</span>
+              <span>{{ settings.out-stock-msg }}</span>
+            </span>
+          </div>
+          {% endif %}
+          
+          {% unless customer_b2B %}
+          <!-- Start of Judge.me code --> 
+            <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}'> 
+              {{ product.metafields.judgeme.badge }} 
+            </div> 
+          <!-- End of Judge.me code -->
+          {% endunless %}
           
           <div class="product-description body-2 mb-2">{{ product.description }}</div>
-            {% render 'product-single-form' product:product  available_online:product.metafields.accentuate.available_online %}
+            {% render 'product-single-form' product:product  available_online: available_online, b2b_product_in_stock: b2b_product_in_stock %}
 
           {% if product.metafields.accentuate.where_to_buy_code != blank and product.metafields.accentuate.available_online != true %}
             <div class="destini-buttons d-flex flex-column">

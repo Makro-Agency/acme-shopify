@@ -1,0 +1,115 @@
+{% assign entry_parts = prod_obj | split: ':::' %}
+{% assign p_id = entry_parts[0] %}
+{% assign title = entry_parts[1] %}
+{% assign img = entry_parts[2] %}
+{% assign qty = entry_parts[3] %}
+{% assign sku = entry_parts[4] %}
+{% assign vendor = entry_parts[5] %}
+{% assign v_id = entry_parts[6] %}
+{% assign v_measure = entry_parts[7] %}
+{% assign v_handle = entry_parts[8] %}
+{% assign v_price = entry_parts[9] %}
+
+<div class="swiper-slide collection-product-card" data-qty="{{ qty }}">
+	<div class="product-grid-item  card-basic">
+		<!-- Image --> 
+		<div class="product-grid-item__inner">
+			<a href="/products/{{v_handle}}">
+				<div class="image-wrap">
+					<img class="product-image img-fluid" src="{{img}}" width="317" height="317" alt="{{title}}" loading="lazy">
+					<img class="product-image product-image-hover img-fluid" width="317" height="317" src="{{img}}" alt="{{title}}" loading="lazy">
+				</div>
+			</a>
+			<!-- // Image -->
+		
+			<div class="product-grid-item__content-container">
+				<!-- Content -->
+				<div class="sku-content">
+					<span>{{vendor}}</span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="1" height="12" viewBox="0 0 1 12" fill="none"><line x1="0.5" y1="0.5" x2="0.5" y2="11.5" stroke="black"></line></svg>
+					<span>SKU: {{sku}}</span>
+				</div>
+			
+				<a href="/products/{{v_handle}}" class="product-grid-item__content"> 
+					<h2 class="card-basic__header">{{title}}</h2>
+				</a>
+			</div>
+
+			<div class="product-form" sh-product-form="" sh-cart-aware-product-form="" data-product-id="{{p_id}}">
+				<form method="post" action="/cart/add" id="product_form_{{p_id}}" accept-charset="UTF-8" class="product-add-form product-form product-form-{{p_id}}" enctype="multipart/form-data" novalidate="novalidate" data-product-form="">
+					<input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
+					<!-- Single Variant -->
+					<input name="id" value="{{v_id}}" type="hidden">
+					<!-- // Single Variant -->
+						
+					<div class="product-single__single-variant">
+						<div class="btn-price">
+							<div class="price price--has_b2b-true" data-price="">
+								<div class="price__b2b-label">Your Price: </div>
+								<div class="price__pricing-group ">
+									<div class="price__regular">
+										<span class="visually-hidden">Regular price</span>
+										<span class="price-item price-item--regular" data-regular-price=""> {{v_price | money }}{% if v_measure != blank %}/{{ v_measure }}{% endif %}</span>
+									</div>
+									<div class="price__sale">
+										<span class="visually-hidden">Sale price</span>
+										<span class="price-item price-item--sale" data-sale-price="">{{v_price | money }}</span>
+										<span class="visually-hidden">Regular price</span>
+										<span class="price-item price-item--regular" data-regular-price=""></span>
+									</div>
+									<div class="price__badges">
+										<span class="price__badge price__badge--sale" aria-hidden="true">
+											<span>Sale</span>
+										</span>
+										<span class="price__badge price__badge--sold-out">
+											<span>Sold out</span>
+										</span>
+									</div>
+								</div>
+								<div class="price__unit">
+									<span class="visually-hidden">Quantity U/M</span>
+									<span class="price-unit-price"><span data-unit-price=""></span><span aria-hidden="true">/</span><span class="visually-hidden">&nbsp;</span><span data-unit-price-base-unit=""></span></span>
+								</div>
+							</div>
+
+							<div class="coll-cart-btn">
+								<span class="addbtn " onclick="addcarttrigger(this)">
+									<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+									<path d="M2.6875 7.5H12.3125" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+									<path d="M7.5 2.6875V12.3125" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+									</svg>
+								</span>
+								<div class="product-qty mb-4 mt-4 mb-xl-0 mt-xl-0" data-id="{{v_id}}">
+									<a class="qty-dec clickable qty-btn disabled" data-quantity-dec="" aria-label="Decrease Quantity" href="javascript:void(0);" data-val="1" onclick="clickAttrMinus(this)"><span class="icon-minus">-</span></a>
+									<input class="qty-input" type="text" id="Quantity-9819409383712" name="quantity" value="1" min="1" pattern="[0-9]*" title="Qty" data-quantity-input="">
+									<a class="qty-inc clickable qty-btn" data-quantity-inc="" aria-label="Increase Quantity" href="javascript:void(0);" data-val="1" onclick="clickAttrPlus(this)"><span class="icon-plus">+</span></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="product-form__footer hide" data-cart-item-key="">
+						<div sh-quantity-component="" data-min-value="1" class="w-50">
+							<div class="product-qty-title visually-hidden"><span class="option-title header-5 text-blue">Quantity</span></div>
+							<div class="product-qty mb-4">
+								<a class="qty-dec clickable" data-quantity-dec="" title="Decrease quantity" aria-label="Decrement Quantity" href="javascript:void(0);"><span class="icon-minus">-</span></a>
+								<input class="qty-input" type="text" id="Quantity-{{p_id}}" name="quantity" value="1" min="1" pattern="[0-9]*" title="Qty" data-quantity-input="">
+								<a class="qty-inc clickable" data-quantity-inc="" title="Increase Quantity" aria-label="Increase Quantity" href="javascript:void(0);"><span class="icon-plus">+</span></a>
+							</div><!-- .product-qty -->
+						</div>
+						<div class="product-form__item product-form__item--submit mt-3 w-50 product-form__item--no-variants">
+							<button type="submit" name="add" class="btn btn-primary btn-test btn-block" aria-label="Add to cart" sh-add-to-cart="" data-product-id="{{p_id}}">
+								<span class="fa fa-spin fa-refresh d-none"></span>
+								<span sh-add-to-cart-text="">Add to cart</span>
+								<span class="d-none" data-loader=""></span>
+							</button>
+						</div>
+					</div>
+		
+					<input type="hidden" name="product-id" value="{{p_id}}"><input type="hidden" name="section-id" value="template--24534381887776__most_purchased_items_zxA43R">
+				</form>            
+					
+			</div>
+		</div>
+	</div>
+</div>

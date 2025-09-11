@@ -91,17 +91,29 @@ product-add-form product-form product-form-{{ product.id }}
 					><span class="icon-plus">+</span></a>
 				</div><!-- .product-qty -->
 			</div>
+
+			{% liquid
+				assign current_variant_ava = current_variant.available
+				if b2b_product_in_stock != 'no'				
+					if b2b_product_in_stock == true
+						assign current_variant_ava = b2b_product_in_stock
+					else
+						assign current_variant_ava = false
+					endif
+				endif
+			%}
+
 			<div class="product-form__item product-form__item--submit pt-2 pt-xl-0 ms-xl-4
 				{% if available_online == false %} d-none {% endif %}
 				{%- if product.has_only_default_variant %} product-form__item--no-variants {%- endif -%}" >
 				<button type="submit" name="add" class="btn btn-primary me-1"
-				{% unless current_variant.available %} aria-disabled="true"{% endunless %}
+				{% unless current_variant_ava %} aria-disabled="true"{% endunless %}
 				{% if available_online == false  %} aria-disabled="true"{% endif %}
-				aria-label="{% unless current_variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
+				aria-label="{% unless current_variant_ava %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
 				sh-add-to-cart data-product-id="{{product.id}}">
 				<span class = 'fa fa-spin fa-refresh d-none'></span>
 				<span sh-add-to-cart-text>
-					{% unless current_variant.available %}
+					{% unless current_variant_ava %}
 					{{ 'products.product.sold_out' | t }}
 					{% else %}
 					{{ 'products.product.buy_now' | t }}
@@ -118,6 +130,38 @@ product-add-form product-form product-form-{{ product.id }}
 	
 	{% endform %}            
 </div>
+
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Handle plus button click
+		document.querySelectorAll('.qty-inc.clickable.qty-btn').forEach(function(plusBtn) {
+			plusBtn.addEventListener('click', function(e) {
+				var qtyInput = plusBtn.closest('.product-qty').querySelector('.qty-input');
+				var minusBtn = plusBtn.closest('.product-qty').querySelector('.qty-dec');
+				if (minusBtn.classList.contains('disabled')) {
+					minusBtn.classList.remove('disabled');
+				}
+			});
+		});
+		// Handle minus button click
+		document.querySelectorAll('.qty-dec.clickable.qty-btn').forEach(function(minusBtn) {
+			minusBtn.addEventListener('click', function(e) {
+				var qtyInput = minusBtn.closest('.product-qty').querySelector('.qty-input');
+				if (qtyInput) {
+					var val = parseInt(qtyInput.value) || 1;
+					if (val > 1) {
+						if (val - 1 == 0) {
+							minusBtn.classList.add('disabled');
+						}
+					} else {
+						minusBtn.classList.add('disabled');
+					}
+				}
+			});
+		});
+	});
+</script>
 
 
 

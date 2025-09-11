@@ -1,0 +1,430 @@
+{% if section.settings.coll_obj != blank %}
+
+  
+{{ 'most-purchased-items-section.css' | asset_url | stylesheet_tag }}
+
+<div class="most-purchased-items-section container hide">
+  {% assign html_capture = blank %}
+  {% if customer and customer.orders.size > 0 %}
+    <script>document.querySelector('.most-purchased-items-section').classList.remove('hide');</script>
+    {% assign latest_orders = customer.orders | sort: 'created_at' | reverse | slice: 0, 20 %}
+    {% assign product_data = '' %}
+    {% for order in latest_orders %}
+      {% for item in order.line_items %}
+        {% assign prod_id = item.product.id | append: '' %}
+        {% assign found = false %}
+        {% if product_data != '' %}
+          {% assign product_data_array = product_data | split: '|||' %}
+          {% for entry in product_data_array %}
+            {% assign entry_parts = entry | split: ':::' %}
+            {% if entry_parts[0] == prod_id %}
+              {% assign found = true %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if found == false %}
+          {% assign image_link = item.image | image_url: width: 400 %}
+          {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
+          {% assign item_vendor = item.product.vendor %}
+          {% assign item_v_id = item.variant_id %}
+          {% assign item_v_measure = item.product.metafields.custom.price_uom %}
+          {% assign item_handle = item.product.handle %}
+          {% assign item_price = item.product.price %}
+          {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id | append: ':::' | append: item_v_measure | append: ':::' | append: item_handle | append: ':::' | append: item_price %}
+          {% if product_data == '' %}
+            {% assign product_data = entry %}
+          {% else %}
+            {% assign product_data = product_data | append: '|||' | append: entry %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+
+    
+
+    {% assign product_data_array = product_data | split: '|||' %}
+    {% assign updated_product_data = '' %}
+    {% for entry in product_data_array %}
+      {% assign entry_parts = entry | split: ':::' %}
+      {% assign prod_id = entry_parts[0] %}
+      {% assign title = entry_parts[1] %}
+      {% assign img = entry_parts[2] %}
+      {% assign sku = entry_parts[4] %}
+      {% assign vendor = entry_parts[5] %}
+      {% assign v_id = entry_parts[6] %}
+      {% assign v_measure = entry_parts[7] %}
+      {% assign v_handle = entry_parts[8] %}
+      {% assign v_price = entry_parts[9] %}
+      {% assign total_qty = 0 %}
+      {% for order in latest_orders %}
+        {% for item in order.line_items %}
+          {% assign con_int = prod_id | plus: 0 %}
+          {% if item.product.id == con_int %}
+            
+            {% assign total_qty = total_qty | plus: item.quantity %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+      {% assign new_entry = prod_id
+        | append: ':::'
+        | append: title
+        | append: ':::'
+        | append: img
+        | append: ':::'
+        | append: total_qty
+        | append: ':::'
+        | append: sku
+        | append: ':::'
+        | append: vendor
+        | append: ':::'
+        | append: v_id
+        | append: ':::'
+        | append: v_measure
+        | append: ':::'
+        | append: v_handle
+        | append: ':::'
+        | append: v_price
+      %}
+      {% if updated_product_data == '' %}
+        {% assign updated_product_data = new_entry %}
+      {% else %}
+        {% assign updated_product_data = updated_product_data | append: '|||' | append: new_entry %}
+      {% endif %}
+    {% endfor %}
+    {% assign sorted_data = '' %}
+    {% assign used_indexes = '' %}
+    
+        {% assign sorted_array = updated_product_data | split: '|||' %}
+        {% assign already_added = '' %}
+        {% for entry in sorted_array %}
+          {% assign entry_parts = entry | split: ':::' %}
+          {% assign title = entry_parts[0] | strip | plus:0 %}
+          {% assign img = entry_parts[2] %}
+          {% assign qty = entry_parts[3] %}
+          {% if qty != '0' and title != blank %}
+
+            {% for prod_object in section.settings.coll_obj.products %} 
+              {% unless already_added contains prod_object.id %}
+                {% if prod_object.id == title %}
+                  {% if already_added == '' %}
+                    {% assign already_added = prod_object.id  %}
+                  {% else %}
+                    {% assign already_added = already_added | append:',' | append:prod_object.id  %}
+                  {% endif %}
+                  
+                  {% capture html_capture %}
+                    {{ html_capture }}
+                    {% render 'product-frequent-item', prod_obj: entry %}
+                  {% endcapture %}
+                {% endif %}
+
+              {% endunless %}
+              
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      
+  {% endif %}
+
+  {% if html_capture != blank %}
+    <h2 class="heading">{{ section.settings.title }}</h2>
+    <div class="most-purchased-items-list most-purchased-product-list swiper">
+      <div class="swiper-wrapper">
+        {{ html_capture }}
+      </div>
+    </div>
+    <!-- Navigation buttons -->
+    <div class="swiper-button-next swiper-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+        <g clip-path="url(#clip0_616_3315)">
+          <path d="M25.0002 49.1069C38.3142 49.1069 49.1074 38.3137 49.1074 24.9997C49.1074 11.6857 38.3142 0.892578 25.0002 0.892578C11.6862 0.892578 0.893066 11.6857 0.893066 24.9997C0.893066 38.3137 11.6862 49.1069 25.0002 49.1069Z" stroke="#14315C" stroke-width="2"/>
+          <path d="M27.6134 24.9949C27.4633 24.8906 27.3188 24.7785 27.1803 24.6592C24.944 22.4259 22.7092 20.1914 20.4759 17.9556C19.7616 17.2414 19.7786 16.7503 20.4545 16.0137C21.3821 15.0021 21.9402 15.1048 22.833 16.0137C25.4732 18.7003 28.1518 21.3494 30.8152 24.0137C31.5295 24.728 31.5357 25.2414 30.825 25.953L22.5964 34.1914C21.9 34.8878 21.4018 34.8646 20.683 34.2083C19.6893 33.3003 19.7303 32.7333 20.683 31.7976C22.8741 29.6628 25.017 27.4789 27.1821 25.3181C27.3192 25.2018 27.4632 25.0938 27.6134 24.9949Z" fill="#14315C"/>
+        </g>
+        <defs>
+          <clipPath id="clip0_616_3315">
+            <rect width="50" height="50" rx="25" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+    <div class="swiper-button-prev swiper-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+        <g opacity="0.4">
+          <g clip-path="url(#clip0_617_3616)">
+            <path d="M24.9998 49.1069C11.6858 49.1069 0.892651 38.3137 0.892651 24.9997C0.892651 11.6857 11.6858 0.892578 24.9998 0.892578C38.3138 0.892578 49.1069 11.6857 49.1069 24.9997C49.1069 38.3137 38.3138 49.1069 24.9998 49.1069Z" stroke="#14315C" stroke-width="2"/>
+            <path d="M22.3866 24.9949C22.5367 24.8906 22.6812 24.7785 22.8197 24.6592C25.056 22.4259 27.2908 20.1914 29.5241 17.9556C30.2384 17.2414 30.2214 16.7503 29.5455 16.0137C28.6179 15.0021 28.0598 15.1048 27.167 16.0137C24.5268 18.7003 21.8482 21.3494 19.1848 24.0137C18.4705 24.728 18.4643 25.2414 19.175 25.953L27.4036 34.1914C28.1 34.8878 28.5982 34.8646 29.317 34.2083C30.3107 33.3003 30.2697 32.7333 29.317 31.7976C27.1259 29.6628 24.983 27.4789 22.8179 25.3181C22.6808 25.2018 22.5368 25.0938 22.3866 24.9949Z" fill="#14315C"/>
+          </g>
+        </g>
+        <defs>
+          <clipPath id="clip0_617_3616">
+            <rect width="50" height="50" rx="25" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+  {% endif %}
+
+  
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    var parent = document.querySelector('.most-purchased-items-list .swiper-wrapper');
+    var cards = Array.from(parent.querySelectorAll('.collection-product-card'));
+
+    cards.sort(function(a, b) {
+        return Number(b.getAttribute('data-qty')) - Number(a.getAttribute('data-qty'));
+    });
+
+    cards.forEach(function(card) {
+      parent.removeChild(card);
+    });
+
+    cards.forEach(function(card) {
+      parent.appendChild(card);
+    });
+
+    var swiper = new Swiper(".most-purchased-product-list", {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        390: {
+          slidesPerView: 1,
+          spaceBetween: 30
+        },
+        649: {
+          slidesPerView: 2,
+          spaceBetween: 30
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 30
+        },
+        1200: {
+          slidesPerView: 4,
+          spaceBetween: 64
+        }
+      }
+    });
+  });
+  function getNextMondays(count = 7) {
+    const inputTime = "{{settings.cut-time}}:00";
+    var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
+    if(tempBitValue.split("").length == 7){
+        var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
+        Tomorrow.setDate(Today.getDate() + 1);
+        var count = 7;
+    
+        var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
+        
+    
+        var checkCount = 0;
+        for (let i = 0; i < count; i++) {
+            const dayOfWeek = Tomorrow.getDay();
+            if(BitValue[(dayOfWeek)] == '1'){
+                if(checkCount==0 && hasEstTimePassedToday(inputTime)){
+                    count++;
+                    checkCount++;
+                }else{
+                    var store_month = (Tomorrow.getMonth() + 1);
+                    var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
+                    Availdays.push(DateFormat);
+                    checkCount++;
+                }
+            }else{
+                if(checkCount == 0){
+                    checkCount++;
+                }
+                count++;
+            }
+            Tomorrow.setDate(Tomorrow.getDate() + 1)
+        }
+
+        var currentstore_month = (Today.getMonth() + 1);
+        var currentDateFormat = `${Today.getFullYear()}-${currentstore_month < 10 ? ('0'+currentstore_month) : currentstore_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`
+        Availdays.push(currentDateFormat)
+    
+        return Availdays;
+    }else{
+        var Availdays = '';
+        return Availdays;
+    }
+
+    
+  }
+
+  function hasEstTimePassedToday(inputTime) {
+    const estNow = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    const nowEstDate = new Date(estNow);
+    
+    const [inputHour, inputMinute] = inputTime.split(':').map(Number);
+    
+    const targetEstTime = new Date(nowEstDate);
+    targetEstTime.setHours(inputHour, inputMinute, 0, 0);
+    
+    return nowEstDate >= targetEstTime;
+  }
+
+  {% if customer.current_location.metafields.acme.delivery_date != blank %}
+    var nextMondays = getNextMondays();
+    if(nextMondays != ''){
+        var tempcurrentDay = nextMondays.pop();
+    }
+  {% else %}
+    var nextMondays = '';
+  {% endif %}
+
+
+  function addcarttrigger(ele){
+    ele.closest('div').classList.add('active');
+    var v_id = parseInt(ele.closest('form').querySelector('[name="id"]').value);
+    if(nextMondays == ''){
+      var productData = { 
+          id: v_id,
+          quantity: 1
+      };
+    }else{
+      var productData = { 
+          id: v_id,
+          quantity: 1,
+          properties: {
+              "_delivery_date":nextMondays,
+              "_addtocart_date":tempcurrentDay
+          }
+      };
+    }
+    fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          items: [productData],
+      })
+    }).then(response => {
+      if (!response.ok) {
+      throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then(result => {
+        console.log('Added',result);
+        document.querySelector('[sh-cart-count]').textContent = parseInt(document.querySelector('[sh-cart-count]').textContent) + 1;
+    }).catch(error => {
+        console.error('There was a problem with the fetch operation:', error);;
+    }).finally(() => {
+      console.log('finally');
+    });
+  }
+
+  var clickAttrPlus = function (plusSelector){
+    var currentVal = parseInt(plusSelector.dataset.val);
+    plusSelector.closest('.product-qty').querySelector('input').value = currentVal + 1;
+    
+    var v_id = plusSelector.closest('.product-qty').dataset.id;
+    var updates = {};
+    if(nextMondays == ''){
+      var productData = { 
+          id: v_id,
+          quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
+      };
+    }else{
+      var productData = { 
+          id: v_id,
+          quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value),
+          properties: {
+              "_delivery_date":nextMondays,
+              "_addtocart_date":tempcurrentDay
+          }
+      };
+    }
+
+    fetch("/cart/change.js", {
+      method: "POST",
+      headers: { "Accept": "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify(productData)
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then(result => {
+        console.log('updated',result);
+        document.querySelector('[sh-cart-count]').textContent = result.item_count;
+    }).catch(error => {
+        console.error('There was a problem with the fetch operation:', error);;
+    }).finally(() => {
+      console.log('finally');
+    });
+  };
+  var clickAttrMinus = function (minusSelector){
+    var currentVal = parseInt(minusSelector.dataset.val);
+    if(currentVal > 0){
+      minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
+      var v_id = minusSelector.closest('.product-qty').dataset.id;
+      var updates = {};
+      nextMondays = '';
+      if(nextMondays == ''){
+        var productData = { 
+          id: v_id,
+          quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
+        };
+      }else{
+        var productData = { 
+            id: v_id,
+            quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value),
+            properties: {
+                "_delivery_date":nextMondays,
+                "_addtocart_date":tempcurrentDay
+            }
+        };
+      }
+      fetch("/cart/change.js", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(productData)
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }).then(result => {
+          console.log('updated',result);
+          document.querySelector('[sh-cart-count]').textContent = result.item_count;
+      }).catch(error => {
+          console.error('There was a problem with the fetch operation:', error);;
+      }).finally(() => {
+        console.log('finally');
+      });
+    }
+  };
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Most Purchased Items",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Your Most Purchased Items"
+    },
+    {
+      "type": "collection",
+      "id": "coll_obj",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Most Purchased Items"
+    }
+  ]
+}
+{% endschema %}

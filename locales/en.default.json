@@ -512,6 +512,20 @@
     "checkout": {
       "payment": {
         "free_order_notice_html": "No payment is required."
+      },
+      "order_summary": {
+        "free_total_label": "$0",
+        "free_shipping_total_label": "$0"
+      },
+      "payment_summary": {
+        "free_label": "$0"
+      }
+    }
+  },
+  "customer_accounts": {
+    "order_details": {
+      "shipping": {
+        "free": "$0"
       }
     }
   }

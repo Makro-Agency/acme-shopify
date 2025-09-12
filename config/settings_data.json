@@ -10,6 +10,7 @@
 {
   "current": {
     "favicon": "shopify://shop_images/Favicon_1.png",
+    "out-stock-msg": "Out Of Stock",
     "social_twitter_link": "https://twitter.com/acmesmokedfish?lang=en",
     "social_facebook_link": "https://www.facebook.com/acmesmokedfish/",
     "social_instagram_link": "https://www.instagram.com/acmesmokedfish/?hl=en",
@@ -18,6 +19,8 @@
     "index_navbar_background": "light",
     "index_navbar_transparency": true,
     "find_in_store_provider": "where_to_buy",
+    "cut-time": "17",
+    "b2b_text_no_product": "No products.",
     "checkout_logo_image": "shopify://shop_images/Acmesmokedfish-01-ringlogo-Blue-Rgb-2000px-w-300ppi_1.png",
     "checkout_logo_size": "large",
     "checkout_body_background_color": "#f2f2f2",
@@ -38,6 +41,12 @@
           "footer_menu": "footer",
           "social_menu": "social-menu",
           "footer_utility_menu": "footer-utility"
+        }
+      },
+      "cart": {
+        "type": "cart",
+        "settings": {
+          "prevent_msg": "<p>Sorry, we can't complete your checkout at this time. Please <a href=\"/pages/contact\" title=\"Contact\">contact</a> our team for more information</p>"
         }
       }
     },

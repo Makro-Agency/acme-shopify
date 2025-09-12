@@ -108,6 +108,11 @@ assign navbar_transparency = false  {% endcomment %}
 						<a href="/cart" id="navCart" class="navbar-toggler" aria-label="Go to Cart page">
 							{% render 'icon-cart-white' %}
 						</a>
+						{% if customer_b2B %}
+						<a href="/account" id="navaccount" class="navCart navbar-toggler d-lg-none">
+							{% render 'icon-account-white' %}
+						</a>
+						{% endif %}
 						<button id="navClose" class="navbar-toggler" type="button" data-toggle="bs-collapse" data-target="#top-nav" aria-controls="top-nav" aria-expanded="false" aria-label="Close navigation">
 							{% render 'icon-close' %}
 						</button>
@@ -176,6 +181,8 @@ assign navbar_transparency = false  {% endcomment %}
 											<div class="clearfix col-12">
 												{% if link.handle == 'products' %}
 													<a class="btn btn-primary mt-3 mb-4" href="/collections/all">All Products</a>
+												{% elsif customer_b2B and link.handle == 'your-products' %}
+													<a class="btn btn-primary mt-3 mb-4" href="/collections/all">All Products</a>
 												{% endif %}
 											</div>
 										{% endif %}
@@ -194,7 +201,7 @@ assign navbar_transparency = false  {% endcomment %}
 				</div> <!-- Container -->
 
 				{% comment %} Subnav Items {% endcomment %}
-				{%- for link in linklists.main-menu.links -%}
+				{%- for link in section.settings.menu.links -%}
 					{% if link.links.size > 0 %}
 						<div class="subnav container d-lg-none mt-5 px-4" data-subnav="{{ link.handle }}" aria-hidden="true">
 							<div class="row">
@@ -289,6 +296,7 @@ assign navbar_transparency = false  {% endcomment %}
 					</form> 
 					{% endcomment %}
 				</div><!-- .nav-search -->
+				{% unless customer_b2B %}
 				<div class="nav-pin nav-icon" tabindex="0">
 					<a href="/pages/where-to-buy" aria-label="Store Finder">
 						{% if template.name == 'product' or template.name == 'collection' %}
@@ -298,6 +306,13 @@ assign navbar_transparency = false  {% endcomment %}
 						{% endif %}
 					</a>
 				</div>
+				{% comment %}{% else %}
+					<div class="nav-pin nav-icon">
+						<a href="/account">
+							{% render 'icon-account' %}
+						</a>
+					</div>{% endcomment %}
+				{% endunless %}
 			</div>
 			<!-- end navbar utility -->
 			

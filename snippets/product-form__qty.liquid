@@ -5,7 +5,7 @@
 {% endif %}
 
 <div sh-quantity-component data-min-value="1">
-    <div class="product-form__qty-title mb-2 mb-lg-4 sr-only"><span class="option-title header-5 text-blue">Quantity</span></div>
+    <div class="product-form__qty-title mb-2 {% unless customer_b2B %}mb-lg-4{% endunless %} sr-only"><span class="option-title header-5 text-blue">Quantity</span></div>
     <div class="product-form__qty">
         <a href="#" 
             class="product-form__qty-dec clickable"  

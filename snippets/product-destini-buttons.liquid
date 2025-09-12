@@ -29,7 +29,7 @@
       class="btn  text-white btn-primary mb-3" 
       href="{{ product.url }}"
     >View Product</a>
-    {%  if where_to_buy_code != blank  %}
+    {%  if where_to_buy_code != blank and customer_b2B == false %}
       <a 
         class="btn  btn-outline-primary" 
         href="/pages/where-to-buy/?wbprod={{ where_to_buy_code }}"

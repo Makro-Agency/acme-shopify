@@ -8,10 +8,14 @@
     {% assign cart_items_array_qty = blank %}
     {% if cart.item_count > 0 %}
         {% for item in cart.items %}
+
+            console.log('{{ item.properties['_price'] }}')
+            
             cart_items['{{item.variant_id}}'] = {
                 "id":{{item.variant_id}},
                 "quantity":{{item.quantity}}
             };
+
             {% if item.properties['_price'] != '' %}
                 add_obj['{{item.variant_id}}'] = {
                     "id":{{item.variant_id}},
@@ -49,7 +53,14 @@
     <p>{{ section.settings.des }}</p>
 </div>
 
+{% comment %} {% assign check_shared = false %} {% endcomment %}
 {% assign collection_get = section.settings.coll %}
+{% comment %} {% for coll_prod in collection_get.products %}
+    {% if coll_prod.tags contains 'shared' %}
+        {% assign check_shared = true %}
+        {% break %}
+    {% endif %}
+{% endfor %} {% endcomment %}
 {% capture bundle-list %}
 <div class="container-fluid">
     <div class="search-bar bundle-search-bar">
@@ -104,6 +115,7 @@
               {% assign item_sku = item.product.selected_or_first_available_variant.sku %}
               {% assign item_vendor = item.product.vendor %}
               {% assign item_v_id = item.variant_id %}
+              {% comment %} {% assign item_v_measure = item.product.metafields.custom.unit_of_measurement %} {% endcomment %}
               {% assign item_v_measure = item.product.metafields.custom.price_uom %}
               {% assign item_handle = item.product.handle %}
 
@@ -127,6 +139,7 @@
                                     {% assign meta2 = false %}
                                 {% endif %}
                                 
+                                {% comment %} {% assign meta3 = item.product.metafields.custom.unit_of_measurement | json %} {% endcomment %}
                                 {% assign meta3 = item.product.metafields.custom.price_uom | json %}
                                 {% assign meta4 = item.product.metafields.custom.unit_of_measurement | json %}
                                 {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"price_uom":' | append:meta3 | append: ',"unit_of_measure":' | append:meta4 | append:'}}' %}
@@ -228,11 +241,45 @@
               {% assign img = entry_parts[2] %}
               {% assign qty = entry_parts[3] %}
               {% if qty != '0' and title != blank %}
+                {% comment %} {% render 'product-frequent-item-order-form', prod_obj: entry %}<br><br> {% endcomment %}
+                {% comment %} {% render 'product-frequent-item', prod_obj: entry %} {% endcomment %}
               {% endif %}
             {% endfor %}
           </div>
         </div>
     {% endif %}
+
+
+
+
+    {% comment %} {% if check_shared %}
+        <div class="tab_wrapper">
+            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=my-product" data-title="my-product" class="active">My products</a>
+            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=all-product" data-title="all-product">All products</a>
+        </div>
+
+        
+
+        <script>
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            
+            if (tabParam) {
+                const tabLinks = document.querySelectorAll('.tab_wrapper a');
+                tabLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.title === tabParam) {
+                        link.classList.add('active');
+                    }
+                });
+            }else{
+                const url = new URL(window.location.href);
+                url.searchParams.set('tab', 'my-product');
+                window.history.replaceState({}, '', url);
+            }
+        </script>
+    {% endif %} {% endcomment %}
 
     <div class="serach_result hide">No results found for terms <strong></strong></div>
     <div class="product-list">
@@ -246,6 +293,8 @@
         <div class="product-item-wrapper">
             {% assign coll = collections[collection_get] %}
             {% assign product_json = '' %}
+            {% comment %} {% assign product_json_shared = '' %}
+            {% assign product_json_not_shared = '' %} {% endcomment %}
             {% assign prod_counter = 0 %}
             {% assign prod_shared_counter = 0 %}
             {% assign prod_notshared_counter = 0 %}
@@ -281,13 +330,64 @@
                     {%- else -%}
                         {%- assign meta2 = false -%}
                     {%- endif -%}
+                    {% comment %} {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%} {% endcomment %}
+                    {% comment %} {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%} {% endcomment %}
                     {% assign meta3 = coll_prod.metafields.custom.price_uom | json %}
                     {% assign meta4 = coll_prod.metafields.custom.unit_of_measurement | json %}
                     {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"price_uom":' | append:meta3 | append: ',"unit_of_measure":' | append:meta4 | append:'}}' -%}
                     {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                     {{ product_with_metafield }}{%- unless prod_counter == _temp_count -%},{%- endunless -%}
                 {%- endcapture -%}
-                
+
+                {% comment %} {%- capture product_json_shared -%}
+                    {{ product_json_shared }}
+                    {%- if coll_prod.tags contains 'shared' -%}
+                        {%- assign prod_shared_counter = prod_shared_counter | minus:1 -%}
+                        {%- assign product_with_metafield = coll_prod | json -%}
+                        {%- assign product_with_metafield_temp = product_with_metafield | remove_last: '}' -%}
+                        {%- if coll_prod.metafields.accentuate.available_online == true -%}
+                            {%- assign meta1 = coll_prod.metafields.accentuate.available_online -%}
+                        {%- else -%}
+                            {%- assign meta1 = false -%}
+                        {%- endif -%}
+
+                        {%- if coll_prod.metafields.custom.availability == true -%}
+                            {%- assign meta2 = coll_prod.metafields.custom.availability -%}
+                        {%- else -%}
+                            {%- assign meta2 = false -%}
+                        {%- endif -%}
+                        {% comment %} {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%} {% endcomment %}
+                        {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%}
+                        {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
+                        {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
+                        {{ product_with_metafield }}{%- if prod_shared_counter > 0 -%},{%- endif -%}
+                    {%- endif -%}
+                {%- endcapture -%}
+
+                {%- capture product_json_not_shared -%}
+                    {{ product_json_not_shared }}
+                    {%- unless coll_prod.tags contains 'shared' -%}
+                        {%- assign prod_notshared_counter = prod_notshared_counter | minus:1 -%}
+                        {%- assign product_with_metafield = coll_prod | json -%}
+                        {%- assign product_with_metafield_temp = product_with_metafield | remove_last: '}' -%}
+                        {%- if coll_prod.metafields.accentuate.available_online == true -%}
+                            {%- assign meta1 = coll_prod.metafields.accentuate.available_online -%}
+                        {%- else -%}
+                            {%- assign meta1 = false -%}
+                        {%- endif -%}
+
+                        {%- if coll_prod.metafields.custom.availability == true -%}
+                            {%- assign meta2 = coll_prod.metafields.custom.availability -%}
+                        {%- else -%}
+                            {%- assign meta2 = false -%}
+                        {%- endif -%}
+                        {% comment %} {%- assign meta3 = coll_prod.metafields.custom.unit_of_measurement | json -%} {% endcomment %}
+                        {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%}
+                        {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"unit_of_measure":' | append:meta3 | append:'}}' -%}
+                        {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
+                        {{ product_with_metafield }}{%- if prod_notshared_counter > 0 -%},{%- endif -%}
+                    {%- endunless -%}
+                {%- endcapture -%} {% endcomment %}
                 {%- endfor -%}
             {% endpaginate %}
         </div>
@@ -297,6 +397,7 @@
         <div class="more-pages">
             <div class="pagination-button">
                 <span>Load More</span>
+                {% comment %} <span class="hidden loader">loader</span> {% endcomment %}
             </div>
         </div>
     </ajaxinate-loading>
@@ -324,6 +425,12 @@
 <script type="application/json" class="json-div">
     [{{ product_json | strip }}]
 </script>
+{% comment %} <script type="application/json" class="json-div-shared">
+    [{{ product_json_shared | strip }}]
+</script> {% endcomment %}
+{% comment %} <script type="application/json" class="json-div-not-shared">
+    [{{ product_json_not_shared | strip }}]
+</script> {% endcomment %}
 
 <script>
 
@@ -396,6 +503,7 @@
     }
 
     function addProduct(ele){
+        {% comment %} document.querySelector('.mini-cart-sticky .add-product-btn').setAttribute('data-vid',getVariants); {% endcomment %}
         if(ele.closest('.product-item').classList.contains('varient-select')){
             ele.closest('.product-wrapper').classList.add('selected');
             ele.closest('.product-item').classList.add('selected');
@@ -474,6 +582,8 @@
             return nowEstDate >= targetEstTime;
         }
 
+        // Example usage:
+
         {% if customer.current_location.metafields.acme.delivery_date != blank %}
             var nextMondays = getNextMondays();
             if(nextMondays != ''){
@@ -488,7 +598,9 @@
             values.forEach((value,index) => {
                 const isLast = index === values.length - 1;
                 
+                console.log(value,value['_price'],'YES')
                 if(value['_price'] != undefined){
+                    console.log(value,value['_price'],'YES1')
                     if(nextMondays == ''){
                         var productData = { 
                             id: value.id,
@@ -509,6 +621,7 @@
                         };
                     }
                 }else{
+                    console.log(value,value['_price'],'YES2')
                     if(nextMondays == ''){
                         var productData = { 
                             id: value.id,
@@ -525,6 +638,7 @@
                         };
                     }
                 }
+                
                 items.push(productData);
                 if(isLast){
                     items_object['items'] = items;
@@ -571,6 +685,8 @@
     }
 
     var json_val = JSON.parse("["+document.querySelector('.json-div').innerText.trim()+"]")[0];
+    {% comment %} var json_val_shared = JSON.parse("["+document.querySelector('.json-div-shared').innerText.trim()+"]")[0];
+    var json_val_not_shared = JSON.parse("["+document.querySelector('.json-div-not-shared').innerText.trim()+"]")[0]; {% endcomment %}
     var _json_val = [], _json_val_shared = [], _json_val_not_shared = [];      
     
     json_val.forEach(function(iteam){
@@ -610,6 +726,25 @@
         }
     })
 
+    {% comment %} json_val_shared.forEach(function(iteam){
+        var _i = iteam;
+        _json_val_shared.push(_i);
+        {% comment %} if( _i.variants.length > 1 ){
+            var _tempArray = [];    
+            var _tempVars = _i.variants;    
+            _tempVars.forEach(function(variant, index){
+                var _temp = [];
+                _temp.push(_i);
+                _temp.variants = [];  
+                _temp.variants.push(variant);
+                _temp.custom = true;        
+                _json_val_shared.push(_temp);
+            });
+        }else{
+            _json_val_shared.push(_i);
+        } {% endcomment %}
+    }); {% endcomment %}
+
     json_val.forEach(function(iteam){
 
         var hasAllProducts = false;
@@ -629,6 +764,26 @@
         }
     })
 
+    {% comment %} json_val_not_shared.forEach(function(iteam){
+        var _ins = iteam;
+        _json_val_not_shared.push(_ins);
+        {% comment %} if( _ins.variants.length > 1 ){
+            var _tempArray = [];    
+            var _tempVars = _ins.variants;    
+            _tempVars.forEach(function(variant, index){
+                var _temp = [];
+                _temp.push(_ins);
+                _temp.variants = [];  
+                _temp.variants.push(variant);
+                _temp.custom = true;        
+                _json_val_not_shared.push(_temp);
+            });
+        }else{
+            _json_val_not_shared.push(_ins);
+        } {% endcomment %}
+    }); {% endcomment %}
+
+    //console.log(json_data_array,'json_data_array')
     if(document.querySelector('.tab_wrapper') != null){
         if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
             Array.prototype.push.apply(json_data_array,_json_val_not_shared);
@@ -649,12 +804,14 @@
         
     })).values()];
 
+    {% comment %} console.log(UniqueFr_item,'UniqueFr_item') {% endcomment %}
 
     var json_searched = [];
 
     var select_eles = document.querySelectorAll('.bundle-search-bar .custom-select select');
     select_eles.forEach(select_ele => {
         select_ele.addEventListener('change', function(){
+            {% comment %} console.log('in'); {% endcomment %}
             var sortType = this.value;
             if( sortType == '' ) return;
             
@@ -667,6 +824,7 @@
             }else{
                 var sortJson = json_searched.length > 0 ? json_searched : json_val;
             }
+            //var sortJson = json_searched.length > 0 ? json_searched : json_val;
             
             if(sortType === "Alphabetically: A-Z") {
             sortJson.sort((a, b) => (a.title < b.title) ? -1 : 1);
@@ -711,7 +869,7 @@
         }
 
         var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
-        console.log(currentVal,'currentVal');
+        
         if (!isNaN(currentVal)) {
             if (currentVal < 99999){
                 plusSelector.closest('.quantity-selector').classList.add('active');
@@ -730,6 +888,7 @@
             plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = 0;
         }
 
+        {% comment %} var getCount = document.querySelectorAll('.quantity-selector.active').length; {% endcomment %}
         var getCount = 0;
         for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
             getCount += (parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('input.qty-selector').value));
@@ -738,11 +897,18 @@
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.add('active');
             var title = plusSelector.closest('.product-wrapper').querySelector('.product-wrap .title').innerText;
+            //document.querySelector('.temp-msg .temp-text').innerText = title + ' has been added to your cart';
+            //document.querySelector('.temp-msg').classList.add('active');
             var store_scroll = document.querySelector('.bundle-search-bar').offsetTop - 100;
             setTimeout(function(){ 
-                setTimeout(function(){
+                //window.scrollTo({top: store_scroll, behavior: 'smooth'});
+                setTimeout(function(){ 
+                    //document.querySelector('.temp-msg').classList.remove('active');
+                    //document.querySelector('.temp-msg .temp-text').innerText = '';
                 }, 4000);
             }, 2000);
+
+            console.log(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail'))
             if(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail')){
                 var prop_value = 'Sales Price U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').nextElementSibling.innerText + '; Quantity U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').innerText;
                 add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
@@ -750,12 +916,15 @@
                     "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
                     "_price" : prop_value
                 };
+                console.log(prop_value,'prop_value',add_obj)
             }else{
+                console.log('prop_value')
                 add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
                     "id":plusSelector.closest('.quantity-selector').dataset.item,
                     "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value)
                 };
             }
+            
         }
     };
 
@@ -800,20 +969,11 @@
         if(currentVal <= 0){
             delete add_obj[minusSelector.closest('.quantity-selector').dataset.item];
         }else{
-            if(minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail')){
-                var prop_value = 'Sales Price U/M = ' + minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').nextElementSibling.innerText + '; Quantity U/M = ' + minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').innerText;
-                add_obj[minusSelector.closest('.quantity-selector').dataset.item] = {
-                    "id":minusSelector.closest('.quantity-selector').dataset.item,
-                    "quantity":parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
-                    "_price" : prop_value
-                };
-            }else{
-                add_obj[minusSelector.closest('.quantity-selector').dataset.item] = {
-                    "id":minusSelector.closest('.quantity-selector').dataset.item,
-                    "quantity":parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
-                    "_price" : "Sales Price U/M = $12.50 /EA; Quantity U/M = 10 EA"
-                };
-            }
+            add_obj[minusSelector.closest('.quantity-selector').dataset.item] = {
+                "id":minusSelector.closest('.quantity-selector').dataset.item,
+                "quantity":parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
+                "_price" : "Sales Price U/M = $12.50 /EA; Quantity U/M = 10 EA"
+            };
         }
     };
     
@@ -822,6 +982,7 @@
         const store_products = document.querySelectorAll('.product-item-wrapper .product-item');
         const store_products_names = document.querySelectorAll('.product-item-wrapper .title');
 
+        {% comment %} document.querySelector('.mini-cart-sticky').classList.remove('active'); {% endcomment %}
         if(document.querySelector('.tab_wrapper') != null){
             if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
                 var sortJson_val = json_searched.length > 0 ? json_searched : _json_val_not_shared;
@@ -836,6 +997,13 @@
             if( searchbox.length == 0 ) return false;
             var _found = true;
             
+            {% comment %} var currentVarint = item.variants.filter((variant) => {     
+                if( variant.available && !_found ){
+                    _found = true
+                    return variant;
+                }
+            }); {% endcomment %}
+            {% comment %} currentVarint = !_found ? item.variants[0] : currentVarint[0];           {% endcomment %}
             currentVarint = item.variants[0];          
             if( (currentVarint.sku).toUpperCase().indexOf(searchbox) > -1 ){
                 return item;
@@ -849,6 +1017,7 @@
             }
         });
 
+        //console.log('json_searched',json_searched.length);
         if( json_searched.length == 0 && searchbox.length > 0 ){
             document.querySelector('.serach_result').classList.remove('hide');
             document.querySelector('.serach_result strong').innerHTML = `"${  document.querySelector('.searchbar input').value }"`;
@@ -863,6 +1032,7 @@
                     appendItems(json_searched.length > 0 ? json_searched : _json_val_shared);     
                 }
             }else{
+                {% comment %} var sortJson_val = json_searched.length > 0 ? json_searched : _json_val; {% endcomment %}
                 appendItems(json_searched.length > 0 ? json_searched : _json_val);     
             }
                    
@@ -873,6 +1043,7 @@
         var finl_html = '';
         var _pageLimit = searchedJSON.length > 10 ? 9 : (searchedJSON.length - 1);
         for(var i=0;i<=_pageLimit;i++){
+        {% comment %} for(var i=0;i<=searchedJSON.length;i++){ {% endcomment %}
             finl_html += appendHTML(searchedJSON[i]);
         }
         if(finl_html != ''){
@@ -923,6 +1094,8 @@
             var B2B_check = 'false';
         {% endif %}
 
+        //console.log(typeof item.custom, 'asd');
+
         var varCus = item.variants;
         var _item = typeof item.custom != 'undefined' ? item[0]:item;
         var currentVAraints = varCus.filter((variant) => { return variant; });        
@@ -936,6 +1109,9 @@
         }
 
         
+        
+        
+        {% comment %} console.log(item,'items'); {% endcomment %}
         if(currentVAraints.length > 1){
             var split_v = (_item.title).split(' - Sauvez')[0];
             var disable_class = '';
@@ -993,7 +1169,7 @@
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
-                                <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);">
+                                <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
                                 <span>0</span>
                                 <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1054,7 +1230,7 @@
                                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                                 </svg>
                                             </button>
-                                            <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);">
+                                            <input type="text" value="0" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
                                             <span>0</span>
                                             <button onclick="clickAttrPlus(this);" class="qtyplus">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -1163,7 +1339,8 @@
                                 <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
-                                <input type="text" value="${qty}" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);">
+                                <input type="text" value="${qty}" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
+                                {% comment %} <span>${qty}</span> {% endcomment %}
                                 <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1198,6 +1375,7 @@
         inputSelector.closest('div').classList.add('active-div');
         if(event.key == 'Enter'){
             inputSelector.blur();
+            {% comment %} clickAttrPlus(inputSelector); {% endcomment %}
         }
     }
 
@@ -1220,6 +1398,24 @@
         }else{
             var selector_json = json_val;
         }
+
+        {% comment %} var selector_json = UniqueFr_item.filter(function(element){
+            if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+                if (element.tags.indexOf('shared') == -1){
+                    return true;
+                } else {
+                    return false;
+                }
+            }else{
+                if (element.tags.indexOf('shared') > -1){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }); {% endcomment %}
+
+        //console.log(selector_json,'selector_json2')
         for(var i=Number(split_val[0]);i<=Number(split_val[1]);i++){
             
             finl_html += appendHTML(selector_json[i]);
@@ -1233,6 +1429,8 @@
             paginate_item.closest('.pagination-lists').querySelector('.page-item.prev-item').classList.add('disabled');
             document.querySelector('ajaxinate-loading') && document.querySelector('ajaxinate-loading').classList.add('hide');
         }
+        {% comment %} var store_scroll = document.querySelector('.bundle-search-bar').offsetTop - 100;
+        window.scrollTo({top: store_scroll, behavior: 'smooth'}); {% endcomment %}
         return true;
     };
 
@@ -1322,6 +1520,7 @@
             var sortType = li_wrap.textContent;
 
             if(document.querySelector('.tab_wrapper') != null){
+                {% comment %} console.log('in'); {% endcomment %}
                 if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
                     var sortJson = json_searched.length > 0 ? json_searched : _json_val_not_shared;
                 }else{
@@ -1329,9 +1528,10 @@
                 }
                 
             }else{
+                {% comment %} console.log('out'); {% endcomment %}
                 var sortJson = json_searched.length > 0 ? json_searched : json_val;
             }
-            
+            {% comment %} var sortJson = json_searched.length > 0 ? json_searched : json_val; {% endcomment %}
             if(sortType === "Alphabetically: A-Z") {
               sortJson.sort((a, b) => (a.title < b.title) ? -1 : 1);
             } else if(sortType === "Alphabetically: Z-A") {
@@ -1356,6 +1556,26 @@
               if(json_searched.length > 0){
                 var sortJson = json_searched;
               }else{
+                {% comment %} if(document.querySelector('.tab_wrapper') != null){
+                    var result_data = UniqueFr_item.filter(function(element){
+                        if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+                            if (element.tags.indexOf('shared') == -1){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }else{
+                            if (element.tags.indexOf('shared') > -1){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    });
+                    var sortJson = result_data;
+                }else{
+                    var sortJson = UniqueFr_item;
+                } {% endcomment %}
                 var sortJson = UniqueFr_item;
               }
             }
@@ -1371,6 +1591,7 @@
         var gettype = ele.dataset.type;
         ele.closest('.view-btn').querySelector('span.active').classList.remove('active');
         ele.classList.add('active');
+        {% comment %} console.log('in',gettype); {% endcomment %}
         if(gettype == 'grid'){
             document.querySelector('.product-list').classList.add('grid');
         }else{
@@ -1413,6 +1634,7 @@
             genratePagination(selector_json);
         }
 
+        //document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].click();
         document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
     }
 
@@ -1471,6 +1693,7 @@
             }
         }
 
+        {% comment %} LoadData(0,9); {% endcomment %}
         customElements.define('ajaxinate-loading', infiniteCardLoading);
     })
 
@@ -1478,6 +1701,7 @@
         constructor() {
             super();
             
+            //this.url = this.querySelector('[data-loading-type]').getAttribute('href');
             this.callbackForViewPort();
         }
         
@@ -1501,6 +1725,7 @@
             }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 2){
                 document.querySelector('ajaxinate-loading').classList.add('hide');
             }
+            //this.querySelector('.pagination-button .loader').classList.remove('hidden');
         }
     
     }

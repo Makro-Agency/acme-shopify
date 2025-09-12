@@ -1,0 +1,630 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .custom-wholesale-application {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #F2F2F2;
+    padding-top:60px; 
+    padding-bottom:150px; 
+  }
+  .custom-wholesale-application .custom-application-form{ max-width:684px; margin:0 auto;  }
+  .custom-wholesale-application .section-heading{ max-width:800px; }
+  .custom-wholesale-application h1 {
+    font-family: EphemeraEgyptianCondensedMedium; 
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color:#14315C; 
+    text-align: center;
+    text-transform: uppercase;
+    
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .custom-wholesale-application .custom-application-form{ margin-top:0px; }
+  .custom-wholesale-application p {
+    text-align: center;
+    margin-top:16px; 
+    max-width:600px; 
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin:0 auto; 
+    margin-bottom: 60px;
+    font-family: ITCClearfaceRegular;
+  }
+  
+  .custom-wholesale-application .form-fieldset {
+    border: 1px solid #14315C; 
+    border-radius: 4px;
+    padding: 20px 15px 14px; 
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .custom-wholesale-application .form-fieldset legend {
+    padding: 0 5px;
+    font-size: 14px;
+    color: #14315C; 
+    background-color:#F2F2F2;
+    text-transform: uppercase;
+    margin-top: -28px;
+    height: fit-content;
+    width: fit-content;
+    margin-bottom: 0;
+    font-family: SaaSeriesED W05 Regular; 
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+     letter-spacing: 0;
+  
+  }
+  
+  .custom-wholesale-application .two-column-inner{ width:100%; gap: 0; }
+  .form-fieldset.error {
+    border-color: #e74c3c !important;
+  }
+  .form-fieldset.error legend:after{  color: #e74c3c !important; }
+  .form-fieldset.error legend {
+    color: #e74c3c !important;
+  }
+  
+  .custom-wholesale-application .custom-wholesale-application {
+    padding: 0;
+  }
+  .custom-wholesale-application .success-container {
+    text-align: center;
+  }
+  .custom-wholesale-application .success-icon{ text-align:center; margin-bottom: 2.8125rem;  }
+  .custom-wholesale-application h2.success-title{ 
+    font-family: EphemeraEgyptianCondensedMedium;
+    font-weight: 400;
+    font-size: 60px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #14315c;
+    text-transform: uppercase;
+  }
+  .custom-wholesale-application .required::after {
+    content: " *";
+    color: #14315C; 
+  }
+  .custom-wholesale-application .form-control {
+    width: 100%;
+    padding: 0;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    line-height:1.6; 
+    font-family:ITCClearfaceRegular; 
+    padding-inline: 5px;
+  }
+  .custom-dropdown {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  .custom-wholesale-application .form-fieldset.dropdown{ padding:0; }
+  .custom-dropdown .selected-option {
+    padding: 21px 20px 15px;  
+    font-size: 14px;
+    color: #0a2e5c;    
+    background-color: transparent;
+    border-radius: 4px;
+  }
+  .custom-wholesale-application .form-fieldset.dropdown legend{
+    position: relative;
+    top: 20px;
+    left: 20px;
+  }
+  
+  .custom-dropdown .dropdown-options {
+    position: absolute;
+    top: 101%;
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+  }
+  .custom-dropdown .dropdown-options .option {
+    padding: 13px 20px;
+    font-family: ITCClearfaceRegular;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+     letter-spacing: 0;
+  
+    background-color: #fff;
+  }
+  .custom-dropdown .selected-option{
+    color:#14315C;
+    font-family: ITCClearfaceRegular;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0;
+  
+  }
+  .custom-dropdown .dropdown-options .option:hover {
+  background: rgba(20, 49, 92, 0.05);
+  }
+  .custom-dropdown.active .dropdown-arrow svg{
+  transform:rotate(180deg);
+  }
+  [data-form-dropdwon-wrapper].active .custom-dropdown .dropdown-options {
+    display: block;
+  }
+  
+  .custom-dropdown .dropdown-arrow {
+    position: absolute;
+    right: 12px;      
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; 
+  }
+  
+  .custom-wholesale-application .two-column.last-fields .form-fieldset.country-code{
+   max-width:180px; 
+  }
+  .custom-wholesale-application .dropdown select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #f2f2f2; 
+      url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') 
+      no-repeat right 10px center;
+    background-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    padding: 0; 
+    font-size: 14px;
+    border: none;
+    outline: none;
+  }
+  
+  /* TWO-COLUMN LAYOUT FOR CERTAIN FIELDS */
+  .custom-wholesale-application .two-column {
+    display: flex;
+    justify-content: space-between;
+    gap: 0 20px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+  .custom-wholesale-application .two-column-check-list {
+    gap: 0 1.875rem;
+    margin-bottom: 2rem;
+  }
+  .custom-wholesale-application .two-column-check-list+.two-column-check-list {
+    margin-top: -0.75rem;
+  }
+  
+  .custom-wholesale-application .form-control::placeholder{
+    opacity:0.4; 
+    color:#14315C; 
+    font-family: ITC Clearface Std;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  padding-top:1px; 
+  }
+  .custom-wholesale-application .two-column .form-fieldset {
+    flex: 1;
+    padding:19px 20px 13px; 
+    margin-bottom: 0;
+  }
+  .custom-wholesale-application .form-control:focus{ box-shadow:none; }
+  /* SUBMIT BUTTON */
+  .custom-wholesale-application .btn-submit {
+    display: inline-block;
+    background-color: #14315C; 
+    color: #fff;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    margin-top: 0px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    font-family: SaaSeriesED W05 Regular; 
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0;
+    margin-top: 1rem;
+  }
+  .custom-wholesale-application .two-column.last-fields .form-fieldset.country-code{ padding-left:15px; padding-right:15px; }
+  .custom-wholesale-application .btn-submit:hover {
+    background-color: #09325c;
+  }
+  
+  /* EXAMPLE ERROR MESSAGE (HIDDEN BY DEFAULT) */
+  .custom-wholesale-application .error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .custom-wholesale-application .two-column-inner .error-message {
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  
+  /* EXAMPLE SUCCESS MESSAGE (HIDDEN BY DEFAULT) */
+  .custom-wholesale-application .success-message {
+    margin-top: 0px;
+    color: #14315C; 
+  font-family:ITCClearfaceRegular; 
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: 0;
+  margin-bottom:32px; 
+  text-align: center;
+  }
+  .custom-wholesale-application .checkbox-group .checkbox-label { font-family: ITC Clearface Std;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0;
+   
+     }
+   
+  .custom-wholesale-application a.go-back-button{ margin:0 auto; background: #14315C; text-decoration:none;  width:fit-content; 
+    border-radius: 100px; padding:12px 30px; color:#ffffff;  display:flex; text-align:center; font-family:SaaSeriesED W05 Regular;   }
+  .custom-wholesale-application .success-message .error-icon{
+    margin-right:8px; 
+  }
+  .custom-wholesale-application .error-message {     color:#EB1C1F;
+    font-size: 14px;
+    margin-top: 0px;
+    font-family: SaaSeriesED W05 Regular; 
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0;  
+    position:relative;  
+    margin-bottom: 24px;
+    margin-top: -14px;
+  }
+  .custom-wholesale-application .checkbox-group{ 
+    margin-bottom:24px; 
+  }
+  .custom-wholesale-application span.checkbox-label a{ position:relative; font-family: ITC Clearface Std;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0;
+    color:#14315c; 
+    text-decoration:none; 
+    }
+  .custom-wholesale-application span.checkbox-label a:after{
+    content: "";
+    position: absolute;
+    background-color:#14315c;
+    width: 100%;
+    height: 1px;
+    top: unset;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    border: none;
+  }
+  .custom-wholesale-application .btn-submit:hover{
+    background-color: #b88b20;
+  }
+  .custom-wholesale-application a.go-back-button:hover{
+   background-color: #b88b20;
+  }
+  
+  .custom-wholesale-application .btn-submit.loading {
+    color: transparent;
+    position: relative;
+  }
+  
+  .btn-submit.loading .loading-overlay__spinner {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .loading-overlay__spinner {
+    width: 1.8rem;
+    display: inline-block;
+  }
+  
+  .spinner {
+    animation: rotator 1.4s linear infinite;
+  }
+  
+  .path {
+    stroke-dasharray: 280;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    stroke: #FFF;
+    animation: dash 1.4s ease-in-out infinite;
+  }
+  
+  @keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+  
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: 280;
+    }
+    50% {
+      stroke-dashoffset: 75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 280;
+      transform: rotate(450deg);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .custom-wholesale-application .two-column {
+      flex-direction: column;
+    }
+  }
+  .custom-wholesale-application .two-column.last-fields .two-column-inner.country-code{ max-width:180px; }
+  @media screen and (max-width:767px){
+    .custom-wholesale-application .success-message{ margin-bottom:36px; }
+     .custom-wholesale-application.success{ padding-left:0; padding-right:0; }
+    .custom-wholesale-application a.go-back-button {font-size:14px; }
+    .custom-wholesale-application h2.success-title{ font-size:42px; }
+    .custom-wholesale-application .two-column.last-fields .form-fieldset.country-code legend{ width:124px; }
+    .custom-wholesale-application .form-fieldset legend{ padding:0 3px; }
+    .custom-wholesale-application .two-column.last-fields .form-fieldset.country-code{ padding-left:10px; padding-right:10px; }
+    .custom-wholesale-application .form-fieldset{ padding: 21px 16px 15px 16px;  }
+    .custom-wholesale-application .two-column.last-fields .two-column-inner.country-code{ max-width:140px; }
+    .custom-wholesale-application .form-fieldset legend{ font-size:14px; }  
+    .custom-wholesale-application .two-column{ gap:0; }  
+    .custom-wholesale-application h1{ font-size:42px; }   
+  }
+  @media screen and (max-width:989px){
+    .custom-wholesale-application{ padding-left:31px; padding-right:31px;padding-bottom: 6.25rem; }
+  }
+  @media screen and (max-width: 389px){
+    .custom-wholesale-application {
+      padding-left: .875rem;
+      padding-right: .875rem;
+      padding-bottom: 3.75rem;
+    }
+  }
+  
+  
+  .custom-application-form form > h2,
+  .custom-application-form form > .wrap-checkbox {
+    margin-block: 2.5rem 1.5rem;
+    }
+    .custom-application-form form>.wrap-checkbox+.ship-data.hide+* {
+      margin-top: 2.5rem;
+    }
+    .custom-application-form form > h2,
+    .custom-application-form form > .wrap-checkbox h2 {
+      font-weight: 400;
+      font-family: ITCClearfaceRegular;
+      text-transform: none;
+      font-size: 1.625rem;
+      line-height: 1.2;
+    }
+    .custom-application-form form > .wrap-checkbox h2 {
+      margin-bottom: 0;
+    }
+    .custom-application-form form > .wrap-checkbox label {
+      display: flex;
+      align-items: center;
+      line-height: 1.5;
+      font-size: 14px;
+      font-family: ITCClearfaceRegular;
+      padding-top: 4px;
+    }
+  
+  
+  
+  
+  .two-column-inner {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+  }
+  
+  .checkbox-group-section h3 {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #001f3f;
+  }
+  
+  .checkbox-group {
+      margin-bottom: 10px;
+  }
+  
+  .custom-checkbox-container {
+      display: block;
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .custom-checkbox-container input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+  }
+  
+  /* Create a custom checkmark (box) */
+  .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 18px;
+      width: 18px;
+      background-color: #eee;
+      border: 1px solid #001f3f;
+  }
+  
+  /* On hover, add a light grey background */
+  .custom-checkbox-container:hover input ~ .checkmark {
+      background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a dark blue background */
+  .custom-checkbox-container input:checked ~ .checkmark {
+      background-color: #001f3f;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .custom-checkbox-container input:checked ~ .checkmark:after {
+      display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .custom-checkbox-container .checkmark:after {
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+  }
+  
+  .checkbox-label {
+      font-size: 16px;
+      color: #333;
+  }
+  
+  .custom-wholesale-application fieldset.form-fieldset.check-list {
+    border: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .wrap-checkbox {
+    display: flex;
+    align-items: center;
+  }
+  
+  .wrap-checkbox input[type="checkbox"] {
+    margin-left: 20px;
+    border-radius: 2px;
+    margin-right: 10px;
+    transform: translateY(-3px);
+  }
+  
+  .wrap-checkbox input[type=checkbox]:checked{
+    background-color: #14315C;
+  }
+  
+  .wrap-checkbox input[type=checkbox]:after{border-color: #FFF;}
+  
+  .check-list h5 {
+    font-size: 1rem;
+    margin-bottom: 0.625rem;
+  }
+  .check-list label {
+    display: flex;
+    align-items: center;
+  }
+  .check-list label+label {
+    margin-top: 0.625rem;
+  }
+  .check-list label input[type="checkbox"] {
+    margin-right: 0.625rem;
+  }
+  
+  @media screen and (max-width:767px){
+  
+    input[type=checkbox]:after {    
+      top: 16%;
+      left: 10%;    
+    }
+    .check-list input[type=checkbox]:after {
+      top: 3px;
+      left: 1px;
+    }
+  
+    .custom-wholesale-application p{ font-size:16px; margin-bottom: 2.5rem; }
+  
+    .custom-wholesale-application .two-column.two-column.last-fields {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .custom-wholesale-application .two-column.two-column.two-column-check-list {    
+      gap: 1.25rem;
+    }
+    .custom-wholesale-application .two-column-check-list {
+      margin-block: 2.1875rem 1.875rem;    
+    }
+    .custom-wholesale-application .two-column-check-list+.two-column-check-list {
+      margin-top: -0.625rem;
+    }  
+    
+    .custom-application-form form>h2,
+    .custom-application-form form>.wrap-checkbox {
+      margin-block: 2.1875rem 1.5rem;
+    }  
+    .custom-application-form form>.wrap-checkbox+.ship-data.hide+* {
+      margin-top: 2.1875rem;
+    }  
+    .custom-application-form form>.wrap-checkbox {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 0.625rem;
+    }
+    .wrap-checkbox input[type=checkbox] {
+      margin-left: 0;
+      transform: translateY(-1px);  
+    }
+    .custom-application-form form>.wrap-checkbox label {
+      padding-top: 0;
+    }
+    .custom-wholesale-application .btn-submit {
+      margin-top: 0.6875rem;
+    }
+  }

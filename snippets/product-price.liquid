@@ -39,10 +39,12 @@
       endif
     endif
   endif
+
+  
 -%}
 
 {% if available_online %}
-
+      
 <div id="v-id-{{ variant.id }}" class="price price--has_b2b-{{ has_b2b }}
   {% if available == false %} price--sold-out {% endif %}
   {% if compare_at_price > price %} price--on-sale {% endif %}
@@ -71,7 +73,7 @@
       - div.price__unit: Displayed when the first variant has a unit price
       - div.price__availability: Displayed when the product is sold out
   {%- endcomment -%}
-  {% if has_b2b %}<div class="price__b2b-label">Your Price: </div>{% endif %}
+   {% if has_b2b %}<div class="price__b2b-label">Your Price: </div>{% endif %}
   <div class="price__pricing-group ">
     <div class="price__regular">
         <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
@@ -85,6 +87,13 @@
             {% endif %}
           {% endif %}
         </span>
+        {%comment %}
+        {% if has_b2b %}
+          {% if product.metafields.custom.weight != blank %}
+            <div class="w-value">{{ product.metafields.custom.weight }}{% if product.metafields.custom.unit_of_measurement != blank %} {{product.metafields.custom.unit_of_measurement}}{% endif %}</div>
+          {% endif %}
+        {% endif %}
+         {% endcomment %}
     </div>
     <div class="price__sale">
         <span class = 'visually-hidden'>{{ 'products.product.price.sale_price' | t }}</span>
@@ -125,10 +134,11 @@
       <span data-unit-price>{{ variant.unit_price | money }}</span>{{- unit_price_separator -}}{{- unit_price_base_unit -}}
     </span>
   </div>
+  
+    
+  
 </div>
 
-
-{% comment %} script for display metafield data in price on cart and product page {% endcomment %}
 <script>
   var store_location_data = []
   {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
@@ -181,10 +191,15 @@
       </div>`);
       document.querySelector('.product-single__single-variant').classList.add('avail-sale');
       document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Sales Price U/M:';
+      var val1 = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
+      var val2 = document.querySelector('.sale-price-b2b .price-item--regular').innerText;
+      {% comment %} var price_prop = `Sales Price U/M = ${val1}; Quantity U/M = ${val2}`;
+      var property_field = `<input type="hidden" name="properties[_price]" value="${price_prop}">`
+      document.querySelector('.product-add-form').innerHTML += property_field;
+      console.log('in'); {% endcomment %}
     }
   {% endif %}
 
   
 </script>
-
 {% endif %}

@@ -30,12 +30,17 @@ product-add-form product-form product-form-{{ product.id }}
 							</div>
 					</div>
 				{% endunless %}
-				{% render 'product-price', variant: current_variant, show_vendor: false  available_online:available_online %}
+				{% render 'product-price', variant: current_variant, show_vendor: false,  available_online:available_online %}
 				<input type = 'hidden' name="id" value="{{current_variant.id}}" />
 			</div>
 		{% endif %}
 		{% if current_variant.sku != blank  %}
-			<h2 class="header-5 pt-2">SKU : {{current_variant.sku}}</h2>
+			<h2 class="header-5 pt-2">
+				SKU : {{current_variant.sku}} 
+				{% comment %} {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+					{% if current_variant.barcode != blank%} / UPC : {{current_variant.barcode}}{% endif %}
+				{% endif %} {% endcomment %}
+			</h2>
 		{% endif %}
 		{% if product.variants.size > 1  %}
 			<div class="product-single__multiple-variants">
@@ -74,20 +79,20 @@ product-add-form product-form product-form-{{ product.id }}
 			<div sh-quantity-component data-min-value="1" class="{% if available_online == false %} d-none {% endif %}">
 				<div class="product-qty-title visually-hidden"><span class="option-title header-5 text-blue">Quantity</span></div>
 				<div class="product-qty mb-4 mt-4 mb-xl-0 mt-xl-0">
-					<a class="qty-dec clickable" 
+					<a class="qty-dec clickable qty-btn disabled" 
 						data-quantity-dec 
 						aria-label="Decrease Quantity"
-						href="#"
+						href="#" data-val="{{ current_variant.quantity | default: 1 }}"
 					><span class="icon-minus">-</span></a>
 					<input class="qty-input"type="text" id="Quantity-{{ product.id }}"
 						name="quantity" value="1" min="1" pattern="[0-9]*"
 						title="Qty" min="0" data-quantity-input 
 						{% if available_online == false  %} aria-disabled="true"{% endif %}>
 					
-					<a class="qty-inc clickable" 
+					<a class="qty-inc clickable qty-btn" 
 						data-quantity-inc
 						aria-label="Increase Quantity"
-						href="#"  
+						href="#" data-val="{{ current_variant.quantity | default: 1 }}"
 					><span class="icon-plus">+</span></a>
 				</div><!-- .product-qty -->
 			</div>
@@ -102,7 +107,6 @@ product-add-form product-form product-form-{{ product.id }}
 					endif
 				endif
 			%}
-
 			<div class="product-form__item product-form__item--submit pt-2 pt-xl-0 ms-xl-4
 				{% if available_online == false %} d-none {% endif %}
 				{%- if product.has_only_default_variant %} product-form__item--no-variants {%- endif -%}" >
@@ -130,6 +134,7 @@ product-add-form product-form product-form-{{ product.id }}
 	
 	{% endform %}            
 </div>
+
 
 
 <script>
@@ -162,6 +167,5 @@ product-add-form product-form product-form-{{ product.id }}
 		});
 	});
 </script>
-
 
 

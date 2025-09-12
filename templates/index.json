@@ -707,38 +707,11 @@
         "image_position": "left"
       }
     },
-    "a83b49b0-6557-4c8a-8b02-291e25990080": {
-      "type": "two-column-panels",
-      "blocks": {
-        "406ef90f-3766-4697-9b71-b3b5cf45cfd4": {
-          "type": "content",
-          "settings": {
-            "lead": "Lead Text",
-            "header": "Evolving Our Craft for Climate and Community",
-            "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>",
-            "image": "shopify://shop_images/Card-EvolvingCraft.jpg",
-            "link_label": "",
-            "link_url": "shopify://pages/philanthropy",
-            "external": false
-          }
-        },
-        "eba71abe-ae11-46c8-bfd0-8130576dc752": {
-          "type": "article",
-          "settings": {
-            "article": "news/acme-and-aquaculture",
-            "external": false
-          }
-        }
-      },
-      "block_order": [
-        "406ef90f-3766-4697-9b71-b3b5cf45cfd4",
-        "eba71abe-ae11-46c8-bfd0-8130576dc752"
-      ],
-      "disabled": true,
+    "most_purchased_items_EXm48A": {
+      "type": "most-purchased-items",
+      "name": "Most Purchased Items",
       "settings": {
-        "anchor_id": "",
-        "color": "light",
-        "link_url": "shopify://blogs/news"
+        "title": "Your Most Purchased Items"
       }
     },
     "a90a4a52-3044-4b1e-b689-d72e5f0ef59c": {
@@ -843,7 +816,7 @@
     "fb4edcb3-2a9e-4311-a6d4-035a301a7e06",
     "e7f2050a-a86e-416c-906c-534b5fcad997",
     "34117dc8-47aa-407e-bb53-9d0f57413667",
-    "a83b49b0-6557-4c8a-8b02-291e25990080",
+    "most_purchased_items_EXm48A",
     "a90a4a52-3044-4b1e-b689-d72e5f0ef59c"
   ]
 }

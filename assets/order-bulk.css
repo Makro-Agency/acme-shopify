@@ -458,7 +458,7 @@ span.title a{
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 150%;
+    line-height: 150%; /* 24px */
 }
 
 /* grid view css */
@@ -466,6 +466,7 @@ span.title a{
     display: flex;
     flex-wrap: wrap;
     gap: 0px;
+    /* justify-content: space-between; */
 }
 
 .product-list.grid .product-header{display: none;}
@@ -473,6 +474,7 @@ span.title a{
 .product-list.grid .product-item-wrapper .product-item {
     width: 100%;
     border: none;
+    /* max-width: 330px; */
 }
 
 .product-list.grid .variant-select-btn {
@@ -554,6 +556,7 @@ span.title a{
 
 .product-list.grid span.grid-price {
     display: flex;
+    /* flex-direction: column; */
     align-items: flex-start;
     gap: 30px;
 }
@@ -743,7 +746,7 @@ span.title a{
     color: var(--Blue, #14315C);
     font-size: 14px;
     font-weight: bold;
-    text-transform: uppercase;
+    text-transform: uppercase; /* 21px */
     text-decoration: none;
     padding: 12px 30px;
     display: inline-block;
@@ -803,6 +806,7 @@ span.title a{
 }
 
 .pagination-lists .page-item a {
+    /* pointer-events: none; */
     text-decoration: none;    
     font-family: SaaSeriesED W05 Regular;
     width: 2.5rem;

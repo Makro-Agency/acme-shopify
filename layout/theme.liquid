@@ -48,6 +48,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 	!function(e,r,a){if(!e.__Marker){e.__Marker={};var t=[],n={__cs:t};["show","hide","isVisible","capture","cancelCapture","unload","reload","isExtensionInstalled","setReporter","clearReporter","setCustomData","on","off"].forEach(function(e){n[e]=function(){var r=Array.prototype.slice.call(arguments);r.unshift(e),t.push(r)}}),e.Marker=n;var s=r.createElement("script");s.async=1,s.src="https://edge.marker.io/latest/shim.js";var i=r.getElementsByTagName("script")[0];i.parentNode.insertBefore(s,i)}}(window,document);
 	</script>
+
+	<script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+	<input type="hidden" id="b2b_address_json" name="b2b_address_json" />
+
+	{% if customer and customer.b2b? %}
+	<script>
+		const src = {{ customer.current_location.shipping_address | json }};
+
+		const payload = {
+		firstName: "{{ customer.first_name | escape }}",
+		lastName: "{{ customer.last_name | escape }}",
+		address1: src.address1 || "",
+		address2: src.address2 || "",
+		city: src.city || "",
+		provinceCode: src.province_code || src.province || "",
+		country: src.country || src.country_name || "",
+		phone: src.phone || "",
+		zip: src.zip || src.postal_code || ""
+		};
+
+		const el = document.querySelector("#b2b_address_json");
+		el.value = JSON.stringify(payload);
+	</script>
+	{% endif %}
 </head>
 
 <body class="template-{{ template | split: '.' | first }} {{ navbar_background }} {% if navbar_transparency %} navbar-transparent {% endif %} {{all_caps}}">

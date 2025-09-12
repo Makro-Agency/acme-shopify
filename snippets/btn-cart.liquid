@@ -1,7 +1,7 @@
 
 <div class="nav-cart {{ classes}} {% if cart.item_count == 0 %} empty{% endif %}" 		
 		sh-nav-cart 
-		href="/cart/"  
+		href="/cart"  
 		 >
 		{% if template.name == 'product' or template.name == 'collection' %}
 			{% render 'icon-cart-blue' %}
@@ -10,7 +10,7 @@
 		{% endif %}
 	<a class ='clickable' 
 		tabindex="0"
-		href="/cart/" 
+		href="/cart" 
 		{% comment %} sh-cart-drawer-trigger {% endcomment %}
 		aria-label="My Cart Button">
 		<span class="icon-cart fa fa-shopping-cart d-none"></span>

@@ -147,11 +147,13 @@
           <div class="product-description body-2 mb-2">{{ product.description }}</div>
             {% render 'product-single-form' product:product  available_online: available_online, b2b_product_in_stock: b2b_product_in_stock %}
 
-          {% if product.metafields.accentuate.where_to_buy_code != blank and product.metafields.accentuate.available_online != true %}
-            <div class="destini-buttons d-flex flex-column">
-              {% render 'product-destini-buttons' product:product %}
-            </div>
-          {% endif %}
+          {% unless customer_b2B %}
+            {% if product.metafields.accentuate.where_to_buy_code != blank and product.metafields.accentuate.available_online != true %}
+              <div class="destini-buttons d-flex flex-column">
+                {% render 'product-destini-buttons' product:product %}
+              </div>
+            {% endif %}
+          {% endunless %}
         </div>
       </div><!-- // product-single__details -->
     </div><!-- row -->

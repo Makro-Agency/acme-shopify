@@ -162,25 +162,33 @@
 
   {% if template.name == 'cart' %}
     {% comment %} var variant_syntax = store_location_data[0]['{{variant.sku}}'][0]; {% endcomment %}
+     
     var variant_syntax = '{{product.quantity}}';
     var variant_get_price = store_location_data[0]['{{variant.sku}}'][0];
-    if(store_location_data.length > 0 && variant_syntax != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
+    if(store_location_data.length > 0 && variant_get_price != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
+      console.log('in3');
       var sale_price = variant_syntax;
-      document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
-        <div class="price__b2b-label">Quantity U/M: </div>
-        <div class="price__pricing-group ">
-          <div class="price__regular">
-              <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">${sale_price}{{ pom_data }}</span>
-          </div>
-          <div class="price__sale"></div>
-        </div>
-      </div>`);
-      document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').classList.add('avail-sale');
-      document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Sales Price U/M:';
 
-      var split_text = document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
-      document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;
+      if(document.querySelectorAll('#v-id-{{ variant.id }}').length > 1){
+        for(var i=0;i<document.querySelectorAll('#v-id-{{ variant.id }}').length;i)
+      }else{
+      
+        document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
+          <div class="price__b2b-label">Quantity U/M: </div>
+          <div class="price__pricing-group ">
+            <div class="price__regular">
+                <span class="visually-hidden">Regular price</span>
+                <span class="price-item price-item--regular" data-regular-price="">${sale_price}{{ pom_data }}</span>
+            </div>
+            <div class="price__sale"></div>
+          </div>
+        </div>`);
+        document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').classList.add('avail-sale');
+        document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Sales Price';
+
+        var split_text = document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
+        document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;
+      }
     }
   {% else %}
     var variant_syntax = '1';
@@ -199,7 +207,7 @@
         </div>
       </div>`);
       document.querySelector('.product-single__single-variant').classList.add('avail-sale');
-      document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Sales Price U/M:';
+      document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Sales Price';
 
       var split_text = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
       document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;

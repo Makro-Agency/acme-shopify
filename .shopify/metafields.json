@@ -3,53 +3,63 @@
   "blog": [],
   "collection": [
     {
-      "key": "filters",
-      "namespace": "algolia",
-      "name": "Algolia Filters",
-      "description": "Filter Trees for Displaying Collection Specific Filter Options",
+      "key": "mobile_subheading",
+      "namespace": "custom",
+      "name": "Mobile subheading",
+      "description": "",
       "type": {
-        "name": "json",
-        "category": "JSON"
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
-      "key": "collection_filters",
+      "key": "mobile_heading",
       "namespace": "custom",
-      "name": "Collection Filters",
+      "name": "Mobile heading",
       "description": "",
       "type": {
-        "name": "list.metaobject_reference",
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "subheading",
+      "namespace": "custom",
+      "name": "Subheading",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "heading",
+      "namespace": "custom",
+      "name": "Heading",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "mobile_banner",
+      "namespace": "custom",
+      "name": "Mobile banner",
+      "description": "",
+      "type": {
+        "name": "file_reference",
         "category": "REFERENCE"
       }
     },
     {
-      "key": "collections_offers",
+      "key": "banner",
       "namespace": "custom",
-      "name": "Collections Offers",
+      "name": "Banner",
       "description": "",
       "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "offermetadata",
-      "namespace": "custom",
-      "name": "OfferMetaData",
-      "description": "",
-      "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "TierInfo",
-      "namespace": "OfferData",
-      "name": "OfferData",
-      "description": "",
-      "type": {
-        "name": "json",
-        "category": "JSON"
+        "name": "file_reference",
+        "category": "REFERENCE"
       }
     }
   ],
@@ -58,103 +68,32 @@
   "location": [],
   "market": [],
   "order": [],
-  "page": [
+  "page": [],
+  "product": [
     {
-      "key": "slideshow_data",
-      "namespace": "custom",
-      "name": "Slideshow Data",
-      "description": "",
+      "key": "plant-support-material",
+      "namespace": "shopify",
+      "name": "Plant support material",
+      "description": "Specifies the material used in plant cages or supports, like terracotta or stone",
       "type": {
         "name": "list.metaobject_reference",
         "category": "REFERENCE"
       }
     },
     {
-      "key": "claim_process",
-      "namespace": "custom",
-      "name": "Claim Process",
-      "description": "",
+      "key": "color-pattern",
+      "namespace": "shopify",
+      "name": "Color",
+      "description": "Defines the primary color or pattern, such as blue or striped",
       "type": {
-        "name": "list.mixed_reference",
+        "name": "list.metaobject_reference",
         "category": "REFERENCE"
       }
     },
     {
-      "key": "accordian",
+      "key": "family",
       "namespace": "custom",
-      "name": "Accordian",
-      "description": "",
-      "type": {
-        "name": "list.mixed_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "image_banner_2",
-      "namespace": "custom",
-      "name": "Image Banner 2",
-      "description": "",
-      "type": {
-        "name": "mixed_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "featured_collection",
-      "namespace": "custom",
-      "name": "Featured Collection",
-      "description": "",
-      "type": {
-        "name": "mixed_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "promotion_block",
-      "namespace": "custom",
-      "name": "Promotion Block",
-      "description": "",
-      "type": {
-        "name": "list.mixed_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "image_video_text",
-      "namespace": "custom",
-      "name": "Image Video Text",
-      "description": "",
-      "type": {
-        "name": "mixed_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "finder",
-      "namespace": "custom",
-      "name": "Finder",
-      "description": "",
-      "type": {
-        "name": "mixed_reference",
-        "category": "REFERENCE"
-      }
-    }
-  ],
-  "product": [
-    {
-      "key": "RebatesOfProduct",
-      "namespace": "tbsfy_Rebate",
-      "name": "Rebate of Product",
-      "description": "Contains \"Rebate Products\" that this rebates belongs to",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "dropdowntitlte",
-      "namespace": "custom",
-      "name": "DropdownTitlte",
+      "name": "Family (Product Family Name)",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -162,9 +101,9 @@
       }
     },
     {
-      "key": "dropdownname",
+      "key": "size_display",
       "namespace": "custom",
-      "name": "DropdownName",
+      "name": "Size (Display – Metafield copy)",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -172,9 +111,19 @@
       }
     },
     {
-      "key": "bbqaccessories",
+      "key": "short_description",
       "namespace": "custom",
-      "name": "BbqAccessories",
+      "name": "Top Blurb / Short Description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "other_sizes",
+      "namespace": "custom",
+      "name": "Other Sizes Available (Links)",
       "description": "",
       "type": {
         "name": "list.product_reference",
@@ -182,246 +131,385 @@
       }
     },
     {
-      "key": "custom_product",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Product",
-      "description": "Use to indicate whether or not the unique product identifiers (UPIs) GTIN, MPN, and brand are available for your product.",
+      "key": "shelving_enabled",
+      "namespace": "custom",
+      "name": "Shelving Enabled",
+      "description": "",
       "type": {
         "name": "boolean",
         "category": "TRUE_FALSE"
       }
     },
     {
-      "key": "features",
-      "namespace": "pimData",
-      "name": "SEO key features",
-      "description": "SEO key features",
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "SEOdescription",
-      "namespace": "pimData",
-      "name": "SEO description",
-      "description": "SEO description",
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "structure",
-      "namespace": "pimData",
-      "name": "Structure",
-      "description": "",
-      "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "OfferGroup",
-      "namespace": "OfferData",
-      "name": "OfferData",
-      "description": "",
-      "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "defaults",
-      "namespace": "algolia",
-      "name": "Algolia Defaults",
-      "description": "",
-      "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "OfferGroup",
+      "key": "drainage_selectable",
       "namespace": "custom",
-      "name": "OfferGroup New",
+      "name": "Drainage Holes – Selectable",
       "description": "",
       "type": {
-        "name": "json",
-        "category": "JSON"
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
     },
     {
-      "key": "specs",
-      "namespace": "algolia",
-      "name": "Algolia Specs",
-      "description": "",
-      "type": {
-        "name": "json",
-        "category": "JSON"
-      }
-    },
-    {
-      "key": "ParentChildsGroups",
-      "namespace": "tbsfy_TAApliance",
-      "name": "ParentsChild",
+      "key": "product_card_tag",
+      "namespace": "custom",
+      "name": "Product card tag",
       "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
-    }
-  ],
-  "variant": [
+    },
     {
-      "key": "net_price_min",
-      "namespace": "makro",
-      "name": "Net Price Min",
+      "key": "long_description",
+      "namespace": "custom",
+      "name": "Bottom Description (Long)",
       "description": "",
       "type": {
-        "name": "number_decimal",
-        "category": "NUMBER"
+        "name": "multi_line_text_field",
+        "category": "TEXT"
       }
     },
     {
-      "key": "net_price_max",
-      "namespace": "makro",
-      "name": "Net Price Max",
+      "key": "material",
+      "namespace": "custom",
+      "name": "Material",
       "description": "",
       "type": {
-        "name": "number_decimal",
-        "category": "NUMBER"
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
-      "key": "custom_label_4",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 4",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "key": "shape",
+      "namespace": "custom",
+      "name": "Shape",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "custom_label_3",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 3",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "key": "usage",
+      "namespace": "custom",
+      "name": "Usage",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "custom_label_2",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 2",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "key": "style",
+      "namespace": "custom",
+      "name": "Style",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "custom_label_1",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 1",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "key": "brand",
+      "namespace": "custom",
+      "name": "Brand",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "custom_label_0",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Custom Label 0",
-      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "key": "color_available",
+      "namespace": "custom",
+      "name": "Color Available",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "size_system",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Size System",
-      "description": "The country of the size system used by your product.",
+      "key": "MSRP",
+      "namespace": "custom",
+      "name": "MSRP",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "size_type",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Size Type",
-      "description": "Your apparel product’s cut.",
+      "key": "model_number",
+      "namespace": "dimensions",
+      "name": "Model Number",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "mpn",
-      "namespace": "mm-google-shopping",
-      "name": "Google: MPN",
-      "description": "Your product’s Manufacturer Part Number (MPN).",
+      "key": "exterior_length",
+      "namespace": "dimensions",
+      "name": "Exterior Length",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "gender",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Gender",
-      "description": "The gender for which your product is intended.",
+      "key": "exterior_width",
+      "namespace": "dimensions",
+      "name": "Exterior Width",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "condition",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Condition",
-      "description": "The condition of your product at time of sale.",
+      "key": "exterior_height",
+      "namespace": "dimensions",
+      "name": "Exterior Height",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "age_group",
-      "namespace": "mm-google-shopping",
-      "name": "Google: Age Group",
-      "description": "The demographic for which your product is intended.",
+      "key": "interior_length",
+      "namespace": "dimensions",
+      "name": "Interior Length",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
-    }
-  ],
-  "shop": [
+    },
     {
-      "key": "blocks_list_checkout_static_content",
-      "namespace": "checkoutblocks",
-      "name": "Checkout Blocks: Blocks List for: checkout_static_content",
-      "description": null,
+      "key": "interior_width",
+      "namespace": "dimensions",
+      "name": "Interior Width",
+      "description": "",
       "type": {
-        "name": "list.metaobject_reference",
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "interior_height",
+      "namespace": "dimensions",
+      "name": "Interior Height",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "vip_price",
+      "namespace": "custom",
+      "name": "VIP Price",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "factory_direct_price",
+      "namespace": "custom",
+      "name": "Factory Direct Price",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "transfer_partner_price",
+      "namespace": "custom",
+      "name": "Transfer/Partner Price",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "distributor_price",
+      "namespace": "custom",
+      "name": "Distributor Price",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "shelving_sku",
+      "namespace": "custom",
+      "name": "Shelving SKU / Variant ID",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "compatible_accessories",
+      "namespace": "custom",
+      "name": "Compatible Accessories (Links)",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
         "category": "REFERENCE"
       }
     },
     {
-      "key": "blocks_list_checkout_custom_field",
-      "namespace": "checkoutblocks",
-      "name": "Checkout Blocks: Blocks List for: checkout_custom_field",
-      "description": null,
+      "key": "brand_details",
+      "namespace": "custom",
+      "name": "Brand (Details Table)",
+      "description": "",
       "type": {
-        "name": "list.metaobject_reference",
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "family_handle",
+      "namespace": "custom",
+      "name": "Category / Family Handle (for linking)",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "requires_freight",
+      "namespace": "custom",
+      "name": "Freight Required",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "grow_pot_size",
+      "namespace": "dimensions",
+      "name": "Grow pot size",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "product_spec_sheet",
+      "namespace": "custom",
+      "name": "Product Spec Sheet",
+      "description": "Override global Product Spec Sheet",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "installation_guide",
+      "namespace": "custom",
+      "name": "Installation Guide",
+      "description": "Override Global Installation Guide",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "care_instruction",
+      "namespace": "custom",
+      "name": "Care Instruction",
+      "description": "Override Global Care Instruction",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "queries",
+      "namespace": "shopify--discovery--product_search_boost",
+      "name": "Search product boosts",
+      "description": "List of search queries for which a product gets higher rank in search results",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "related_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products",
+      "description": "List of related products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "related_products_display",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products settings",
+      "description": "Determines how related products are displayed along with algorithmic product recommendations",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "complementary_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Complementary products",
+      "description": "List of complementary products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "size",
+      "namespace": "custom",
+      "name": "Size (Only for filters)",
+      "description": "Only used for filter",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "variant": [],
+  "shop": [
+    {
+      "key": "premium_finish_colors",
+      "namespace": "custom",
+      "name": "Premium finish colors",
+      "description": "Add color with comma separate",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "test",
+      "namespace": "custom",
+      "name": "test",
+      "description": "",
+      "type": {
+        "name": "file_reference",
         "category": "REFERENCE"
       }
     }

@@ -78,13 +78,15 @@
     <div class="price__regular">
         <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
         <span class="price-item price-item--regular" data-regular-price>
-          {{ money_price }}
+          
           {% if has_b2b %}
             {% if template.name == 'cart' %}
               {% if main_obj.product.metafields.custom.unit_of_measurement != blank %}/{{ main_obj.product.metafields.custom.unit_of_measurement }}{% endif %}
             {% else %}
               {% if product.metafields.custom.unit_of_measurement != blank %}/{{ product.metafields.custom.unit_of_measurement }}{% endif %}
             {% endif %}
+          {% else %}
+            {{ money_price }}
           {% endif %}
         </span>
         {%comment %}
@@ -159,7 +161,9 @@
   {% endif %}
 
   {% if template.name == 'cart' %}
-    var variant_syntax = store_location_data[0]['{{variant.sku}}'][0];
+    {% comment %} var variant_syntax = store_location_data[0]['{{variant.sku}}'][0]; {% endcomment %}
+    var variant_syntax = '{{product.quantity}}';
+    var variant_get_price = store_location_data[0]['{{variant.sku}}'][0];
     if(store_location_data.length > 0 && variant_syntax != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
       var sale_price = variant_syntax;
       document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
@@ -174,9 +178,14 @@
       </div>`);
       document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').classList.add('avail-sale');
       document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Sales Price U/M:';
+
+      var split_text = document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
+      document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;
     }
   {% else %}
-    var variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
+    var variant_syntax = '1';
+    {% comment %} variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0]; {% endcomment %}
+    var variant_get_price = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
     if(store_location_data.length > 0 && variant_syntax != undefined){
       var sale_price = variant_syntax;
       document.querySelector('.price') && document.querySelector('.price').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
@@ -191,6 +200,10 @@
       </div>`);
       document.querySelector('.product-single__single-variant').classList.add('avail-sale');
       document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Sales Price U/M:';
+
+      var split_text = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
+      document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;
+
       var val1 = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
       var val2 = document.querySelector('.sale-price-b2b .price-item--regular').innerText;
       {% comment %} var price_prop = `Sales Price U/M = ${val1}; Quantity U/M = ${val2}`;

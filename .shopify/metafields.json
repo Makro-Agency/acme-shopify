@@ -3,441 +3,276 @@
   "blog": [],
   "collection": [
     {
-      "key": "mobile_subheading",
-      "namespace": "custom",
-      "name": "Mobile subheading",
-      "description": "",
+      "key": "primary_collection",
+      "namespace": "collection",
+      "name": "Primary Collection",
+      "description": "Check True if this is a primary collection",
       "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "mobile_heading",
-      "namespace": "custom",
-      "name": "Mobile heading",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "subheading",
-      "namespace": "custom",
-      "name": "Subheading",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "heading",
-      "namespace": "custom",
-      "name": "Heading",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "mobile_banner",
-      "namespace": "custom",
-      "name": "Mobile banner",
-      "description": "",
-      "type": {
-        "name": "file_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "banner",
-      "namespace": "custom",
-      "name": "Banner",
-      "description": "",
-      "type": {
-        "name": "file_reference",
-        "category": "REFERENCE"
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
     }
   ],
-  "company": [],
-  "company_location": [],
-  "location": [],
+  "company": [
+    {
+      "key": "infor_customer_name",
+      "namespace": "custom",
+      "name": "Infor Customer Name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "company_location": [
+    {
+      "key": "test_name",
+      "namespace": "custom",
+      "name": "Test Name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "delivery_date",
+      "namespace": "acme",
+      "name": "Delivery date",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "block_checkout",
+      "namespace": "custom",
+      "name": "block_checkout",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "sales",
+      "namespace": "custom",
+      "name": "sales",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "infor_customer_number",
+      "namespace": "custom",
+      "name": "Infor Customer Number",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "test_location_id_metafield",
+      "namespace": "custom",
+      "name": "Test Location ID Metafield",
+      "description": "",
+      "type": {
+        "name": "id",
+        "category": "ID"
+      }
+    },
+    {
+      "key": "infor_billing_address_id",
+      "namespace": "custom",
+      "name": "infor_billing_address_id",
+      "description": "The Infor Address Id for the billing address of the location",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "infor_shipping_address_id",
+      "namespace": "custom",
+      "name": "infor_shipping_address_id",
+      "description": "The Infor Address Id for the shipping address of the location.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "location_sale_price",
+      "namespace": "custom",
+      "name": "Location Sale Price",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "sales_id",
+      "namespace": "custom",
+      "name": "Sales ID",
+      "description": "Sales Rep ID",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "location_unit_price",
+      "namespace": "custom",
+      "name": "Location Unit Price",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "checkout_disabled",
+      "namespace": "custom",
+      "name": "Checkout Disabled",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
+  "location": [
+    {
+      "key": "email",
+      "namespace": "custom",
+      "name": "email",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "test_location_id_metafield_loc",
+      "namespace": "custom",
+      "name": "Test Location ID Metafield Loc",
+      "description": "",
+      "type": {
+        "name": "id",
+        "category": "ID"
+      }
+    }
+  ],
   "market": [],
-  "order": [],
-  "page": [],
+  "order": [
+    {
+      "key": "choose_your_delivery_day",
+      "namespace": "checkoutblocks",
+      "name": "Choose your delivery day",
+      "description": "test",
+      "type": {
+        "name": "date",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "po_number",
+      "namespace": "custom",
+      "name": "PO Number",
+      "description": "The customer's purchase order number for the order.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "page": [
+    {
+      "key": "navbar_background",
+      "namespace": "page",
+      "name": "Navbar Background",
+      "description": "Choose Light or Dark. ",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "navbar_transparency",
+      "namespace": "page",
+      "name": "Navbar Transparency",
+      "description": "Should the navbar be transparent before scroll",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
   "product": [
     {
-      "key": "plant-support-material",
-      "namespace": "shopify",
-      "name": "Plant support material",
-      "description": "Specifies the material used in plant cages or supports, like terracotta or stone",
+      "key": "hidden",
+      "namespace": "seo",
+      "name": "SEO HIdden",
+      "description": "Hide this product from the Sitemap.xml",
       "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
+        "name": "number_integer",
+        "category": "NUMBER"
       }
     },
     {
-      "key": "color-pattern",
-      "namespace": "shopify",
-      "name": "Color",
-      "description": "Defines the primary color or pattern, such as blue or striped",
-      "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "family",
-      "namespace": "custom",
-      "name": "Family (Product Family Name)",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "size_display",
-      "namespace": "custom",
-      "name": "Size (Display – Metafield copy)",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "short_description",
-      "namespace": "custom",
-      "name": "Top Blurb / Short Description",
-      "description": "",
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "other_sizes",
-      "namespace": "custom",
-      "name": "Other Sizes Available (Links)",
-      "description": "",
-      "type": {
-        "name": "list.product_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "shelving_enabled",
-      "namespace": "custom",
-      "name": "Shelving Enabled",
-      "description": "",
+      "key": "custom_product",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Product",
+      "description": "Use to indicate whether or not the unique product identifiers (UPIs) GTIN, MPN, and brand are available for your product.",
       "type": {
         "name": "boolean",
         "category": "TRUE_FALSE"
       }
     },
     {
-      "key": "drainage_selectable",
-      "namespace": "custom",
-      "name": "Drainage Holes – Selectable",
-      "description": "",
+      "key": "rating",
+      "namespace": "reviews",
+      "name": "Product rating",
+      "description": "Average rating from customers",
       "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
+        "name": "rating",
+        "category": "RATING"
       }
     },
     {
-      "key": "product_card_tag",
-      "namespace": "custom",
-      "name": "Product card tag",
-      "description": "",
+      "key": "rating_count",
+      "namespace": "reviews",
+      "name": "Product rating count",
+      "description": "Total number of ratings from customers",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "where_to_buy_code",
+      "namespace": "accentuate",
+      "name": "Where To Buy Code",
+      "description": "Enter product code from where to buy ",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "long_description",
-      "namespace": "custom",
-      "name": "Bottom Description (Long)",
-      "description": "",
-      "type": {
-        "name": "multi_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "material",
-      "namespace": "custom",
-      "name": "Material",
-      "description": "",
+      "key": "related_products_display",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products settings",
+      "description": "Determines how related products are displayed along with algorithmic product recommendations",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
-      }
-    },
-    {
-      "key": "shape",
-      "namespace": "custom",
-      "name": "Shape",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "usage",
-      "namespace": "custom",
-      "name": "Usage",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "style",
-      "namespace": "custom",
-      "name": "Style",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "brand",
-      "namespace": "custom",
-      "name": "Brand",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "color_available",
-      "namespace": "custom",
-      "name": "Color Available",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "MSRP",
-      "namespace": "custom",
-      "name": "MSRP",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "model_number",
-      "namespace": "dimensions",
-      "name": "Model Number",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "exterior_length",
-      "namespace": "dimensions",
-      "name": "Exterior Length",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "exterior_width",
-      "namespace": "dimensions",
-      "name": "Exterior Width",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "exterior_height",
-      "namespace": "dimensions",
-      "name": "Exterior Height",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "interior_length",
-      "namespace": "dimensions",
-      "name": "Interior Length",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "interior_width",
-      "namespace": "dimensions",
-      "name": "Interior Width",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "interior_height",
-      "namespace": "dimensions",
-      "name": "Interior Height",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "vip_price",
-      "namespace": "custom",
-      "name": "VIP Price",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "factory_direct_price",
-      "namespace": "custom",
-      "name": "Factory Direct Price",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "transfer_partner_price",
-      "namespace": "custom",
-      "name": "Transfer/Partner Price",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "distributor_price",
-      "namespace": "custom",
-      "name": "Distributor Price",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "shelving_sku",
-      "namespace": "custom",
-      "name": "Shelving SKU / Variant ID",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "compatible_accessories",
-      "namespace": "custom",
-      "name": "Compatible Accessories (Links)",
-      "description": "",
-      "type": {
-        "name": "list.product_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "brand_details",
-      "namespace": "custom",
-      "name": "Brand (Details Table)",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "family_handle",
-      "namespace": "custom",
-      "name": "Category / Family Handle (for linking)",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "requires_freight",
-      "namespace": "custom",
-      "name": "Freight Required",
-      "description": "",
-      "type": {
-        "name": "boolean",
-        "category": "TRUE_FALSE"
-      }
-    },
-    {
-      "key": "grow_pot_size",
-      "namespace": "dimensions",
-      "name": "Grow pot size",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "product_spec_sheet",
-      "namespace": "custom",
-      "name": "Product Spec Sheet",
-      "description": "Override global Product Spec Sheet",
-      "type": {
-        "name": "file_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "installation_guide",
-      "namespace": "custom",
-      "name": "Installation Guide",
-      "description": "Override Global Installation Guide",
-      "type": {
-        "name": "file_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "care_instruction",
-      "namespace": "custom",
-      "name": "Care Instruction",
-      "description": "Override Global Care Instruction",
-      "type": {
-        "name": "file_reference",
-        "category": "REFERENCE"
       }
     },
     {
@@ -461,16 +296,6 @@
       }
     },
     {
-      "key": "related_products_display",
-      "namespace": "shopify--discovery--product_recommendation",
-      "name": "Related products settings",
-      "description": "Determines how related products are displayed along with algorithmic product recommendations",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
       "key": "complementary_products",
       "namespace": "shopify--discovery--product_recommendation",
       "name": "Complementary products",
@@ -481,35 +306,226 @@
       }
     },
     {
-      "key": "size",
-      "namespace": "custom",
-      "name": "Size (Only for filters)",
-      "description": "Only used for filter",
+      "key": "custom_featured_image",
+      "namespace": "product",
+      "name": "Custom Featured Image",
+      "description": "Choose an image to show first in the product carousel",
       "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
+        "name": "file_reference",
+        "category": "REFERENCE"
       }
-    }
-  ],
-  "variant": [],
-  "shop": [
+    },
     {
-      "key": "premium_finish_colors",
+      "key": "hover_image",
+      "namespace": "product",
+      "name": "Hover Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "fish_calculator_options",
+      "namespace": "product",
+      "name": "Fish Calculator",
+      "description": "Choose fish calculator options for this product",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "availability",
       "namespace": "custom",
-      "name": "Premium finish colors",
-      "description": "Add color with comma separate",
+      "name": "Availability",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "weight",
+      "namespace": "custom",
+      "name": "Weight",
+      "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "test",
+      "key": "catch_weight",
       "namespace": "custom",
-      "name": "test",
+      "name": "catch_weight",
       "description": "",
       "type": {
-        "name": "file_reference",
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "unit_of_measurement",
+      "namespace": "custom",
+      "name": "Unit of Measurement",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "price_uom",
+      "namespace": "custom",
+      "name": "Price UOM",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "cofa",
+      "namespace": "custom",
+      "name": "COFA",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "variant": [
+    {
+      "key": "custom_label_4",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 4",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_2",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 2",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_3",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 3",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_0",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 0",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "mpn",
+      "namespace": "mm-google-shopping",
+      "name": "Google: MPN",
+      "description": "Your product’s Manufacturer Part Number (MPN).",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "size_type",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Size Type",
+      "description": "Your apparel product’s cut.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_1",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 1",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "condition",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Condition",
+      "description": "The condition of your product at time of sale.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "gender",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Gender",
+      "description": "The gender for which your product is intended.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "size_system",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Size System",
+      "description": "The country of the size system used by your product.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "age_group",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Age Group",
+      "description": "The demographic for which your product is intended.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "shop": [
+    {
+      "key": "blocks_list_checkout_custom_field",
+      "namespace": "checkoutblocks",
+      "name": "Checkout Blocks: Blocks List for: checkout_custom_field",
+      "description": null,
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "blocks_list_checkout_static_content",
+      "namespace": "checkoutblocks",
+      "name": "Checkout Blocks: Blocks List for: checkout_static_content",
+      "description": null,
+      "type": {
+        "name": "list.metaobject_reference",
         "category": "REFERENCE"
       }
     }

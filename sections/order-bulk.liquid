@@ -873,11 +873,22 @@
         if (!isNaN(currentVal)) {
             if (currentVal < 99999){
                 plusSelector.closest('.quantity-selector').classList.add('active');
+                var get_value_split = plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
+                if(get_value_split.length > 1){
+                    var temp_val = get_value_split[1];
+                }else{
+                    var temp_val = get_value_split[0];
+                }
+
                 if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
+                    plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
+                    plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val;
                     plusSelector.closest('.quantity-selector').classList.remove('active-div');
                 }else{
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = (currentVal + 1);
+                    plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = (currentVal + 1) + ' ' + temp_val;
+                    plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = (currentVal + 1) + ' ' + temp_val;
                 }
                 plusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
             }else{
@@ -908,7 +919,7 @@
                 }, 4000);
             }, 2000);
 
-            console.log(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail'))
+            //console.log(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail'))
             if(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail')){
                 var prop_value = 'Sales Price U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').nextElementSibling.innerText + '; Quantity U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').innerText;
                 add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
@@ -916,7 +927,7 @@
                     "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
                     "_price" : prop_value
                 };
-                console.log(prop_value,'prop_value',add_obj)
+                //console.log(prop_value,'prop_value',add_obj)
             }else{
                 console.log('prop_value')
                 add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
@@ -949,12 +960,23 @@
         }else{
             var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
         }
+
+        var get_value_split = minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
+        if(get_value_split.length > 1){
+            var temp_val = get_value_split[1];
+        }else{
+            var temp_val = get_value_split[0];
+        }
         
         if (!isNaN(currentVal) && currentVal > 0) {
             minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
+            minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
+            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val;
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
         }else{
             minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = 0;
+            minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = temp_val;
+            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = temp_val;
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.opacity = 0.5;
             minusSelector.closest('.quantity-selector').classList.remove('active');
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
@@ -1267,7 +1289,8 @@
                 
                 if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
                     if(item.metafields.price_uom != null){
-                        var _sale_price = store_location_data[0][currentVAraint.sku][0] + ' ' + item.metafields.price_uom;
+                        //var _sale_price = store_location_data[0][currentVAraint.sku][0] + ' ' + item.metafields.price_uom;
+                        var _sale_price = item.metafields.price_uom;
                     }else{
                         var _sale_price = store_location_data[0][currentVAraint.sku][0];
                     }
@@ -1277,7 +1300,7 @@
                                 <span>${_sale_price}</span>
                             </div>`;
                     var price_lable = 'Sales Price U/M:';
-                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Quantity U/M</span>${_sale_price}</span>`;
+                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Quantity U/M</span><span class="price-value">${_sale_price}</span></span>`;
                     var mobile_order = `<span class="price"><span class="mobile-header">Sales Price U/M</span>${_item_price}</span>`;
                 }else{
                     var _sale_price = '';

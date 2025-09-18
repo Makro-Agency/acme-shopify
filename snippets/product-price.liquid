@@ -78,13 +78,15 @@
     <div class="price__regular">
         <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
         <span class="price-item price-item--regular" data-regular-price>
-          {{ money_price }}
+          
           {% if has_b2b %}
             {% if template.name == 'cart' %}
               {% if main_obj.product.metafields.custom.unit_of_measurement != blank %}/{{ main_obj.product.metafields.custom.unit_of_measurement }}{% endif %}
             {% else %}
               {% if product.metafields.custom.unit_of_measurement != blank %}/{{ product.metafields.custom.unit_of_measurement }}{% endif %}
             {% endif %}
+          {% else %}
+            {{ money_price }}
           {% endif %}
         </span>
         {%comment %}
@@ -139,67 +141,166 @@
   
 </div>
 
-<script>
-  var store_location_data = []
-  {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
-      {% if customer.current_location.metafields.custom.location_sale_price != blank %}
-          store_location_data.push({{ customer.current_location.metafields.custom.location_sale_price }});
+  {% if has_b2b %}
+  <script>
+    
+    document.addEventListener("DOMContentLoaded", function(event) {
+    
+      
+    
+      var store_location_data = []
+      {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+          {% if customer.current_location.metafields.custom.location_unit_price != blank %}
+              store_location_data.push({{ customer.current_location.metafields.custom.location_unit_price }});
+          {% endif %}
       {% endif %}
-  {% endif %}
 
-  {% assign pom_data = '' %}
-  {% if template.name == 'cart' %}
-    {% if main_obj.product.metafields.custom.price_uom != blank %}
-      {% assign pom_data = ' ' | append:main_obj.product.metafields.custom.price_uom %}
-    {% endif %}
-  {% else %}
-    {% if product.metafields.custom.price_uom != blank %}
-      {% assign pom_data = ' ' | append:product.metafields.custom.price_uom %}
-    {% endif %}
-  {% endif %}
+      {% assign pom_data = '' %}
+      {% if template.name == 'cart' %}
+        {% if main_obj.product.metafields.custom.price_uom != blank %}
+          {% assign pom_data = ' ' | append:main_obj.product.metafields.custom.price_uom %}
+        {% endif %}
+      {% else %}
+        {% if product.metafields.custom.price_uom != blank %}
+          {% assign pom_data = ' ' | append:product.metafields.custom.price_uom %}
+        {% endif %}
+      {% endif %}
 
-  {% if template.name == 'cart' %}
-    var variant_syntax = store_location_data[0]['{{variant.sku}}'][0];
-    if(store_location_data.length > 0 && variant_syntax != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
-      var sale_price = variant_syntax;
-      document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
-        <div class="price__b2b-label">Quantity U/M: </div>
-        <div class="price__pricing-group ">
-          <div class="price__regular">
-              <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">${sale_price}{{ pom_data }}</span>
-          </div>
-          <div class="price__sale"></div>
-        </div>
-      </div>`);
-      document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').classList.add('avail-sale');
-      document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Sales Price U/M:';
-    }
-  {% else %}
-    var variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
-    if(store_location_data.length > 0 && variant_syntax != undefined){
-      var sale_price = variant_syntax;
-      document.querySelector('.price') && document.querySelector('.price').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
-        <div class="price__b2b-label">Quantity U/M: </div>
-        <div class="price__pricing-group ">
-          <div class="price__regular">
-              <span class="visually-hidden">Regular price</span>
-              <span class="price-item price-item--regular" data-regular-price="">${sale_price}{{ pom_data }}</span>
-          </div>
-          <div class="price__sale"></div>
-        </div>
-      </div>`);
-      document.querySelector('.product-single__single-variant').classList.add('avail-sale');
-      document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Sales Price U/M:';
-      var val1 = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
-      var val2 = document.querySelector('.sale-price-b2b .price-item--regular').innerText;
-      {% comment %} var price_prop = `Sales Price U/M = ${val1}; Quantity U/M = ${val2}`;
-      var property_field = `<input type="hidden" name="properties[_price]" value="${price_prop}">`
-      document.querySelector('.product-add-form').innerHTML += property_field;
-      console.log('in'); {% endcomment %}
-    }
-  {% endif %}
+      {% if template.name == 'cart' %}
+        {% comment %} var variant_syntax = store_location_data[0]['{{variant.sku}}'][0]; {% endcomment %}
+        
+        var variant_syntax = '{{product.quantity}}';
+        var variant_get_price = store_location_data[0]['{{variant.sku}}'][0];
+        if(store_location_data.length > 0 && variant_get_price != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
 
-  
-</script>
+          var sale_price = variant_syntax;
+
+          if(document.querySelectorAll('#v-id-{{ variant.id }}').length > 1){
+            for(var i=0;i<document.querySelectorAll('#v-id-{{ variant.id }}').length;i++){
+              var selector_current = document.querySelectorAll('#v-id-{{ variant.id }}')[i];
+              var get_qty = selector_current.closest('.cart__row').querySelector('.cart__quantity-td .product-form__qty .product-form__qty-input').value;
+
+              if(get_qty == '0'){
+                get_qty = ''; 
+              }else{
+                get_qty = get_qty + ' ';
+              }
+
+              selector_current && selector_current.insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
+                <div class="price__b2b-label">Quantity U/M: </div>
+                <div class="price__pricing-group ">
+                  <div class="price__regular">
+                      <span class="visually-hidden">Regular price</span>
+                      <span class="price-item price-item--regular" data-regular-price="">${get_qty}{{ pom_data }}</span>
+                  </div>
+                  <div class="price__sale"></div>
+                </div>
+              </div>`);
+              selector_current.closest('.price-wrap').classList.add('avail-sale');
+              selector_current.querySelector('.price__b2b-label').innerText = 'Sales Price';
+      
+              var split_text = selector_current.querySelector('.price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
+              selector_current.querySelector('.price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;
+            }
+          }else{
+          
+            var get_qty = document.querySelector('#v-id-{{ variant.id }}').closest('.cart__row').querySelector('.cart__quantity-td .product-form__qty .product-form__qty-input').value;
+
+            if(get_qty == '0'){
+              get_qty = ''; 
+            }else{
+              get_qty = get_qty + ' ';
+            }
+            document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
+              <div class="price__b2b-label">Quantity U/M: </div>
+              <div class="price__pricing-group ">
+                <div class="price__regular">
+                    <span class="visually-hidden">Regular price</span>
+                    <span class="price-item price-item--regular" data-regular-price="">${get_qty}{{ pom_data }}</span>
+                </div>
+                <div class="price__sale"></div>
+              </div>
+            </div>`);
+            document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').classList.add('avail-sale');
+            document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true  .price__b2b-label').innerText = 'Sales Price';
+
+            var split_text = document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
+            document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;
+          }
+        }
+      {% else %}
+        var variant_syntax = '1';
+        {% comment %} variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0]; {% endcomment %}
+        var variant_get_price = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
+        if(store_location_data.length > 0 && variant_syntax != undefined){
+          var sale_price = variant_syntax;
+          document.querySelector('.price') && document.querySelector('.price').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
+            <div class="price__b2b-label">Quantity U/M: </div>
+            <div class="price__pricing-group ">
+              <div class="price__regular">
+                  <span class="visually-hidden">Regular price</span>
+                  <span class="price-item price-item--regular" data-regular-price="">${sale_price}{{ pom_data }}</span>
+              </div>
+              <div class="price__sale"></div>
+            </div>
+          </div>`);
+          document.querySelector('.product-single__single-variant').classList.add('avail-sale');
+          document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__b2b-label').innerText = 'Sales Price';
+
+          var split_text = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
+          document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;
+
+          var val1 = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
+          var val2 = document.querySelector('.sale-price-b2b .price-item--regular').innerText;
+          {% comment %} var price_prop = `Sales Price U/M = ${val1}; Quantity U/M = ${val2}`;
+          var property_field = `<input type="hidden" name="properties[_price]" value="${price_prop}">`
+          document.querySelector('.product-add-form').innerHTML += property_field;
+          console.log('in'); {% endcomment %}
+        }
+
+        // Decrement quantity
+      document.querySelectorAll('[data-quantity-dec]').forEach(function(decBtn) {
+        decBtn.addEventListener('click', function(e) {
+          var input = this.parentElement.querySelector('.qty-input');
+          if (input) {
+            var current = parseInt(input.value) || 1;
+            if (current > 0) {
+              var store_val = this.closest('form').querySelector('.avail-sale .sale-price-b2b .price__pricing-group .price-item--regular').innerText;
+              if(store_val.split(' ').length > 1){
+                this.closest('form').querySelector('.avail-sale .sale-price-b2b .price__pricing-group .price-item--regular').innerText = current + ' ' + store_val.split(' ')[1];
+              }else{
+                store_val.innerText = store_val;
+              }
+            }
+          }
+        });
+      });
+
+      // Increment quantity
+      document.querySelectorAll('[data-quantity-inc]').forEach(function(incBtn) {
+        incBtn.addEventListener('click', function(e) {
+          var input = this.parentElement.querySelector('.qty-input');
+          if (input) {
+            var current = parseInt(input.value) || 1;
+            if (current > 0) {
+              var store_val = this.closest('form').querySelector('.avail-sale .sale-price-b2b .price__pricing-group .price-item--regular').innerText;
+              if(store_val.split(' ').length > 1){
+                this.closest('form').querySelector('.avail-sale .sale-price-b2b .price__pricing-group .price-item--regular').innerText = current + ' ' + store_val.split(' ')[1];
+              }else{
+                store_val.innerText = store_val;
+              }
+            }
+          }
+        });
+      });
+        
+      {% endif %}
+
+    
+
+    });
+
+    
+  </script>
+  {% endif %}
 {% endif %}

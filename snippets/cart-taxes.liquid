@@ -9,5 +9,5 @@
 			{{ 'cart.messages.taxes_and_shipping_at_checkout' | t }}
 		  {%- endif -%}
 		{%- endcapture -%}
-		<small class="cart__shipping rte body-2 text-blue">{{ taxes_shipping_checkout }}</small>
+		<small class="cart__shipping rte body-2 text-blue {% if customer_b2B %}hide{% endif %}">{{ taxes_shipping_checkout }}</small>
 

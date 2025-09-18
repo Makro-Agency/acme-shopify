@@ -150,8 +150,8 @@
     
       var store_location_data = []
       {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
-          {% if customer.current_location.metafields.custom.location_sale_price != blank %}
-              store_location_data.push({{ customer.current_location.metafields.custom.location_sale_price }});
+          {% if customer.current_location.metafields.custom.location_unit_price != blank %}
+              store_location_data.push({{ customer.current_location.metafields.custom.location_unit_price }});
           {% endif %}
       {% endif %}
 

@@ -34,8 +34,8 @@
     {% endif %}
     {% unless request.design_mode %}
         {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
-            {% if customer.current_location.metafields.custom.location_sale_price != blank %}
-                store_location_data.push({{ customer.current_location.metafields.custom.location_sale_price }});
+            {% if customer.current_location.metafields.custom.location_unit_price != blank %}
+                store_location_data.push({{ customer.current_location.metafields.custom.location_unit_price }});
             {% endif %}
         {% else %}  
             window.location.href = '/'
@@ -1302,6 +1302,8 @@
                     }else{
                         var _sale_price = store_location_data[0][currentVAraint.sku][0];
                     }
+
+                    var _item_price = store_location_data[0][currentVAraint.sku][0] + ' /' + item.metafields.unit_of_measure
                     
                     var _sale_price_mobile = `<div class="sale-price">
                                 <span>Quantity U/M:</span>

@@ -13,6 +13,14 @@
       break
     endif
   endfor
+
+  assign add_price_prop = true
+  for item in cart.items
+    unless item.properties['_price']
+      assign add_price_prop = false
+      break
+    endunless
+  endfor
   
 -%}
 {% if customer_b2B %}
@@ -343,12 +351,13 @@
         return Availdays;
       }
   
-      const updateProp = async(up_obj,resp = null) => {
+      const updateProp = async(up_obj,resp = null,key_val = null) => {
+        
         if(!up_obj.length){
           document.querySelector('[name="checkout"]').removeAttribute('disabled');
           return;
         }
-        
+        var old_selector = document.querySelector('[data-cart-item-key="'+JSON.parse(up_obj[0].body).id+'"]');
         const response = await fetch(`/cart/change`, up_obj[0]);
         if (!response.ok) {
           console.log('%cHTTP error! status:','color: red; font-size: 15px; font-weight: 700', response.status);
@@ -357,6 +366,8 @@
           return;
         }
         const data = await response.json();
+        var store_place = (parseInt(old_selector.getAttribute('data-cart-item-index')) - 1);
+        old_selector.setAttribute('data-cart-item-key',data.items[store_place].key);
         up_obj.shift();
         {% comment %} console.log(`%cItem properties update success on pickup select >>`,'color: green; font-size: 15px; font-weight: 700', data); {% endcomment %}
         updateProp(up_obj,JSON.stringify(data));
@@ -376,92 +387,58 @@
 
       document.addEventListener("DOMContentLoaded", (event) => {
   
-      var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
-      const inputTime = "{{settings.cut-time}}:00";
-      var store_month = (Today.getMonth() + 1);
-      var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
-  
-      {% if changed_day %}
-  
-        var check_change_line = false;
-        if(DateFormat != order_date){
-          check_change_line = true;
-        }else{
-          if(hasEstTimePassedToday(inputTime)){
-            check_change_line = true;
-          }
-        }
-  
-        var update_main_arry = [];
-        if(check_change_line){
-          document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
-  
-          var get_new_date = getNextMondays();
-          var tempcurrentDay = get_new_date.pop();
-  
-          {% for item in cart.items %}
-            {% if item.properties['_addtocart_date'] %}
-              var date_array = [];
-              var prop = {}
-  
-              {% for item_prop in item.properties %}
-                {% assign val = item_prop.last | split:',' %}
-                {% if val.size > 1 %}
-                  prop['{{ item_prop.first }}']=get_new_date;
-                {% elsif item_prop.first == '_addtocart_date' %}
-                  prop['{{ item_prop.first }}']=tempcurrentDay
-                {% else %}
-                  prop['{{ item_prop.first }}']='{{ item_prop.last }}'
-                {% endif %}
-              {% endfor %}
+        var Today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+        const inputTime = "{{settings.cut-time}}:00";
+        var store_month = (Today.getMonth() + 1);
+        var DateFormat = `${Today.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Today.getDate() < 10 ? ('0'+Today.getDate()) : Today.getDate()}`;
+    
+        {% if changed_day %}
+          {% if customer_b2B == true %}
 
-              {% comment %} var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
-              var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
-              var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
-              prop['_price'] = prop_value; {% endcomment %}
-  
-              var cart_item_data = {
-                id: '{{item.key}}',
-                quantity: {{item.quantity}},
-                properties: prop
-              };
-              var UPDATE_OBJ = {
-                method: 'POST',
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify(cart_item_data)
-              };
-              update_main_arry.push(UPDATE_OBJ);
-            {% endif %}
-            {% if forloop.last %}
-              updateProp(update_main_arry);
-              if(update_main_arry.length == 0){
-                document.querySelector('[name="checkout"]').removeAttribute('disabled');
+            var check_change_line = false;
+            if(DateFormat != order_date){
+              check_change_line = true;
+            }else{
+              if(hasEstTimePassedToday(inputTime)){
+                check_change_line = true;
               }
-            {% endif %}
-          {% endfor %}
-        }
-      {% elsif customer_b2B == true and changed_day == false %}
-        var check_change_line = true;
-  
-        var update_main_arry = [];
-        if(check_change_line){
-          document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
-  
-          var get_new_date = getNextMondays();
-          var tempcurrentDay = get_new_date.pop();
-  
-          {% for item in cart.items %}
-            console.log('item', {{item | json}});
+            }
+
+            console.log('need to add item');
+            var update_main_arry = [];
+            document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+
+            {% for item in cart.items %}
               var date_array = [];
               var prop = {}
-  
-              prop['_delivery_date']=get_new_date;
-              prop['_addtocart_date']=tempcurrentDay;
 
-              {% comment %} var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
+              {% if forloop.first %}
+
+                if(check_change_line){
+
+                  var get_new_date = getNextMondays();
+                  var tempcurrentDay = get_new_date.pop();
+
+                  {% for item_prop in item.properties %}
+                    {% assign val = item_prop.last | split:',' %}
+                    {% if val.size > 1 %}
+                      prop['{{ item_prop.first }}']=get_new_date;
+                    {% elsif item_prop.first == '_addtocart_date' %}
+                      prop['{{ item_prop.first }}']=tempcurrentDay
+                    {% else %}
+                      prop['{{ item_prop.first }}']='{{ item_prop.last }}'
+                    {% endif %}
+                  {% endfor %}
+                }
+
+              {% endif %}
+
+              console.log(prop,'prop');
+
+              var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
               var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
               var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
-              prop['_price'] = prop_value; {% endcomment %}
+              prop['_price'] = prop_value;
   
               var cart_item_data = {
                 id: '{{item.key}}',
@@ -473,12 +450,61 @@
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify(cart_item_data)
               };
+
               update_main_arry.push(UPDATE_OBJ);
-              updateProp(update_main_arry);
-              {% break %}
-          {% endfor %}
-        }
-      {% endif %}
+
+              {% if forloop.last %}
+                updateProp(update_main_arry);
+                if(update_main_arry.length == 0){
+                  document.querySelector('[name="checkout"]').removeAttribute('disabled');
+                }
+              {% endif %}
+
+            {% endfor %}
+            
+          {% endif %}
+        {% elsif customer_b2B == true and changed_day == false %}
+          var check_change_line = true;
+    
+          var update_main_arry = [];
+          if(check_change_line){
+            document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+    
+            var get_new_date = getNextMondays();
+            var tempcurrentDay = get_new_date.pop();
+    
+            {% for item in cart.items %}
+              console.log('item', {{item | json}});
+                var date_array = [];
+                var prop = {}
+    
+                prop['_delivery_date']=get_new_date;
+                prop['_addtocart_date']=tempcurrentDay;
+
+                var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
+                var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
+                var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
+                prop['_price'] = prop_value;
+    
+                var cart_item_data = {
+                  id: '{{item.key}}',
+                  quantity: {{item.quantity}},
+                  properties: prop
+                };
+                var UPDATE_OBJ = {
+                  method: 'POST',
+                  headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                  body: JSON.stringify(cart_item_data)
+                };
+                update_main_arry.push(UPDATE_OBJ);
+                console.log('item2', UPDATE_OBJ);
+                updateProp(update_main_arry);
+                
+                {% break %}
+            {% endfor %}
+          }
+        
+        {% endif %}
 
       })
       
@@ -489,7 +515,7 @@
 
 
   {% if customer_b2B %}
-  <script>
+  {% comment %} <script>
     document.addEventListener("DOMContentLoaded", function() {
       // Decrement quantity
       document.querySelectorAll('[data-quantity-dec]').forEach(function(decBtn) {
@@ -526,5 +552,7 @@
         });
       });
     });
-  </script>
+  </script> {% endcomment %}
   {% endif %}
+
+  

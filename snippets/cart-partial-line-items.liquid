@@ -6,6 +6,8 @@
       data-cart-item-url="{{ item.url }}" 
       data-cart-item-title="{{ item.title }}" 
       data-cart-item-index="{{ forloop.index }}" 
+      {% unless item.properties['_addtocart_date'] %}data-add-cart{% endunless %}
+      {% unless item.properties['_price'] %}data-price-prop{% endunless %}
       data-cart-item-quantity="{{ item.quantity }}">
 
       {% unless customer_b2B %}

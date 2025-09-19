@@ -249,45 +249,14 @@
         </div>
     {% endif %}
 
-
-
-
-    {% comment %} {% if check_shared %}
-        <div class="tab_wrapper">
-            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=my-product" data-title="my-product" class="active">My products</a>
-            <a href="{{ request.path }}{% if request.url contains '?' %}&{% else %}?{% endif %}tab=all-product" data-title="all-product">All products</a>
-        </div>
-
-        
-
-        <script>
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const tabParam = urlParams.get('tab');
-            
-            if (tabParam) {
-                const tabLinks = document.querySelectorAll('.tab_wrapper a');
-                tabLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.dataset.title === tabParam) {
-                        link.classList.add('active');
-                    }
-                });
-            }else{
-                const url = new URL(window.location.href);
-                url.searchParams.set('tab', 'my-product');
-                window.history.replaceState({}, '', url);
-            }
-        </script>
-    {% endif %} {% endcomment %}
-
     <div class="serach_result hide">No results found for terms <strong></strong></div>
     <div class="product-list">
         <div class="product-header">
             <span>PRODUCT</span>
             <span>SKU</span>
-            <span>Sale Price</span>
-            <span>Order Price</span>
+            <span>Ordering U/M</span>
+            <span>Sales Price</span>
+            <span>Quantity</span>
         </div>
         
         <div class="product-item-wrapper">
@@ -873,21 +842,21 @@
         if (!isNaN(currentVal)) {
             if (currentVal < 99999){
                 plusSelector.closest('.quantity-selector').classList.add('active');
-                var get_value_split = plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
+                {% comment %} var get_value_split = plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
                 if(get_value_split.length > 1){
                     var temp_val = get_value_split[1];
                 }else{
                     var temp_val = get_value_split[0];
-                }
+                } {% endcomment %}
                 if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
-                    plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
-                    plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val;
+                    {% comment %} plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
+                    plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val; {% endcomment %}
                     plusSelector.closest('.quantity-selector').classList.remove('active-div');
                 }else{
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = (currentVal + 1);
-                    plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = (currentVal + 1) + ' ' + temp_val;
-                    plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = (currentVal + 1) + ' ' + temp_val;
+                    {% comment %} plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = (currentVal + 1) + ' ' + temp_val;
+                    plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = (currentVal + 1) + ' ' + temp_val; {% endcomment %}
                 }
                 plusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
             }else{
@@ -960,22 +929,22 @@
             var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
         }
 
-        var get_value_split = minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
+        {% comment %} var get_value_split = minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
         if(get_value_split.length > 1){
             var temp_val = get_value_split[1];
         }else{
             var temp_val = get_value_split[0];
-        }
+        } {% endcomment %}
         
         if (!isNaN(currentVal) && currentVal > 0) {
             minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
-            minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
-            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val;
+            {% comment %} minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
+            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val; {% endcomment %}
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
         }else{
             minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = 0;
-            minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = temp_val;
-            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = temp_val;
+            {% comment %} minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = temp_val;
+            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = temp_val; {% endcomment %}
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.opacity = 0.5;
             minusSelector.closest('.quantity-selector').classList.remove('active');
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
@@ -1310,7 +1279,7 @@
                             </div>`;
                     var price_lable = 'Sales Price U/M:';
                     var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Ordering U/M</span><span class="price-value">${_sale_price}</span></span>`;
-                    var mobile_order = `<span class="price"><span class="mobile-header">Sales Price U/M</span>${_item_price}</span>`;
+                    var mobile_order = `<span class="price"><span class="mobile-header">Sales Price U/M</span>$${_item_price}</span>`;
                 }else{
                     var _sale_price = '';
                     var _sale_price_mobile = '';
@@ -1363,7 +1332,7 @@
                             ${_sale_price_mobile}
                             <div>
                                 <span>${price_lable}</span>
-                                <span>${_item_price}</span>
+                                <span>$${_item_price}</span>
                             </div>
                         </span>
                         <div class="quantity-btn-wrap">

@@ -170,7 +170,7 @@
         {% comment %} var variant_syntax = store_location_data[0]['{{variant.sku}}'][0]; {% endcomment %}
         
         var variant_syntax = '{{product.quantity}}';
-        var variant_get_price = store_location_data[0]['{{variant.sku}}'][0];
+        var variant_get_price = '$' + store_location_data[0]['{{variant.sku}}'][0];
         if(store_location_data.length > 0 && variant_get_price != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
 
           var sale_price = variant_syntax;
@@ -178,20 +178,20 @@
           if(document.querySelectorAll('#v-id-{{ variant.id }}').length > 1){
             for(var i=0;i<document.querySelectorAll('#v-id-{{ variant.id }}').length;i++){
               var selector_current = document.querySelectorAll('#v-id-{{ variant.id }}')[i];
-              var get_qty = selector_current.closest('.cart__row').querySelector('.cart__quantity-td .product-form__qty .product-form__qty-input').value;
+              {% comment %} var get_qty = selector_current.closest('.cart__row').querySelector('.cart__quantity-td .product-form__qty .product-form__qty-input').value;
 
               if(get_qty == '0'){
                 get_qty = ''; 
               }else{
                 get_qty = get_qty + ' ';
-              }
+              } {% endcomment %}
 
               selector_current && selector_current.insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
                 <div class="price__b2b-label">Ordering U/M: </div>
                 <div class="price__pricing-group ">
                   <div class="price__regular">
                       <span class="visually-hidden">Regular price</span>
-                      <span class="price-item price-item--regular" data-regular-price="">${get_qty}{{ pom_data }}</span>
+                      <span class="price-item price-item--regular" data-regular-price="">{{ pom_data }}</span>
                   </div>
                   <div class="price__sale"></div>
                 </div>
@@ -204,19 +204,19 @@
             }
           }else{
           
-            var get_qty = document.querySelector('#v-id-{{ variant.id }}').closest('.cart__row').querySelector('.cart__quantity-td .product-form__qty .product-form__qty-input').value;
+            {% comment %} var get_qty = document.querySelector('#v-id-{{ variant.id }}').closest('.cart__row').querySelector('.cart__quantity-td .product-form__qty .product-form__qty-input').value;
 
             if(get_qty == '0'){
               get_qty = ''; 
             }else{
               get_qty = get_qty + ' ';
-            }
+            } {% endcomment %}
             document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
               <div class="price__b2b-label">Ordering U/M: </div>
               <div class="price__pricing-group ">
                 <div class="price__regular">
                     <span class="visually-hidden">Regular price</span>
-                    <span class="price-item price-item--regular" data-regular-price="">${get_qty}{{ pom_data }}</span>
+                    <span class="price-item price-item--regular" data-regular-price="">{{ pom_data }}</span>
                 </div>
                 <div class="price__sale"></div>
               </div>
@@ -231,7 +231,7 @@
       {% else %}
         var variant_syntax = '1';
         {% comment %} variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0]; {% endcomment %}
-        var variant_get_price = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
+        var variant_get_price = '$' + store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
         if(store_location_data.length > 0 && variant_syntax != undefined){
           var sale_price = variant_syntax;
           document.querySelector('.price') && document.querySelector('.price').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
@@ -239,7 +239,7 @@
             <div class="price__pricing-group ">
               <div class="price__regular">
                   <span class="visually-hidden">Regular price</span>
-                  <span class="price-item price-item--regular" data-regular-price="">${sale_price}{{ pom_data }}</span>
+                  <span class="price-item price-item--regular" data-regular-price="">{{ pom_data }}</span>
               </div>
               <div class="price__sale"></div>
             </div>
@@ -258,7 +258,7 @@
           console.log('in'); {% endcomment %}
         }
 
-        // Decrement quantity
+      {% comment %} // Decrement quantity
       document.querySelectorAll('[data-quantity-dec]').forEach(function(decBtn) {
         decBtn.addEventListener('click', function(e) {
           var input = this.parentElement.querySelector('.qty-input');
@@ -292,7 +292,7 @@
             }
           }
         });
-      });
+      }); {% endcomment %}
         
       {% endif %}
 

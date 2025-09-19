@@ -202,6 +202,10 @@ li.page-item.disabled {
 .product-header span:first-child {
     padding-left: 20px;
 }
+.product-header span:last-child {
+    text-align: right;
+    padding-right: 60px;
+}
 .product-item {
     border-bottom: 1px solid var(--Blue, #14315C);
 }
@@ -568,9 +572,9 @@ span.title a{
     gap: 10px;
 }
 
-.product-list.grid span.grid-price div.sale-price {
+/* .product-list.grid span.grid-price div.sale-price {
     opacity: 0.6;
-}
+} */
 
 /* .sale-p-avail{
     opacity: 0.5;

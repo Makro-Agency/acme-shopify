@@ -516,9 +516,6 @@
       "order_summary": {
         "free_total_label": "$0",
         "free_shipping_total_label": "$0"
-      },
-      "shipping": {
-        "free_rate_label": "$0"
       }
     }
   }

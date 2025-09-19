@@ -519,9 +519,6 @@
       },
       "shipping": {
         "free_rate_label": "$0"
-      },
-      "payment_summary": {
-        "free_label": "$0"
       }
     }
   }

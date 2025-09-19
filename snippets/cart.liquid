@@ -415,10 +415,10 @@
                 {% endif %}
               {% endfor %}
 
-              var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
+              {% comment %} var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
               var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
               var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
-              prop['_price'] = prop_value;
+              prop['_price'] = prop_value; {% endcomment %}
   
               var cart_item_data = {
                 id: '{{item.key}}',
@@ -458,10 +458,10 @@
               prop['_delivery_date']=get_new_date;
               prop['_addtocart_date']=tempcurrentDay;
 
-              var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
+              {% comment %} var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
               var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
               var prop_value = 'Sales Price U/M = ' + val2 + '; Quantity U/M = ' + val1;
-              prop['_price'] = prop_value;
+              prop['_price'] = prop_value; {% endcomment %}
   
               var cart_item_data = {
                 id: '{{item.key}}',
@@ -486,3 +486,45 @@
   {% endif %}
   
   
+
+
+  {% if customer_b2B %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Decrement quantity
+      document.querySelectorAll('[data-quantity-dec]').forEach(function(decBtn) {
+        decBtn.addEventListener('click', function(e) {
+          var input = this.parentElement.querySelector('.product-form__qty-input');
+          if (input) {
+            var current = parseInt(input.value) || 1;
+            if (current > 0) {
+              var store_val = this.closest('.cart__row').querySelector('.price-wrap .sale-price-b2b .price__pricing-group .price-item--regular').innerText;
+              if(store_val.split(' ').length > 1){
+                this.closest('.cart__row').querySelector('.price-wrap .sale-price-b2b .price__pricing-group .price-item--regular').innerText = current + ' ' + store_val.split(' ')[1];
+              }else{
+                store_val.innerText = store_val;
+              }
+            }
+          }
+        });
+      });
+      // Increment quantity
+      document.querySelectorAll('[data-quantity-inc]').forEach(function(incBtn) {
+        incBtn.addEventListener('click', function(e) {
+          var input = this.parentElement.querySelector('.product-form__qty-input');
+          if (input) {
+            var current = parseInt(input.value) || 1;
+            if (current > 0) {
+              var store_val = this.closest('.cart__row').querySelector('.price-wrap .sale-price-b2b .price__pricing-group .price-item--regular').innerText;
+              if(store_val.split(' ').length > 1){
+                this.closest('.cart__row').querySelector('.price-wrap .sale-price-b2b .price__pricing-group .price-item--regular').innerText = current + ' ' + store_val.split(' ')[1];
+              }else{
+                store_val.innerText = store_val;
+              }
+            }
+          }
+        });
+      });
+    });
+  </script>
+  {% endif %}

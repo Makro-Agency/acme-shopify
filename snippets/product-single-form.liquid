@@ -75,9 +75,11 @@ product-add-form product-form product-form-{{ product.id }}
 
 		{% endif %}
 
-		<div class="product-form__footer mt-1 mt-xl-4 pt-xl-2 d-xl-flex align-items-center">
+		{% comment %} <div class="product-form__footer mt-1 mt-xl-4 pt-xl-2 d-xl-flex align-items-center"> {% endcomment %}
+		<div class="product-form__footer mt-1 mt-xl-4 pt-xl-2 d-xl-flex align-items-end">
 			<div sh-quantity-component data-min-value="1" class="{% if available_online == false %} d-none {% endif %}">
 				<div class="product-qty-title visually-hidden"><span class="option-title header-5 text-blue">Quantity</span></div>
+				<div class="product-qty-title"><span class="option-title header-5 text-blue">Quantity:</span></div>
 				<div class="product-qty mb-4 mt-4 mb-xl-0 mt-xl-0">
 					<a class="qty-dec clickable qty-btn disabled" 
 						data-quantity-dec 

@@ -83,6 +83,13 @@ span.addbtn svg {
 .product-single__details .price.price--has_b2b-true {
   margin-block: 2rem;
 }
+.avail-sale {
+  display: flex;
+  gap: 30px;
+}
+/* .sale-price-b2b{
+  opacity: .8;
+} */
 .avail-sale, .order-bulk .product-list.grid span.grid-price {
   display: flex;
   gap: 16px;
@@ -103,6 +110,16 @@ span.addbtn svg {
   border-radius: 4px;
   background: rgba(20, 49, 92, 0.04);
   padding: 9px 10px;
+}
+
+.product-qty-title{
+  margin-bottom: 12.5px;
+}
+
+.product-qty-title .option-title.header-5{
+  font-size: 12px;
+    line-height: 100%;
+    display: inline-block;
 }
 
 .sale-price-b2b{

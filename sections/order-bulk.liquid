@@ -34,8 +34,8 @@
     {% endif %}
     {% unless request.design_mode %}
         {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
-            {% if customer.current_location.metafields.custom.location_sale_price != blank %}
-                store_location_data.push({{ customer.current_location.metafields.custom.location_sale_price }});
+            {% if customer.current_location.metafields.custom.location_unit_price != blank %}
+                store_location_data.push({{ customer.current_location.metafields.custom.location_unit_price }});
             {% endif %}
         {% else %}  
             window.location.href = '/'
@@ -286,8 +286,8 @@
         <div class="product-header">
             <span>PRODUCT</span>
             <span>SKU</span>
-            <span>Quantity U/M</span>
-            <span>Sales Price U/M</span>
+            <span>Sale Price</span>
+            <span>Order Price</span>
         </div>
         
         <div class="product-item-wrapper">
@@ -873,11 +873,21 @@
         if (!isNaN(currentVal)) {
             if (currentVal < 99999){
                 plusSelector.closest('.quantity-selector').classList.add('active');
+                var get_value_split = plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
+                if(get_value_split.length > 1){
+                    var temp_val = get_value_split[1];
+                }else{
+                    var temp_val = get_value_split[0];
+                }
                 if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
+                    plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
+                    plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val;
                     plusSelector.closest('.quantity-selector').classList.remove('active-div');
                 }else{
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = (currentVal + 1);
+                    plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = (currentVal + 1) + ' ' + temp_val;
+                    plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = (currentVal + 1) + ' ' + temp_val;
                 }
                 plusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
             }else{
@@ -908,7 +918,7 @@
                 }, 4000);
             }, 2000);
 
-            console.log(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail'))
+            // console.log(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail'))
             if(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail')){
                 var prop_value = 'Sales Price U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').nextElementSibling.innerText + '; Quantity U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').innerText;
                 add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
@@ -916,7 +926,7 @@
                     "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
                     "_price" : prop_value
                 };
-                console.log(prop_value,'prop_value',add_obj)
+                //console.log(prop_value,'prop_value',add_obj)
             }else{
                 console.log('prop_value')
                 add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
@@ -949,12 +959,23 @@
         }else{
             var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
         }
+
+        var get_value_split = minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
+        if(get_value_split.length > 1){
+            var temp_val = get_value_split[1];
+        }else{
+            var temp_val = get_value_split[0];
+        }
         
         if (!isNaN(currentVal) && currentVal > 0) {
             minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
+            minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
+            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val;
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
         }else{
             minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = 0;
+            minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = temp_val;
+            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = temp_val;
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.opacity = 0.5;
             minusSelector.closest('.quantity-selector').classList.remove('active');
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
@@ -1134,7 +1155,7 @@
             if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
                 var _sale_price = store_location_data[0][currentVAraint.sku][0];
                 var _sale_price_mobile = `<div class="sale-price">
-                            <span>Quantity U/M:</span>
+                            <span>Ordering U/M:</span>
                             <span>${store_location_data[0][currentVAraint.sku][0]}</span>
                         </div>`;
                 var price_lable = 'Sales Price U/M:';
@@ -1265,19 +1286,30 @@
         }else{
             currentVAraints.forEach(function(currentVAraint){
                 
+                var qty = '0';
+                if(cart_items[currentVAraint.id] != undefined){
+                    qty = cart_items[currentVAraint.id].quantity;
+                }
                 if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
                     if(item.metafields.price_uom != null){
-                        var _sale_price = store_location_data[0][currentVAraint.sku][0] + ' ' + item.metafields.price_uom;
+                        //var _sale_price = store_location_data[0][currentVAraint.sku][0] + ' ' + item.metafields.price_uom;
+                        if(qty == 0){
+                            var _sale_price = item.metafields.price_uom;
+                        }else{
+                            var _sale_price = qty + ' ' + item.metafields.price_uom;
+                        }
                     }else{
                         var _sale_price = store_location_data[0][currentVAraint.sku][0];
                     }
+
+                    var _item_price = store_location_data[0][currentVAraint.sku][0] + ' /' + item.metafields.unit_of_measure
                     
                     var _sale_price_mobile = `<div class="sale-price">
-                                <span>Quantity U/M:</span>
+                                <span>Ordering U/M:</span>
                                 <span>${_sale_price}</span>
                             </div>`;
                     var price_lable = 'Sales Price U/M:';
-                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Quantity U/M</span>${_sale_price}</span>`;
+                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Ordering U/M</span><span class="price-value">${_sale_price}</span></span>`;
                     var mobile_order = `<span class="price"><span class="mobile-header">Sales Price U/M</span>${_item_price}</span>`;
                 }else{
                     var _sale_price = '';
@@ -1287,10 +1319,10 @@
                     var mobile_order = `<span class="price"><span class="mobile-header">Price</span>${_item_price}</span>`;
                 }
 
-                var qty = '0';
+                {% comment %} var qty = '0';
                 if(cart_items[currentVAraint.id] != undefined){
                     qty = cart_items[currentVAraint.id].quantity;
-                }
+                } {% endcomment %}
                 var disable_class = '';
                 if(currentVAraint.available == false){
                     var disable_class = 'disabled';

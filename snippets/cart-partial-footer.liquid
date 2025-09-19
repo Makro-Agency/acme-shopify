@@ -5,8 +5,8 @@
 		</div> {% endcomment %}
 	  <div class="col-md-9">
 		{% render 'cart-discounts' %}
-		{% render 'cart-subtotal' %}
-		{% render 'cart-taxes' %}
+		{% render 'cart-subtotal',customer_b2B:customer_b2B %}
+		{% render 'cart-taxes',customer_b2B:customer_b2B %}
 	  </div>
 	</div>
 	<div class="row mb-2">

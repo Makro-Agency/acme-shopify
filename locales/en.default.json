@@ -524,12 +524,5 @@
         "free_label": "$0"
       }
     }
-  },
-  "customer_accounts": {
-    "order_details": {
-      "shipping": {
-        "free": "$0"
-      }
-    }
   }
 }

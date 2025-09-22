@@ -923,7 +923,7 @@
         }
 
         if(minusSelector.closest('.quantity-selector').classList.contains('active-div')){
-            var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
+            var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
             minusSelector.closest('.quantity-selector').classList.remove('active-div');
         }else{
             var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
@@ -950,10 +950,17 @@
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
         }
 
-        var getCount = document.querySelectorAll('.quantity-selector.active').length;
+        //var getCount = document.querySelectorAll('.quantity-selector.active').length;
+        var getCount = 0;
+        for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
+            getCount += (parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('input.qty-selector').value));
+        }
         if(getCount <= 0){
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.remove('active');
+        }else{
+            document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
+            document.querySelector('.mini-cart-sticky').classList.add('active');
         }
 
         if(currentVal <= 0){

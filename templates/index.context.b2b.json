@@ -7,20 +7,26 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "parent": "index.json",
   "context": {
     "b2b": true
   },
   "sections": {
+    "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
     "hero_section_AG7Gij": {
       "disabled": false,
       "settings": {},
       "blocks": {}
     },
-    "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3": {
-      "disabled": true,
-      "settings": {},
+    "most_purchased_items_EXm48A": {
+      "settings": {
+        "coll_obj": "master-product-collection"
+      },
       "blocks": {}
     }
   }

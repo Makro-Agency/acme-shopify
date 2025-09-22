@@ -29,9 +29,10 @@
             {% assign item_v_id = item.variant_id %}
             {% comment %} {% assign item_v_measure = item.product.metafields.custom.unit_of_measurement %} {% endcomment %}
             {% assign item_v_measure = item.product.metafields.custom.price_uom %}
+            {% assign item_unit_measure = item.product.metafields.custom.unit_of_measurement %}
             {% assign item_handle = item.product.handle %}
             {% assign item_price = item.product.price %}
-            {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id | append: ':::' | append: item_v_measure | append: ':::' | append: item_handle | append: ':::' | append: item_price %}
+            {% assign entry = prod_id | append: ':::' | append: item.title | append: ':::' | append: image_link | append: ':::' | append: '0' | append: ':::' | append: item_sku | append: ':::' | append: item_vendor | append: ':::' | append: item_v_id | append: ':::' | append: item_v_measure | append: ':::' | append: item_handle | append: ':::' | append: item_price | append: ':::' | append: item_unit_measure %}
             {% if product_data == '' %}
               {% assign product_data = entry %}
             {% else %}
@@ -56,6 +57,7 @@
         {% assign v_measure = entry_parts[7] %}
         {% assign v_handle = entry_parts[8] %}
         {% assign v_price = entry_parts[9] %}
+        {% assign u_measure = entry_parts[10] %}
         {% assign total_qty = 0 %}
         {% for order in latest_orders %}
           {% for item in order.line_items %}
@@ -85,6 +87,8 @@
           | append: v_handle
           | append: ':::'
           | append: v_price
+          | append: ':::'
+          | append: u_measure
         %}
         {% if updated_product_data == '' %}
           {% assign updated_product_data = new_entry %}
@@ -202,6 +206,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", (event) => {
+
+      var store_location_data = []
+      {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+          {% if customer.current_location.metafields.custom.location_unit_price != blank %}
+              store_location_data.push({{ customer.current_location.metafields.custom.location_unit_price }});
+          {% endif %}
+      {% endif %}
+
       var parent = document.querySelector('.most-purchased-items-list .swiper-wrapper');
       var cards = Array.from(parent.querySelectorAll('.collection-product-card'));
   
@@ -215,6 +227,27 @@
   
       cards.forEach(function(card) {
         parent.appendChild(card);
+        var find_sku = card.querySelector('.product-grid-item__content-container .sku-content').querySelectorAll('span')[1].textContent.split(': ')[1];
+        var vuom = card.querySelector('.product-grid-item__content-container .sku-content').getAttribute('data-uom');
+
+        var variant_get_price = '$' + store_location_data[0][find_sku][0];
+        if(vuom != ''){
+          vuom = variant_get_price + ' /' + vuom;
+        }else{
+          vuom = '';
+        }
+        if(store_location_data.length > 0 && store_location_data[0][find_sku][0] != undefined){
+          card.querySelector('.coll-cart-btn') && card.querySelector('.btn-price .price.price--has_b2b-true').insertAdjacentHTML('afterend', `<div class="price price--has_b2b-true" data-price="">
+            <div class="price__b2b-label">Sales Price</div>
+              <div class="price__pricing-group ">
+                <div class="price__regular">
+                    <span class="visually-hidden">Regular price</span>
+                    <span class="price-item price-item--regular" data-regular-price="">${vuom}</span>
+                    
+                </div>
+              </div>
+            </div>`);
+        }
       });
   
       var swiper = new Swiper(".most-purchased-product-list", {
@@ -229,7 +262,7 @@
             slidesPerView: 1,
             spaceBetween: 30
           },
-          649: {
+          641: {
             slidesPerView: 2,
             spaceBetween: 30
           },

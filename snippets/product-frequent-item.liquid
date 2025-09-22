@@ -9,6 +9,16 @@
 {% assign v_measure = entry_parts[7] %}
 {% assign v_handle = entry_parts[8] %}
 {% assign v_price = entry_parts[9] %}
+{% assign u_measure = entry_parts[10] %}
+
+
+{% liquid
+	assign has_b2b = false
+	if customer and customer.b2b? and customer.company_available_locations_count > 0
+		assign has_b2b = true
+	endif
+%}
+
 
 <div class="swiper-slide collection-product-card" data-qty="{{ qty }}">
 	<div class="product-grid-item  card-basic">
@@ -24,7 +34,7 @@
 		
 			<div class="product-grid-item__content-container">
 				<!-- Content -->
-				<div class="sku-content">
+				<div class="sku-content" data-uom="{{ u_measure }}">
 					<span>{{vendor}}</span>
 					<svg xmlns="http://www.w3.org/2000/svg" width="1" height="12" viewBox="0 0 1 12" fill="none"><line x1="0.5" y1="0.5" x2="0.5" y2="11.5" stroke="black"></line></svg>
 					<span>SKU: {{sku}}</span>
@@ -44,31 +54,40 @@
 						
 					<div class="product-single__single-variant">
 						<div class="btn-price">
-							<div class="price price--has_b2b-true" data-price="">
-								<div class="price__b2b-label">Your Price: </div>
-								<div class="price__pricing-group ">
-									<div class="price__regular">
-										<span class="visually-hidden">Regular price</span>
-										<span class="price-item price-item--regular" data-regular-price=""> {{v_price | money }}{% if v_measure != blank %}/{{ v_measure }}{% endif %}</span>
+
+							<div class="price-wrap">
+								<div class="price price--has_b2b-true" data-price="">
+									<div class="price__b2b-label">{% if has_b2b %}Ordering U/M:{% else %}Your Price: {% endif %}</div>
+									<div class="price__pricing-group ">
+										<div class="price__regular">
+											<span class="visually-hidden">Regular price</span>
+											<span class="price-item price-item--regular" data-regular-price=""> 
+											{% if has_b2b %}
+												{{v_measure}}
+											{% else %}
+												{{v_price | money }}{% if v_measure != blank %}/{{ v_measure }}{% endif %}
+											{% endif %}
+											</span>
+										</div>
+										<div class="price__sale">
+											<span class="visually-hidden">Sale price</span>
+											<span class="price-item price-item--sale" data-sale-price="">{{v_price | money }}</span>
+											<span class="visually-hidden">Regular price</span>
+											<span class="price-item price-item--regular" data-regular-price=""></span>
+										</div>
+										<div class="price__badges">
+											<span class="price__badge price__badge--sale" aria-hidden="true">
+												<span>Sale</span>
+											</span>
+											<span class="price__badge price__badge--sold-out">
+												<span>Sold out</span>
+											</span>
+										</div>
 									</div>
-									<div class="price__sale">
-										<span class="visually-hidden">Sale price</span>
-										<span class="price-item price-item--sale" data-sale-price="">{{v_price | money }}</span>
-										<span class="visually-hidden">Regular price</span>
-										<span class="price-item price-item--regular" data-regular-price=""></span>
+									<div class="price__unit">
+										<span class="visually-hidden">Quantity U/M</span>
+										<span class="price-unit-price"><span data-unit-price=""></span><span aria-hidden="true">/</span><span class="visually-hidden">&nbsp;</span><span data-unit-price-base-unit=""></span></span>
 									</div>
-									<div class="price__badges">
-										<span class="price__badge price__badge--sale" aria-hidden="true">
-											<span>Sale</span>
-										</span>
-										<span class="price__badge price__badge--sold-out">
-											<span>Sold out</span>
-										</span>
-									</div>
-								</div>
-								<div class="price__unit">
-									<span class="visually-hidden">Quantity U/M</span>
-									<span class="price-unit-price"><span data-unit-price=""></span><span aria-hidden="true">/</span><span class="visually-hidden">&nbsp;</span><span data-unit-price-base-unit=""></span></span>
 								</div>
 							</div>
 

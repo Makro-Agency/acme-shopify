@@ -351,7 +351,7 @@
         return Availdays;
       }
   
-      const updateProp = async(up_obj,resp = null,key_val = null) => {
+      const updateProp = async(up_obj,resp = null) => {
         
         if(!up_obj.length){
           document.querySelector('[name="checkout"]').removeAttribute('disabled');
@@ -367,7 +367,11 @@
         }
         const data = await response.json();
         var store_place = (parseInt(old_selector.getAttribute('data-cart-item-index')) - 1);
-        old_selector.setAttribute('data-cart-item-key',data.items[store_place].key);
+        {% comment %} console.log(store_place,'store_place',data.items); {% endcomment %}
+        if(data.items[store_place]){
+          old_selector.setAttribute('data-cart-item-key',data.items[store_place].key);
+        }
+        
         up_obj.shift();
         {% comment %} console.log(`%cItem properties update success on pickup select >>`,'color: green; font-size: 15px; font-weight: 700', data); {% endcomment %}
         updateProp(up_obj,JSON.stringify(data));
@@ -412,7 +416,7 @@
               var date_array = [];
               var prop = {}
 
-              {% if forloop.first %}
+              {% if item.properties['_addtocart_date'] != blank %}
 
                 if(check_change_line){
 
@@ -425,6 +429,18 @@
                       prop['{{ item_prop.first }}']=get_new_date;
                     {% elsif item_prop.first == '_addtocart_date' %}
                       prop['{{ item_prop.first }}']=tempcurrentDay
+                    {% else %}
+                      prop['{{ item_prop.first }}']='{{ item_prop.last }}'
+                    {% endif %}
+                  {% endfor %}
+                }else{
+                  {% for item_prop in item.properties %}
+                    {% if item_prop.first == '_delivery_date' %}
+                      var prop_val_arr = [];
+                      {% for sing_val in item_prop.last %}
+                        prop_val_arr.push('{{ sing_val }}')
+                      {% endfor %}
+                      prop['{{ item_prop.first }}']=prop_val_arr
                     {% else %}
                       prop['{{ item_prop.first }}']='{{ item_prop.last }}'
                     {% endif %}
@@ -478,8 +494,10 @@
                 var date_array = [];
                 var prop = {}
     
-                prop['_delivery_date']=get_new_date;
-                prop['_addtocart_date']=tempcurrentDay;
+                {% if forloop.first %}
+                  prop['_delivery_date']=get_new_date;
+                  prop['_addtocart_date']=tempcurrentDay;
+                {% endif %}
 
                 var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
                 var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
@@ -500,13 +518,42 @@
                 console.log('item2', UPDATE_OBJ);
                 updateProp(update_main_arry);
                 
-                {% break %}
             {% endfor %}
           }
         
         {% endif %}
 
       })
+
+      function removeProduct(e,element){
+        e.preventDefault();
+        const target = element;
+        const lineItem = target.closest('.cart__row');
+        const key = lineItem.dataset.cartItemKey;
+
+        {% comment %} var cart_item_data = {
+          id: key,
+          quantity: 0
+        };
+        var UPDATE_OBJ = {
+          method: 'POST',
+          headers: { "Accept": "application/json", "Content-Type": "application/json" },
+          body: JSON.stringify(cart_item_data)
+        };
+
+        const response = await fetch(`/cart/change`, UPDATE_OBJ);
+        if (!response.ok) {
+          console.log('%cHTTP error! status:','color: red; font-size: 15px; font-weight: 700', response.status);
+          console.log('%cSomething went wrong, please refresh the page and try again..!!','color: red; font-size: 15px; font-weight: 700');
+          document.querySelector('[name="checkout"]').removeAttribute('disabled');
+          return;
+        } {% endcomment %}
+        Shopify.cartService.removeItem( key ).then( function( response ){
+          if( response.success ){
+            location.reload();
+          };
+        });
+      }
       
     </script>
   {% endif %}

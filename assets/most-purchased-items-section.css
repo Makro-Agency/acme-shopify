@@ -69,6 +69,42 @@
   margin-top: auto;
 }
 
+.quantity-btn-wrap {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.quantity-selector {
+    border-radius: 100px;
+    border: 1px solid var(--Blue, #14315C);
+    display: flex;
+    height: 45px;
+    padding: 12px 24px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    font-family: ITCClearfaceRegular;
+}
+.quantity-selector button {
+    border: none;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+}
+
+.quantity-selector button svg{
+    pointer-events: none;
+}
+
+.quantity-selector input.qty-selector {
+    background: transparent;
+    border: none;
+    width: 50px;
+    text-align: center;
+    padding: 0;
+}
+
 @media screen and (max-width: 989px) {
     .most-purchased-items-section h2.heading {
         font-size: 42px;

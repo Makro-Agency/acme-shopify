@@ -489,6 +489,15 @@
     function addtocart(ele){
         const items = [],items_object = {};
 
+        var bulkOrderObj = {};
+        bulkOrderObj = JSON.parse(localStorage.getItem('bulkOrderObj'));
+
+        {% comment %} if(Object.entries(bulkOrderObj).length > 0){
+            Object.values(bulkOrderObj).forEach(function(obj) {
+                items.push(obj);
+            });
+        } {% endcomment %}
+
         if(main_items.length > 0){
             main_items.forEach((item)=>{
                 items.push(item);
@@ -562,14 +571,14 @@
             var nextMondays = '';
         {% endif %}
 
-        if(Object.values(add_obj).length > 0){
+        {% comment %} if(Object.values(add_obj).length > 0){
             const values = Object.values(add_obj);
             values.forEach((value,index) => {
                 const isLast = index === values.length - 1;
                 
-                console.log(value,value['_price'],'YES')
+                {% comment %} console.log(value,value['_price'],'YES') {% endcomment %}
                 if(value['_price'] != undefined){
-                    console.log(value,value['_price'],'YES1')
+                    {% comment %} console.log(value,value['_price'],'YES1') {% endcomment %}
                     if(nextMondays == ''){
                         var productData = { 
                             id: value.id,
@@ -643,6 +652,97 @@
                             console.error('There was a problem with the fetch operation:', error);;
                         }).finally(() => {
                         console.log('finally');
+                        });
+                    })
+                    .catch(err => {
+                        console.error('Error clearing cart:', err);
+                    });
+                }
+            });
+        } {% endcomment %}
+
+        if(Object.values(bulkOrderObj).length > 0){
+            const values = Object.values(bulkOrderObj);
+            values.forEach((value,index) => {
+                const isLast = index === values.length - 1;
+                
+                {% comment %} console.log(value,value['_price'],'YES') {% endcomment %}
+                if(value['_price'] != undefined){
+                    {% comment %} console.log(value,value['_price'],'YES1') {% endcomment %}
+                    if(nextMondays == ''){
+                        var productData = { 
+                            id: value.id,
+                            quantity: value.quantity,
+                            properties: {
+                                "_price" : value['_price']
+                            }
+                        };
+                    }else{
+                        var productData = { 
+                            id: value.id,
+                            quantity: value.quantity,
+                            properties: {
+                                "_delivery_date":nextMondays,
+                                "_addtocart_date":tempcurrentDay,
+                                "_price" : value['_price']
+                            }
+                        };
+                    }
+                }else{
+                    console.log(value,value['_price'],'YES2')
+                    if(nextMondays == ''){
+                        var productData = { 
+                            id: value.id,
+                            quantity: value.quantity
+                        };
+                    }else{
+                        var productData = { 
+                            id: value.id,
+                            quantity: value.quantity,
+                            properties: {
+                                "_delivery_date":nextMondays,
+                                "_addtocart_date":tempcurrentDay
+                            }
+                        };
+                    }
+                }
+                
+                items.push(productData);
+                if(isLast){
+                    items_object['items'] = items;
+                    const o = items_object;
+
+                    fetch('/cart/clear.js', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(res => {
+                        if (!res.ok) throw new Error('Cart clear failed');
+                            return res.json();
+                        })
+                    .then(data => {
+                        fetch(`{{ routes.cart_add_url }}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Accept: `application/json`,
+                            },
+                            body: JSON.stringify(o)
+                        }).then(response => {
+                            if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        }).then(result => {
+                            console.log('Added',result);
+                            localStorage.removeItem('bulkOrderObj');
+                            window.location.href = '/cart';
+                        }).catch(error => {
+                            console.error('There was a problem with the fetch operation:', error);;
+                        }).finally(() => {
+                            console.log('finally');
                         });
                     })
                     .catch(err => {
@@ -888,6 +988,11 @@
             }, 2000);
 
             // console.log(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail'))
+
+            // Store the object in localStorage instead of adding to add_obj
+            var itemKey = plusSelector.closest('.quantity-selector').dataset.item;
+
+
             if(plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail')){
                 var prop_value = 'Sales Price U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').nextElementSibling.innerText + '; Quantity U/M = ' + plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').innerText;
                 add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
@@ -895,6 +1000,14 @@
                     "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
                     "_price" : prop_value
                 };
+                
+                var itemValue = {
+                    "id": itemKey,
+                    "quantity": parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
+                    "_price": prop_value
+                };
+                
+                
                 //console.log(prop_value,'prop_value',add_obj)
             }else{
                 console.log('prop_value')
@@ -902,7 +1015,23 @@
                     "id":plusSelector.closest('.quantity-selector').dataset.item,
                     "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value)
                 };
+
+                var itemValue = {
+                    "id": itemKey,
+                    "quantity": parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value)
+                };
             }
+
+            var bulkOrderObj = {};
+            if (localStorage.getItem('bulkOrderObj')) {
+                try {
+                    bulkOrderObj = JSON.parse(localStorage.getItem('bulkOrderObj'));
+                } catch(e) {
+                    bulkOrderObj = {};
+                }
+            }
+            bulkOrderObj[itemKey] = itemValue;
+            localStorage.setItem('bulkOrderObj', JSON.stringify(bulkOrderObj));
             
         }
     };
@@ -963,15 +1092,40 @@
             document.querySelector('.mini-cart-sticky').classList.add('active');
         }
 
+        var itemKey = minusSelector.closest('.quantity-selector').dataset.item;
+
         if(currentVal <= 0){
             delete add_obj[minusSelector.closest('.quantity-selector').dataset.item];
         }else{
+            var prop_value = 'Sales Price U/M = ' + minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').nextElementSibling.innerText + '; Quantity U/M = ' + minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail').innerText;
             add_obj[minusSelector.closest('.quantity-selector').dataset.item] = {
                 "id":minusSelector.closest('.quantity-selector').dataset.item,
                 "quantity":parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
-                "_price" : "Sales Price U/M = $12.50 /EA; Quantity U/M = 10 EA"
+                "_price" : prop_value
+            };
+
+            var itemValue = {
+                "id": itemKey,
+                "quantity": parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value),
+                "_price": prop_value
             };
         }
+
+        var bulkOrderObj = {};
+        if (localStorage.getItem('bulkOrderObj')) {
+            try {
+                bulkOrderObj = JSON.parse(localStorage.getItem('bulkOrderObj'));
+            } catch(e) {
+                bulkOrderObj = {};
+            }
+        }
+
+        if(currentVal <= 0){
+            delete bulkOrderObj[itemKey];
+        }else{
+            bulkOrderObj[itemKey] = itemValue;
+        }
+        localStorage.setItem('bulkOrderObj', JSON.stringify(bulkOrderObj));
     };
     
     const filter_bar = () => {
@@ -1263,8 +1417,14 @@
             currentVAraints.forEach(function(currentVAraint){
                 
                 var qty = '0';
-                if(cart_items[currentVAraint.id] != undefined){
-                    qty = cart_items[currentVAraint.id].quantity;
+                var bulkOrderObj = {};
+                bulkOrderObj = localStorage.getItem('bulkOrderObj') != null ? JSON.parse(localStorage.getItem('bulkOrderObj')) : bulkOrderObj;
+                if(cart_items[currentVAraint.id] != undefined || Object.entries(bulkOrderObj).length > 0){
+                    if(Object.entries(bulkOrderObj).length > 0 && bulkOrderObj[currentVAraint.id] != undefined){
+                        qty = bulkOrderObj[currentVAraint.id].quantity;
+                    }else if(cart_items[currentVAraint.id] != undefined){
+                        qty = cart_items[currentVAraint.id].quantity;
+                    }
                 }
                 if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
                     if(item.metafields.price_uom != null){
@@ -1649,7 +1809,6 @@
     addEventListener("DOMContentLoaded", (event) => {
 
         var hasMyProducts = false;
-
         for(var i=0; i < json_val.length; i++){
             var sku = json_val[i].variants && json_val[i].variants.length > 0 ? json_val[i].variants[0].sku : null;
             if (sku && Array.isArray(store_location_data) && store_location_data.length > 0) {
@@ -1692,12 +1851,49 @@
                         }
                     }
                     LoadData(0,9);
+                    if(localStorage.getItem('bulkOrderObj') != null){
+                        var getData = JSON.parse(localStorage.getItem('bulkOrderObj'));
+                        // Calculate total quantity from getData object
+                        var totalQuantity = 0;
+                        if (getData && typeof getData === 'object') {
+                            Object.keys(getData).forEach(function(key) {
+                                var item = getData[key];
+                                if (item && typeof item.quantity !== 'undefined') {
+                                    totalQuantity += Number(item.quantity) || 0;
+                                }
+                            });
+                        }
+                        {% comment %} console.log(document.querySelector('.mini-cart-sticky'),'test') {% endcomment %}
+                        if(document.querySelector('.mini-cart-sticky')){
+                            document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
+                            document.querySelector('.mini-cart-sticky').classList.add('active');
+                        }
+                    }
                     break;
                 }
             }
 
             if(i == (json_val.length - 1)){
                 LoadData(0,9);
+
+                if(localStorage.getItem('bulkOrderObj') != null){
+                    var getData = JSON.parse(localStorage.getItem('bulkOrderObj'));
+                    // Calculate total quantity from getData object
+                    var totalQuantity = 0;
+                    if (getData && typeof getData === 'object') {
+                        Object.keys(getData).forEach(function(key) {
+                            var item = getData[key];
+                            if (item && typeof item.quantity !== 'undefined') {
+                                totalQuantity += Number(item.quantity) || 0;
+                            }
+                        });
+                    }
+                    if(document.querySelector('.mini-cart-sticky')){
+                        document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
+                        document.querySelector('.mini-cart-sticky').classList.add('active');
+                    }
+                }
+
             }
         }
 
@@ -1723,7 +1919,7 @@
         }
         
         onPaginationChange(event){
-            console.log('call pagination');
+            //console.log('call pagination');
             if(event) event.preventDefault();
             if(document.querySelector('.pagination-wrapper .pagination-lists .next-item').classList.contains('disabled') == false){
                 document.querySelector('.pagination-wrapper .pagination-lists .next-item').click();

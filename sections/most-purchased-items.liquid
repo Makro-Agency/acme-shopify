@@ -389,19 +389,22 @@
   
     var clickAttrPlus = function (plusSelector){
       var currentVal = parseInt(plusSelector.dataset.val);
-      plusSelector.closest('.product-qty').querySelector('input').value = currentVal + 1;
+      plusSelector.closest('.quantity-selector').querySelector('input').value = currentVal + 1;
+      plusSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('data-val',(currentVal + 1));
+      plusSelector.closest('.quantity-selector').querySelector('.qtyplus').setAttribute('data-val',(currentVal + 1));
+      plusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
       
-      var v_id = plusSelector.closest('.product-qty').dataset.id;
+      var v_id = plusSelector.closest('.quantity-selector').dataset.item;
       var updates = {};
       if(nextMondays == ''){
         var productData = { 
             id: v_id,
-            quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value)
+            quantity: parseInt(plusSelector.closest('.quantity-selector').querySelector('input').value)
         };
       }else{
         var productData = { 
             id: v_id,
-            quantity: parseInt(plusSelector.closest('.product-qty').querySelector('input').value),
+            quantity: parseInt(plusSelector.closest('.quantity-selector').querySelector('input').value),
             properties: {
                 "_delivery_date":nextMondays,
                 "_addtocart_date":tempcurrentDay
@@ -430,19 +433,21 @@
     var clickAttrMinus = function (minusSelector){
       var currentVal = parseInt(minusSelector.dataset.val);
       if(currentVal > 0){
-        minusSelector.closest('.product-qty').querySelector('input').value = currentVal - 1;
-        var v_id = minusSelector.closest('.product-qty').dataset.id;
+        minusSelector.closest('.quantity-selector').querySelector('input').value = currentVal - 1;
+        minusSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('data-val',(currentVal - 1));
+        minusSelector.closest('.quantity-selector').querySelector('.qtyplus').setAttribute('data-val',(currentVal - 1));
+        var v_id = minusSelector.closest('.quantity-selector').dataset.item;
         var updates = {};
         nextMondays = '';
         if(nextMondays == ''){
           var productData = { 
             id: v_id,
-            quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value)
+            quantity: parseInt(minusSelector.closest('.quantity-selector').querySelector('input').value)
           };
         }else{
           var productData = { 
               id: v_id,
-              quantity: parseInt(minusSelector.closest('.product-qty').querySelector('input').value),
+              quantity: parseInt(minusSelector.closest('.quantity-selector').querySelector('input').value),
               properties: {
                   "_delivery_date":nextMondays,
                   "_addtocart_date":tempcurrentDay
@@ -466,6 +471,8 @@
         }).finally(() => {
           console.log('finally');
         });
+      }else{
+        minusSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('style','opacity: 0.5; cursor: not-allowed;');
       }
     };
   </script>

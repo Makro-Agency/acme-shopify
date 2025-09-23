@@ -91,7 +91,7 @@
 								</div>
 							</div>
 
-							<div class="coll-cart-btn">
+							<div class="coll-cart-btn hide">
 								<span class="addbtn " onclick="addcarttrigger(this)">
 									<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
 									<path d="M2.6875 7.5H12.3125" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -105,6 +105,19 @@
 								</div>
 							</div>
 						</div>
+						<div class="quantity-btn-wrap">
+                            <div class="quantity-selector " data-item="{{v_id}}">
+                                <button type="button" onclick="clickAttrMinus(this);" class="qtyminus"  data-val="0" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg></button>
+                                <input type="text" value="0" class="qty-selector">
+                                
+                                <button type="button" onclick="clickAttrPlus(this);"  data-val="0" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg></button>
+                            </div>
+                        </div>
 					</div>
 					
 					<div class="product-form__footer hide" data-cart-item-key="">

@@ -145,7 +145,7 @@
           {% endunless %}
           
           <div class="product-description body-2 mb-2">{{ product.description }}</div>
-            {% render 'product-single-form' product:product  available_online: available_online, b2b_product_in_stock: b2b_product_in_stock %}
+            {% render 'product-single-form' product:product  available_online: available_online, b2b_product_in_stock: b2b_product_in_stock, customer_b2B:customer_b2B %}
 
           {% unless customer_b2B %}
             {% if product.metafields.accentuate.where_to_buy_code != blank and product.metafields.accentuate.available_online != true %}

@@ -20,7 +20,7 @@ product-add-form product-form product-form-{{ product.id }}
 
 		
 		{% if product.has_only_default_variant or product.variants.size == 1 %}
-			<div class="product-single__single-variant">
+			<div class="product-single__single-variant {% if customer_b2B %}hide-block{% endif %}">
 				{% unless current_variant.title == "Default Title" %}
 					{% comment %} <h4 class="card-basic__sub-header_2">{{ current_variant.title }}</h4> {% endcomment %}
 					<div class="swatch swatch-element-container mb-3">

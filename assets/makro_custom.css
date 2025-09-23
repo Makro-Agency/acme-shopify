@@ -102,6 +102,10 @@ span.addbtn svg {
   align-items: center;
 }
 
+.product-single__single-variant.hide-block{
+  opacity: 0;
+}
+
 .cart__table .avail-sale{
   gap: 24px;
 }

@@ -226,6 +226,7 @@
 
             var split_text = document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText.split('/')[1];
             document.querySelector('#v-id-{{ variant.id }}.price--has_b2b-true .price__pricing-group .price__regular .price-item.price-item--regular').innerText = variant_get_price + ' /' + split_text;
+            document.querySelector('#v-id-{{ variant.id }}').closest('div').classList.remove('hide-block');
           }
         }
       {% else %}
@@ -252,6 +253,7 @@
 
           var val1 = document.querySelectorAll('.price.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;
           var val2 = document.querySelector('.sale-price-b2b .price-item--regular').innerText;
+          document.querySelector('.product-single__single-variant').classList.remove('hide-block');
           {% comment %} var price_prop = `Sales Price U/M = ${val1}; Quantity U/M = ${val2}`;
           var property_field = `<input type="hidden" name="properties[_price]" value="${price_prop}">`
           document.querySelector('.product-add-form').innerHTML += property_field;

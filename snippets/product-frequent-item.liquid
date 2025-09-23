@@ -11,22 +11,28 @@
 {% assign v_price = entry_parts[9] %}
 {% assign u_measure = entry_parts[10] %}
 
-{% assign v_id_add = entry_parts[6] | append:'3' %}
-
 {% liquid
 	assign has_b2b = false
 	if customer and customer.b2b? and customer.company_available_locations_count > 0
 		assign has_b2b = true
 	endif
+
+
+	for item in cart.items
+		if item.id == check_id
+			assign qty = item.quantity
+		endif
+	endfor
 %}
-<script>
+{% comment %} <script>
 	var qty = 0;
 	console.log(cart_items,'{{v_id}}',cart_items['{{ v_id }}'])
 	if(cart_items['{{ v_id }}'] != undefined){
 		qty = cart_items['{{ v_id }}'].quantity
 	}
-	console.log(qty,'qty');
-</script>
+
+	console.log('qty','{{ qty }}')
+</script> {% endcomment %}
 
 <div class="swiper-slide collection-product-card" data-qty="{{ qty }}">
 	<div class="product-grid-item  card-basic">
@@ -109,18 +115,18 @@
 								<div class="product-qty mb-4 mt-4 mb-xl-0 mt-xl-0" data-id="{{v_id}}">
 									<a class="qty-dec clickable qty-btn disabled" data-quantity-dec="" aria-label="Decrease Quantity" href="javascript:void(0);" data-val="1" onclick="clickAttrMinus(this)"><span class="icon-minus">-</span></a>
 									<input class="qty-input" type="text" id="Quantity-9819409383712" name="quantity" value="1" min="1" pattern="[0-9]*" title="Qty" data-quantity-input="">
-									<a class="qty-inc clickable qty-btn" data-quantity-inc="" aria-label="Increase Quantity" href="javascript:void(0);" data-val="1" onclick="clickAttrPlus(this)"><span class="icon-plus">+</span></a>
+									<a class="qty-inc clickable qty-btn" data-quantity-inc="" aria-label="Increase Quantity" href="javascript:void(0);" data-val="1" onclick="clickAttrPlusfaq(this)"><span class="icon-plus">+</span></a>
 								</div>
 							</div>
 						</div>
 						<div class="quantity-btn-wrap">
                             <div class="quantity-selector " data-item="{{v_id}}">
-                                <button type="button" onclick="clickAttrMinus(this);" class="qtyminus"  data-val="{{ qty }}" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <button type="button" onclick="clickAttrMinusfaq(this);" class="qtyminus"  data-val="0" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
-                                <input type="text" value="{{ qty }}" class="qty-selector" onchange="updateCart(this);">
+                                <input type="text" value="0" class="qty-selector" onchange="updateCart(this);">
                                 
-                                <button type="button" onclick="clickAttrPlus(this);"  data-val="{{ qty }}" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <button type="button" onclick="clickAttrPlusfaq(this);"  data-val="0" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>

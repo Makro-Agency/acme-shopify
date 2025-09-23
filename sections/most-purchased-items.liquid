@@ -289,6 +289,17 @@
           }
         }
       });
+
+      var cart_items = {};
+      {% if cart.item_count > 0 %}
+        {% for item in cart.items %}
+            
+            cart_items['{{item.variant_id}}'] = {
+                "id":{{item.variant_id}},
+                "quantity":{{item.quantity}}
+            };
+        {% endfor %}
+      {% endif %}
     });
     function getNextMondays(count = 7) {
       const inputTime = "{{settings.cut-time}}:00";
@@ -405,6 +416,11 @@
       updateSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('data-val',currentVal);
       updateSelector.closest('.quantity-selector').querySelector('.qtyplus').setAttribute('data-val',currentVal);
       updateSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
+
+      var URL_data = "/cart/add.js";
+      if(currentVal == 0){
+        URL_data = "/cart/add.js";
+      }
       
       var v_id = updateSelector.closest('.quantity-selector').dataset.item;
       var updates = {};
@@ -424,7 +440,7 @@
         };
       }
   
-      fetch("/cart/change.js", {
+      fetch(URL_data, {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(productData)
@@ -435,7 +451,7 @@
         return response.json();
       }).then(result => {
           console.log('updated',result);
-          document.querySelector('[sh-cart-count]').textContent = result.item_count;
+          document.querySelector('[sh-cart-count]').textContent = parseInt(document.querySelector('[sh-cart-count]').textContent) + parseInt(currentVal);
       }).catch(error => {
           console.error('There was a problem with the fetch operation:', error);;
       }).finally(() => {
@@ -443,7 +459,7 @@
       });
     }
   
-    var clickAttrPlus = function (plusSelector){
+    var clickAttrPlusfaq = function (plusSelector){
 
       
       var currentVal = parseInt(plusSelector.dataset.val);
@@ -453,23 +469,29 @@
       plusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
       
       var v_id = plusSelector.closest('.quantity-selector').dataset.item;
+
       var updates = {};
-      var URL_data = "/cart/change.js";
+      var URL_data = "/cart/add.js";
       if(nextMondays == ''){
         var productData = { 
             id: v_id,
-            quantity: parseInt(plusSelector.closest('.quantity-selector').querySelector('input').value)
+            quantity: 1
         };
       }else{
-        URL_data = "/cart/update.js";
         var productData = { 
             id: v_id,
-            quantity: parseInt(plusSelector.closest('.quantity-selector').querySelector('input').value),
+            quantity: 1,
             properties: {
                 "_delivery_date":nextMondays,
                 "_addtocart_date":tempcurrentDay
             }
         };
+      }
+
+      console.log('pzlus',productData);
+
+      if(currentVal == 0){
+        URL_data = "/cart/add.js";
       }
   
       fetch(URL_data, {
@@ -483,14 +505,15 @@
         return response.json();
       }).then(result => {
           console.log('updated',result);
-          document.querySelector('[sh-cart-count]').textContent = result.item_count;
+          document.querySelector('[sh-cart-count]').textContent = parseInt(document.querySelector('[sh-cart-count]').textContent) + 1;
+          
       }).catch(error => {
           console.error('There was a problem with the fetch operation:', error);;
       }).finally(() => {
         console.log('finally');
       });
     };
-    var clickAttrMinus = function (minusSelector){
+    var clickAttrMinusfaq = function (minusSelector){
       var currentVal = parseInt(minusSelector.dataset.val);
       if(currentVal > 0){
         minusSelector.closest('.quantity-selector').querySelector('input').value = currentVal - 1;
@@ -525,7 +548,7 @@
           return response.json();
         }).then(result => {
             console.log('updated',result);
-            document.querySelector('[sh-cart-count]').textContent = result.item_count;
+            document.querySelector('[sh-cart-count]').textContent = parseInt(document.querySelector('[sh-cart-count]').textContent) - 1;
         }).catch(error => {
             console.error('There was a problem with the fetch operation:', error);;
         }).finally(() => {

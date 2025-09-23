@@ -386,8 +386,53 @@
       });
     //ele.closest('form').querySelector('.product-form__footer .product-form__item button[name="add"]').click();
     }
+
+    var updateCart = function (updateSelector){
+      var currentVal = updateSelector.value;
+      updateSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('data-val',currentVal);
+      updateSelector.closest('.quantity-selector').querySelector('.qtyplus').setAttribute('data-val',currentVal);
+      updateSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
+      
+      var v_id = updateSelector.closest('.quantity-selector').dataset.item;
+      var updates = {};
+      if(nextMondays == ''){
+        var productData = { 
+            id: v_id,
+            quantity: currentVal
+        };
+      }else{
+        var productData = { 
+            id: v_id,
+            quantity: currentVal,
+            properties: {
+                "_delivery_date":nextMondays,
+                "_addtocart_date":tempcurrentDay
+            }
+        };
+      }
+  
+      fetch("/cart/change.js", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(productData)
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }).then(result => {
+          console.log('updated',result);
+          document.querySelector('[sh-cart-count]').textContent = result.item_count;
+      }).catch(error => {
+          console.error('There was a problem with the fetch operation:', error);;
+      }).finally(() => {
+        console.log('finally');
+      });
+    }
   
     var clickAttrPlus = function (plusSelector){
+
+      
       var currentVal = parseInt(plusSelector.dataset.val);
       plusSelector.closest('.quantity-selector').querySelector('input').value = currentVal + 1;
       plusSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('data-val',(currentVal + 1));

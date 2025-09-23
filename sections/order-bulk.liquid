@@ -973,6 +973,13 @@
             getCount += (parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('input.qty-selector').value));
         }
         if(getCount > 0){
+            {% comment %} if (localStorage.getItem('bulkOrderObj')) {
+                try {
+                    bulkOrderObj = JSON.parse(localStorage.getItem('bulkOrderObj'));
+                } catch(e) {
+                    bulkOrderObj = {};
+                }
+            } {% endcomment %}
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.add('active');
             var title = plusSelector.closest('.product-wrapper').querySelector('.product-wrap .title').innerText;

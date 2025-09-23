@@ -11,6 +11,7 @@
 {% assign v_price = entry_parts[9] %}
 {% assign u_measure = entry_parts[10] %}
 
+{% assign v_id_add = entry_parts[6] | append:'3' %}
 
 {% liquid
 	assign has_b2b = false
@@ -18,7 +19,14 @@
 		assign has_b2b = true
 	endif
 %}
-
+<script>
+	var qty = 0;
+	console.log(cart_items,'{{v_id}}',cart_items['{{ v_id }}'])
+	if(cart_items['{{ v_id }}'] != undefined){
+		qty = cart_items['{{ v_id }}'].quantity
+	}
+	console.log(qty,'qty');
+</script>
 
 <div class="swiper-slide collection-product-card" data-qty="{{ qty }}">
 	<div class="product-grid-item  card-basic">
@@ -107,12 +115,12 @@
 						</div>
 						<div class="quantity-btn-wrap">
                             <div class="quantity-selector " data-item="{{v_id}}">
-                                <button type="button" onclick="clickAttrMinus(this);" class="qtyminus"  data-val="0" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <button type="button" onclick="clickAttrMinus(this);" class="qtyminus"  data-val="{{ qty }}" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
-                                <input type="text" value="0" class="qty-selector" onchange="updateCart(this);">
+                                <input type="text" value="{{ qty }}" class="qty-selector" onchange="updateCart(this);">
                                 
-                                <button type="button" onclick="clickAttrPlus(this);"  data-val="0" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <button type="button" onclick="clickAttrPlus(this);"  data-val="{{ qty }}" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>

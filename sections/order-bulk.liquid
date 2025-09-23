@@ -927,6 +927,23 @@
             document.querySelector('.error-massage.active').classList.remove('active')
         }
 
+        var totalQuantity = 0;
+        if (localStorage.getItem('bulkOrderObj') != null) {
+            getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
+            if (getDatabulk && typeof getDatabulk === 'object') {
+                Object.keys(getDatabulk).forEach(function(key) {
+                    
+                    var item = getDatabulk[key];
+                    var qty_get = Number(item.quantity);
+                    var Get_prod_id = plusSelector.closest('.quantity-selector').dataset.item;
+                    console.log(plusSelector.closest('.quantity-selector'),Get_prod_id,getDatabulk[Get_prod_id])
+                    if (item && typeof item.quantity !== 'undefined') {
+                        totalQuantity += qty_get || 0;
+                    }
+                });
+            }
+        }
+
 
         if(plusSelector.closest('.quantity-selector').classList.contains('disabled')){
             if(plusSelector.closest('.variant-inner-item')){
@@ -938,7 +955,7 @@
         }
 
         var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
-        
+        var getCount = 0;
         if (!isNaN(currentVal)) {
             if (currentVal < 99999){
                 plusSelector.closest('.quantity-selector').classList.add('active');
@@ -950,11 +967,13 @@
                 } {% endcomment %}
                 if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
+                    totalQuantity = totalQuantity + 0;
                     {% comment %} plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
                     plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val; {% endcomment %}
                     plusSelector.closest('.quantity-selector').classList.remove('active-div');
                 }else{
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = (currentVal + 1);
+                    totalQuantity = totalQuantity + 1;
                     {% comment %} plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = (currentVal + 1) + ' ' + temp_val;
                     plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = (currentVal + 1) + ' ' + temp_val; {% endcomment %}
                 }
@@ -968,18 +987,13 @@
         }
 
         {% comment %} var getCount = document.querySelectorAll('.quantity-selector.active').length; {% endcomment %}
-        var getCount = 0;
-        for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
+        
+        {% comment %} for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
             getCount += (parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('input.qty-selector').value));
-        }
-        if(getCount > 0){
-            {% comment %} if (localStorage.getItem('bulkOrderObj')) {
-                try {
-                    bulkOrderObj = JSON.parse(localStorage.getItem('bulkOrderObj'));
-                } catch(e) {
-                    bulkOrderObj = {};
-                }
-            } {% endcomment %}
+        } {% endcomment %}
+        {% comment %} console.log(getCount,'getCount',totalQuantity); {% endcomment %}
+        if(totalQuantity > 0){
+            getCount = totalQuantity;
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.add('active');
             var title = plusSelector.closest('.product-wrapper').querySelector('.product-wrap .title').innerText;
@@ -1058,12 +1072,32 @@
             return;
         }
 
+        var totalQuantity = 0;
+        if (localStorage.getItem('bulkOrderObj') != null) {
+            getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
+            if (getDatabulk && typeof getDatabulk === 'object') {
+                Object.keys(getDatabulk).forEach(function(key) {
+                    
+                    var item = getDatabulk[key];
+                    var qty_get = Number(item.quantity);
+                    var Get_prod_id = minusSelector.closest('.quantity-selector').dataset.item;
+                    if (item && typeof item.quantity !== 'undefined') {
+                        totalQuantity += qty_get || 0;
+                    }
+                });
+            }
+        }
+
         if(minusSelector.closest('.quantity-selector').classList.contains('active-div')){
             var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
+            totalQuantity = totalQuantity - 1;
             minusSelector.closest('.quantity-selector').classList.remove('active-div');
         }else{
             var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
+            totalQuantity = totalQuantity - 1;
         }
+
+        
 
         {% comment %} var get_value_split = minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
         if(get_value_split.length > 1){
@@ -1086,16 +1120,16 @@
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
         }
 
-        //var getCount = document.querySelectorAll('.quantity-selector.active').length;
-        var getCount = 0;
-        for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
+        var getCount = document.querySelectorAll('.quantity-selector.active').length;
+        {% comment %} var getCount = 0; {% endcomment %}
+        {% comment %} for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
             getCount += (parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('input.qty-selector').value));
-        }
-        if(getCount <= 0){
-            document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
+        } {% endcomment %}
+        if(totalQuantity <= 0){
+            document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.remove('active');
         }else{
-            document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
+            document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.add('active');
         }
 
@@ -1816,6 +1850,7 @@
     addEventListener("DOMContentLoaded", (event) => {
 
         var hasMyProducts = false;
+        var global_count = 0;
         for(var i=0; i < json_val.length; i++){
             var sku = json_val[i].variants && json_val[i].variants.length > 0 ? json_val[i].variants[0].sku : null;
             if (sku && Array.isArray(store_location_data) && store_location_data.length > 0) {
@@ -1870,6 +1905,7 @@
                                 }
                             });
                         }
+                        global_count = totalQuantity;
                         {% comment %} console.log(document.querySelector('.mini-cart-sticky'),'test') {% endcomment %}
                         if(document.querySelector('.mini-cart-sticky')){
                             document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';

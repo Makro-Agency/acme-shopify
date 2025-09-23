@@ -2,6 +2,19 @@
 
   
   {{ 'most-purchased-items-section.css' | asset_url | stylesheet_tag }}
+
+  <script>
+    var cart_items = {};
+    {% if cart.item_count > 0 %}
+      {% for item in cart.items %}
+          
+          cart_items['{{item.variant_id}}'] = {
+              "id":{{item.variant_id}},
+              "quantity":{{item.quantity}}
+          };
+      {% endfor %}
+    {% endif %}
+  </script>
   
   <div class="most-purchased-items-section container hide">
     {% assign html_capture = blank %}
@@ -441,12 +454,14 @@
       
       var v_id = plusSelector.closest('.quantity-selector').dataset.item;
       var updates = {};
+      var URL_data = "/cart/change.js";
       if(nextMondays == ''){
         var productData = { 
             id: v_id,
             quantity: parseInt(plusSelector.closest('.quantity-selector').querySelector('input').value)
         };
       }else{
+        URL_data = "/cart/update.js";
         var productData = { 
             id: v_id,
             quantity: parseInt(plusSelector.closest('.quantity-selector').querySelector('input').value),
@@ -457,7 +472,7 @@
         };
       }
   
-      fetch("/cart/change.js", {
+      fetch(URL_data, {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(productData)

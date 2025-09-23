@@ -927,6 +927,8 @@
             document.querySelector('.error-massage.active').classList.remove('active')
         }
 
+        var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
+
         var totalQuantity = 0;
         if (localStorage.getItem('bulkOrderObj') != null) {
             getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
@@ -936,13 +938,19 @@
                     var item = getDatabulk[key];
                     var qty_get = Number(item.quantity);
                     var Get_prod_id = plusSelector.closest('.quantity-selector').dataset.item;
-                    console.log(plusSelector.closest('.quantity-selector'),Get_prod_id,getDatabulk[Get_prod_id])
+                    if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
+                        if(Get_prod_id == key){
+                            qty_get = currentVal;
+                        }
+                    }
                     if (item && typeof item.quantity !== 'undefined') {
                         totalQuantity += qty_get || 0;
                     }
                 });
             }
         }
+
+        console.log(totalQuantity,'totalQuantity');
 
 
         if(plusSelector.closest('.quantity-selector').classList.contains('disabled')){
@@ -954,7 +962,7 @@
             return;
         }
 
-        var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
+        
         var getCount = 0;
         if (!isNaN(currentVal)) {
             if (currentVal < 99999){
@@ -965,9 +973,10 @@
                 }else{
                     var temp_val = get_value_split[0];
                 } {% endcomment %}
+                
                 if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
-                    totalQuantity = totalQuantity + 0;
+                    {% comment %} totalQuantity = totalQuantity + 1; {% endcomment %}
                     {% comment %} plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
                     plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val; {% endcomment %}
                     plusSelector.closest('.quantity-selector').classList.remove('active-div');
@@ -993,6 +1002,7 @@
         } {% endcomment %}
         {% comment %} console.log(getCount,'getCount',totalQuantity); {% endcomment %}
         if(totalQuantity > 0){
+            console.log(totalQuantity,'totalQuantity2');
             getCount = totalQuantity;
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.add('active');

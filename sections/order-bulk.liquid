@@ -1205,6 +1205,9 @@
             var getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
 
             var bulkOrderObj = {};
+            Object.keys(getDatabulk).forEach(function(key) {
+                bulkOrderObj[key] = getDatabulk[key];
+            });
             {% comment %} console.log(document.querySelectorAll('.quantity-selector.active'),'len') {% endcomment %}
             document.querySelectorAll('.quantity-selector.active').forEach((selected_item) => {
                 if(getDatabulk[selected_item.dataset.item] != undefined){
@@ -1236,6 +1239,8 @@
             })
             var totalQuantity = check_qty;
         }
+
+        console.log(bulkOrderObj,'bulkOrderObj')
 
         var itemKey = minusSelector.closest('.quantity-selector').dataset.item;
 
@@ -2008,6 +2013,17 @@
                     if(localStorage.getItem('bulkOrderObj') != null){
                         var getData = JSON.parse(localStorage.getItem('bulkOrderObj'));
                         // Calculate total quantity from getData object
+
+                        var bulkOrderObj = {};
+                        Object.keys(getData).forEach(function(key) {
+                            bulkOrderObj[key] = getData[key];
+                        });
+                        Object.keys(cart_items).forEach(function(key) {
+                            bulkOrderObj[key] = cart_items[key];
+                        });
+
+                        localStorage.setItem('bulkOrderObj', JSON.stringify(bulkOrderObj));
+                        
                         var totalQuantity = 0;
                         if (getData && typeof getData === 'object') {
                             Object.keys(getData).forEach(function(key) {

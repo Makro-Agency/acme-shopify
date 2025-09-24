@@ -1222,9 +1222,14 @@
                 }
             })
 
+            // When we have the same object, take quantity from selector input
             var totalQuantity = Object.values(bulkOrderObj).reduce(function(sum, item) {
-                return sum + parseInt(item.quantity);
+                var selector = document.querySelector('.quantity-selector[data-item="' + item.id + '"] input.qty-selector');
+                var qty = selector ? parseInt(selector.value) : parseInt(item.quantity);
+                return sum + (isNaN(qty) ? 0 : qty);
             }, 0);
+
+            console.log(totalQuantity,'totalQuantity',totalQuantity)
 
         }else{
             var check_qty = 0;
@@ -1240,7 +1245,7 @@
             var totalQuantity = check_qty;
         }
 
-        console.log(bulkOrderObj,'bulkOrderObj')
+        console.log(bulkOrderObj,'bulkOrderObj',totalQuantity)
 
         var itemKey = minusSelector.closest('.quantity-selector').dataset.item;
 

@@ -18,9 +18,16 @@
 	endif
 
 
+	assign qty = 0
+	assign prop = ''
 	for item in cart.items
-		if item.id == check_id
-			assign qty = item.quantity
+		assign check_id = p_id | times:1
+		if item.product.id == check_id
+			assign prop = item.properties
+			for prop in item.properties
+				assign prop = prop | append:prop.first | append:prop.last
+			endfor
+			assign qty = qty | plus:item.quantity
 		endif
 	endfor
 %}
@@ -121,12 +128,12 @@
 						</div>
 						<div class="quantity-btn-wrap">
                             <div class="quantity-selector " data-item="{{v_id}}">
-                                <button type="button" onclick="clickAttrMinusfaq(this);" class="qtyminus"  data-val="0" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <button type="button" onclick="clickAttrMinusfaq(this);" class="qtyminus"  data-val="{{ qty }}" {% if qty == 0 %}style="opacity: 0.5; cursor: not-allowed;"{% endif %}><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
-                                <input type="text" value="0" class="qty-selector" onchange="updateCart(this);">
+                                <input type="text" value="{{ qty }}" data-prop="{{ prop }}" class="qty-selector" data-qty="{{ qty }}" onchange="updateCart(this);">
                                 
-                                <button type="button" onclick="clickAttrPlusfaq(this);"  data-val="0" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <button type="button" onclick="clickAttrPlusfaq(this);"  data-val="{{ qty }}" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>

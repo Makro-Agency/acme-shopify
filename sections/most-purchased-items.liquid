@@ -413,18 +413,33 @@
 
     var updateCart = function (updateSelector){
       var currentVal = updateSelector.value;
+      var store_qty = updateSelector.dataset.qty;
       updateSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('data-val',currentVal);
       updateSelector.closest('.quantity-selector').querySelector('.qtyplus').setAttribute('data-val',currentVal);
       updateSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
 
-      var URL_data = "/cart/add.js";
-      if(currentVal == 0){
+      var URL_data = "/cart/update.js";
+      if(parseInt(store_qty) == 0){
         URL_data = "/cart/add.js";
       }
+
+      updateSelector.closest('.quantity-selector').querySelector('input').setAttribute('data-qty',currentVal);
       
       var v_id = updateSelector.closest('.quantity-selector').dataset.item;
-      var updates = {};
-      if(nextMondays == ''){
+      var updates = {},productData = {};
+
+      updates[v_id] = parseInt(currentVal)
+
+      if(parseInt(store_qty) > 0){
+        productData.updates = updates;
+      }else{
+        productData = { 
+          id: v_id,
+          quantity: currentVal
+        };  
+      }
+
+      {% comment %} if(nextMondays == ''){
         var productData = { 
             id: v_id,
             quantity: currentVal
@@ -438,7 +453,7 @@
                 "_addtocart_date":tempcurrentDay
             }
         };
-      }
+      } {% endcomment %}
   
       fetch(URL_data, {
         method: "POST",
@@ -451,7 +466,12 @@
         return response.json();
       }).then(result => {
           console.log('updated',result);
-          document.querySelector('[sh-cart-count]').textContent = parseInt(document.querySelector('[sh-cart-count]').textContent) + parseInt(currentVal);
+          if(parseInt(store_qty) == 0){
+            document.querySelector('[sh-cart-count]').textContent = parseInt(document.querySelector('[sh-cart-count]').textContent) + parseInt(currentVal);
+          }else{
+            document.querySelector('[sh-cart-count]').textContent = result.item_count;
+          }
+          
       }).catch(error => {
           console.error('There was a problem with the fetch operation:', error);;
       }).finally(() => {
@@ -463,16 +483,39 @@
 
       
       var currentVal = parseInt(plusSelector.dataset.val);
+      var store_qty = plusSelector.closest('.quantity-selector').querySelector('input').dataset.qty;
       plusSelector.closest('.quantity-selector').querySelector('input').value = currentVal + 1;
       plusSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('data-val',(currentVal + 1));
       plusSelector.closest('.quantity-selector').querySelector('.qtyplus').setAttribute('data-val',(currentVal + 1));
       plusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
+
+      var URL_data = "/cart/update.js";
+      if(parseInt(store_qty) == 0){
+        URL_data = "/cart/add.js";
+      }
       
       var v_id = plusSelector.closest('.quantity-selector').dataset.item;
 
-      var updates = {};
-      var URL_data = "/cart/add.js";
-      if(nextMondays == ''){
+      var updates = {},productData = {};
+
+      updates[v_id] = (currentVal + 1)
+
+      if(parseInt(store_qty) > 0){
+        productData.updates = updates;
+      }else{
+        productData = { 
+          id: v_id,
+          quantity: (currentVal + 1)
+        };  
+      }
+
+      {% comment %} var URL_data = "/cart/add.js";
+
+      var productData = { 
+        id: v_id,
+        quantity: 1
+      }; {% endcomment %}
+      {% comment %} if(nextMondays == ''){
         var productData = { 
             id: v_id,
             quantity: 1
@@ -486,13 +529,13 @@
                 "_addtocart_date":tempcurrentDay
             }
         };
-      }
+      } 
 
       console.log('pzlus',productData);
 
       if(currentVal == 0){
         URL_data = "/cart/add.js";
-      }
+      }{% endcomment %}
   
       fetch(URL_data, {
         method: "POST",
@@ -520,8 +563,13 @@
         minusSelector.closest('.quantity-selector').querySelector('.qtyminus').setAttribute('data-val',(currentVal - 1));
         minusSelector.closest('.quantity-selector').querySelector('.qtyplus').setAttribute('data-val',(currentVal - 1));
         var v_id = minusSelector.closest('.quantity-selector').dataset.item;
-        var updates = {};
-        nextMondays = '';
+        var updates = {},productData = {};
+
+        updates[v_id] = parseInt(minusSelector.closest('.quantity-selector').querySelector('input').value)
+
+        productData.updates = updates;
+
+        {% comment %} nextMondays = '';
         if(nextMondays == ''){
           var productData = { 
             id: v_id,
@@ -536,8 +584,10 @@
                   "_addtocart_date":tempcurrentDay
               }
           };
-        }
-        fetch("/cart/change.js", {
+        } {% endcomment %}
+
+
+        fetch("/cart/update.js", {
           method: "POST",
           headers: { "Accept": "application/json", "Content-Type": "application/json" },
           body: JSON.stringify(productData)

@@ -8,8 +8,6 @@
     {% assign cart_items_array_qty = blank %}
     {% if cart.item_count > 0 %}
         {% for item in cart.items %}
-
-            console.log('{{ item.properties['_price'] }}')
             
             cart_items['{{item.variant_id}}'] = {
                 "id":{{item.variant_id}},
@@ -32,6 +30,8 @@
             {% assign cart_items_array_qty = cart_items_array_qty | append:',' | append:item.quantity %}
         {% endfor %}
     {% endif %}
+
+
     {% unless request.design_mode %}
         {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
             {% if customer.current_location.metafields.custom.location_unit_price != blank %}
@@ -498,12 +498,12 @@
             });
         } {% endcomment %}
 
-        if(main_items.length > 0){
+        {% comment %} if(main_items.length > 0){
             main_items.forEach((item)=>{
                 items.push(item);
             })
             
-        }
+        } {% endcomment %}
 
         function getNextMondays(count = 7) {
 
@@ -709,6 +709,7 @@
                 
                 items.push(productData);
                 if(isLast){
+
                     items_object['items'] = items;
                     const o = items_object;
 
@@ -929,7 +930,7 @@
 
         var currentVal = parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value);
 
-        var totalQuantity = 0;
+        {% comment %} var totalQuantity = 0;
         if (localStorage.getItem('bulkOrderObj') != null) {
             getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
             if (getDatabulk && typeof getDatabulk === 'object') {
@@ -948,10 +949,7 @@
                     }
                 });
             }
-        }
-
-        console.log(totalQuantity,'totalQuantity');
-
+        } {% endcomment %}
 
         if(plusSelector.closest('.quantity-selector').classList.contains('disabled')){
             if(plusSelector.closest('.variant-inner-item')){
@@ -961,7 +959,6 @@
             }
             return;
         }
-
         
         var getCount = 0;
         if (!isNaN(currentVal)) {
@@ -976,12 +973,17 @@
                 
                 if(plusSelector.closest('.quantity-selector').classList.contains('active-div')){
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
+                    plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').setAttribute('value',currentVal);
+                    if(totalQuantity == 0){
+                        totalQuantity = totalQuantity + currentVal;
+                    }
                     {% comment %} totalQuantity = totalQuantity + 1; {% endcomment %}
                     {% comment %} plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
                     plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val; {% endcomment %}
                     plusSelector.closest('.quantity-selector').classList.remove('active-div');
                 }else{
                     plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = (currentVal + 1);
+                    plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').setAttribute('value',(currentVal + 1));
                     totalQuantity = totalQuantity + 1;
                     {% comment %} plusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = (currentVal + 1) + ' ' + temp_val;
                     plusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = (currentVal + 1) + ' ' + temp_val; {% endcomment %}
@@ -995,6 +997,98 @@
             plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = 0;
         }
 
+        var check_qty = 0;
+        {% comment %} if (localStorage.getItem('bulkOrderObj') != null) {
+            var getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
+            var check_qty = 0;
+            var totalQuantity = 0;
+            Object.keys(getDatabulk).forEach(function(key,index) {
+                var temp_qty = 0;
+                document.querySelectorAll('.quantity-selector.active').forEach((selected_item) => {
+                    var check_id = selected_item.dataset.item;
+                    if(check_id == key){
+                        check_qty = check_qty + parseInt(selected_item.querySelector('input').value);
+                    }
+                })
+        
+                document.querySelectorAll('.quantity-selector.active').forEach((selected_item) => {
+                    var check_id = selected_item.dataset.item;
+                    if(check_id != key){
+                        check_qty = check_qty + parseInt(selected_item.querySelector('input').value);
+                    }
+                })
+                console.log((Object.keys(getDatabulk).length - 1),index)
+                if((Object.keys(getDatabulk).length - 1) == index){
+                    console.log('infunction');
+                    totalQuantity = check_qty;
+                }
+            })
+            
+        }else{
+            var check_qty = 0;
+            document.querySelectorAll('.quantity-selector.active').forEach((selected_item) => {
+                check_qty = check_qty + parseInt(selected_item.querySelector('input').value);
+            })
+            var totalQuantity = check_qty;
+        } {% endcomment %}
+
+        {% comment %} console.log(localStorage.getItem('bulkOrderObj'),'check'); {% endcomment %}
+        if (localStorage.getItem('bulkOrderObj') != null) {
+            var check_qty = 0;
+            var getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
+
+            {% comment %} console.log(getDatabulk,'getDatabulk') {% endcomment %}
+
+            var bulkOrderObj = {};
+            Object.keys(getDatabulk).forEach(function(key) {
+                bulkOrderObj[key] = getDatabulk[key];
+            });
+            document.querySelectorAll('.quantity-selector.active').forEach((selected_item) => {
+                {% comment %} console.log(selected_item.dataset.item,getDatabulk[selected_item.dataset.item]) {% endcomment %}
+                if(getDatabulk[selected_item.dataset.item] != undefined){
+                    getDatabulk[selected_item.dataset.item].quantity = selected_item.querySelector('input.qty-selector').value;
+                    bulkOrderObj[selected_item.dataset.item] = getDatabulk[selected_item.dataset.item];
+                }else{
+                    var itemValue = {
+                        "id": selected_item.closest('.quantity-selector').dataset.item,
+                        "quantity": selected_item.querySelector('input.qty-selector').value
+                    };
+                    bulkOrderObj[selected_item.closest('.quantity-selector').dataset.item] = itemValue;
+                }
+            })
+
+            var totalQuantity = Object.values(bulkOrderObj).reduce(function(sum, item) {
+                return sum + parseInt(item.quantity);
+            }, 0);
+
+            {% comment %} console.log(bulkOrderObj,'bulkOrderObj')
+            console.log(totalQuantity,'totalQuantity') {% endcomment %}
+
+            localStorage.setItem('bulkOrderObj', JSON.stringify(bulkOrderObj));
+            
+            {% comment %} for (var i = 0, keys = Object.keys(getDatabulk); i < keys.length; i++) {
+                var key = keys[i];
+                var index = i;
+                
+            } {% endcomment %}
+        }else{
+            var check_qty = 0;
+            var bulkOrderObj = {};
+            document.querySelectorAll('.quantity-selector.active').forEach((selected_item) => {
+                check_qty = check_qty + parseInt(selected_item.querySelector('input').value);
+                var itemValue = {
+                    "id": selected_item.closest('.quantity-selector').dataset.item,
+                    "quantity": selected_item.querySelector('input.qty-selector').value
+                };
+                bulkOrderObj[selected_item.closest('.quantity-selector').dataset.item] = itemValue;
+            })
+            localStorage.setItem('bulkOrderObj', JSON.stringify(bulkOrderObj));
+            var totalQuantity = check_qty;
+        }
+
+
+        {% comment %} console.log(document.querySelectorAll('.quantity-selector.active'),totalQuantity) {% endcomment %}
+
         {% comment %} var getCount = document.querySelectorAll('.quantity-selector.active').length; {% endcomment %}
         
         {% comment %} for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
@@ -1002,7 +1096,7 @@
         } {% endcomment %}
         {% comment %} console.log(getCount,'getCount',totalQuantity); {% endcomment %}
         if(totalQuantity > 0){
-            console.log(totalQuantity,'totalQuantity2');
+            {% comment %} console.log(totalQuantity,'totalQuantity2'); {% endcomment %}
             getCount = totalQuantity;
             document.querySelector('.mini-cart-sticky .total-added-product').textContent = getCount + ' products selected';
             document.querySelector('.mini-cart-sticky').classList.add('active');
@@ -1041,7 +1135,7 @@
                 
                 //console.log(prop_value,'prop_value',add_obj)
             }else{
-                console.log('prop_value')
+                {% comment %} console.log('prop_value') {% endcomment %}
                 add_obj[plusSelector.closest('.quantity-selector').dataset.item] = {
                     "id":plusSelector.closest('.quantity-selector').dataset.item,
                     "quantity":parseInt(plusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value)
@@ -1082,22 +1176,6 @@
             return;
         }
 
-        var totalQuantity = 0;
-        if (localStorage.getItem('bulkOrderObj') != null) {
-            getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
-            if (getDatabulk && typeof getDatabulk === 'object') {
-                Object.keys(getDatabulk).forEach(function(key) {
-                    
-                    var item = getDatabulk[key];
-                    var qty_get = Number(item.quantity);
-                    var Get_prod_id = minusSelector.closest('.quantity-selector').dataset.item;
-                    if (item && typeof item.quantity !== 'undefined') {
-                        totalQuantity += qty_get || 0;
-                    }
-                });
-            }
-        }
-
         if(minusSelector.closest('.quantity-selector').classList.contains('active-div')){
             var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
             totalQuantity = totalQuantity - 1;
@@ -1106,41 +1184,57 @@
             var currentVal = parseInt(minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value) - 1;
             totalQuantity = totalQuantity - 1;
         }
-
-        
-
-        {% comment %} var get_value_split = minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText.split(' ');
-        if(get_value_split.length > 1){
-            var temp_val = get_value_split[1];
-        }else{
-            var temp_val = get_value_split[0];
-        } {% endcomment %}
         
         if (!isNaN(currentVal) && currentVal > 0) {
             minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = currentVal;
-            {% comment %} minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = currentVal + ' ' + temp_val;
-            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = currentVal + ' ' + temp_val; {% endcomment %}
+            minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').setAttribute('value',currentVal);
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').removeAttribute('style');
         }else{
             minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').value = 0;
-            {% comment %} minusSelector.closest('.product-wrapper').querySelector('.price.sale-p-avail .price-value').innerText = temp_val;
-            minusSelector.closest('.product-wrapper').querySelectorAll('.grid-price .sale-price span')[1].innerText = temp_val; {% endcomment %}
+            minusSelector.closest('.quantity-selector').querySelector('input.qty-selector').setAttribute('value',0);
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.opacity = 0.5;
             minusSelector.closest('.quantity-selector').classList.remove('active');
             minusSelector.closest('.quantity-selector').querySelector('.qtyminus').style.cursor = 'not-allowed';
         }
 
         var getCount = document.querySelectorAll('.quantity-selector.active').length;
-        {% comment %} var getCount = 0; {% endcomment %}
-        {% comment %} for(var i=0;i<document.querySelectorAll('.quantity-selector.active').length;i++){
-            getCount += (parseInt(document.querySelectorAll('.quantity-selector.active')[i].querySelector('input.qty-selector').value));
-        } {% endcomment %}
-        if(totalQuantity <= 0){
-            document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
-            document.querySelector('.mini-cart-sticky').classList.remove('active');
+
+        {% comment %} var totalQuantity = 0; {% endcomment %}
+        if (localStorage.getItem('bulkOrderObj') != null) {
+            var check_qty = 0;
+            var getDatabulk = JSON.parse(localStorage.getItem('bulkOrderObj'));
+
+            var bulkOrderObj = {};
+            {% comment %} console.log(document.querySelectorAll('.quantity-selector.active'),'len') {% endcomment %}
+            document.querySelectorAll('.quantity-selector.active').forEach((selected_item) => {
+                if(getDatabulk[selected_item.dataset.item] != undefined){
+                    getDatabulk[selected_item.dataset.item].quantity = selected_item.querySelector('input.qty-selector').value;
+                    bulkOrderObj[selected_item.dataset.item] = getDatabulk[selected_item.dataset.item];
+                }else{
+                    var itemValue = {
+                        "id": selected_item.closest('.quantity-selector').dataset.item,
+                        "quantity": selected_item.querySelector('input.qty-selector').value
+                    };
+                    bulkOrderObj[selected_item.closest('.quantity-selector').dataset.item] = itemValue;
+                }
+            })
+
+            var totalQuantity = Object.values(bulkOrderObj).reduce(function(sum, item) {
+                return sum + parseInt(item.quantity);
+            }, 0);
+
         }else{
-            document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
-            document.querySelector('.mini-cart-sticky').classList.add('active');
+            var check_qty = 0;
+            var bulkOrderObj = {};
+            document.querySelectorAll('.quantity-selector.active').forEach((selected_item) => {
+                check_qty = check_qty + parseInt(selected_item.querySelector('input').value);
+                var itemValue = {
+                    "id": selected_item.closest('.quantity-selector').dataset.item,
+                    "quantity": selected_item.querySelector('input.qty-selector').value
+                };
+                bulkOrderObj[selected_item.closest('.quantity-selector').dataset.item] = itemValue;
+            })
+            var totalQuantity = check_qty;
         }
 
         var itemKey = minusSelector.closest('.quantity-selector').dataset.item;
@@ -1162,20 +1256,20 @@
             };
         }
 
-        var bulkOrderObj = {};
-        if (localStorage.getItem('bulkOrderObj')) {
-            try {
-                bulkOrderObj = JSON.parse(localStorage.getItem('bulkOrderObj'));
-            } catch(e) {
-                bulkOrderObj = {};
-            }
-        }
-
         if(currentVal <= 0){
             delete bulkOrderObj[itemKey];
         }else{
             bulkOrderObj[itemKey] = itemValue;
         }
+
+        if(totalQuantity <= 0){
+            document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
+            document.querySelector('.mini-cart-sticky').classList.remove('active');
+        }else{
+            document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
+            document.querySelector('.mini-cart-sticky').classList.add('active');
+        }
+
         localStorage.setItem('bulkOrderObj', JSON.stringify(bulkOrderObj));
     };
     
@@ -1506,6 +1600,14 @@
                     var mobile_order = `<span class="price"><span class="mobile-header">Price</span>${_item_price}</span>`;
                 }
 
+                var show_active_class = '';
+
+                var show_style = `style="opacity: 0.5; cursor: not-allowed;"`;
+                if(qty > 0){
+                    show_active_class = 'active';
+                    show_style = ``;
+                }
+
                 {% comment %} var qty = '0';
                 if(cart_items[currentVAraint.id] != undefined){
                     qty = cart_items[currentVAraint.id].quantity;
@@ -1554,8 +1656,8 @@
                             </div>
                         </span>
                         <div class="quantity-btn-wrap">
-                            <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
-                                <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <div class="quantity-selector ${disable_class} ${show_active_class}" data-item="${ currentVAraint.id }">
+                                <button onclick="clickAttrMinus(this);" class="qtyminus" ${show_style}><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></button>
                                 <input type="text" value="${qty}" class="qty-selector" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
@@ -1840,7 +1942,7 @@
             var selector_json = json_val;
         }
 
-        console.log(selector_json,'selector_json')
+        {% comment %} console.log(selector_json,'selector_json') {% endcomment %}
         
         for(var i=Number(startindex);i<=Number(endindex);i++){
             finl_html += appendHTML(selector_json[i]);
@@ -1919,9 +2021,14 @@
                         {% comment %} console.log(document.querySelector('.mini-cart-sticky'),'test') {% endcomment %}
                         if(document.querySelector('.mini-cart-sticky')){
                             document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
-                            document.querySelector('.mini-cart-sticky').classList.add('active');
+                            //document.querySelector('.mini-cart-sticky').classList.add('active');
+                        }
+                    }else{
+                        if(Object.entries(cart_items).length > 0){
+                            localStorage.setItem('bulkOrderObj', JSON.stringify(cart_items));
                         }
                     }
+                    console.log('cart_items',cart_items)
                     break;
                 }
             }
@@ -1943,7 +2050,7 @@
                     }
                     if(document.querySelector('.mini-cart-sticky')){
                         document.querySelector('.mini-cart-sticky .total-added-product').textContent = totalQuantity + ' products selected';
-                        document.querySelector('.mini-cart-sticky').classList.add('active');
+                        //document.querySelector('.mini-cart-sticky').classList.add('active');
                     }
                 }
 

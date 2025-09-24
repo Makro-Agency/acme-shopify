@@ -408,7 +408,7 @@
               }
             }
 
-            console.log('need to add item');
+            //console.log('need to add item');
             var update_main_arry = [];
             document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
 
@@ -449,7 +449,7 @@
 
               {% endif %}
 
-              console.log(prop,'prop');
+              //console.log(prop,'prop');
 
               var val1 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelector('.sale-price-b2b .price-item--regular').innerText;
               var val2 = document.querySelector('[data-cart-item-key="{{ item.key }}"]').querySelectorAll('.price--has_b2b-true')[1].querySelector('.price__pricing-group .price__regular .price-item--regular').innerText;

@@ -1638,9 +1638,9 @@
                 }
 
                 if(currentVAraint.featured_image){
-                    var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">`;
+                    var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}&width=300" alt="Salmon" height="auto" width="auto">`;
                 }else if(_item.featured_image){
-                    var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">`;
+                    var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}&width=300" alt="Salmon" height="auto" width="auto">`;
                 }else{
                     var image_div = `{{ 'product-1' | placeholder_svg_tag }}`;
                 }

@@ -21,12 +21,52 @@
     "hero_section_AG7Gij": {
       "disabled": false,
       "settings": {},
-      "blocks": {}
+      "blocks": {
+        "slide_Mq6b47": {
+          "settings": {
+            "header": "Order Wholesale Online",
+            "sub_header": "<p>Streamline your ordering. Reorder top items and explore new products—all in one place.</p>",
+            "cta": "Place Your Order",
+            "external": false,
+            "image": "shopify://shop_images/smoked_salmon_truck_2.jpg"
+          }
+        }
+      }
     },
     "most_purchased_items_EXm48A": {
       "settings": {
         "coll_obj": "master-product-collection"
       },
+      "blocks": {}
+    },
+    "b2049783-56d5-4f1f-9033-f993b51af154": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "two_column_swiper_YkWV6n": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "058aa77c-6cc0-4133-8ad8-c28c9947fba5": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "header_content_f7YkDB": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "e8e1192d-b2fc-42c2-835a-ec6cdf0dd392": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "1751558522e0c37a8c": {
+      "disabled": true,
+      "settings": {},
       "blocks": {}
     }
   }

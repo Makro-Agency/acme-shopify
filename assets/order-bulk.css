@@ -227,7 +227,7 @@ li.page-item.disabled {
     gap: 20px;
     text-decoration: none;
 }
-.product-wrap img {
+.product-wrap img,.product-wrap svg {
     max-width: 100%;
     width: 80px;
     height: 80px;

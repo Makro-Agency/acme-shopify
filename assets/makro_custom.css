@@ -280,10 +280,10 @@ span.addbtn svg {
   }
 
   .price--has_b2b-true+.price--has_b2b-true {
-    background: #14315c0a;
+    /* background: #14315c0a; */
     padding: 8px 10px;
-    border-radius: 4px;
-}
+    /* border-radius: 4px; */
+  }
 
   @media screen and (min-width: 641px){
     /* .cart-checkout-error .wrapper {

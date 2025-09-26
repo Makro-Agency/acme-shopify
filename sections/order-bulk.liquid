@@ -689,7 +689,7 @@
                         };
                     }
                 }else{
-                    console.log(value,value['_price'],'YES2')
+                    {% comment %} console.log(value,value['_price'],'YES2') {% endcomment %}
                     if(nextMondays == ''){
                         var productData = { 
                             id: value.id,
@@ -1229,7 +1229,7 @@
                 return sum + (isNaN(qty) ? 0 : qty);
             }, 0);
 
-            console.log(totalQuantity,'totalQuantity',totalQuantity)
+            {% comment %} console.log(totalQuantity,'totalQuantity',totalQuantity) {% endcomment %}
 
         }else{
             var check_qty = 0;
@@ -1245,7 +1245,7 @@
             var totalQuantity = check_qty;
         }
 
-        console.log(bulkOrderObj,'bulkOrderObj',totalQuantity)
+        {% comment %} console.log(bulkOrderObj,'bulkOrderObj',totalQuantity) {% endcomment %}
 
         var itemKey = minusSelector.closest('.quantity-selector').dataset.item;
 
@@ -1291,12 +1291,15 @@
         {% comment %} document.querySelector('.mini-cart-sticky').classList.remove('active'); {% endcomment %}
         if(document.querySelector('.tab_wrapper') != null){
             if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
-                var sortJson_val = json_searched.length > 0 ? json_searched : _json_val_not_shared;
+                {% comment %} var sortJson_val = json_searched.length > 0 ? json_searched : _json_val_not_shared; {% endcomment %}
+                var sortJson_val = _json_val_not_shared;
             }else{
-                var sortJson_val = json_searched.length > 0 ? json_searched : _json_val_shared;
+                {% comment %} var sortJson_val = json_searched.length > 0 ? json_searched : _json_val_shared; {% endcomment %}
+                var sortJson_val = _json_val_shared;
             }
         }else{
-            var sortJson_val = json_searched.length > 0 ? json_searched : _json_val;
+            {% comment %} var sortJson_val = json_searched.length > 0 ? json_searched : _json_val; {% endcomment %}
+            var sortJson_val = _json_val;
         }
         
         json_searched = sortJson_val.filter((item) => {
@@ -1342,7 +1345,7 @@
                 appendItems(json_searched.length > 0 ? json_searched : _json_val);     
             }
                    
-        }
+        } 
     }
 
     function appendItems(searchedJSON){
@@ -1359,6 +1362,7 @@
         }
         if(document.querySelector('ajaxinate-loading') && document.querySelector('ajaxinate-loading').classList.contains('hide') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length != 3){
             document.querySelector('ajaxinate-loading').classList.remove('hide');
+            document.querySelector('ajaxinate-loading').callbackForViewPort();
         }
         
         genratePagination(searchedJSON);
@@ -1434,7 +1438,7 @@
             if(_item.featured_image){
                 var image_div = `<img src="${ _item.featured_image }" alt="Salmon" height="auto" width="auto">`;
             }else{
-                var image_div = ``;
+                var image_div = `{{ 'product-1' | placeholder_svg_tag }}`;
             }
 
             if(store_location_data[0][currentVAraint.sku] != null && store_location_data[0][currentVAraint.sku] != 'undefined'){
@@ -1638,7 +1642,7 @@
                 }else if(_item.featured_image){
                     var image_div = `<img src="${ currentVAraint.featured_image ? currentVAraint.featured_image.src :  _item.featured_image}" alt="Salmon" height="auto" width="auto">`;
                 }else{
-                    var image_div = ``;
+                    var image_div = `{{ 'product-1' | placeholder_svg_tag }}`;
                 }
 
                 _returnHTML += `<div class="product-item ">
@@ -2049,7 +2053,7 @@
                             localStorage.setItem('bulkOrderObj', JSON.stringify(cart_items));
                         }
                     }
-                    console.log('cart_items',cart_items)
+                    {% comment %} console.log('cart_items',cart_items) {% endcomment %}
                     break;
                 }
             }
@@ -2100,7 +2104,6 @@
         }
         
         onPaginationChange(event){
-            //console.log('call pagination');
             if(event) event.preventDefault();
             if(document.querySelector('.pagination-wrapper .pagination-lists .next-item').classList.contains('disabled') == false){
                 document.querySelector('.pagination-wrapper .pagination-lists .next-item').click();

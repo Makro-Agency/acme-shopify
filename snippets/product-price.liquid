@@ -211,8 +211,8 @@
             }else{
               get_qty = get_qty + ' ';
             } {% endcomment %}
-            document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
-              <div class="price__b2b-label">Ordering U/M: </div>
+            document.querySelector('#v-id-{{ variant.id }}') && document.querySelector('#v-id-{{ variant.id }}').insertAdjacentHTML('afterend', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">
+              <div class="price__b2b-label">Ordering U/M </div>
               <div class="price__pricing-group ">
                 <div class="price__regular">
                     <span class="visually-hidden">Regular price</span>

@@ -71,8 +71,8 @@
                 {% endif %}
                 <option>Alphabetically: A-Z</option>
                 <option>Alphabetically: Z-A</option>
-                <option>Price: low to high</option>
-                <option>Price: high to low</option>
+                {% comment %} <option>Price: low to high</option>
+                <option>Price: high to low</option> {% endcomment %}
                 
             </select>
         </div>
@@ -1956,7 +1956,13 @@
             var selector_json = json_val;
         }
 
+        document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
+
         {% comment %} console.log(selector_json,'selector_json') {% endcomment %}
+        if(document.querySelector('.select-options li.is-selected').innerText == 'Alphabetically: A-Z'){
+            selector_json.sort((a, b) => (a.title < b.title) ? -1 : 1);
+        }
+        
         
         for(var i=Number(startindex);i<=Number(endindex);i++){
             finl_html += appendHTML(selector_json[i]);
@@ -1970,7 +1976,7 @@
         }
 
         //document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].click();
-        document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
+        
     }
 
     addEventListener("DOMContentLoaded", (event) => {

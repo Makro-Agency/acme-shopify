@@ -28,9 +28,32 @@
       "disabled": true,
       "settings": {
         "body": "<p>20 grams protein per serving. Ready to eat, right out of the pack. Wild caught and sustainably sourced. What else could you need?!</p>",
-        "image": "shopify://shop_images/IMG_0970_1.jpg"
+        "image": null
       },
       "blocks": {}
+    },
+    "hero_section_AG7Gij": {
+      "disabled": false,
+      "settings": {},
+      "blocks": {
+        "slide_697t6": {
+          "type": "slide",
+          "disabled": false,
+          "settings": {
+            "color": "light",
+            "alignment": "left",
+            "header": "Order Wholesale Online",
+            "sub_header": "<p>Streamline your ordering. Reorder top items and explore new products—all in one place.</p>",
+            "cta": "Place Your Order",
+            "url": "https://makro-staging-rc-creations-1954.myshopify.com/pages/wholesale-order-form?tab=all-product",
+            "external": false,
+            "image": "shopify://shop_images/correct-homepage-resize.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "slide_697t6"
+      ]
     },
     "two_column_swiper_aeNLTF": {
       "disabled": true,
@@ -61,29 +84,6 @@
       "disabled": true,
       "settings": {},
       "blocks": {}
-    },
-    "hero_section_AG7Gij": {
-      "disabled": false,
-      "settings": {},
-      "blocks": {
-        "slide_697t6": {
-          "type": "slide",
-          "disabled": false,
-          "settings": {
-            "color": "light",
-            "alignment": "left",
-            "header": "Order Wholesale Online",
-            "sub_header": "<p>Streamline your ordering. Reorder top items and explore new products—all in one place.</p>",
-            "cta": "Place Your Order",
-            "url": "https://makro-staging-rc-creations-1954.myshopify.com/pages/wholesale-order-form?tab=all-product",
-            "external": false,
-            "image": "shopify://shop_images/IMG_0970_1.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "slide_697t6"
-      ]
     }
   },
   "order": [

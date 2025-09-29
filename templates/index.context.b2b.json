@@ -28,7 +28,7 @@
             "sub_header": "<p>Streamline your ordering. Reorder top items and explore new products—all in one place.</p>",
             "cta": "Place Your Order",
             "external": false,
-            "image": "shopify://shop_images/smoked_salmon_truck_2.jpg"
+            "image": "shopify://shop_images/correct-homepage-resize.jpg"
           }
         }
       }
@@ -39,12 +39,12 @@
       },
       "blocks": {}
     },
-    "b2049783-56d5-4f1f-9033-f993b51af154": {
+    "two_column_swiper_YkWV6n": {
       "disabled": true,
       "settings": {},
       "blocks": {}
     },
-    "two_column_swiper_YkWV6n": {
+    "b2049783-56d5-4f1f-9033-f993b51af154": {
       "disabled": true,
       "settings": {},
       "blocks": {}

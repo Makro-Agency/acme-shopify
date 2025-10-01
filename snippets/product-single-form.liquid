@@ -8,6 +8,7 @@ product-add-form product-form product-form-{{ product.id }}
 {% if available_online != true %}
 	{% assign available_online = false %}
 {% endif %}
+{% assign available_online = true %}
 
 	<div class = 'product-form {{available_online}}' sh-product-form data-product-id="{{product.id}}">
 		{% form 'product', product, class:form_classes, novalidate: 'novalidate', data-product-form: '' %}
@@ -34,7 +35,7 @@ product-add-form product-form product-form-{{ product.id }}
 				<input type = 'hidden' name="id" value="{{current_variant.id}}" />
 			</div>
 		{% endif %}
-		{% if current_variant.sku != blank  %}
+		{% if current_variant.sku != blank and customer_b2B != false %}
 			<h2 class="header-5 pt-2">
 				SKU : {{current_variant.sku}} 
 				{% comment %} {% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}

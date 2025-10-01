@@ -250,7 +250,7 @@
           vuom = '';
         }
         if(store_location_data.length > 0 && store_location_data[0][find_sku][0] != undefined){
-          card.querySelector('.coll-cart-btn') && card.querySelector('.btn-price .price.price--has_b2b-true').insertAdjacentHTML('afterend', `<div class="price price--has_b2b-true" data-price="">
+          card.querySelector('.coll-cart-btn') && card.querySelector('.btn-price .price.price--has_b2b-true').insertAdjacentHTML('beforebegin', `<div class="price price--has_b2b-true" data-price="">
             <div class="price__b2b-label">Sales Price</div>
               <div class="price__pricing-group ">
                 <div class="price__regular">

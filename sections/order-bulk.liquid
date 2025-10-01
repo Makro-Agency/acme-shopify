@@ -254,8 +254,8 @@
         <div class="product-header">
             <span>PRODUCT</span>
             <span>SKU</span>
-            <span>Ordering U/M</span>
             <span>Sales Price</span>
+            <span>Ordering U/M</span>
             <span>Quantity</span>
         </div>
         
@@ -1600,12 +1600,12 @@
                     var _item_price = store_location_data[0][currentVAraint.sku][0] + ' /' + item.metafields.unit_of_measure
                     
                     var _sale_price_mobile = `<div class="sale-price">
-                                <span>Ordering U/M:</span>
+                                <span>Ordering U/M</span>
                                 <span>${_sale_price}</span>
                             </div>`;
-                    var price_lable = 'Sales Price U/M:';
-                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Ordering U/M</span><span class="price-value">${_sale_price}</span></span>`;
-                    var mobile_order = `<span class="price"><span class="mobile-header">Sales Price U/M</span>$${_item_price}</span>`;
+                    var price_lable = 'Sales Price';
+                    var mobile_sale = `<span class="price sale-p-avail"><span class="mobile-header">Ordering U/M</span><span class="price-value">${_item_price}</span></span>`;
+                    var mobile_order = `<span class="price"><span class="mobile-header">Sales Price U/M</span>$${_sale_price}</span>`;
                 }else{
                     var _sale_price = '';
                     var _sale_price_mobile = '';
@@ -1663,11 +1663,11 @@
                         ${mobile_sale}
                         ${mobile_order}
                         <span class="grid-price">
-                            ${_sale_price_mobile}
                             <div>
                                 <span>${price_lable}</span>
                                 <span>$${_item_price}</span>
                             </div>
+                            ${_sale_price_mobile}
                         </span>
                         <div class="quantity-btn-wrap">
                             <div class="quantity-selector ${disable_class} ${show_active_class}" data-item="${ currentVAraint.id }">

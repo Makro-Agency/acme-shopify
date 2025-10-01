@@ -47,6 +47,20 @@
     "hero_section_AG7Gij": {
       "type": "hero-section",
       "blocks": {
+        "slide_R7F9nh": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "color": "light",
+            "alignment": "left",
+            "header": "The Oppor-Tuna-Ties are endless",
+            "sub_header": "<p>20 grams of protein per serving. Ready-to-eat, right out of the pack. Wild caught and sustainably sourced. What else could you need?!</p>",
+            "cta": "Check it out",
+            "url": "https://acmesmokedfish.co/smoked-tuna-homepage-slide-1",
+            "external": true,
+            "image": "shopify://shop_images/smoked-tuna-spicy-hero.png"
+          }
+        },
         "slide_Mq6b47": {
           "type": "slide",
           "settings": {
@@ -60,18 +74,6 @@
             "image": "shopify://shop_images/acme-occasions-occasion-bagel-brunch-RT.jpg"
           }
         },
-        "slide_R7F9nh": {
-          "type": "slide",
-          "settings": {
-            "color": "light",
-            "alignment": "left",
-            "header": "The Oppor-Tuna-Ties are endless",
-            "sub_header": "<p>20 grams of protein per serving. Ready-to-eat, right out of the pack. Wild caught and sustainably sourced. What else could you need?!</p>",
-            "cta": "Check it out",
-            "url": "https://acmesmokedfish.co/smoked-tuna-homepage-slide-1",
-            "external": true
-          }
-        },
         "slide_iQahgj": {
           "type": "slide",
           "settings": {
@@ -81,12 +83,12 @@
             "sub_header": "<p>Use this interactive map to find out where you can get Acme at a deli near you!</p>",
             "cta": "Look Now",
             "url": "https://acmesmokedfish.co/bagel-map-homepage-hero",
-            "external": true
+            "external": true,
+            "image": "shopify://shop_images/acme-tuna-avocado-toast-3-resize.png"
           }
         },
         "slide_7TgRkR": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "color": "light",
             "alignment": "left",
@@ -94,7 +96,8 @@
             "sub_header": "",
             "cta": "",
             "url": "",
-            "external": false
+            "external": false,
+            "image": "shopify://shop_images/map_copy_2.png"
           }
         },
         "slide_nWcUUX": {
@@ -113,8 +116,8 @@
         }
       },
       "block_order": [
-        "slide_Mq6b47",
         "slide_R7F9nh",
+        "slide_Mq6b47",
         "slide_iQahgj",
         "slide_7TgRkR",
         "slide_nWcUUX"
@@ -138,6 +141,7 @@
         "block_QmqKzm": {
           "type": "block",
           "settings": {
+            "image": "shopify://shop_images/resize-2-sesame-crusted-smoked-tuna-recipe-poke-bowl_9ceffed3-9620-4bef-8bb0-79e124676795_1.png",
             "header": "Smoked Tuna Poke Bowl",
             "sub_header": "Recipe",
             "sub_header_2": "",
@@ -148,6 +152,7 @@
         "block_hrkCCQ": {
           "type": "block",
           "settings": {
+            "image": "shopify://shop_images/salmon-candy-lettuce-wraps_1.png",
             "header": "Smoked Salmon Candy Lettuce Wraps",
             "sub_header": "Recipe",
             "sub_header_2": "",
@@ -158,6 +163,7 @@
         "block_MRzbGH": {
           "type": "block",
           "settings": {
+            "image": "shopify://shop_images/lemon-garlic-hot-smnoked-salmon-pita-1_700x_ab114f08-8998-4857-a6c2-b2da312ffdcc_1.png",
             "header": "Lemon Garlic Smoked Salmon Pita",
             "sub_header": "Recipe",
             "sub_header_2": "",
@@ -249,13 +255,13 @@
           "type": "Slide",
           "settings": {
             "anchor_id": "",
-            "label": "Becoming Citizens of Seafood",
-            "header": "1% for the Planet",
+            "label": "",
+            "header": "Read our Blog",
             "title": "",
             "sub_title": "",
-            "image": "shopify://shop_images/1percent_web_image_v2_1.png",
-            "image_size": "contain",
-            "body": "<p>Acme Smoked Fish Corporation is a proud member of 1% for the Planet. Through this partnership, 1% of sales from all Acme brand cold smoked salmon retail products are donated to support climate initiatives.</p>",
+            "image": "shopify://shop_images/BBQ-hot-smoked-salmon-sandwich-2_700x_b3d1a19b-bdd9-49f1-a5c4-52a1062ee4bf_1.png",
+            "image_size": "cover",
+            "body": "<p>From recipes to community to family history, explore our stories. Get tips, get inspired, and most importantly, get to know us here at Acme!</p>",
             "link_url": "https://acmesmokedfish.com/blogs/news",
             "external": true,
             "link_label": "All Articles"
@@ -268,9 +274,9 @@
       "name": "Two Column Slider",
       "settings": {
         "anchor_id": "",
-        "color": "light",
+        "color": "dark",
         "layout": "swiper",
-        "image_position": "right"
+        "image_position": "left"
       }
     },
     "two_column_panels_qqTPfi": {
@@ -575,6 +581,7 @@
     },
     "header_content_f7YkDB": {
       "type": "header-content",
+      "disabled": true,
       "name": "Header Content",
       "settings": {
         "anchor_id": "",
@@ -645,15 +652,15 @@
     },
     "e42e5ee8-81f2-4dca-9b66-d5d3d57d7993": {
       "type": "header-content",
-      "disabled": true,
+      "name": "Header Content",
       "settings": {
         "anchor_id": "",
         "color": "light",
-        "lead": "",
-        "header": "Find Your Inspiration",
+        "lead": "Follow us @acmesmokedfish",
+        "header": "",
         "subheader": "",
-        "cta": "See All Recipes",
-        "url": "shopify://blogs/recipes",
+        "cta": "",
+        "url": "",
         "external": false
       }
     },

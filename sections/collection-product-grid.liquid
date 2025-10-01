@@ -12,6 +12,15 @@
   }
 </style>
 
+{%- liquid
+  assign checkB2B = false
+
+	if customer and customer.b2b? and customer.company_available_locations_count > 0
+    assign checkB2B = true
+  endif
+
+-%}
+
 <section class="section-collection-title header-1">
     <div class="container">
         <h1 class="mb-3">
@@ -28,6 +37,7 @@
 </div>
 {% render "filters" filters: section.settings.filters custom_collection: section.settings.custom_collection -%}
 
+{% assign check_prod = 0 %}
 <section class='section-product-grid'>
   {% paginate collection.products by 9 %}
     <div class='container'>
@@ -35,6 +45,7 @@
             
                 {% for product in collection.products %}
                     {% unless product.tags contains 'private' or product.tags contains 'Private' or product.tags contains 'PRIVATE' %}
+                      {% assign check_prod = check_prod | plus: 1 %}
                         <div
                             mx-filter-result
                             class='{% for tag in product.tags %} {{ tag | handleize }}{% endfor %}'
@@ -63,7 +74,7 @@
         {% endif %}
       {% endpaginate %}
     </div> 
-    {% if collection.products.size == 0 %}
+    {% if collection.products.size == 0 or check_prod == 0 %}
       <div class="container">
         <div class="row">
           <div class="col-lg-6 offset-lg-3 text-center py-5" >
@@ -80,9 +91,14 @@
     {% endif %}
 </section> 
 
+{% if checkB2B %}
 <script>
+  
   document.addEventListener("DOMContentLoaded", function() {
     var endlessScroll = new Ajaxinate();
+    if(document.querySelectorAll('.page-pagination ul.pagination li').length > 0){
+      document.querySelector('.page-pagination ul.pagination').classList.remove('d-none');
+    }
   });
 
   function getNextMondays(count = 7) {
@@ -275,7 +291,9 @@
         });
       }
   };
+  
 </script>
+{% endif %}
 
 {% schema %}
 {

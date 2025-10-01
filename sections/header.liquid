@@ -64,7 +64,9 @@
 assign navbar_transparency = false  {% endcomment %}
 
 {% unless customer %}
-	{% assign navbar_transparency = 'opaque' %}
+	{% unless template == 'index' %}
+		{% assign navbar_transparency = 'opaque' %}
+	{% endunless %}
 {% endunless %}
 
 
@@ -85,14 +87,25 @@ assign navbar_transparency = false  {% endcomment %}
 				#navaccount svg{margin-right: 10px;}
 				.navbar #navCart{right: 4.5rem;}
 				#navaccount{box-shadow: none;background: #14315c;position: absolute;right: 8rem;color: #FFF;border-radius: 5px;border: 1px solid;width: auto;text-decoration: none;flex-direction: row;}
+				.navbar.transparent.navbar-light #navaccount {background: #fff;}
+				.navbar.transparent.navbar-light #navaccount path {fill: #14315c;}
+				.navbar.transparent.show.navbar-light #navaccount path {fill: #fff;}
+				.navbar.transparent.show.navbar-light #navaccount {background: #14315c;}
 				{% else %}
 				.navbar #navCart{right: 8rem;}
 				#navaccount{box-shadow: none;background: #14315c;position: absolute;right: 4.5rem;}
+				.navbar.transparent.navbar-light #navaccount {background: #fff;}
+				.navbar.transparent.navbar-light #navaccount path {fill: #14315c;}
+				.navbar.transparent.show.navbar-light #navaccount path {fill: #fff;}
+				.navbar.transparent.show.navbar-light #navaccount {background: #14315c;}
 				{% endunless %}
 
 			</style>
+			<a href="/account" id="navaccount" class="navCart navbar-toggler d-lg-none">
+				{% render 'icon-account-white' %}{% unless customer_b2B %} Wholesaler Login{% endunless %}
+			</a>
 			<a href="/cart" id="navCart" class="navCart navbar-toggler d-lg-none" aria-label="Go to Cart page">
-				{% render 'icon-cart-white' %}{% unless customer_b2B %} Wholesaler Login{% endunless %}
+				{% render 'icon-cart-white' %}
 			</a>
 			<button id="navOpen" class="navbar-toggler open" type="button" data-toggle="bs-collapse" data-target="#top-nav" aria-controls="top-nav" aria-expanded="false" aria-label="Open navigation">
 				{% render 'icon-menu-blue' %}
@@ -243,17 +256,29 @@ assign navbar_transparency = false  {% endcomment %}
 					{% unless customer_b2B %}
 					.nav-icon.nav-account a {
 						text-decoration: none;
-						color: inherit;
+						color: #FFF;
 						letter-spacing: -.01rem;
     					font-family: SaaSeriesED W05 Regular;
 						font-size: 14px;
 						line-height: 100%;
 					}
+
+					.nav-icon.nav-account:hover a{
+						color: inherit;
+					}
+
+					.navbar:not(.transparent) .nav-icon.nav-account a,.navbar.transparent.show .nav-icon.nav-account a {
+						color: inherit;
+					}
 					
 					.nav-icon.nav-account {
-							border: 1px solid;
+							border: 1px solid #FFF;
 							border-radius: 5px;
 							padding: 5px;
+					}
+
+					.navbar:not(.transparent) .nav-icon.nav-account,.navbar.transparent.show .nav-icon.nav-account{
+						border: 1px solid;
 					}
 					
 					.nav-icon.nav-account:hover {

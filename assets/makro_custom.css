@@ -116,7 +116,8 @@ span.addbtn svg {
 
 .product-single__details .price.price--has_b2b-true:not(.sale-price-b2b),
 .cart__table .avail-sale .price.price--has_b2b-true:not(.sale-price-b2b), 
-.order-bulk .product-list.grid span.grid-price div:not(.sale-price) {
+.order-bulk .product-list.grid span.grid-price div:not(.sale-price),
+.most-purchased-items-list .btn-price .price--has_b2b-true:first-child {
   border-radius: 4px;
   background: rgba(20, 49, 92, 0.04);
   padding: 9px 10px;

@@ -52,7 +52,7 @@
 
   {% assign check_b2b = product.tags | has:'ExtKey:' %}
   {% if customer_b2B == false and check_b2b %}
-    window.location.href = '/';
+    //window.location.href = '/';
   {% endif %}
 
 {% endunless %}

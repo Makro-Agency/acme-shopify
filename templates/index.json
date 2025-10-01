@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "split_hero_iLW3aK": {
       "type": "split-hero",
@@ -28,6 +28,7 @@
     },
     "fca3c9e6-dce6-4e50-8dbb-f15b7cb738e3": {
       "type": "split-hero",
+      "disabled": true,
       "settings": {
         "anchor_id": "",
         "height": "large",
@@ -118,9 +119,17 @@
         "slide_7TgRkR",
         "slide_nWcUUX"
       ],
-      "disabled": true,
       "settings": {
         "anchor_id": ""
+      }
+    },
+    "most_purchased_items_EXm48A": {
+      "type": "most-purchased-items",
+      "disabled": true,
+      "name": "Most Purchased Items",
+      "settings": {
+        "title": "Your Most Purchased Items",
+        "coll_obj": ""
       }
     },
     "basic_card_swiper_CCUzw6": {
@@ -162,7 +171,6 @@
         "block_hrkCCQ",
         "block_MRzbGH"
       ],
-      "disabled": true,
       "name": "Basic Card Swiper",
       "settings": {
         "anchor_id": "",
@@ -579,24 +587,6 @@
         "external": false
       }
     },
-    "1751558522e0c37a8c": {
-      "type": "apps",
-      "settings": {}
-    },
-    "e42e5ee8-81f2-4dca-9b66-d5d3d57d7993": {
-      "type": "header-content",
-      "disabled": true,
-      "settings": {
-        "anchor_id": "",
-        "color": "light",
-        "lead": "",
-        "header": "Find Your Inspiration",
-        "subheader": "",
-        "cta": "See All Recipes",
-        "url": "shopify://blogs/recipes",
-        "external": false
-      }
-    },
     "e8e1192d-b2fc-42c2-835a-ec6cdf0dd392": {
       "type": "two-column-panels",
       "blocks": {
@@ -642,10 +632,29 @@
         "3ccc0984-c37a-49b5-80c1-48372484b58b",
         "6f78499c-ff20-4b89-90b5-45bf7f93d801"
       ],
+      "disabled": true,
       "settings": {
         "anchor_id": "",
         "color": "light",
         "link_url": ""
+      }
+    },
+    "1751558522e0c37a8c": {
+      "type": "apps",
+      "settings": {}
+    },
+    "e42e5ee8-81f2-4dca-9b66-d5d3d57d7993": {
+      "type": "header-content",
+      "disabled": true,
+      "settings": {
+        "anchor_id": "",
+        "color": "light",
+        "lead": "",
+        "header": "Find Your Inspiration",
+        "subheader": "",
+        "cta": "See All Recipes",
+        "url": "shopify://blogs/recipes",
+        "external": false
       }
     },
     "fb4edcb3-2a9e-4311-a6d4-035a301a7e06": {
@@ -705,13 +714,6 @@
         "color": "light",
         "layout": "rows",
         "image_position": "left"
-      }
-    },
-    "most_purchased_items_EXm48A": {
-      "type": "most-purchased-items",
-      "name": "Most Purchased Items",
-      "settings": {
-        "title": "Your Most Purchased Items"
       }
     },
     "a90a4a52-3044-4b1e-b689-d72e5f0ef59c": {

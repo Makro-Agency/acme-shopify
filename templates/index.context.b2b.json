@@ -47,6 +47,7 @@
       }
     },
     "most_purchased_items_EXm48A": {
+      "disabled": false,
       "settings": {
         "coll_obj": "master-product-collection"
       },

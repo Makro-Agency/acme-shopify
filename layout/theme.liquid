@@ -19,34 +19,44 @@
 			display:none;
 		}
 	</style>
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WS63W24');</script>
-<!-- End Google Tag Manager -->
+  	<!-- Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-WS63W24');</script>
+	<!-- End Google Tag Manager -->
 
-  <meta name="google-site-verification" content="gnXm4j8YmBXUP5FrjgOqv8T-zSid_q6s_cXAJwS7pdg" />
-  <!-- Hotjar Tracking Code for https://acmesmokedfish.com/ -->
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:3795316,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
+	<meta name="google-site-verification" content="gnXm4j8YmBXUP5FrjgOqv8T-zSid_q6s_cXAJwS7pdg" />
+	<!-- Hotjar Tracking Code for https://acmesmokedfish.com/ -->
+	<script>
+		(function(h,o,t,j,a,r){
+			h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+			h._hjSettings={hjid:3795316,hjsv:6};
+			a=o.getElementsByTagName('head')[0];
+			r=o.createElement('script');r.async=1;
+			r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+			a.appendChild(r);
+		})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+	</script>
 
 	<script>
-	window.markerConfig = {
-		project: '67f96470c416e9de2b0c7ab6', 
-		source: 'snippet'
-	};
+		window.markerConfig = {
+			project: '67f96470c416e9de2b0c7ab6', 
+			source: 'snippet'
+		};
 
-	!function(e,r,a){if(!e.__Marker){e.__Marker={};var t=[],n={__cs:t};["show","hide","isVisible","capture","cancelCapture","unload","reload","isExtensionInstalled","setReporter","clearReporter","setCustomData","on","off"].forEach(function(e){n[e]=function(){var r=Array.prototype.slice.call(arguments);r.unshift(e),t.push(r)}}),e.Marker=n;var s=r.createElement("script");s.async=1,s.src="https://edge.marker.io/latest/shim.js";var i=r.getElementsByTagName("script")[0];i.parentNode.insertBefore(s,i)}}(window,document);
+		!function(e,r,a){if(!e.__Marker){e.__Marker={};var t=[],n={__cs:t};["show","hide","isVisible","capture","cancelCapture","unload","reload","isExtensionInstalled","setReporter","clearReporter","setCustomData","on","off"].forEach(function(e){n[e]=function(){var r=Array.prototype.slice.call(arguments);r.unshift(e),t.push(r)}}),e.Marker=n;var s=r.createElement("script");s.async=1,s.src="https://edge.marker.io/latest/shim.js";var i=r.getElementsByTagName("script")[0];i.parentNode.insertBefore(s,i)}}(window,document);
+	</script>
+
+	{% if customer and customer.b2b? and customer.company_available_locations_count > 0 %}
+	<script>
+		window.CUSTOMER_IS_B2B = true;
+	</script>
+	{% endif %}
+
+	<script>
+		var cart_items_count = '{{ cart.item_count }}'
 	</script>
 
 	<script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
@@ -76,11 +86,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body class="template-{{ template | split: '.' | first }} {{ navbar_background }} {% if navbar_transparency %} navbar-transparent {% endif %} {{all_caps}}">
 	<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WS63W24"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WS63W24"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
  
- {% render 'mobile-tablet-check' %} 
+ 	{% render 'mobile-tablet-check' %} 
 	
 	{% comment %} {% render "cart-drawer" %} {% endcomment %}
 	{% comment %} {% section 'header' %} {% endcomment %}
@@ -88,10 +98,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	{{ content_for_layout }}
 	{% comment %} {% section 'footer' %} {% endcomment %}
 	{% sections 'footer-group' %}
- {%  comment %}
-	<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=RCw3QX"></script>
-{%  endcomment %}
-  {% if template == 'collection' or template == 'product' %}
+	{%  comment %}
+		<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=RCw3QX"></script>
+	{%  endcomment %}
+  	{% if template == 'collection' or template == 'product' %}
 		<script src="//destinilocators.com/acmesmokedfish/pdpwidget/install/"></script>
 		{% render 'modal-destini-find-a-store'  %}
 	{% endif %}

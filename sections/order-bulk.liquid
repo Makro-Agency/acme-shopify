@@ -1597,7 +1597,9 @@
                         var _sale_price = store_location_data[0][currentVAraint.sku][0];
                     }
 
-                    var _item_price = store_location_data[0][currentVAraint.sku][0] + ' /' + item.metafields.unit_of_measure
+                    var _base_price = store_location_data[0][currentVAraint.sku][0];
+                    var _formatted_price = (parseFloat(_base_price).toFixed(2));
+                    var _item_price = _formatted_price + ' /' + item.metafields.unit_of_measure;
                     
                     var _sale_price_mobile = `<div class="sale-price">
                                 <span>Ordering U/M</span>

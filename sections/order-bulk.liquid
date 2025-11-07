@@ -142,7 +142,7 @@
                                 {% comment %} {% assign meta3 = item.product.metafields.custom.unit_of_measurement | json %} {% endcomment %}
                                 {% assign meta3 = item.product.metafields.custom.price_uom | json %}
                                 {% assign meta4 = item.product.metafields.custom.unit_of_measurement | json %}
-                                {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"price_uom":' | append:meta3 | append: ',"unit_of_measure":' | append:meta4 | append:'}}' %}
+                                {% assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"price_uom":' | append:meta3 | append: ',"unit_of_measurement":' | append:meta4 | append:'}}' %}
                                 {{ product_with_metafield }}
                             {% endcapture %}
                             
@@ -303,7 +303,7 @@
                     {% comment %} {%- assign meta3 = coll_prod.metafields.custom.price_uom | json -%} {% endcomment %}
                     {% assign meta3 = coll_prod.metafields.custom.price_uom | json %}
                     {% assign meta4 = coll_prod.metafields.custom.unit_of_measurement | json %}
-                    {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"price_uom":' | append:meta3 | append: ',"unit_of_measure":' | append:meta4 | append:'}}' -%}
+                    {%- assign product_with_metafield = product_with_metafield_temp | append: ',"metafields": {"available_online":' | append:meta1 | append: ',"availability_b2b":' | append:meta2 | append: ',"price_uom":' | append:meta3 | append: ',"unit_of_measurement":' | append:meta4 | append:'}}' -%}
                     {%- assign product_with_metafield = product_with_metafield | replace:'\\"','\"' -%}
                     {{ product_with_metafield }}{%- unless prod_counter == _temp_count -%},{%- endunless -%}
                 {%- endcapture -%}
@@ -1412,8 +1412,8 @@
         var _returnHTML = '';
         
 
-        if(_item.metafields.unit_of_measure != null){
-            var _item_price = Shopify.formatMoney(_item.price, amount_text) + ' /' + item.metafields.unit_of_measure
+        if(_item.metafields.unit_of_measurement != null){
+            var _item_price = Shopify.formatMoney(_item.price, amount_text) + ' /' + item.metafields.unit_of_measurement
         }else{
             var _item_price = Shopify.formatMoney(_item.price, amount_text)
         }
@@ -1574,7 +1574,6 @@
             
         }else{
             currentVAraints.forEach(function(currentVAraint){
-                
                 var qty = '0';
                 var bulkOrderObj = {};
                 bulkOrderObj = localStorage.getItem('bulkOrderObj') != null ? JSON.parse(localStorage.getItem('bulkOrderObj')) : bulkOrderObj;
@@ -1599,7 +1598,7 @@
 
                     var _base_price = store_location_data[0][currentVAraint.sku][0];
                     var _formatted_price = (parseFloat(_base_price).toFixed(2));
-                    var _item_price = _formatted_price + ' /' + item.metafields.unit_of_measure;
+                    var _item_price = _formatted_price + ' /' + item.metafields.unit_of_measurement;
                     
                     var _sale_price_mobile = `<div class="sale-price">
                                 <span>Ordering U/M</span>

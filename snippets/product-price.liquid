@@ -76,7 +76,7 @@
    {% if has_b2b %}<div class="price__b2b-label">Your Price: </div>{% endif %}
   <div class="price__pricing-group ">
     <div class="price__regular">
-        <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+        <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}/*/*/</span>
         <span class="price-item price-item--regular" data-regular-price>
           
           {% if has_b2b %}
@@ -170,7 +170,7 @@
         {% comment %} var variant_syntax = store_location_data[0]['{{variant.sku}}'][0]; {% endcomment %}
         
         var variant_syntax = '{{product.quantity}}';
-        var variant_get_price = '$' + store_location_data[0]['{{variant.sku}}'][0];
+        var variant_get_price = '$' + (parseFloat(store_location_data[0]['{{variant.sku}}'][0]).toFixed(2));
         if(store_location_data.length > 0 && variant_get_price != undefined && document.querySelector('#v-id-{{ variant.id }}').closest('.price-wrap').querySelector('.sale-price-b2b') == null){
 
           var sale_price = variant_syntax;
@@ -232,7 +232,7 @@
       {% else %}
         var variant_syntax = '1';
         {% comment %} variant_syntax = store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0]; {% endcomment %}
-        var variant_get_price = '$' + store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0];
+        var variant_get_price = '$' + (parseFloat(store_location_data[0]['{{product.selected_or_first_available_variant.sku}}'][0]).toFixed(2));
         if(store_location_data.length > 0 && variant_syntax != undefined){
           var sale_price = variant_syntax;
           document.querySelector('.price--has_b2b-true') && document.querySelector('.price--has_b2b-true').insertAdjacentHTML('afterend', `<div class="price price--has_b2b-true sale-price-b2b" data-price="">

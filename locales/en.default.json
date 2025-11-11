@@ -514,9 +514,9 @@
         "free_order_notice_html": "No payment is required."
       },
       "order_summary": {
-        "free_total_label": "$0",
+        "free_total_label": "Contact Support",
         "price_per_item": {
-          "label": "$0"
+          "label": "Contact Support"
         }
       }
     }

@@ -71,6 +71,7 @@
                 {% endif %}
                 <option>Alphabetically: A-Z</option>
                 <option>Alphabetically: Z-A</option>
+                <option>SKU</option>
                 {% comment %} <option>Price: low to high</option>
                 <option>Price: high to low</option> {% endcomment %}
                 
@@ -1845,9 +1846,12 @@
     var li_wrapper = document.querySelectorAll('.bundle-search-bar ul.select-options li');
     li_wrapper.forEach(li_wrap => {
         li_wrap.addEventListener('click',function(){
+
+            
   
             if(document.querySelector('.bundle-search-bar ul.select-options li.is-selected') != null){
-                document.querySelector('.bundle-search-bar ul.select-options li.is-selected').classList.remove('is-selected');  
+                var store_val = document.querySelector('.bundle-search-bar ul.select-options li.is-selected').getAttribute('data-title');
+                document.querySelector('.bundle-search-bar ul.select-options li.is-selected').classList.remove('is-selected');
             }
             li_wrap.classList.add('is-selected');
             document.querySelector('.bundle-search-bar .select-styled').classList.remove('active');
@@ -1914,6 +1918,31 @@
                 } {% endcomment %}
                 var sortJson = UniqueFr_item;
               }
+            } else if(sortType === "SKU") {
+
+                if(store_val == 'Frequently Bought'){
+                    if(json_searched.length > 0){
+                        var sortJson = json_searched;
+                    }else{
+                        var sortJson = UniqueFr_item;
+                    }
+                }
+                
+
+                function getNumericSku(sku) {
+                    if(!sku) return '';
+                    return sku.replace(/\D+/g, '');
+                }
+
+                
+                sortJson.sort(function(a, b) {
+                    var aSku = getNumericSku(a.variants[0].sku);
+                    var bSku = getNumericSku(b.variants[0].sku);
+
+                    var aNum = aSku ? parseInt(aSku, 10) : 0;
+                    var bNum = bSku ? parseInt(bSku, 10) : 0;
+                    return aNum - bNum;
+                });
             }
 
             document.querySelector('.mini-cart-sticky').classList.remove('active');

@@ -66,12 +66,12 @@
     <div class="search-bar bundle-search-bar">
         <div class="custom-select">
             <select>
+                <option>SKU</option>
                 {% if customer and customer.orders.size > 0 %}
                     <option data-title="faq active">Frequently Bought</option>
                 {% endif %}
                 <option>Alphabetically: A-Z</option>
                 <option>Alphabetically: Z-A</option>
-                <option>SKU</option>
                 {% comment %} <option>Price: low to high</option>
                 <option>Price: high to low</option> {% endcomment %}
                 
@@ -1989,9 +1989,24 @@
         document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
 
         {% comment %} console.log(selector_json,'selector_json') {% endcomment %}
-        if(document.querySelector('.select-options li.is-selected').innerText == 'Alphabetically: A-Z'){
+        {% comment %} if(document.querySelector('.select-options li.is-selected').innerText == 'Alphabetically: A-Z'){
             selector_json.sort((a, b) => (a.title < b.title) ? -1 : 1);
+        } {% endcomment %}
+
+        function getNumericSku(sku) {
+            if(!sku) return '';
+            return sku.replace(/\D+/g, '');
         }
+
+        
+        selector_json.sort(function(a, b) {
+            var aSku = getNumericSku(a.variants[0].sku);
+            var bSku = getNumericSku(b.variants[0].sku);
+
+            var aNum = aSku ? parseInt(aSku, 10) : 0;
+            var bNum = bSku ? parseInt(bSku, 10) : 0;
+            return bNum - aNum;
+        });
         
         
         for(var i=Number(startindex);i<=Number(endindex);i++){

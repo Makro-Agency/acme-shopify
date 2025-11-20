@@ -9,6 +9,10 @@
 	data-btn-cart-submit>
 </div> {% endcomment %}
 
+<style>
+	.cart__submit+.cart__submit { display: none; }
+</style>
+
 <div class="cart__submit-controls">
 
 	{% if customer_b2B %}
@@ -22,10 +26,8 @@
 		<input type="button" class="btn btn-primary mt-4 mb-0 cart__submit disabled" value="{{ checkout_button_text }}">
 	{% else %}
 		{% if customer_b2B %}<p>Inspect the cart before finalizing the order...</p>{% endif %}
-		<input type="submit" name="checkout"
-			class="btn btn-primary mt-4 mb-0 cart__submit"
-			value="{{ checkout_button_text }}"
-			data-btn-cart-submit>
+		<input type="button" name="dummycheckout" class="btn btn-primary mt-4 mb-0 cart__submit" value="{{ checkout_button_text }}" onclick="removeObj(this)" data-btn-cart-submit="">
+		<input type="submit" name="checkout" class="btn btn-primary mt-4 mb-0 cart__submit" value="{{ checkout_button_text }}" data-btn-cart-submit>
 	{% endif %}
 </div>
 
@@ -36,6 +38,11 @@
 {% endif %}
 
 <script>
+
+	function removeObj(ele){
+		localStorage.removeItem('bulkOrderObj');
+		ele.closest('form').querySelector('[name="checkout"]').click();
+	}
 
 	function observeSlotsBox() {
 		const slotsBox = document.querySelector("#birdchime-slots-box");

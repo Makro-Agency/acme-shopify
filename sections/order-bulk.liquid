@@ -1986,7 +1986,7 @@
             var selector_json = json_val;
         }
 
-        document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
+        
 
         {% comment %} console.log(selector_json,'selector_json') {% endcomment %}
         {% comment %} if(document.querySelector('.select-options li.is-selected').innerText == 'Alphabetically: A-Z'){
@@ -1998,15 +1998,25 @@
             return sku.replace(/\D+/g, '');
         }
 
-        
-        selector_json.sort(function(a, b) {
-            var aSku = getNumericSku(a.variants[0].sku);
-            var bSku = getNumericSku(b.variants[0].sku);
+        if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+            document.querySelector('.search-bar.bundle-search-bar .select-options li[data-title="Frequently Bought"]').classList.add('is-selected');
+            if(json_searched.length > 0){
+                var selector_json = json_searched;
+            }else{
+                var selector_json = UniqueFr_item;
+            }
 
-            var aNum = aSku ? parseInt(aSku, 10) : 0;
-            var bNum = bSku ? parseInt(bSku, 10) : 0;
-            return bNum - aNum;
-        });
+        }else{
+            document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
+            selector_json.sort(function(a, b) {
+                var aSku = getNumericSku(a.variants[0].sku);
+                var bSku = getNumericSku(b.variants[0].sku);
+    
+                var aNum = aSku ? parseInt(aSku, 10) : 0;
+                var bNum = bSku ? parseInt(bSku, 10) : 0;
+                return aNum - bNum;
+            });
+        }
         
         
         for(var i=Number(startindex);i<=Number(endindex);i++){

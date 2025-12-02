@@ -7,21 +7,21 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
-    "name": "Footer",
-    "type": "footer",
-    "sections": {
-      "footer": {
-        "type": "footer",
-        "settings": {
-          "footer_menu": "b2b-footer",
-          "social_menu": "b2b-menu",
-          "footer_utility_menu": "b2b-footer-utility"
-        }
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "footer_menu": "b2b-footer",
+        "footer_menu_logout": "b2b-footer-logout",
+        "social_menu": "b2b-menu",
+        "footer_utility_menu": "b2b-footer-utility"
       }
-    },
-    "order": [
-      "footer"
-    ]
-  }
-  
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

@@ -7,16 +7,20 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
-  "name": "Header",
-  "type": "header",
-  "sections": {
-    "header": {
-      "type": "header",
-      "settings": {}
-    }
-  },
-  "order": [
-    "header"
-  ]
-}
+ {
+    "name": "Header",
+    "type": "header",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu_login": "main-menu-login",
+          "menu_logout": "main-menu"
+        }
+      }
+    },
+    "order": [
+      "header"
+    ]
+  }
+  

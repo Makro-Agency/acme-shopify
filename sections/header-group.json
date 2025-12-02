@@ -14,7 +14,8 @@
       "header": {
         "type": "header",
         "settings": {
-          "menu": "main-menu"
+          "menu_login": "main-menu-login",
+          "menu_logout": "main-menu"
         }
       }
     },

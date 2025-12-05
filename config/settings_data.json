@@ -21,8 +21,8 @@
     "find_in_store_provider": "where_to_buy",
     "cut-time": "17",
     "b2b_text_no_product": "No products.",
-    "delivery_window_days": 10,
-    "delivery_holiday_dates": "2025-12-15,2025-12-08",
+    "delivery_window_days": 50,
+    "delivery_holiday_dates": "2025-12-15,2025-12-08,2025-12-10,2025-12-09",
     "checkout_logo_image": "shopify://shop_images/Acmesmokedfish-01-ringlogo-Blue-Rgb-2000px-w-300ppi_1.png",
     "checkout_logo_size": "large",
     "checkout_body_background_color": "#f2f2f2",
@@ -33,9 +33,7 @@
     "sections": {
       "header": {
         "type": "header",
-        "settings": {
-          "menu": "main-menu"
-        }
+        "settings": {}
       },
       "footer": {
         "type": "footer",
@@ -52,18 +50,6 @@
         }
       }
     },
-    "content_for_index": [],
-    "blocks": {
-      "16015553545834452532": {
-        "type": "shopify://apps/bird-pickup-delivery/blocks/app-embed/6e8f5020-fc3a-4acd-a31a-fb627c0270cf",
-        "disabled": false,
-        "settings": {}
-      },
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      }
-    }
+    "content_for_index": []
   }
 }

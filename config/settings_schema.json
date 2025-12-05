@@ -288,5 +288,22 @@
         "label": "Add Text For B2B users"
       }      
     ]
+  },
+  {
+    "name": "B2B Delivery",
+    "settings": [
+      {
+        "type": "number",
+        "id": "delivery_window_days",
+        "label": "Delivery window (days)",
+        "default": 7
+      },
+      {
+        "type": "textarea",
+        "id": "delivery_holiday_dates",
+        "label": "Blocked delivery dates",
+        "info": "Comma-separated list of dates in YYYY-MM-DD format, e.g. 2025-12-25, 2025-12-31"
+      }
+    ]
   }
 ]

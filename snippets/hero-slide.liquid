@@ -31,7 +31,15 @@
     {% if url %}
       <a
         class="btn {% if color == 'dark' %} btn-primary {% else %} btn-light {% endif %} hero-section__btn mt-4"
+        {% if url contains '/pages/wholesale-order-form' %}
+          {% if customer and customer.company_available_locations_count > 0 %}
+          href="{{ url }}"
+          {% else %}
+          href="/account"
+          {% endif %}
+        {% else %}
         href="{{ url }}"
+        {% endif %}
         {% if external %}
           target="_blank"
         {% endif %}

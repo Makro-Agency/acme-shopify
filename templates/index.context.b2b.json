@@ -22,7 +22,7 @@
             "header": "Order Wholesale Online",
             "sub_header": "<p>Streamline your ordering. Reorder top items and explore new products—all in one place.</p>",
             "cta": "Place Your Order",
-            "url": "https://makro-staging-rc-creations-1954.myshopify.com/pages/wholesale-order-form?tab=my-product",
+            "url": "/pages/wholesale-order-form?tab=my-product",
             "external": false,
             "image": "shopify://shop_images/correct-homepage-resize.jpg"
           }

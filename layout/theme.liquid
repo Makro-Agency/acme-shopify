@@ -66,17 +66,25 @@
 	<script>
 		const src = {{ customer.current_location.shipping_address | json }};
 
-		const payload = {
-		firstName: "{{ customer.first_name | escape }}",
-		lastName: "{{ customer.last_name | escape }}",
-		address1: src.address1 || "",
-		address2: src.address2 || "",
-		city: src.city || "",
-		provinceCode: src.province_code || src.province || "",
-		country: src.country || src.country_name || "",
-		phone: src.phone || "",
-		zip: src.zip || src.postal_code || ""
-		};
+		if(src){
+			var payload = {
+				firstName: "{{ customer.first_name | escape }}",
+				lastName: "{{ customer.last_name | escape }}",
+				address1: src.address1 || "",
+				address2: src.address2 || "",
+				city: src.city || "",
+				provinceCode: src.province_code || src.province || "",
+				country: src.country || src.country_name || "",
+				phone: src.phone || "",
+				zip: src.zip || src.postal_code || ""
+			};
+		}else{
+			var payload = {
+				firstName: "{{ customer.first_name | escape }}",
+				lastName: "{{ customer.last_name | escape }}"
+			};
+		}
+		
 
 		const el = document.querySelector("#b2b_address_json");
 		el.value = JSON.stringify(payload);

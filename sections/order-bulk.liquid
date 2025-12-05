@@ -506,21 +506,27 @@
             
         } {% endcomment %}
 
-        function getNextMondays(count = 7) {
+        var daysWindow = '{{ settings.delivery_window_days }}';
+        var delivery_holiday_dates = '{{ settings.delivery_holiday_dates }}';
+
+        function getNextDeliveryDays(count = 7) {
 
             const inputTime = "{{settings.cut-time}}:00";
 
             var Availdays = [],Today = new Date(),Tomorrow = new Date(Today);
             Tomorrow.setDate(Today.getDate() + 1);
-            var count = 7;
+            {% comment %} var count = 7; {% endcomment %}
         
             var tempBitValue = '{{customer.current_location.metafields.acme.delivery_date}}';
             var BitValue = tempBitValue.slice(6) + tempBitValue.slice(0,6);
             BitValue.split('');
+
+            console.log('count',count)
         
             var checkCount = 0;
             for (let i = 0; i < count; i++) {
                 const dayOfWeek = Tomorrow.getDay();
+                var skipDay = false;
                 if(BitValue[(dayOfWeek)] == '1'){
                     if(checkCount==0 && hasEstTimePassedToday(inputTime)){
                         count++;
@@ -528,8 +534,16 @@
                     }else{
                         var store_month = (Tomorrow.getMonth() + 1);
                         var DateFormat = `${Tomorrow.getFullYear()}-${store_month < 10 ? ('0'+store_month) : store_month}-${Tomorrow.getDate() < 10 ? ('0'+Tomorrow.getDate()) : Tomorrow.getDate()}`
-                        Availdays.push(DateFormat);
-                        checkCount++;
+                        var holidaysArr = delivery_holiday_dates ? delivery_holiday_dates.split(',') : [];
+                        holidaysArr = holidaysArr.map(function(d){ return d.trim(); });
+                        if(holidaysArr.includes(DateFormat)){
+                            skipDay = true;
+                            count++;
+                        } else {
+                            console.log('DateFormat',DateFormat)
+                            Availdays.push(DateFormat);
+                            checkCount++;
+                        }
                     }
                 }else{
                     if(checkCount == 0){
@@ -564,7 +578,7 @@
         // Example usage:
 
         {% if customer.current_location.metafields.acme.delivery_date != blank %}
-            var nextMondays = getNextMondays();
+            var nextMondays = getNextDeliveryDays(daysWindow);
             if(nextMondays != ''){
                 var tempcurrentDay = nextMondays.pop();
             }
@@ -1998,7 +2012,7 @@
             return sku.replace(/\D+/g, '');
         }
 
-        if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
+        if(document.querySelector('.tab_wrapper') && document.querySelector('.search-bar.bundle-search-bar .select-options li[data-title="Frequently Bought"]') && document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
             document.querySelector('.search-bar.bundle-search-bar .select-options li[data-title="Frequently Bought"]').classList.add('is-selected');
             if(json_searched.length > 0){
                 var selector_json = json_searched;

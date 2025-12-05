@@ -449,8 +449,11 @@
                     {% endif %}
                   {% endfor %}
                 }else{
+                  var has_delivery_date = false;
+                  var delivery_date_count = 0;
                   {% for item_prop in item.properties %}
                     {% if item_prop.first == '_delivery_date' %}
+                      has_delivery_date = true;
                       var prop_val_arr = [];
                       {% for sing_val in item_prop.last %}
                         prop_val_arr.push('{{ sing_val }}')
@@ -460,6 +463,13 @@
                       prop['{{ item_prop.first }}']='{{ item_prop.last }}'
                     {% endif %}
                   {% endfor %}
+                  var store_length = '{{ item.properties['_delivery_date'] | join:',' }}';
+                  
+                  if(has_delivery_date && store_length.split(',').length != parseInt(daysWindow)){
+                    var get_new_date = getNextDeliveryDays(daysWindow);
+                    var tempcurrentDay = get_new_date.pop();
+                    prop['_delivery_date'] = get_new_date;
+                  }
                 }
 
               {% endif %}

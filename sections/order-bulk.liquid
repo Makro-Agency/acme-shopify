@@ -578,12 +578,12 @@
         // Example usage:
 
         {% if customer.current_location.metafields.acme.delivery_date != blank %}
-            var nextMondays = getNextDeliveryDays(daysWindow);
-            if(nextMondays != ''){
-                var tempcurrentDay = nextMondays.pop();
+            var nextdays = getNextDeliveryDays(daysWindow);
+            if(nextdays != ''){
+                var tempcurrentDay = nextdays.pop();
             }
         {% else %}
-            var nextMondays = '';
+            var nextdays = '';
         {% endif %}
 
         {% comment %} if(Object.values(add_obj).length > 0){
@@ -594,7 +594,7 @@
                 {% comment %} console.log(value,value['_price'],'YES') {% endcomment %}
                 if(value['_price'] != undefined){
                     {% comment %} console.log(value,value['_price'],'YES1') {% endcomment %}
-                    if(nextMondays == ''){
+                    if(nextdays == ''){
                         var productData = { 
                             id: value.id,
                             quantity: value.quantity,
@@ -607,7 +607,7 @@
                             id: value.id,
                             quantity: value.quantity,
                             properties: {
-                                "_delivery_date":nextMondays,
+                                "_delivery_date":nextdays,
                                 "_addtocart_date":tempcurrentDay,
                                 "_price" : value['_price']
                             }
@@ -615,7 +615,7 @@
                     }
                 }else{
                     console.log(value,value['_price'],'YES2')
-                    if(nextMondays == ''){
+                    if(nextdays == ''){
                         var productData = { 
                             id: value.id,
                             quantity: value.quantity
@@ -625,7 +625,7 @@
                             id: value.id,
                             quantity: value.quantity,
                             properties: {
-                                "_delivery_date":nextMondays,
+                                "_delivery_date":nextdays,
                                 "_addtocart_date":tempcurrentDay
                             }
                         };
@@ -684,7 +684,7 @@
                 {% comment %} console.log(value,value['_price'],'YES') {% endcomment %}
                 if(value['_price'] != undefined){
                     {% comment %} console.log(value,value['_price'],'YES1') {% endcomment %}
-                    if(nextMondays == ''){
+                    if(nextdays == ''){
                         var productData = { 
                             id: value.id,
                             quantity: value.quantity,
@@ -697,7 +697,7 @@
                             id: value.id,
                             quantity: value.quantity,
                             properties: {
-                                "_delivery_date":nextMondays,
+                                "_delivery_date":nextdays,
                                 "_addtocart_date":tempcurrentDay,
                                 "_price" : value['_price']
                             }
@@ -705,7 +705,7 @@
                     }
                 }else{
                     {% comment %} console.log(value,value['_price'],'YES2') {% endcomment %}
-                    if(nextMondays == ''){
+                    if(nextdays == ''){
                         var productData = { 
                             id: value.id,
                             quantity: value.quantity
@@ -715,7 +715,7 @@
                             id: value.id,
                             quantity: value.quantity,
                             properties: {
-                                "_delivery_date":nextMondays,
+                                "_delivery_date":nextdays,
                                 "_addtocart_date":tempcurrentDay
                             }
                         };

@@ -21,6 +21,21 @@
       break
     endunless
   endfor
+
+  
+  assign store_clear_id = ''
+  for item in cart.items
+    for tag in item.product.tags
+      if tag == 'B2B'
+        if store_clear_id == ''
+          assign store_clear_id = item.id
+        else
+          assign store_clear_id = store_clear_id | append:',' | append:item.id
+        endif
+        break
+      endif
+    endfor
+  endfor
   
 -%}
 {% if customer_b2B %}
@@ -203,6 +218,35 @@
     }
   }
 </style>
+{% else %}
+  {% if store_clear_id != '' %}
+    <script>
+      var store_all_ids = '{{ store_clear_id }}'.split(',');
+      var update_items = {};
+      for(i=0;i<store_all_ids.length;i++){
+        update_items[store_all_ids[i]] = 0;
+      }
+      console.log(update_items,'update_items');
+      fetch('/cart/update.js', {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({updates:update_items,sections:'cart'})
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }).then(result => {
+          console.log('updated',result);
+          document.querySelector('[sh-cart-count]').textContent = result.item_count;
+          location.reload();
+      }).catch(error => {
+          console.error('There was a problem with the fetch operation:', error);;
+      }).finally(() => {
+        console.log('finally');
+      });
+    </script>
+  {% endif %}
 {% endif %}
 
 

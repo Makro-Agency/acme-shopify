@@ -80,7 +80,7 @@ assign navbar_transparency = false  {% endcomment %}
 					{% render 'acme-logo-blue' %}
 				{% endif %} {% endcomment %}
 			</a>
-			<style>
+			{% comment %} <style>
 				
 				
 				{% unless customer_b2B %}
@@ -103,7 +103,7 @@ assign navbar_transparency = false  {% endcomment %}
 			</style>
 			<a href="/account" id="navaccount" class="navCart navbar-toggler d-lg-none">
 				{% render 'icon-account-white' %}{% unless customer_b2B %} Wholesaler Login{% endunless %}
-			</a>
+			</a> {% endcomment %}
 			<a href="/cart" id="navCart" class="navCart navbar-toggler d-lg-none" aria-label="Go to Cart page">
 				{% render 'icon-cart-white' %}
 			</a>
@@ -245,7 +245,7 @@ assign navbar_transparency = false  {% endcomment %}
 			<a class="navbar-brand" href="/" title="<?= bloginfo('name');?>">{{settings.store.name}}</a>
 
 			<div class="navbar-utility d-none d-lg-flex align-items-center">
-				<style>
+				{% comment %} <style>
 					.navbar .navbar-utility{
 						gap: 40px;
 					}
@@ -312,7 +312,7 @@ assign navbar_transparency = false  {% endcomment %}
 							{% render 'icon-account-white' %}
 						{% endif %}{% unless customer_b2B %} Wholesaler Login{% endunless %}
 					</a>
-				</div>
+				</div> {% endcomment %}
 				<div class="nav-cart nav-icon d-none d-lg-block">
 					{% render 'btn-cart' %}
 				</div>

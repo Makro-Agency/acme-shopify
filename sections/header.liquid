@@ -121,11 +121,11 @@ assign navbar_transparency = false  {% endcomment %}
 						<a href="/cart" id="navCart" class="navbar-toggler" aria-label="Go to Cart page">
 							{% render 'icon-cart-white' %}
 						</a>
-						{% if customer_b2B %}
+						{% comment %} {% if customer_b2B %}
 						<a href="/account" id="navaccount" class="navCart navbar-toggler d-lg-none">
 							{% render 'icon-account-white' %}
 						</a>
-						{% endif %}
+						{% endif %} {% endcomment %}
 						<button id="navClose" class="navbar-toggler" type="button" data-toggle="bs-collapse" data-target="#top-nav" aria-controls="top-nav" aria-expanded="false" aria-label="Close navigation">
 							{% render 'icon-close' %}
 						</button>

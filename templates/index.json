@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "hero_section_AG7Gij": {
       "type": "hero-section",
@@ -31,6 +31,14 @@
       ],
       "settings": {
         "anchor_id": ""
+      }
+    },
+    "most_purchased_items_xt9zMG": {
+      "type": "most-purchased-items",
+      "name": "Most Purchased Items",
+      "settings": {
+        "title": "Your Most Purchased Items",
+        "coll_obj": "master-product-collection"
       }
     },
     "a90a4a52-3044-4b1e-b689-d72e5f0ef59c": {
@@ -108,14 +116,6 @@
         "button_text": "Acme in the news",
         "button_url": "https://acmesmokedfish.myshopify.com/blogs/news/tagged/about_press",
         "external": false
-      }
-    },
-    "most_purchased_items_xt9zMG": {
-      "type": "most-purchased-items",
-      "name": "Most Purchased Items",
-      "settings": {
-        "title": "Your Most Purchased Items",
-        "coll_obj": ""
       }
     }
   },

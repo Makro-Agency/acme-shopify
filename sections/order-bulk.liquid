@@ -1988,65 +1988,58 @@
         }
     });
 
-    function LoadData(startindex,endindex){
-        var finl_html = '';
-        if(document.querySelector('.tab_wrapper') != null){
-            if(document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
-                var selector_json = _json_val_not_shared;
-            }else{
-                var selector_json = _json_val_shared;
-            }
-        }else{
-            var selector_json = json_val;
+   function LoadData(startindex, endindex) {
+    var finl_html = '';
+    var selector_json = '';
+
+    if (document.querySelector('.tab_wrapper') != null) {
+        if (document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product') {
+            selector_json = _json_val_not_shared;
+        } else {
+            selector_json = _json_val_shared;
         }
-
-        
-
-        {% comment %} console.log(selector_json,'selector_json') {% endcomment %}
-        {% comment %} if(document.querySelector('.select-options li.is-selected').innerText == 'Alphabetically: A-Z'){
-            selector_json.sort((a, b) => (a.title < b.title) ? -1 : 1);
-        } {% endcomment %}
-
-        function getNumericSku(sku) {
-            if(!sku) return '';
-            return sku.replace(/\D+/g, '');
-        }
-
-        if(document.querySelector('.tab_wrapper') && document.querySelector('.search-bar.bundle-search-bar .select-options li[data-title="Frequently Bought"]') && document.querySelector('.tab_wrapper a.active').getAttribute('data-title') == 'my-product'){
-            document.querySelector('.search-bar.bundle-search-bar .select-options li[data-title="Frequently Bought"]').classList.add('is-selected');
-            if(json_searched.length > 0){
-                var selector_json = json_searched;
-            }else{
-                var selector_json = UniqueFr_item;
-            }
-
-        }else{
-            document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
-            selector_json.sort(function(a, b) {
-                var aSku = getNumericSku(a.variants[0].sku);
-                var bSku = getNumericSku(b.variants[0].sku);
-    
-                var aNum = aSku ? parseInt(aSku, 10) : 0;
-                var bNum = bSku ? parseInt(bSku, 10) : 0;
-                return aNum - bNum;
-            });
-        }
-        
-        
-        for(var i=Number(startindex);i<=Number(endindex);i++){
-            finl_html += appendHTML(selector_json[i]);
-        }
-        document.querySelector('.product-item-wrapper').innerHTML = finl_html;
-        if(finl_html == ''){
-            document.querySelector('.pagination-wrapper').classList.add('hide');
-        }else{
-            document.querySelector('.pagination-wrapper').classList.remove('hide');
-            genratePagination(selector_json);
-        }
-
-        //document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].click();
-        
+    } else {
+        selector_json = json_val;
     }
+
+    function getNumericSku(sku) {
+        if (!sku) return '';
+        return sku.replace(/\D+/g, '');
+    }
+
+   
+    if (json_searched.length > 0) {
+        selector_json = json_searched;
+    } else {
+        // keep existing default dropdown selection to first option
+        if (document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0]) {
+            document.querySelectorAll('.search-bar.bundle-search-bar .select-options li')[0].classList.add('is-selected');
+        }
+
+        selector_json.sort(function(a, b) {
+            var aSku = getNumericSku(a.variants && a.variants[0] ? a.variants[0].sku : '');
+            var bSku = getNumericSku(b.variants && b.variants[0] ? b.variants[0].sku : '');
+
+            var aNum = aSku ? parseInt(aSku, 10) : 0;
+            var bNum = bSku ? parseInt(bSku, 10) : 0;
+            return aNum - bNum;
+        });
+    }
+
+    for (var i = Number(startindex); i <= Number(endindex); i++) {
+        finl_html += appendHTML(selector_json[i]);
+    }
+
+    document.querySelector('.product-item-wrapper').innerHTML = finl_html;
+
+    if (finl_html == '') {
+        document.querySelector('.pagination-wrapper').classList.add('hide');
+    } else {
+        document.querySelector('.pagination-wrapper').classList.remove('hide');
+        genratePagination(selector_json);
+    }
+}
+
 
     addEventListener("DOMContentLoaded", (event) => {
 

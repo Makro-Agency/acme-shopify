@@ -413,7 +413,9 @@
       const updateProp = async(up_obj,resp = null) => {
         
         if(!up_obj.length){
-          document.querySelector('[name="checkout"]').removeAttribute('disabled');
+          if(document.querySelector('[name="checkout"]')){
+            document.querySelector('[name="checkout"]').removeAttribute('disabled');
+          }
           return;
         }
         var old_selector = document.querySelector('[data-cart-item-key="'+JSON.parse(up_obj[0].body).id+'"]');
@@ -421,7 +423,9 @@
         if (!response.ok) {
           console.log('%cHTTP error! status:','color: red; font-size: 15px; font-weight: 700', response.status);
           console.log('%cSomething went wrong, please refresh the page and try again..!!','color: red; font-size: 15px; font-weight: 700');
-          document.querySelector('[name="checkout"]').removeAttribute('disabled');
+          if(document.querySelector('[name="checkout"]')){
+            document.querySelector('[name="checkout"]').removeAttribute('disabled');
+          }
           return;
         }
         const data = await response.json();
@@ -469,7 +473,10 @@
 
             //console.log('need to add item');
             var update_main_arry = [];
-            document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+            if(document.querySelector('[name="checkout"]')){
+              document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+            }
+            
 
             {% for item in cart.items %}
               var date_array = [];
@@ -540,7 +547,7 @@
 
               {% if forloop.last %}
                 updateProp(update_main_arry);
-                if(update_main_arry.length == 0){
+                if(update_main_arry.length == 0 && document.querySelector('[name="checkout"]')){
                   document.querySelector('[name="checkout"]').removeAttribute('disabled');
                 }
               {% endif %}
@@ -553,7 +560,9 @@
     
           var update_main_arry = [];
           if(check_change_line){
-            document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+            if(document.querySelector('[name="checkout"]')){
+              document.querySelector('[name="checkout"]').setAttribute('disabled','disabled');
+            }
     
             var get_new_date = getNextDeliveryDays(daysWindow);
             var tempcurrentDay = get_new_date.pop();

@@ -266,6 +266,7 @@ li.page-item.disabled {
     width: 50px;
     text-align: center;
     padding: 0;
+    font-size: 16px;
 }
 button.select-btn {
     border-radius: 100px;
@@ -857,5 +858,38 @@ span.title a{
     text-align: center;
 }
 .serach_result:not(.hide)~* {
+    display: none !important;
+}
+
+/* Loading and empty state layout */
+.order-loading-state,
+.order-empty-state {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.order-loading-state .loading-overlay__spinner {
+    width: 3.6rem;
+}
+
+.order-loading-state .loading-overlay__spinner .spinner .path {
+    stroke: #14315C;
+}
+
+/* Hide product list and pagination when loading/empty states are visible */
+.order-loading-state[style*="display: flex"] ~ .product-list,
+.order-loading-state[style*="display: flex"] ~ .pagination-wrapper,
+.order-loading-state[style*="display: flex"] ~ ajaxinate-loading,
+.order-empty-state[style*="display: flex"] ~ .product-list,
+.order-empty-state[style*="display: flex"] ~ .pagination-wrapper,
+.order-empty-state[style*="display: flex"] ~ ajaxinate-loading {
+    display: none !important;
+}
+
+/* Hide Load More button */
+ajaxinate-loading.hide {
     display: none !important;
 }

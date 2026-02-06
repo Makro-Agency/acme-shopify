@@ -251,6 +251,21 @@
     {% endif %}
 
     <div class="serach_result hide">No results found for terms <strong></strong></div>
+
+    <!-- Loading state for slow connections (uses existing Shopify spinner) -->
+    <div class="order-loading-state" style="display:none;">
+        <div class="loading-overlay__spinner">
+            {% render 'icon-spinner' %}
+        </div>
+        <p>Loading products...</p>
+    </div>
+
+    <!-- Empty state when no products available -->
+    <div class="order-empty-state" style="display:none;">
+        <p class="empty-state-text">No products available</p>
+        <button class="btn btn-primary" onclick="window.location.reload()">Refresh Page</button>
+    </div>
+
     <div class="product-list">
         <div class="product-header">
             <span>PRODUCT</span>
@@ -2032,17 +2047,88 @@
 
     document.querySelector('.product-item-wrapper').innerHTML = finl_html;
 
-    if (finl_html == '') {
+    if (finl_html == '' || selector_json.length === 0) {
         document.querySelector('.pagination-wrapper').classList.add('hide');
+        var loadMoreEl = document.querySelector('ajaxinate-loading');
+        if (loadMoreEl) loadMoreEl.classList.add('hide');
+        showEmptyState();
     } else {
         document.querySelector('.pagination-wrapper').classList.remove('hide');
+        hideEmptyState();
         genratePagination(selector_json);
     }
 }
 
+function showEmptyState(message) {
+    var el = document.querySelector('.order-empty-state');
+    if (el) {
+        el.style.display = 'flex';
+        if (message) el.querySelector('.empty-state-text').textContent = message;
+    }
+}
+
+function hideEmptyState() {
+    var el = document.querySelector('.order-empty-state');
+    if (el) el.style.display = 'none';
+}
+
+function showLoadingState() {
+    var el = document.querySelector('.order-loading-state');
+    if (el) el.style.display = 'flex';
+}
+
+function hideLoadingState() {
+    var el = document.querySelector('.order-loading-state');
+    if (el) el.style.display = 'none';
+}
+
+
+// Retry mechanism for slow connections where store_location_data isn't parsed yet
+function initializeWithRetry(attempts, callback) {
+    var maxAttempts = 10;
+    var retryDelay = 200;
+
+    if (attempts >= maxAttempts) {
+        // Max retries reached — proceed anyway (location data may legitimately be absent)
+        hideLoadingState();
+        callback();
+        return;
+    }
+
+    if (Array.isArray(store_location_data) && store_location_data.length > 0) {
+        // Location data ready — proceed
+        hideLoadingState();
+        callback();
+    } else if (json_val.length > 0 && attempts === 0) {
+        // First attempt with products but no location data — retry a few times
+        showLoadingState();
+        setTimeout(function() {
+            initializeWithRetry(attempts + 1, callback);
+        }, retryDelay);
+    } else if (json_val.length > 0 && attempts > 0 && attempts < maxAttempts) {
+        // Subsequent retries
+        setTimeout(function() {
+            initializeWithRetry(attempts + 1, callback);
+        }, retryDelay);
+    } else {
+        // No products — proceed without location data
+        hideLoadingState();
+        callback();
+    }
+}
 
     addEventListener("DOMContentLoaded", (event) => {
 
+        showLoadingState();
+
+        initializeWithRetry(0, function() {
+            initializeProductDisplay();
+        });
+
+        customElements.define('ajaxinate-loading', infiniteCardLoading);
+    })
+
+    function initializeProductDisplay() {
         var hasMyProducts = false;
         var global_count = 0;
         for(var i=0; i < json_val.length; i++){
@@ -2151,8 +2237,7 @@
         }
 
         {% comment %} LoadData(0,9); {% endcomment %}
-        customElements.define('ajaxinate-loading', infiniteCardLoading);
-    })
+    }
 
     class infiniteCardLoading extends HTMLElement {
         constructor() {
@@ -2173,13 +2258,19 @@
         
         onPaginationChange(event){
             if(event) event.preventDefault();
+            var pageItems = document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item');
+            var loadMoreEl = document.querySelector('ajaxinate-loading');
+
+            if (pageItems.length <= 3) {
+                if (loadMoreEl) loadMoreEl.classList.add('hide');
+                if (pageItems.length === 0) return;
+            }
+
             if(document.querySelector('.pagination-wrapper .pagination-lists .next-item').classList.contains('disabled') == false){
                 document.querySelector('.pagination-wrapper .pagination-lists .next-item').click();
                 this.callbackForViewPort();
-            }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 3){
-                document.querySelector('ajaxinate-loading').classList.add('hide');
-            }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 2){
-                document.querySelector('ajaxinate-loading').classList.add('hide');
+            } else if(loadMoreEl) {
+                loadMoreEl.classList.add('hide');
             }
             //this.querySelector('.pagination-button .loader').classList.remove('hidden');
         }

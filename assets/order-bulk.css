@@ -859,3 +859,130 @@ span.title a{
 .serach_result:not(.hide)~* {
     display: none !important;
 }
+
+/* Loading state styles */
+.order-loading-state {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.order-loading-state.active {
+    display: flex;
+}
+
+.order-loading-state.active ~ .product-list,
+.order-loading-state.active ~ .pagination-wrapper,
+.order-loading-state.active ~ ajaxinate-loading {
+    display: none !important;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(20, 49, 92, 0.2);
+    border-top-color: #14315C;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    margin-top: 16px;
+    color: #14315C;
+    font-family: ITCClearfaceRegular;
+    font-size: 16px;
+}
+
+/* Empty state styles */
+.order-empty-state {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: #14315C;
+}
+
+.order-empty-state.active {
+    display: flex;
+}
+
+.order-empty-state.active ~ .product-list,
+.order-empty-state.active ~ .pagination-wrapper,
+.order-empty-state.active ~ ajaxinate-loading {
+    display: none !important;
+}
+
+.order-empty-state svg {
+    margin-bottom: 16px;
+    opacity: 0.6;
+}
+
+.empty-state-text {
+    margin: 0 0 20px;
+    font-family: ITCClearfaceRegular;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.refresh-btn {
+    display: inline-flex;
+    padding: 12px 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 100px;
+    background: #14315C;
+    border: 1px solid transparent;
+    color: #fff;
+    font-family: SaaSeriesED W05 Regular;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 150%;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.refresh-btn:hover {
+    background: transparent;
+    border-color: #14315C;
+    color: #14315C;
+}
+
+/* Hide Load More button class */
+ajaxinate-loading.hide {
+    display: none !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+    .order-loading-state,
+    .order-empty-state {
+        padding: 40px 20px;
+    }
+
+    .loading-spinner {
+        width: 32px;
+        height: 32px;
+    }
+
+    .empty-state-text {
+        font-size: 16px;
+    }
+
+    .order-empty-state svg {
+        width: 40px;
+        height: 40px;
+    }
+}

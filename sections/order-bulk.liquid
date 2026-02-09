@@ -251,6 +251,24 @@
     {% endif %}
 
     <div class="serach_result hide">No results found for terms <strong></strong></div>
+
+    <!-- Loading state for slow connections -->
+    <div class="order-loading-state">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading products...</p>
+    </div>
+
+    <!-- Empty state when no products available -->
+    <div class="order-empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <p class="empty-state-text">No products available</p>
+        <button class="refresh-btn" onclick="window.location.reload()">Refresh Page</button>
+    </div>
+
     <div class="product-list">
         <div class="product-header">
             <span>PRODUCT</span>
@@ -2032,17 +2050,97 @@
 
     document.querySelector('.product-item-wrapper').innerHTML = finl_html;
 
-    if (finl_html == '') {
+    if (finl_html == '' || selector_json.length === 0) {
         document.querySelector('.pagination-wrapper').classList.add('hide');
+        // Hide Load More button when no products
+        var loadMoreEl = document.querySelector('ajaxinate-loading');
+        if (loadMoreEl) loadMoreEl.classList.add('hide');
+        // Show empty state if products wrapper is empty
+        showEmptyState();
     } else {
         document.querySelector('.pagination-wrapper').classList.remove('hide');
+        hideEmptyState();
         genratePagination(selector_json);
     }
 }
 
+// Empty state helper functions
+function showEmptyState(message) {
+    var emptyStateEl = document.querySelector('.order-empty-state');
+    if (emptyStateEl) {
+        emptyStateEl.classList.add('active');
+        if (message) {
+            emptyStateEl.querySelector('.empty-state-text').textContent = message;
+        }
+    }
+}
+
+function hideEmptyState() {
+    var emptyStateEl = document.querySelector('.order-empty-state');
+    if (emptyStateEl) {
+        emptyStateEl.classList.remove('active');
+    }
+}
+
+function showLoadingState() {
+    var loadingEl = document.querySelector('.order-loading-state');
+    if (loadingEl) {
+        loadingEl.classList.add('active');
+    }
+}
+
+function hideLoadingState() {
+    var loadingEl = document.querySelector('.order-loading-state');
+    if (loadingEl) {
+        loadingEl.classList.remove('active');
+    }
+}
+
+// Retry mechanism for slow connections
+function initializeWithRetry(attempts, callback) {
+    var maxAttempts = 10;
+    var retryDelay = 200; // ms
+
+    if (attempts >= maxAttempts) {
+        hideLoadingState();
+        showEmptyState('Unable to load products. Please refresh the page.');
+        return;
+    }
+
+    // Check if store_location_data is populated (for B2B customers)
+    if (Array.isArray(store_location_data) && store_location_data.length > 0) {
+        hideLoadingState();
+        callback();
+    } else if (json_val.length > 0 && (!Array.isArray(store_location_data) || store_location_data.length === 0)) {
+        // If we have products but no location data after initial check, retry
+        showLoadingState();
+        setTimeout(function() {
+            initializeWithRetry(attempts + 1, callback);
+        }, retryDelay);
+    } else {
+        // No products at all - proceed without location data
+        hideLoadingState();
+        callback();
+    }
+}
 
     addEventListener("DOMContentLoaded", (event) => {
 
+        var hasMyProducts = false;
+        var global_count = 0;
+
+        // Show loading state initially
+        showLoadingState();
+
+        // Use retry mechanism for initialization
+        initializeWithRetry(0, function() {
+            initializeProductDisplay();
+        });
+
+        customElements.define('ajaxinate-loading', infiniteCardLoading);
+    })
+
+    function initializeProductDisplay() {
         var hasMyProducts = false;
         var global_count = 0;
         for(var i=0; i < json_val.length; i++){
@@ -2151,8 +2249,7 @@
         }
 
         {% comment %} LoadData(0,9); {% endcomment %}
-        customElements.define('ajaxinate-loading', infiniteCardLoading);
-    })
+    }
 
     class infiniteCardLoading extends HTMLElement {
         constructor() {
@@ -2173,13 +2270,20 @@
         
         onPaginationChange(event){
             if(event) event.preventDefault();
+            var pageItems = document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item');
+            var loadMoreEl = document.querySelector('ajaxinate-loading');
+
+            // Handle zero items or few items case - hide Load More button
+            if (pageItems.length <= 3) {
+                if (loadMoreEl) loadMoreEl.classList.add('hide');
+                if (pageItems.length === 0) return;
+            }
+
             if(document.querySelector('.pagination-wrapper .pagination-lists .next-item').classList.contains('disabled') == false){
                 document.querySelector('.pagination-wrapper .pagination-lists .next-item').click();
                 this.callbackForViewPort();
-            }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 3){
-                document.querySelector('ajaxinate-loading').classList.add('hide');
-            }else if(document.querySelector('ajaxinate-loading') && document.querySelectorAll('.pagination-wrapper .pagination-lists .page-item').length == 2){
-                document.querySelector('ajaxinate-loading').classList.add('hide');
+            } else if(loadMoreEl) {
+                loadMoreEl.classList.add('hide');
             }
             //this.querySelector('.pagination-button .loader').classList.remove('hidden');
         }

@@ -1509,15 +1509,15 @@
                         <div class="quantity-btn-wrap">
                             <button class="variant-select-btn ${disable_class}" onclick="toggleVariant(this)">select a variant</button>
                             <div class="quantity-selector ${disable_class}" data-item="${ _item.variants[0].id }">
-                                <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <div onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg></button>
+                                </svg></div>
                                 <input type="text" value="0" class="qty-selector" onfocus="if(this.value === '0'){ this.value = ''; }" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
                                 <span>0</span>
-                                <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <div onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg></button>
+                                </svg></div>
                             </div>
                         </div>
                     </div>
@@ -1568,19 +1568,19 @@
                                     <span class="price"><span class="mobile-header">Price</span>${Shopify.formatMoney(currentVAraint.price, amount_text)}</span>
                                     <div class="quantity-btn-wrap">
                                         <div class="quantity-selector ${disable_class}" data-item="${ currentVAraint.id }">
-                                            <button onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;">
+                                            <div onclick="clickAttrMinus(this);" class="qtyminus" style="opacity: 0.5; cursor: not-allowed;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                                 </svg>
-                                            </button>
+                                            </div>
                                             <input type="text" value="0" class="qty-selector" onfocus="if(this.value === '0'){ this.value = ''; }" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
                                             <span>0</span>
-                                            <button onclick="clickAttrPlus(this);" class="qtyplus">
+                                            <div onclick="clickAttrPlus(this);" class="qtyplus">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                                     <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                                 </svg>
-                                            </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1705,15 +1705,15 @@
                         </span>
                         <div class="quantity-btn-wrap">
                             <div class="quantity-selector ${disable_class} ${show_active_class}" data-item="${ currentVAraint.id }">
-                                <button onclick="clickAttrMinus(this);" class="qtyminus" ${show_style}><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <div onclick="clickAttrMinus(this);" class="qtyminus" ${show_style}><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg></button>
+                                </svg></div>
                                 <input type="text" value="${qty}" class="qty-selector" onfocus="if(this.value === '0'){ this.value = ''; }" onkeyup="InputChange(event, this);" onblur="clickAttrPlus(this);" >
                                 {% comment %} <span>${qty}</span> {% endcomment %}
-                                <button onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <div onclick="clickAttrPlus(this);" class="qtyplus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M2.1875 7H11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M7 2.1875V11.8125" stroke="#14315C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg></button>
+                                </svg></div>
                             </div>
                         </div>
                     </div>

@@ -73,6 +73,7 @@
     display: flex;
     gap: 20px;
     justify-content: flex-start;
+    touch-action: manipulation;
 }
 
 .quantity-selector {

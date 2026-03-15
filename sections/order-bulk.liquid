@@ -819,11 +819,9 @@
             var locationData = store_location_data[0];
             var skuExists = false;
             
-          var skuData = locationData[sku];
-var hasAllProducts = skuData ? skuData.some(function(val) {
-    return val.includes('All Products');
-}) : false;
-
+            var hasAllProducts = locationData[sku].some(function(val) {
+                return val.includes('All Products');
+            });
             if(hasAllProducts){
                 var _i = iteam;
                 _json_val_shared.push(_i);
@@ -859,10 +857,9 @@ var hasAllProducts = skuData ? skuData.some(function(val) {
             var locationData = store_location_data[0];
             var skuExists = false;
             
-            var skuData = locationData[sku];
-var hasAllProducts = skuData ? skuData.some(function(val) {
-    return val.includes('My Products');
-}) : false;
+            var hasAllProducts = locationData[sku].some(function(val) {
+                return val.includes('My Products');
+            });
             if(hasAllProducts){
                 var _ins = iteam;
                 _json_val_not_shared.push(_ins);

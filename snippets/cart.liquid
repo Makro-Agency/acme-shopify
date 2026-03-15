@@ -373,7 +373,8 @@
         BitValue.split('');
     
         var checkCount = 0;
-        for (let i = 0; i < count; i++) {
+       var maxIterations = 365;
+            for (let i = 0; i < count && i < maxIterations; i++) {
             const dayOfWeek = Tomorrow.getDay();
             var skipDay = false;
             if(BitValue[(dayOfWeek)] == '1'){

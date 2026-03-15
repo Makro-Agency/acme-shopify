@@ -508,8 +508,12 @@
     function addtocart(ele){
         const items = [],items_object = {};
 
-        var bulkOrderObj = {};
+        {% comment %}  var bulkOrderObj = {};
         bulkOrderObj = JSON.parse(localStorage.getItem('bulkOrderObj'));
+        {% endcomment %}
+
+        var bulkOrderObj = JSON.parse(localStorage.getItem('bulkOrderObj')) || {};
+
 
         {% comment %} if(Object.entries(bulkOrderObj).length > 0){
             Object.values(bulkOrderObj).forEach(function(obj) {

@@ -22,7 +22,7 @@
     "cut-time": "17",
     "b2b_text_no_product": "No products.",
     "delivery_window_days": 30,
-    "delivery_holiday_dates": "2025-12-24,2025-12-25,2026-01-01",
+    "delivery_holiday_dates": "2025-12-24,2025-12-25,2026-01-01,2026-04-06",
     "checkout_logo_image": "shopify://shop_images/Acmesmokedfish-01-ringlogo-Blue-Rgb-2000px-w-300ppi_1.png",
     "checkout_logo_size": "large",
     "checkout_body_background_color": "#f2f2f2",

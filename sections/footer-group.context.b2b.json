@@ -7,20 +7,19 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
-    "parent": "footer-group.json",
-    "context": {
-      "b2b": true
-    },
-    "sections": {
-      "footer": {
-        "settings": {
-          "footer_menu": "b2b-footer",
-          "social_menu": "",
-          "footer_utility_menu": "b2b-footer-utility"
-        },
-        "blocks": {}
-      }
+{
+  "parent": "footer-group.json",
+  "context": {
+    "market": "all-b2b"
+  },
+  "sections": {
+    "footer": {
+      "settings": {
+        "footer_menu": "b2b-footer",
+        "social_menu": "",
+        "footer_utility_menu": "b2b-footer-utility"
+      },
+      "blocks": {}
     }
   }
-  
+}

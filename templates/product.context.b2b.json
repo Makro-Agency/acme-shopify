@@ -10,7 +10,7 @@
 {
   "parent": "product.json",
   "context": {
-    "b2b": true
+    "market": "all-b2b"
   },
   "sections": {
     "0208aff1-8dd2-44fa-94c4-2231272d3a57": {

@@ -7,18 +7,17 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
-    "parent": "header-group.json",
-    "context": {
-      "b2b": true
-    },
-    "sections": {
-      "header": {
-        "settings": {
-          "menu": "b2b-menu"
-        },
-        "blocks": {}
-      }
+{
+  "parent": "header-group.json",
+  "context": {
+    "market": "all-b2b"
+  },
+  "sections": {
+    "header": {
+      "settings": {
+        "menu": "b2b-menu"
+      },
+      "blocks": {}
     }
   }
-  
+}
